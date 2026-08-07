@@ -35,6 +35,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
+  # Checks for and applies Shorebird code push patches at runtime.
+  shorebird_code_push: ^2.0.7
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -55,6 +58,8 @@ flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
+  assets:
+    - shorebird.yaml
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
