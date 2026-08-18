@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Hello World',
+                'Hello Shorebird!',
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: 24),
