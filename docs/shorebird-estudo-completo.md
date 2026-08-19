@@ -198,7 +198,7 @@ No app, a inscrição é feita em código (**exige `auto_update: false`**):
 final track = user.isTester ? UpdateTrack.beta : UpdateTrack.stable;
 await updater.update(track: track);
 // nome customizado:
-await updater.update(track: UpdateTrack.custom('qa-interno'));
+await updater.update(track: UpdateTrack('qa-interno'));   // track customizado
 ```
 
 Se não houver patch no track pedido, o device **continua na release base** — não há fallback
