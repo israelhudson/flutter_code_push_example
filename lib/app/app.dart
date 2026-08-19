@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../core/theme/app_theme.dart';
 import '../features/home/home_page.dart';
+import '../features/update/update_prompt.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -12,7 +13,7 @@ class App extends StatelessWidget {
       title: 'Flutter Code Push Example',
       theme: AppTheme.light,
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: const UpdatePrompt(child: HomePage()),
     );
   }
 }

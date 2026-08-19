@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:shorebird_code_push/shorebird_code_push.dart';
+
+import '../update/update_service.dart';
+import '../update/widgets/update_available_sheet.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, this.service});
+
+  /// Injetável para teste; em produção o serviço padrão dá conta.
+  final UpdateService? service;
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  final _updater = ShorebirdUpdater();
+  late final UpdateService _service = widget.service ?? UpdateService();
 
   String _status = 'Carregando...';
   int? _currentPatchNumber;
@@ -22,48 +27,46 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _loadCurrentPatch() async {
-    if (!_updater.isAvailable) {
+    if (!_service.isAvailable) {
       setState(() {
         _status =
-            'Shorebird indisponível neste build (rode com "shorebird run" '
-            'ou instale um build gerado por "shorebird release").';
+            'Shorebird indisponível neste build — instale um build gerado '
+            'por "shorebird release".';
       });
       return;
     }
 
-    final patch = await _updater.readCurrentPatch();
+    final number = await _service.currentPatchNumber();
+    if (!mounted) return;
+
     setState(() {
-      _currentPatchNumber = patch?.number;
-      _status = patch == null
+      _currentPatchNumber = number;
+      _status = number == null
           ? 'Nenhum patch aplicado ainda (release base).'
-          : 'Patch atual: ${patch.number}';
+          : 'Rodando o patch $number.';
     });
   }
 
-  Future<void> _checkForUpdate() async {
+  /// Mesma verificação que o [UpdatePrompt] faz sozinho ao abrir o app e ao
+  /// voltar do background — aqui só é disparada na mão.
+  Future<void> _checkNow() async {
     setState(() => _isBusy = true);
-    final status = await _updater.checkForUpdate();
+
+    final result = await _service.checkAndDownload();
+    if (!mounted) return;
+
     setState(() {
       _isBusy = false;
-      _status = switch (status) {
-        UpdateStatus.upToDate => 'App já está atualizado.',
-        UpdateStatus.outdated => 'Atualização disponível! Toque em "Baixar atualização".',
-        UpdateStatus.restartRequired =>
-          'Atualização já baixada — reinicie o app para aplicar.',
-        UpdateStatus.unavailable => 'Serviço de atualização indisponível no momento.',
+      _status = switch (result) {
+        UpdateUpToDate() => 'Nenhuma atualização disponível.',
+        UpdateReady() => 'Atualização baixada, aguardando reinício.',
+        UpdateUnavailable() => 'Serviço de atualização indisponível no momento.',
+        UpdateFailed(:final message) => 'Erro ao atualizar: $message',
       };
     });
-  }
 
-  Future<void> _downloadUpdate() async {
-    setState(() => _isBusy = true);
-    try {
-      await _updater.update();
-      setState(() => _status = 'Patch baixado! Feche e reabra o app para aplicar.');
-    } on UpdateException catch (e) {
-      setState(() => _status = 'Erro ao atualizar: ${e.message}');
-    } finally {
-      setState(() => _isBusy = false);
+    if (result is UpdateReady) {
+      await showUpdateAvailableSheet(context, patchNumber: result.patchNumber);
     }
   }
 
@@ -94,19 +97,9 @@ class _HomePageState extends State<HomePage> {
               if (_isBusy)
                 const CircularProgressIndicator()
               else
-                Wrap(
-                  spacing: 12,
-                  alignment: WrapAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: _checkForUpdate,
-                      child: const Text('Verificar atualização'),
-                    ),
-                    ElevatedButton(
-                      onPressed: _downloadUpdate,
-                      child: const Text('Baixar atualização'),
-                    ),
-                  ],
+                ElevatedButton(
+                  onPressed: _checkNow,
+                  child: const Text('Verificar atualização agora'),
                 ),
             ],
           ),
