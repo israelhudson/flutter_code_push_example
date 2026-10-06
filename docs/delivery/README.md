@@ -129,8 +129,9 @@ A implementação está em PR; o agente **não faz merge na main**.
 na branch padrão. Antes do merge da implementação, o gate pode ser executado pela
 CLI. Não há loop de polling, Slack nem token extra.
 
-O workflow de candidata roda o gate inicial explicitamente: eventos causados pelo
-`GITHUB_TOKEN` não iniciam outros workflows de PR automaticamente. Reviews humanas
+O workflow de candidata roda o gate inicial explicitamente: eventos de `pull_request_target` causados pelo `GITHUB_TOKEN` não iniciam outros
+workflows automaticamente. Pela documentação atual, eventos `pull_request` de
+abertura/atualização podem criar runs que exigem **Approve workflows to run**. Reviews humanas
 subsequentes disparam o gate. O dispatch permite reavaliar a expiração/recuperação;
 o botão Run workflow existe sempre, mas a operação falha sem 2/2 e PR integrado.
 

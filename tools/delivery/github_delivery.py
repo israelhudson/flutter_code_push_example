@@ -159,11 +159,10 @@ def create_candidate(sha, artifact_id, demo=False):
     artifact, metadata, _, _ = artifact_data(artifact_id)
     if not preview_usable(metadata, fingerprint(sha), artifact):
         raise ValueError('Preview divergente ou expirado.')
-    protection = api(f'{BASE}/branches/{LEDGER}/protection')
-    if (protection['required_pull_request_reviews']['required_approving_review_count'] < 2
-            or not protection['enforce_admins']['enabled']
-            or CONTEXT not in protection['required_status_checks']['contexts']):
-        raise ValueError('Proteção da branch de versões incompleta.')
+    # The branch endpoint is readable by GITHUB_TOKEN. The /protection endpoint
+    # needs administration permission, which the workflow deliberately lacks.
+    if not api(f'{BASE}/branches/{LEDGER}')['protected']:
+        raise ValueError('Branch de versões sem proteção; configure o laboratório.')
     rules = [api(f'{BASE}/rulesets/{r["id"]}') for r in api(f'{BASE}/rulesets')]
     if not any(r['target'] == 'tag' and r['enforcement'] == 'active'
                and not r.get('bypass_actors')
@@ -262,7 +261,7 @@ def gate(number):
         description = f'{result["count"]}/2 aprovações válidas; ' + ('liberado' if result['allowed'] else 'bloqueado')
         state = 'success' if result['allowed'] else 'failure'
         summary = record_body(record, result)
-    except (ValueError, RuntimeError) as error:
+    except (ValueError, RuntimeError, KeyError, TypeError) as error:
         state, description, summary = 'failure', 'Registro inválido ou preview indisponível', str(error)
     # A pending/failed check prevents merging; the publisher independently checks again.
     api(f'{BASE}/statuses/{pr["head"]["sha"]}', {'state': state, 'context': CONTEXT,

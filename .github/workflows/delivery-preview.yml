@@ -41,6 +41,8 @@ jobs:
         run: |
           VERSION=$(python3 -c 'import json; print(json.load(open("delivery/build-inputs.json"))["flutter_version"])')
           git clone --depth 1 --branch "$VERSION" https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          REVISION=$(python3 -c 'import json; print(json.load(open("delivery/build-inputs.json"))["flutter_revision"])')
+          test "$(git -C "$RUNNER_TEMP/flutter" rev-parse HEAD)" = "$REVISION"
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
       - name: Verificar app existente
         if: steps.reuse.outputs.artifact == ''

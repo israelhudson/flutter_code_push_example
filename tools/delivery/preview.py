@@ -30,7 +30,8 @@ def package():
     if subprocess.check_output(['uname', '-s']).decode().strip() != 'Linux':
         raise ValueError('O artefato reutilizável exige o runner Linux declarado.')
     actual = json.loads(subprocess.check_output(['flutter', '--version', '--machine']))
-    if actual['frameworkVersion'] != inputs['flutter_version']:
+    if (actual['frameworkVersion'] != inputs['flutter_version']
+            or actual['frameworkRevision'] != inputs['flutter_revision']):
         raise ValueError('Flutter diferente do build-inputs.json.')
     subprocess.run(['flutter', 'pub', 'get', '--enforce-lockfile'], check=True)
     subprocess.run(inputs['command'], check=True)

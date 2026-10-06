@@ -103,6 +103,51 @@ class PreviewTests(unittest.TestCase):
                 g('add', '.'); g('commit', '-m', 'new compiler')
                 self.assertNotEqual(fingerprint(a), fingerprint('HEAD'))
 
+class PublisherBoundaryTests(unittest.TestCase):
+    def state(self):
+        pr = {'merged': True, 'head': {'sha': HEAD}, 'user': {'login': 'author'},
+              'html_url': 'https://github.com/example/pull/3'}
+        record = {'tag': 'lab/delivery/2026-10-06-rc.1', 'source_sha': 'b' * 40,
+                  'patches': {'ios': None, 'android': None}, 'preview': {'artifact_id': 7}}
+        decision = {'count': 2, 'allowed': True, 'approved': list(REQUIRED)}
+        return pr, record, decision
+
+    def test_two_current_review_payloads_allow_only_lab_release_and_receipt(self):
+        state = self.state()
+        calls = []
+        def api(path, data=None, method=None):
+            calls.append((path, data, method))
+            if path.endswith('/pulls/3'):
+                return state[0]
+            if data and data.get('draft') is True:
+                self.assertTrue(data['prerelease'])
+                self.assertEqual(data['make_latest'], 'false')
+                return {'id': 9}
+            return {'html_url': 'https://github.com/example/releases/tag/lab'}
+        def pages(path):
+            return [review(u, n=i) for i, u in enumerate(REQUIRED)] if '/reviews' in path else []
+        def upload(args, check):
+            self.assertEqual(args[:3], ['gh', 'release', 'upload'])
+            receipt = next(Path(arg) for arg in args if str(arg).endswith('/receipt.json'))
+            import json
+            data = json.loads(receipt.read_text())
+            self.assertFalse(data['distribution_performed'])
+            self.assertTrue(data['dry_run'])
+            self.assertEqual(data['patches'], {'ios': None, 'android': None})
+        with patch.object(delivery, 'inspect', return_value=state), patch.object(delivery, 'api', side_effect=api), patch.object(delivery, 'pages', side_effect=pages), patch.object(delivery, 'artifact_data', return_value=({}, {}, b'fixture-not-a-real-app', {})), patch.object(delivery, 'record_body', return_value='LAB ONLY'), patch.object(delivery.subprocess, 'run', side_effect=upload):
+            delivery.publish(3)
+        writes = [c for c in calls if c[1] is not None]
+        self.assertEqual(len(writes), 2)
+        self.assertEqual(writes[-1][1], {'draft': False, 'make_latest': 'false'})
+
+    def test_revocation_during_upload_never_publishes_draft(self):
+        state = self.state()
+        revoked = (state[0], state[1], {'count': 1, 'allowed': False})
+        with patch.object(delivery, 'inspect', side_effect=[state, revoked]), patch.object(delivery, 'api', side_effect=[state[0], {'id': 9}]) as api, patch.object(delivery, 'pages', side_effect=[[review(u) for u in REQUIRED], []]), patch.object(delivery, 'artifact_data', return_value=({}, {}, b'fixture', {})), patch.object(delivery, 'record_body', return_value='LAB ONLY'), patch.object(delivery.subprocess, 'run'):
+            with self.assertRaisesRegex(ValueError, 'Estado mudou'):
+                delivery.publish(3)
+            self.assertFalse(any(call.args[-1] == 'PATCH' for call in api.call_args_list))
+
 
 if __name__ == '__main__':
     unittest.main()

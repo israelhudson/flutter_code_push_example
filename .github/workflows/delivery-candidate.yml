@@ -38,7 +38,7 @@ jobs:
               artifacts = pages(f'{BASE}/actions/runs/{os.environ["PREVIEW_RUN"]}/artifacts', 'artifacts')
               artifact = next(a['id'] for a in artifacts if a['name'].startswith('web-preview-'))
           pr = create_candidate(sha, artifact)
-          # PRs created by GITHUB_TOKEN do not trigger another workflow.
+          # Do not depend on target events or approval-pending PR runs from GITHUB_TOKEN.
           # Evaluate here so the initial state is explicitly blocked, not missing.
           gate(pr['number'])
           with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
