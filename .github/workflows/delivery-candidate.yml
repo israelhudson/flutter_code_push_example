@@ -1,0 +1,46 @@
+name: Delivery - criar candidata depois do merge
+on:
+  workflow_run:
+    workflows: [Delivery - preview web]
+    types: [completed]
+    branches: [main]
+permissions:
+  contents: write
+  pull-requests: write
+  actions: read
+  statuses: write
+concurrency:
+  group: delivery-candidate
+  cancel-in-progress: false
+jobs:
+  candidate:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'main'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Criar registro e tag protegida
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}
+          PREVIEW_RUN: ${{ github.event.workflow_run.id }}
+        run: |
+          python3 - <<'PY'
+          import os, sys
+          sys.path.insert(0, 'tools/delivery')
+          from github_delivery import BASE, api, create_candidate, find_preview, pages, gate
+          sha = os.environ['SOURCE_SHA']
+          artifact = find_preview(sha)
+          if not artifact:
+              artifacts = pages(f'{BASE}/actions/runs/{os.environ["PREVIEW_RUN"]}/artifacts', 'artifacts')
+              artifact = next(a['id'] for a in artifacts if a['name'].startswith('web-preview-'))
+          pr = create_candidate(sha, artifact)
+          # PRs created by GITHUB_TOKEN do not trigger another workflow.
+          # Evaluate here so the initial state is explicitly blocked, not missing.
+          gate(pr['number'])
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('\n\n[Revisar a versão](' + pr['html_url'] + ')\n')
+          PY

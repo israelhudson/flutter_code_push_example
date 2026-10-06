@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "flutter_version": "3.44.1",
+  "runner": "ubuntu-24.04",
+  "command": ["flutter", "build", "web", "--release", "--base-href=/"],
+  "dart_defines": {},
+  "retention_days": 30,
+  "network_assets": "Flutter web may fetch engine resources; preview is not an offline or mobile validation"
+}

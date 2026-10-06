@@ -138,3 +138,8 @@ Mais informações:
 - [Documentação do Flutter](https://docs.flutter.dev/)
 - [Instalação do Flutter](https://docs.flutter.dev/get-started/install)
 - [Documentação do Shorebird](https://docs.shorebird.dev/)
+
+## Laboratório de aprovação de versões no GitHub
+
+[Guia da POC: preview web, aprovação 2/2 e publicação dry-run](docs/delivery/README.md).
+A implementação não gera patches Shorebird nem distribui aplicativos.

@@ -1,0 +1,56 @@
+name: Delivery - aprovar versao e publicar laboratorio
+on:
+  pull_request_target:
+    branches: [codex/lab-versions]
+    types: [opened, synchronize, reopened, closed]
+  pull_request_review:
+    types: [submitted, dismissed, edited]
+  workflow_dispatch:
+    inputs:
+      version_pr:
+        description: Número do PR de versão (reavaliar ou recuperar publicação de laboratório)
+        required: true
+        type: number
+permissions:
+  contents: read
+concurrency:
+  group: delivery-version-${{ github.event.pull_request.number || inputs.version_pr }}
+  cancel-in-progress: false
+jobs:
+  approve:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.base.ref == 'codex/lab-versions'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: read
+      statuses: write
+    steps:
+      # Never check out or execute the version PR head with a privileged token.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Verificar as duas identidades e o registro exato
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION_PR: ${{ github.event.pull_request.number || inputs.version_pr }}
+        run: python3 tools/delivery/github_delivery.py gate --pr "$VERSION_PR"
+  publish:
+    needs: approve
+    if: (github.event.action == 'closed' && github.event.pull_request.merged == true) || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      actions: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Publicar somente GitHub pre-release de laboratório
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION_PR: ${{ github.event.pull_request.number || inputs.version_pr }}
+        run: python3 tools/delivery/github_delivery.py publish --pr "$VERSION_PR"

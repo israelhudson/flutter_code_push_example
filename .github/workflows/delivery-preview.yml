@@ -1,0 +1,78 @@
+name: Delivery - preview web
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+permissions:
+  contents: read
+  actions: read
+  pull-requests: read
+concurrency:
+  group: preview-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  policy:
+    name: Política 2 de 2 - testes sintéticos
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - run: python3 -m unittest discover -s tests/delivery -v
+      - run: python3 tools/delivery/demo.py >> "$GITHUB_STEP_SUMMARY"
+  preview:
+    name: Preview web privado - sem deploy
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Reutilizar build equivalente do PR
+        id: reuse
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: python3 tools/delivery/github_delivery.py find-preview --sha "$SOURCE_SHA"
+      - name: Instalar Flutter fixado
+        if: steps.reuse.outputs.artifact == ''
+        run: |
+          VERSION=$(python3 -c 'import json; print(json.load(open("delivery/build-inputs.json"))["flutter_version"])')
+          git clone --depth 1 --branch "$VERSION" https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+      - name: Verificar app existente
+        if: steps.reuse.outputs.artifact == ''
+        run: |
+          flutter pub get --enforce-lockfile
+          flutter analyze
+          flutter test
+      - name: Build web e identidade por conteúdo
+        id: build
+        if: steps.reuse.outputs.artifact == ''
+        run: python3 tools/delivery/preview.py
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        id: artifact
+        if: steps.reuse.outputs.artifact == ''
+        with:
+          name: web-preview-${{ steps.build.outputs.fingerprint }}
+          path: build/delivery-preview/*
+          if-no-files-found: error
+          retention-days: 30
+      - name: Abrir preview
+        env:
+          ARTIFACT_URL: ${{ steps.artifact.outputs.artifact-url }}
+          REUSED_ID: ${{ steps.reuse.outputs.artifact }}
+        run: |
+          python3 - <<'PY'
+          import os
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('# Preview web de laboratório\n\n')
+              if os.environ['REUSED_ID']:
+                  f.write('Build equivalente do PR reutilizado. Artefato: ' + os.environ['REUSED_ID'] + '\n\n')
+              else:
+                  f.write('[Baixar preview privado](' + os.environ['ARTIFACT_URL'] + ')\n\n')
+              f.write('Extraia o download e depois preview.zip. Na pasta extraída, execute `python3 -m http.server 8080` e abra http://localhost:8080.\n\n')
+              f.write('**Sem hospedagem, sem deploy do app, sem patch.** O ZIP expira em 30 dias.\n')
+          PY
