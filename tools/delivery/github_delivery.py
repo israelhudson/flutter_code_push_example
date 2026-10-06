@@ -154,8 +154,11 @@ Não foram enviados pedidos de review, menções notificáveis, convites ou avis
 def create_candidate(sha, artifact_id, demo=False):
     if git('rev-parse', sha) != sha or not re.fullmatch(r'[0-9a-f]{40}', sha):
         raise ValueError('Informe o SHA completo exato.')
-    if not demo and api(f'{BASE}/git/ref/heads/main')['object']['sha'] != sha:
-        raise ValueError('Candidata automática deve corresponder à main atual.')
+    if not demo:
+        main_sha = api(f'{BASE}/git/ref/heads/main')['object']['sha']
+        comparison = api(f'{BASE}/compare/{sha}...{main_sha}')
+        if comparison['status'] not in ('ahead', 'identical'):
+            raise ValueError('O SHA candidato precisa pertencer ao histórico integrado da main.')
     artifact, metadata, _, _ = artifact_data(artifact_id)
     if not preview_usable(metadata, fingerprint(sha), artifact):
         raise ValueError('Preview divergente ou expirado.')

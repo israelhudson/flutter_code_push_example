@@ -24,7 +24,7 @@ def decide(reviews, head_sha, author):
     do not authorize the current record. The candidate manifest is in that head.
     """
     latest = {}
-    for review in sorted(reviews, key=lambda r: r['id']):
+    for review in sorted(reviews, key=lambda r: (r.get('submitted_at') or '', r['id'])):
         login = review['user']['login'].lower()
         if login not in REQUIRED or review['state'] not in (
                 'APPROVED', 'CHANGES_REQUESTED', 'DISMISSED'):

@@ -46,6 +46,11 @@ class ApprovalTests(unittest.TestCase):
     def test_comment_does_not_revoke_and_api_order_does_not_matter(self):
         self.assertEqual(decide([review(state='COMMENTED', n=2), review()], HEAD, 'author')['count'], 1)
 
+    def test_submission_time_wins_over_draft_creation_id(self):
+        old_draft = {**review(n=1, state='CHANGES_REQUESTED'), 'submitted_at': '2026-10-06T12:00:00Z'}
+        earlier_approval = {**review(n=2), 'submitted_at': '2026-10-06T11:00:00Z'}
+        self.assertEqual(decide([old_draft, earlier_approval], HEAD, 'author')['count'], 0)
+
     def test_reapproval_after_changes(self):
         self.assertEqual(decide([review(state='CHANGES_REQUESTED'), review(n=2)], HEAD, 'author')['count'], 1)
 
