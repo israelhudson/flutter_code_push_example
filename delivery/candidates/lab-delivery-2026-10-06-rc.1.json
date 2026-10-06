@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "repository": "israelhudson/flutter_code_push_example",
+  "tag": "lab/delivery/2026-10-06-rc.1",
+  "source_sha": "14a0d02d41f266f43fe4d868307c34d213cbf051",
+  "source_tree": "3ce97b39fa85b7c3d9901f709be54f87a395a5e4",
+  "mobile_base": "1.1.0+2",
+  "patches": {
+    "ios": null,
+    "android": null
+  },
+  "approvers": [
+    "samuelcamilo",
+    "friasvinicius"
+  ],
+  "mode": "demo-before-main-merge",
+  "previous_sha": "5536205441608c887145693a7f00c0777961bf0c",
+  "compare_url": "https://github.com/israelhudson/flutter_code_push_example/compare/5536205441608c887145693a7f00c0777961bf0c...14a0d02d41f266f43fe4d868307c34d213cbf051",
+  "changes": [
+    {
+      "sha": "f6a4ffa40a85b15e3d6eabafbdd5ae9c82156a2f",
+      "subject": "setup inicial"
+    },
+    {
+      "sha": "0c40fa5fdb564dd81956cd64809993f2435374ff",
+      "subject": "Set up Shorebird code push (Android) and update-check UI"
+    },
+    {
+      "sha": "45dc33c5c6a38797eb900662f011062d35c36cf9",
+      "subject": "Document Shorebird setup steps and validate patch flow end-to-end"
+    },
+    {
+      "sha": "c1ed073724311daf61097bc4ee6a81095ba260e9",
+      "subject": "Merge pull request #1 from israelhudson/feature/shorebird-code-push-setup"
+    },
+    {
+      "sha": "8d37d74a5f7a00d3c980744d165e667b3a567416",
+      "subject": "Prompt users to restart when a patch is ready"
+    },
+    {
+      "sha": "c1288f646b8177e5705a8ccbd1b392eb05dd7306",
+      "subject": "Merge branch 'feature/update-prompt-bottom-sheet'"
+    },
+    {
+      "sha": "833cb147a03552b7513741fc8e3161860b4d487a",
+      "subject": "Add GitHub-only release approval laboratory with exact two-person gate"
+    },
+    {
+      "sha": "747224dc42788791787c31239dc805b50898bfd5",
+      "subject": "Verify fixed Flutter revision and test the publication boundary"
+    },
+    {
+      "sha": "14a0d02d41f266f43fe4d868307c34d213cbf051",
+      "subject": "Handle review submission order and concurrent merged candidates"
+    }
+  ],
+  "preview": {
+    "artifact_id": 11447291249,
+    "fingerprint": "fd5fe213ad841501d5743fa8bfe6b59342f0978df61e9176a8ae6daeeb29b6a0",
+    "sha256": "a8c865154fffc01e29e2d36e642f8e1a5e416fa9662294d1f0037a80b2d9498b",
+    "expires_at": "2026-11-05T22:04:06Z",
+    "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37537872345/artifacts/11447291249",
+    "origin": "build do PR reutilizado"
+  }
+}
