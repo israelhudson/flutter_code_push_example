@@ -97,7 +97,7 @@ Manter os workflows existentes e acrescentar uma coordenação remota do LAB:
 
 | Arquivo / componente | Responsabilidade |
 |---|---|
-| `deploy-main.yaml` — coordenação em implementação | Dispatch de comandos do laboratório: iniciar, preparar, aprovar papel, revogar, consultar, publicar dry-run, reconciliar e avançar fila. Um coordenador persiste o estado entre runs. |
+| `deploy-main.yaml` — coordenação | Dispatch de comandos do laboratório: iniciar, preparar, aprovar papel, revogar, consultar, publicar dry-run, reconciliar e avançar fila. Um coordenador persiste o estado entre runs. |
 | `delivery-preview.yml` | Testar, analisar e construir preview web do SHA escolhido; fornecer ZIP e metadata fixos. Reutilizar somente com equivalência de conteúdo e inputs. |
 | `pull-request.yaml` | CI reutilizável chamado pelo job `policy` do preview: executa uma vez os testes Python e exemplos de 0/2, 1/2 e 2/2. As verificações Flutter continuam no job de preview. |
 | `mobile-build.yaml` | Build reutilizável por plataforma, chamado com SHA completo. Gera AAB ou XCArchive sem assinatura e metadata; nenhuma distribuição. |
@@ -224,6 +224,8 @@ duplicar os testes Python nem mudar a busca dos artifacts web.
 - [ ] Aviso Slack usa somente o canal privado autorizado e não interfere no gate.
 - [ ] Fonte, artefatos e recibos indicam laboratório e ausência de distribuição real.
 
-**Próximo passo concreto:** implementar persistência e dispatch de comandos LAB,
-depois executar uma candidata do começo ao fim em runs separados. Somente após
+Persistência e dispatch estão implementados; a instalação do bot e a validação
+real dos runs são registradas separadamente. Consulte [Operação no GitHub](OPERACAO-GITHUB.md).
+
+**Próximo passo concreto:** executar uma candidata do começo ao fim em runs separados. Somente após
 esse ensaio decidir o contrato e a autorização de um adaptador mobile real da POC.
