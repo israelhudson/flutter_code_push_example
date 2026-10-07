@@ -54,12 +54,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: python3 trusted/deploy/pages_preview.py history --site "$RUNNER_TEMP/pages-site"
       - name: Instalar Flutter fixado no snapshot
-        run: |
-          VERSION=$(python3 -c 'import json; print(json.load(open("app/delivery/build-inputs.json"))["flutter_version"])')
-          REVISION=$(python3 -c 'import json; print(json.load(open("app/delivery/build-inputs.json"))["flutter_revision"])')
-          git clone --depth 1 --branch "$VERSION" https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
-          test "$(git -C "$RUNNER_TEMP/flutter" rev-parse HEAD)" = "$REVISION"
-          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+        uses: ./trusted/.github/actions/setup-flutter
+        with:
+          build-inputs: app/delivery/build-inputs.json
       - name: Build real e identidade do preview
         env:
           SOURCE_SHA: ${{ steps.source.outputs.sha }}
