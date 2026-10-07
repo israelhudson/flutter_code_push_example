@@ -1,0 +1,60 @@
+name: Delivery - Ensaio local de papéis (sem publicação)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: delivery-lab-${{ github.run_id }}
+  cancel-in-progress: false
+jobs:
+  scenarios:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Validar política e snapshots com provedores falsos
+        run: python3 -m unittest discover -s tests/delivery -v
+      - name: Percorrer o cenário isolado
+        run: |
+          mkdir -p build/delivery-lab
+          python3 tools/delivery/lab.py demo --folder build/delivery-lab/demo > build/delivery-lab/report.json
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          report = Path('build/delivery-lab/report.json').read_text()
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('# LABORATÓRIO — papéis simulados por Israel\n\n')
+              f.write('Cenário isolado desta execução. Não persiste aprovações entre runs e não atualiza o gate GitHub real.\n\n')
+              f.write('Somente arquivos locais e recibos falsos; nenhuma distribuição.\n\n')
+              f.write('```json\n' + report + '\n```\n')
+          PY
+      - name: Avisar cenário sintético no canal privado (opcional)
+        continue-on-error: true
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ -z "$SLACK_BOT_TOKEN" ]; then
+            echo 'Aviso Slack não enviado: SLACK_BOT_TOKEN ausente.'
+            exit 0
+          fi
+          python3 - <<'PY'
+          import json, os, subprocess, sys
+          with open('build/delivery-lab/report.json') as f:
+              report = json.load(f)
+          subprocess.run([sys.executable, 'tools/delivery/slack_notify.py',
+              '--event', 'lab', '--status', 'Ensaio sintético concluído: 0/2, 1/2, 2/2, RC2 e retomada parcial.',
+              '--candidate', report['candidate_id'], '--source-sha', report['published_source_sha'],
+              '--url', os.environ['RUN_URL'], '--simulation', '--dry-run',
+              '--idempotency-key', 'github-' + os.environ['GITHUB_RUN_ID'] + '-lab',
+              '--outbox', os.environ['RUNNER_TEMP'] + '/delivery-slack.sqlite3', '--send'], check=True)
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: delivery-lab-${{ github.run_id }}
+          path: build/delivery-lab/
+          if-no-files-found: error
+          retention-days: 14

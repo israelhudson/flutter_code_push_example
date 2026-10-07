@@ -1,0 +1,113 @@
+name: Delivery - Publicar agora (GitHub LAB)
+on:
+  pull_request_target:
+    branches: [codex/lab-versions]
+    types: [opened, synchronize, reopened]
+  pull_request_review:
+    types: [submitted, dismissed, edited]
+  workflow_dispatch:
+    inputs:
+      action:
+        description: Reavaliar ou executar o comando final (sempre exige 2/2 real)
+        required: true
+        type: choice
+        default: evaluate
+        options: [evaluate, publish]
+      version_pr:
+        description: Número do PR de versão (reavaliar ou publicar laboratório)
+        required: true
+        type: number
+permissions:
+  contents: read
+concurrency:
+  group: delivery-version-${{ github.event.pull_request.number || inputs.version_pr }}
+  cancel-in-progress: false
+jobs:
+  approve:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.base.ref == 'codex/lab-versions'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: read
+      statuses: write
+    steps:
+      # Never check out or execute the version PR head with a privileged token.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Verificar as duas identidades e o registro exato
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION_PR: ${{ github.event.pull_request.number || inputs.version_pr }}
+        run: |
+          python3 - <<'PY'
+          import os, sys
+          sys.path.insert(0, 'tools/delivery')
+          from github_delivery import gate, inspect
+          number = int(os.environ['VERSION_PR'])
+          allowed = gate(number)
+          pr, record, decision = inspect(number)
+          with open(os.environ['GITHUB_ENV'], 'a') as f:
+              f.write('NOTIFY_CANDIDATE=' + record['tag'] + '\n')
+              f.write('NOTIFY_SHA=' + record['source_sha'] + '\n')
+              f.write('NOTIFY_URL=' + pr['html_url'] + '\n')
+              f.write('NOTIFY_STATUS=' + str(decision['count']) + '/2 aprovações reais; ' + ('comando final disponível, sem publicação automática' if allowed else 'publicação bloqueada') + '.\n')
+          sys.exit(0 if allowed else 1)
+          PY
+      - name: Avisar estado de aprovação no canal privado (opcional)
+        if: always() && !cancelled()
+        continue-on-error: true
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        run: |
+          if [ -z "$SLACK_BOT_TOKEN" ] || [ -z "${NOTIFY_CANDIDATE:-}" ]; then
+            echo 'Aviso Slack não enviado: token ausente ou registro não validado.'
+            exit 0
+          fi
+          python3 tools/delivery/slack_notify.py --event approval --status "$NOTIFY_STATUS" --candidate "$NOTIFY_CANDIDATE" --source-sha "$NOTIFY_SHA" --url "$NOTIFY_URL" --dry-run --idempotency-key "github-${GITHUB_RUN_ID}-approval" --outbox "$RUNNER_TEMP/delivery-slack.sqlite3" --send
+  publish:
+    needs: approve
+    if: github.event_name == 'workflow_dispatch' && inputs.action == 'publish'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Publicar somente GitHub pre-release de laboratório
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION_PR: ${{ inputs.version_pr }}
+        run: python3 tools/delivery/github_delivery.py publish --pr "$VERSION_PR"
+      - name: Avisar resultado no canal privado de ensaio (opcional)
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          VERSION_PR: ${{ inputs.version_pr }}
+        run: |
+          if [ -z "$SLACK_BOT_TOKEN" ]; then
+            echo 'Aviso Slack não enviado: SLACK_BOT_TOKEN ausente.'
+            exit 0
+          fi
+          python3 - <<'PY'
+          import os, subprocess, sys
+          from urllib.parse import quote
+          sys.path.insert(0, 'tools/delivery')
+          from github_delivery import URL, inspect
+          _, record, _ = inspect(int(os.environ['VERSION_PR']))
+          subprocess.run([sys.executable, 'tools/delivery/slack_notify.py',
+              '--event', 'publication', '--status', 'GitHub pre-release LAB publicada; nenhuma distribuição do app.',
+              '--candidate', record['tag'], '--source-sha', record['source_sha'],
+              '--url', URL + '/releases/tag/' + quote(record['tag'], safe=''), '--dry-run',
+              '--idempotency-key', 'github-' + os.environ['GITHUB_RUN_ID'] + '-publication',
+              '--outbox', os.environ['RUNNER_TEMP'] + '/delivery-slack.sqlite3', '--send'], check=True)
+          PY

@@ -2,6 +2,20 @@
 
 Prática do uso do code push do Flutter com ShoreBird.
 
+## Ensaiar a esteira agora
+
+```bash
+python3 tools/delivery/lab.py demo --folder build/delivery-lab/meu-primeiro-ensaio
+```
+
+Israel representa os papéis de desenvolvedor, Ian/Yan, Samuel e Vinícius.
+O cenário local percorre 0/2 → 1/2 → 2/2, comando final separado, snapshots e
+recuperação de falha parcial, com recibos falsos e sem distribuição.
+
+[Guia passo a passo do laboratório](docs/delivery/LABORATORIO.md) ·
+[Plano e critérios de aceite](docs/plano-evolucao-esteira.md) ·
+[GitHub nativo e ativação futura](docs/delivery/README.md).
+
 ## Setup
 
 ### Pré-requisitos
@@ -82,6 +96,10 @@ lib/
 Este projeto é um exemplo de atualização de código com Shorebird (code push para Android; iOS
 também é suportado pelo Shorebird, mas requer dispositivo físico — veja a nota abaixo).
 
+Os comandos abaixo são o estudo manual de Shorebird. A esteira implementada não
+os executa. Um ensaio real exige confirmar app, release-base, destino e autorização
+antes de gerar/publicar patches; as duas aprovações liberam um comando final separado.
+
 #### 1. Instalar a CLI e autenticar
 
 ```bash
@@ -115,8 +133,10 @@ Depois de alterar código Dart, publique a mudança como patch para uma release 
 shorebird patch android --release-version=<versão da release, ex: 1.0.0+1>
 ```
 
-O app verifica por patches novos ao abrir e aplica automaticamente no próximo restart — sem
-passar pela loja.
+O app verifica e baixa patches pelo `UpdateService` ao abrir/retomar e também
+pelo botão manual. O download do engine está configurado com `auto_update: false`;
+o código do app controla a operação e informa quando é preciso fechar e reabrir
+o aplicativo. O patch baixado passa a valer no próximo **cold start**.
 
 #### 5. Testar
 
@@ -138,3 +158,12 @@ Mais informações:
 - [Documentação do Flutter](https://docs.flutter.dev/)
 - [Instalação do Flutter](https://docs.flutter.dev/get-started/install)
 - [Documentação do Shorebird](https://docs.shorebird.dev/)
+
+## Laboratório de aprovação de versões no GitHub
+
+[Guia da POC: preview web, aprovação 2/2 e publicação dry-run](docs/delivery/README.md).
+Preparar candidata é manual no Actions; PRs e merges não criam RCs por conta própria.
+Reviews e merge do registro não publicam. Publicar agora é um workflow separado,
+que exige 2/2 real e pode criar somente uma GitHub pre-release de laboratório.
+A sessão local usa SQLite; a fila local e os papéis simulados não viram aprovações
+do GitHub. A implementação não gera patches Shorebird nem distribui aplicativos.
