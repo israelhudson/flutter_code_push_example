@@ -2,6 +2,7 @@
 import importlib.util
 import json
 from pathlib import Path
+import shutil
 import subprocess
 import tempfile
 import unittest
@@ -28,7 +29,7 @@ class PagesPreviewTests(unittest.TestCase):
         self.site = self.folder / 'site'
         self.run = subprocess.run
 
-    def compile(self, sha=None):
+    def compile(self, sha=None, extra_file=None):
         def fake_run(args, **kwargs):
             if args[0] != 'flutter':
                 return self.run(args, **kwargs)
@@ -38,6 +39,10 @@ class PagesPreviewTests(unittest.TestCase):
                 output.mkdir(parents=True, exist_ok=True)
                 (output / 'index.html').write_text('<html>synthetic compiled fixture</html>')
                 (output / 'main.dart.js').write_text('compiled fixture ' + (sha or self.sha))
+                (output / '.last_build_id').write_text('flutter-build-control-id')
+                if extra_file:
+                    (output / extra_file).parent.mkdir(parents=True, exist_ok=True)
+                    (output / extra_file).write_text('not a public asset')
                 self.assertEqual(args[-1], '--base-href=' + pages.PROJECT_BASE + 'snapshots/' + (sha or self.sha) + '/app/')
             return subprocess.CompletedProcess(args, 0)
         version = {'frameworkVersion': self.inputs['flutter_version'], 'frameworkRevision': self.inputs['flutter_revision']}
@@ -52,6 +57,22 @@ class PagesPreviewTests(unittest.TestCase):
         self.assertNotEqual(metadata['pages_build_inputs']['command'], metadata['source_build_inputs']['command'])
         self.assertIn(self.sha, (self.site / 'snapshots' / self.sha / 'index.html').read_text())
         self.assertEqual(pages.validate_site(self.site), [self.sha])
+        snapshot = self.site / 'snapshots' / self.sha
+        self.assertEqual(metadata['snapshot_manifest_sha256'], pages.digest(pages.json_file(snapshot / 'files.json')))
+        self.assertNotIn('snapshot_manifest_sha256', pages.json_file(snapshot / 'metadata.json'))
+
+    def test_flutter_build_marker_is_not_published(self):
+        self.compile()
+        self.assertTrue((self.repo.path / 'build/web/.last_build_id').is_file())
+        self.assertFalse((self.site / 'snapshots' / self.sha / 'app/.last_build_id').exists())
+        self.assertNotIn('app/.last_build_id', pages.json_file(self.site / 'snapshots' / self.sha / 'files.json'))
+
+    def test_other_hidden_files_are_still_rejected(self):
+        for name in ('.env', '.unknown-marker', 'assets/.last_build_id'):
+            with self.subTest(name=name), self.assertRaisesRegex(ValueError, 'oculto'):
+                self.compile(extra_file=name)
+            shutil.rmtree(self.site)
+            (self.repo.path / 'build/web' / name).unlink()
 
     def test_existing_snapshot_reuses_bytes_without_rebuilding(self):
         original = self.compile()
@@ -65,7 +86,8 @@ class PagesPreviewTests(unittest.TestCase):
         self.repo.git('checkout', '--detach', newer)
         self.compile(newer)
         self.assertEqual(pages.hashes(self.site / 'snapshots' / self.sha), old_hash)
-        self.assertEqual(pages.json_file(self.site / 'snapshots' / self.sha / 'metadata.json'), original)
+        self.assertEqual(pages.json_file(self.site / 'snapshots' / self.sha / 'metadata.json'),
+                         {key: value for key, value in original.items() if key != 'snapshot_manifest_sha256'})
         self.assertEqual(len(pages.validate_site(self.site)), 2)
         self.assertIn(newer, (self.site / 'index.html').read_text())
 

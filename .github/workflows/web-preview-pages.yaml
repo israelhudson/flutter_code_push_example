@@ -22,6 +22,8 @@ jobs:
       contents: write
     outputs:
       source_sha: ${{ steps.source.outputs.sha }}
+      web_content_sha256: ${{ steps.identity.outputs.web_content_sha256 }}
+      snapshot_manifest_sha256: ${{ steps.identity.outputs.snapshot_manifest_sha256 }}
     steps:
       - name: Checkout das ferramentas confiáveis
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -72,16 +74,21 @@ jobs:
         with:
           path: ${{ runner.temp }}/pages-public
           retention-days: 1
-      - name: Registrar URL e SHA
+      - name: Registrar identidade preparada para deploy
+        id: identity
         env:
           SOURCE_SHA: ${{ steps.source.outputs.sha }}
         run: |
           python3 - <<'PY'
-          import json,os
+          import json,os,re
           metadata=json.load(open(os.environ['RUNNER_TEMP']+'/pages-metadata.json'))
-          url='https://israelhudson.github.io/flutter_code_push_example/snapshots/'+os.environ['SOURCE_SHA']+'/'
+          if metadata['source_sha'] != os.environ['SOURCE_SHA'] or any(not re.fullmatch(r'[0-9a-f]{64}',metadata[key]) for key in ('web_content_sha256','snapshot_manifest_sha256')):
+              raise ValueError('Identidade produzida pelo build inválida.')
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write('web_content_sha256='+metadata['web_content_sha256']+'\n')
+              f.write('snapshot_manifest_sha256='+metadata['snapshot_manifest_sha256']+'\n')
           with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
-              f.write('# Preview Flutter web\n\n['+metadata['version']+' · snapshot fixado]('+url+')\n\n')
+              f.write('# Preview Flutter web preparado\n\nAguardando deploy e confirmação HTTP no próximo job.\n\n')
               f.write('SHA: `'+metadata['source_sha']+'`\n\nHash web: `'+metadata['web_content_sha256']+'`\n\n')
               f.write('Base href Pages diferente do ZIP do CI; mesmo código e toolchain, hashes próprios. Sem distribuição mobile.\n')
           PY
@@ -90,12 +97,41 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
+      contents: read
       pages: write
       id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.confirmed.outputs.snapshot_url }}
     steps:
+      - name: Checkout da verificação confiável
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          path: trusted
+          persist-credentials: false
       - name: Deploy do artefato estático
         id: deployment
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4 verified 2026-10-07
+      - name: Confirmar snapshot e arquivos publicados por HTTP
+        env:
+          PAGE_SOURCE_SHA: ${{ needs.build.outputs.source_sha }}
+          PAGE_EXPECTED_WEB_HASH: ${{ needs.build.outputs.web_content_sha256 }}
+          PAGE_EXPECTED_MANIFEST_HASH: ${{ needs.build.outputs.snapshot_manifest_sha256 }}
+        run: python3 trusted/deploy/pages_smoke.py --source-sha "$PAGE_SOURCE_SHA" --expected-web-content-sha256 "$PAGE_EXPECTED_WEB_HASH" --expected-snapshot-manifest-sha256 "$PAGE_EXPECTED_MANIFEST_HASH" --output "$RUNNER_TEMP/pages-smoke.json"
+      - name: Mostrar link confirmado
+        id: confirmed
+        run: |
+          python3 - <<'PY'
+          import json,os
+          report=json.load(open(os.environ['RUNNER_TEMP']+'/pages-smoke.json'))
+          if report['success'] is not True:
+              raise ValueError('O snapshot não foi confirmado por HTTP.')
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write('snapshot_url='+report['snapshot_url']+'\n')
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
+              f.write('# Preview Flutter web confirmado\n\n[Abrir snapshot publicado]('+report['snapshot_url']+')\n\n')
+              f.write('SHA: `'+report['source_sha']+'`\n\nHash web: `'+report['web_content_sha256']+'`\n\n')
+              f.write('Hash do manifesto completo: `'+report['snapshot_manifest_sha256']+'`\n\n')
+              f.write('Metadata, mapa de arquivos, entrada, base href, bootstrap e main.dart.js conferidos por HTTP. Interação no navegador e Android/iOS são validações separadas.\n')
+          PY
