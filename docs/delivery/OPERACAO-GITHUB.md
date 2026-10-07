@@ -3,6 +3,8 @@
 Esta versão é um laboratório de um operador. O GitHub autentica Israel; Ian,
 Samuel e Vinícius são papéis **simulados por Israel**. Dois papéis aprovados não
 representam duas pessoas reais. O fluxo nativo de reviews reais continua separado.
+As execuções manuais são reservadas a Israel; o agente prepara mudanças,
+revisões e evidências, sem disparar esses controles em seu lugar.
 
 ## Preview que abre no navegador
 
@@ -93,31 +95,44 @@ Se houver interrupção após iniciar uma publicação, confira os eventos,
 checkpoints e a release/draft existente antes de tentar novamente. Não apague,
 sobrescreva ou refaça os assets congelados para esconder uma tentativa incerta.
 
-### Próxima execução reservada ao proprietário
+### Entrega-0100: registro concluído pelo proprietário
 
 Em 07/10/2026, o [plano 37702713050](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37702713050)
 foi conferido e a tag `entrega-0100-rc.1` foi criada no SHA aprovado. A primeira
 [tentativa de publicação 37702829375](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37702829375)
-criou o draft `406248758`, mas falhou no primeiro upload; a consulta posterior
-confirmou **draft com zero assets, sem publicação final**.
+criou o draft `406248758`, mas falhou no primeiro upload; a consulta daquele
+momento confirmou draft com zero assets. Esse resultado permanece no histórico.
 
-Israel reservou as execuções manuais para si. Depois de integrar a correção,
-abra [o workflow](https://github.com/israelhudson/flutter_code_push_example/actions/workflows/github-lab-release.yaml)
-e faça uma **nova execução em `main`**, com:
+Após a correção integrada no [PR8](https://github.com/israelhudson/flutter_code_push_example/pull/8)
+e o [CI 37703315084](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37703315084)
+com sucesso, Israel executou manualmente o [publish 37704202085](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37704202085).
+A mesma Release `406248758` está publicada como pre-release desde
+`2026-10-07T23:47:41Z`, com `draft=false` e quatro assets confirmados.
 
 | Campo | Valor |
 |---|---|
-| action | `publish` |
-| candidate | `entrega-0100-rc.1` |
+| Versão | `1.1.0+2` |
+| Candidata/tag | `entrega-0100-rc.1` |
+| Fonte congelada | `08ce07d615905e33f0572f9264808683cab53349` |
+| Ferramentas da retomada | `0817b4fbf84204b24a20858925fa414a1dcac54a` |
 | manifest_hash | `28a15ae28f273bd13742dfbec2191d907769db53de6d5b3550a35070823acaeb` |
 
-O comando confere a tag já existente e retoma o mesmo draft. Não é necessário
-criar outra tag ou apagar o draft. **Re-run jobs do run antigo usa o código
-antigo**; use `Run workflow` em `main` para executar a correção.
+Abra a [GitHub pre-release confirmada](https://github.com/israelhudson/flutter_code_push_example/releases/tag/entrega-0100-rc.1)
+para consultar `candidate.json`, `receipt.json`, `preview.zip` e `checksums.sha256`.
+Os arquivos foram baixados e seus tamanhos, hashes e conteúdo conferidos contra
+o plano e os artifacts congelados. O recibo declara **2 papéis simulados,
+0 reviews reais e `distribution_performed=false`**. Não representa Shorebird,
+loja, TestFlight ou uma nova validação mobile.
 
-A correção será validada por testes locais e CI. A confirmação de upload e
-publicação reais fica pendente desta nova execução pelo proprietário. Os
-[logs e lições](LICOES-APRENDIDAS.md) distinguem esses resultados.
+Não há novo publish pendente para esta RC. Os [logs e lições](LICOES-APRENDIDAS.md)
+preservam falha, correção e retomada manual com sucesso. As execuções manuais
+seguintes continuam sendo de Israel.
+
+Para uma futura RC, quando houver outra mudança, siga os controles gerais acima:
+revise a fonte nova, prepare uma nova candidata e obtenha novos avais. Não
+reinicialize a produção, reaproveite aprovações antigas ou mova a tag publicada.
+Esta é a referência do processo futuro, não uma instrução para publicar novamente
+a entrega já concluída.
 
 ## Falha e recuperação no publicador fictício
 
