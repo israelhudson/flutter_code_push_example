@@ -1,0 +1,102 @@
+name: Delivery - Registrar release LAB no GitHub
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: Primeiro revisar plan; depois publicar explicitamente
+        type: choice
+        required: true
+        default: plan
+        options: [plan, publish]
+      candidate:
+        description: Candidata congelada do laboratório (exemplo entrega-0100-rc.1)
+        type: string
+        required: true
+      manifest_hash:
+        description: SHA-256 completo do manifesto aprovado no laboratório
+        type: string
+        required: true
+permissions:
+  contents: read
+concurrency:
+  group: delivery-laboratory-state
+  cancel-in-progress: false
+jobs:
+  release:
+    name: Registro GitHub LAB - ${{ inputs.action }}
+    if: github.ref == 'refs/heads/main' && github.actor == 'israelhudson' && github.triggering_actor == 'israelhudson'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - name: Checkout das ferramentas no commit confiável
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Validar o proprietário e operar a candidata congelada
+        id: command
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_ACTION: ${{ inputs.action }}
+          LAB_CANDIDATE: ${{ inputs.candidate }}
+          LAB_MANIFEST_HASH: ${{ inputs.manifest_hash }}
+        run: |
+          python3 tools/delivery/github_lab_release.py --action "$RELEASE_ACTION" --candidate "$LAB_CANDIDATE" --manifest-hash "$LAB_MANIFEST_HASH" --output build/github-lab-release
+      - name: Mostrar plano ou publicação confirmada
+        if: always() && !cancelled()
+        env:
+          RELEASE_ACTION: ${{ inputs.action }}
+          HELPER_OUTCOME: ${{ steps.command.outcome }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          root = Path('build/github-lab-release')
+          plan_path, result_path = root / 'plan.json', root / 'result.json'
+          if not plan_path.is_file():
+              with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+                  f.write('# GitHub release LAB bloqueada\n\nPlano não produzido. Consulte a validação e os eventos preservados no artifact.\n')
+              raise SystemExit(0)
+          plan = json.loads(plan_path.read_text())
+          result = json.loads(result_path.read_text()) if result_path.is_file() else {}
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('# GitHub release de laboratório\n\n')
+              f.write('Proprietário autenticado pelo GitHub; os papéis Samuel/Vinícius são simulados.\n\n')
+              f.write('Candidata: `' + plan['candidate_id'] + '`\n\n')
+              f.write('| Campo | Valor |\n|---|---|\n')
+              for label, key in [('Versão', 'version'), ('Tag', 'tag'), ('Fonte congelada', 'source_sha'), ('Hash do manifesto', 'manifest_hash')]:
+                  f.write('| ' + label + ' | `' + plan[key] + '` |\n')
+              f.write('\n')
+              f.write('[Preview desse SHA](' + plan['preview']['pages_url'] + ')\n\n')
+              if result.get('published') is True:
+                  f.write('[Abrir GitHub pre-release confirmada](' + result['release_url'] + ')\n\n')
+              elif os.environ['RELEASE_ACTION'] == 'plan' and os.environ['HELPER_OUTCOME'] == 'success':
+                  f.write('Confira o plano e o **tag-spec.json** no artifact. Se a tag ainda estiver ausente, o proprietário cria a tag anotada com **SHA e mensagem exatos** desse arquivo, usando sua autenticação existente. O GITHUB_TOKEN desta Action não cria essa tag.\n\n')
+                  f.write('```bash\npython3 tools/delivery/create_lab_tag.py --spec CAMINHO/tag-spec.json --output build/github-lab-tag\n```\n\n')
+                  f.write('Depois, execute **Run workflow** novamente na **main**, com **action=publish**, a mesma candidata e o mesmo hash. A tag será revalidada antes da publicação.\n\n')
+              else:
+                  f.write('Resultado sem publicação confirmada. Confira result.json, release-events.jsonl, checkpoint.json e eventual draft antes de tentar novamente.\n\n')
+              f.write('Registro LAB com ausência explícita de distribuição: sem Shorebird, loja ou TestFlight.\n')
+          PY
+      - name: Preservar plano, eventos e checkpoints da release
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: github-lab-release-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            build/github-lab-release/plan.json
+            build/github-lab-release/tag-spec.json
+            build/github-lab-release/result.json
+            build/github-lab-release/release-events.jsonl
+            build/github-lab-release/checkpoint.json
+            build/github-lab-release/candidate.json
+            build/github-lab-release/receipt.json
+            build/github-lab-release/preview.zip
+            build/github-lab-release/checksums.sha256
+          if-no-files-found: warn
+          retention-days: 90
+          overwrite: false
