@@ -1,5 +1,9 @@
 # Aprovar uma versão no GitHub
 
+**Para testar sozinho agora, abra o [laboratório local](LABORATORIO.md).**
+Ele já permite operar papéis simulados e estados persistentes. Este guia explica
+o caminho GitHub com reviews reais; a contagem local não autoriza esse caminho.
+
 ## Laboratório: nenhuma distribuição real
 
 Esta POC adiciona um fluxo de aprovação ao projeto pessoal. Não contém comandos
@@ -7,21 +11,25 @@ Shorebird, credenciais de lojas, TestFlight, Play, tracks ou deploy do aplicativ
 O resultado final permitido é uma **GitHub pre-release de laboratório**, identificada
 como dry-run, com um recibo que diz `distribution_performed: false`.
 
-## As três telas
+## O caminho GitHub nativo
 
 1. **PR de código:** revisão técnica (Ian no plano do Amulets). Actions gera o
    preview Flutter web, que pode ser baixado e executado localmente.
-2. **PR de versão:** changelog, link fixo do preview, tag RC, SHA, base mobile e
+2. **Actions → Preparar candidata:** Israel escolhe o lote integrado e informa
+   SHA completo, artifact ID do preview, entrega e SHA-base da última publicação.
+   Nenhum merge ou preview cria RC automaticamente.
+3. **PR de versão:** changelog, link fixo do preview, tag RC, SHA, base mobile e
    tabela dos responsáveis. Samuel e Vinicius aprovam esse PR, depois do merge do
    código. Ele adiciona somente um JSON à branch `codex/lab-versions`.
-3. **GitHub Releases:** depois de 2/2 reviews válidos e do merge do PR de versão,
-   a automação revalida tudo e publica a pre-release de laboratório.
+4. **Actions → Publicar agora:** depois de 2/2 reviews válidos e do merge do PR
+   de versão, Israel seleciona `action=publish`. A automação revalida tudo e cria
+   somente a pre-release LAB. Aprovação e merge não executam esse comando.
 
 **A tela e os botões de review/merge são nativos. A política dos dois nomes,
 criação da candidata, reuso do preview e publicação são automações deste projeto.**
-O botão nativo chama-se **Merge pull request**, não “Publicar”. Não há aplicativo
-HTML embutido nas release notes. A UX exata com “Publicar” habilitado dinamicamente
-exigiria uma interface externa.
+O botão de integração chama-se **Merge pull request**. O comando final usa
+**Run workflow** no Actions. Esse botão pode estar visível enquanto a regra
+interna mantém a operação bloqueada. Não há botão customizado em release notes.
 
 Use zoom de 125% ou 150% no navegador. Os registros usam títulos grandes, tabela
 curta e textos de estado por extenso, sem depender só de cor. A POC não altera o
@@ -47,18 +55,24 @@ Fontes verificadas: [Environments](https://docs.github.com/en/actions/how-tos/de
 
 ## Identidade que os responsáveis aprovam
 
-- Tag: `lab/delivery/AAAA-MM-DD-rc.N`, sequencial no fuso de Fortaleza.
+- Nova tag neutra: `entrega-0042-rc.N`; a entrega é informada no gatilho manual.
+- Primeira RC parte de SHA integrado na main; correções posteriores podem
+  descender de `release/entrega-0042`, preservando features posteriores da main fora.
 - Tag anotada aponta ao SHA exato e guarda SHA-256 do manifesto completo.
-- Ruleset impede alterar/excluir tags desse namespace, sem bypass configurado.
+- O criador exige ruleset ativo que impeça alterar/excluir as novas RCs, sem bypass.
+  O existente cobre `lab/delivery/**`; não cobre os novos nomes automaticamente.
+  O bootstrap revisável prepara a configuração, sem executá-la neste ensaio.
 - O manifesto fixa changelog, versão base, preview, expiração e seus hashes.
 - Reviews precisam ser dos dois nomes fixos, no **HEAD exato do PR de versão**.
   Uma review antiga, revogada, duplicada, de terceiro ou do próprio autor não vale.
 - Base mobile vem do `pubspec.yaml`; não prova que essa base existe no Shorebird.
 - Patch iOS e Android ficam `null` / **a gerar**. Nenhum número é reservado.
 
-O changelog reúne todos os commits desde a candidata ancestral anterior, mais o
-link de comparação completa. Na primeira candidata, parte do commit inicial do
-repositório. Não tenta inventar uma descrição de produto a partir do diff.
+O changelog usa `previous_sha` explícito da última entrega efetivamente publicada
+ou da base inicial escolhida. A última RC não é baseline de compatibilidade.
+O criador exige base ancestral do snapshot candidato. O mantenedor precisa
+confirmar a evidência real dessa base: informar um SHA não comprova publicação.
+Não tenta inventar uma descrição de produto a partir do diff.
 
 O estado da tabela no corpo do PR começa em 0/2; o **status obrigatório e o summary
 da execução mais recente** são a fonte atualizada das aprovações. O GitHub também
@@ -89,14 +103,17 @@ e ao head do PR realmente integrado. O hash do ZIP é conferido novamente.
 Retenção: 30 dias. Expirado, removido ou divergente: não reutilizar e não publicar.
 Antes de aprovar, a automação pode reconstruir; depois de fixar uma candidata,
 **crie outra candidata e obtenha novas aprovações**, sem trocar o ZIP aprovado.
-Para isso execute novamente o workflow de preview na main e o criador de candidata;
+Para isso execute novamente o workflow de preview na referência escolhida e o gatilho manual Preparar candidata;
 um novo artifact ID gera nova RC, mesmo se o SHA de código for igual.
 
-## Experimentar agora, antes de integrar a implementação
+## Evidência histórica e experiência atual
 
-O PR da implementação executa os testes e produz o build web. Um segundo PR,
-separado, registra uma candidata **demo-before-main-merge**. Isso é explicitamente
-uma demonstração antecipada, não prova de um merge que não aconteceu.
+O PR #2 executou testes e produziu um build web em 06/10/2026. O PR #3 registrou
+uma candidata **demo-before-main-merge**, demonstração antecipada em
+`lab/delivery/2026-10-06-rc.1`. Esses registros antigos permanecem como evidência.
+Na consulta de 07/10, ambos estavam abertos e a versão continuava em 0/2 real.
+Há uma pre-release `0.0.1+1` naquela tag, sem assets/recibo da automação; sua
+existência não comprova autorização 2/2 nem execução deste publicador.
 
 A proteção de 2 reviews e o status 0/2 são reais. Os cenários 1/2 e 2/2 no summary
 são **fixtures de testes**; não aparecem como reviews reais e não publicam nada.
@@ -104,36 +121,57 @@ Sem acesso dos dois responsáveis, não é possível exercitar duas identidades 
 
 ```bash
 python3 -m unittest discover -s tests/delivery -v
-python3 tools/delivery/demo.py
+python3 tools/delivery/lab.py demo --folder build/delivery-lab/meu-ensaio
 python3 tools/delivery/github_delivery.py gate --pr NUMERO_DO_PR_DE_VERSAO
 # O gate retorna exit 1 em 0/2: bloqueio esperado.
 ```
 
-## Ativar a automação completa posteriormente
+## Ativar o registro GitHub posteriormente
 
 A implementação está em PR; o agente **não faz merge na main**.
 
 1. Revisar e integrar o PR de implementação na `main` por decisão do proprietário.
-2. A branch `codex/lab-versions` e o ruleset RC precisam existir/protegidos. O
-   bootstrap revisável está em `tools/delivery/configure_lab.py --seed SHA`.
+2. A branch `codex/lab-versions` e os rulesets RC precisam existir/protegidos.
+   Revisar também o namespace neutro e a branch release. O bootstrap revisável
+   está em `tools/delivery/configure_lab.py --seed SHA`;
+   sem proteção neutra a criação bloqueia antes de escrever uma nova candidata.
 3. Em Settings → Actions → General, a criação automática de PRs com `GITHUB_TOKEN`
    depende de **Allow GitHub Actions to create and approve pull requests**.
    Essa opção não foi habilitada pela POC. Alternativa: o mantenedor executar o
    criador pela CLI com sua autenticação existente. Não é preciso criar um PAT.
 4. Samuel e Vinicius precisariam ter acesso adequado e aprovar de verdade.
    Convites, menções e review requests exigem instrução adicional; não são enviados.
-5. Depois dessas condições, merge em main → preview/reuso → tag + PR de versão →
-   2/2 reviews → merge do registro → GitHub pre-release de laboratório.
+5. Depois dessas condições: PRs revisados integram main → preview/reuso →
+   **Preparar candidata manual** → tag + PR de versão → 2/2 reviews reais →
+   merge do registro → **Publicar agora manual** → GitHub pre-release LAB.
 
-`workflow_run`, `pull_request_target` e o botão Run workflow dependem dos workflows
+`pull_request_target` e o botão Run workflow dependem dos workflows
 na branch padrão. Antes do merge da implementação, o gate pode ser executado pela
 CLI. Não há loop de polling, Slack nem token extra.
 
 O workflow de candidata roda o gate inicial explicitamente: eventos de `pull_request_target` causados pelo `GITHUB_TOKEN` não iniciam outros
 workflows automaticamente. Pela documentação atual, eventos `pull_request` de
 abertura/atualização podem criar runs que exigem **Approve workflows to run**. Reviews humanas
-subsequentes disparam o gate. O dispatch permite reavaliar a expiração/recuperação;
-o botão Run workflow existe sempre, mas a operação falha sem 2/2 e PR integrado.
+subsequentes disparam somente o gate. O dispatch com `action=evaluate` reavalia;
+`action=publish` solicita o comando final. A publicação falha sem 2/2 real e PR
+integrado. O evento `closed` deixou de executar publicação.
+
+## Persistência e avisos Slack
+
+A escolha é GitHub nativo para aprovar e publicar; Slack recebe apenas avisos e
+links no canal privado `app-deploy-test-isr` (`C0C8DUJB52L`). Os avisos opcionais
+dependem de `SLACK_BOT_TOKEN` configurado para a automação; sem esse segredo os
+workflows seguem sem enviar mensagens. O publicador mobile não existe nesta POC.
+
+O registro GitHub preserva manifestos e reviews, mas os workflows manuais não
+implementam a fila SQLite, o seed de produção e a reconciliação por destino
+entre runs. `concurrency` serializa jobs; não substitui a fila de negócio.
+Esse comportamento está funcional na CLI local. Antes de torná-lo remoto, definir
+persistência confiável e a recuperação do estado, sem transformar fixtures em reviews.
+
+O outbox de avisos guarda IDs e estados dentro da execução. Runner efêmero não
+garante deduplicação entre runs; repetição de aviso não é autorização de publicação.
+Uma falha ao enviar aviso não deve fazer repetir o publicador.
 
 ## Limites de confiança e recuperação
 

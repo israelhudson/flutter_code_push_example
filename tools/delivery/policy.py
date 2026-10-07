@@ -25,6 +25,12 @@ def decide(reviews, head_sha, author):
     """
     latest = {}
     for review in sorted(reviews, key=lambda r: (r.get('submitted_at') or '', r['id'])):
+        # A lab role event must never become a live GitHub identity approval,
+        # even if its payload contains one of the required usernames.
+        if (review.get('simulation') or review.get('simulated')
+                or review.get('is_simulated') or review.get('simulated_role')
+                or review.get('mode') in ('lab', 'laboratory', 'simulation', 'simulated')):
+            continue
         login = review['user']['login'].lower()
         if login not in REQUIRED or review['state'] not in (
                 'APPROVED', 'CHANGES_REQUESTED', 'DISMISSED'):

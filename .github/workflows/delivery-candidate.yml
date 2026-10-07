@@ -1,9 +1,23 @@
-name: Delivery - criar candidata depois do merge
+name: Delivery - Preparar candidata
 on:
-  workflow_run:
-    workflows: [Delivery - preview web]
-    types: [completed]
-    branches: [main]
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: SHA completo (primeira RC integrada na main; correção descendente da release)
+        required: true
+        type: string
+      preview_artifact:
+        description: ID fixo de um preview web válido e equivalente ao snapshot
+        required: true
+        type: number
+      delivery_id:
+        description: Identificador neutro da entrega (exemplo entrega-0042)
+        required: true
+        type: string
+      previous_sha:
+        description: SHA completo da última entrega confirmada ou base inicial explícita
+        required: true
+        type: string
 permissions:
   contents: write
   pull-requests: write
@@ -14,33 +28,58 @@ concurrency:
   cancel-in-progress: false
 jobs:
   candidate:
-    if: github.event.workflow_run.conclusion == 'success' && (github.event.workflow_run.event == 'push' || github.event.workflow_run.event == 'workflow_dispatch') && github.event.workflow_run.head_branch == 'main'
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
+      # Execute trusted implementation code from the default branch, never code
+      # supplied by a candidate or a privileged pull_request_target checkout.
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           ref: main
           fetch-depth: 0
           persist-credentials: false
-      - name: Criar registro e tag protegida
+      - name: Preparar registro com SHA e preview fixados
         env:
           GH_TOKEN: ${{ github.token }}
-          SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}
-          PREVIEW_RUN: ${{ github.event.workflow_run.id }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          PREVIEW_ARTIFACT: ${{ inputs.preview_artifact }}
+          DELIVERY_ID: ${{ inputs.delivery_id }}
+          PREVIOUS_SHA: ${{ inputs.previous_sha }}
         run: |
           python3 - <<'PY'
-          import os, sys
+          import os, re, sys
           sys.path.insert(0, 'tools/delivery')
-          from github_delivery import BASE, api, create_candidate, find_preview, pages, gate
+          from github_delivery import create_candidate, gate, inspect
+          from preview import git
           sha = os.environ['SOURCE_SHA']
-          artifact = find_preview(sha)
-          if not artifact:
-              artifacts = pages(f'{BASE}/actions/runs/{os.environ["PREVIEW_RUN"]}/artifacts', 'artifacts')
-              artifact = next(a['id'] for a in artifacts if a['name'].startswith('web-preview-'))
-          pr = create_candidate(sha, artifact)
-          # Do not depend on target events or approval-pending PR runs from GITHUB_TOKEN.
-          # Evaluate here so the initial state is explicitly blocked, not missing.
-          gate(pr['number'])
+          previous = os.environ['PREVIOUS_SHA']
+          for value in (sha, previous):
+              if not re.fullmatch(r'[0-9a-f]{40}', value) or git('rev-parse', value + '^{commit}') != value:
+                  raise ValueError('Informe um SHA completo presente no repositório.')
+          artifact = int(os.environ['PREVIEW_ARTIFACT'])
+          if artifact <= 0:
+              raise ValueError('Informe um ID fixo de preview; latest não é permitido.')
+          pr = create_candidate(sha, artifact, delivery_id=os.environ['DELIVERY_ID'], previous_sha=previous)
+          # False at 0/2 is expected: preparing a record never authorizes publication.
+          allowed = gate(pr['number'])
+          _, record, decision = inspect(pr['number'])
+          with open(os.environ['GITHUB_ENV'], 'a') as f:
+              f.write('NOTIFY_CANDIDATE=' + record['tag'] + '\n')
+              f.write('NOTIFY_SHA=' + record['source_sha'] + '\n')
+              f.write('NOTIFY_URL=' + pr['html_url'] + '\n')
+              f.write('NOTIFY_STATUS=Candidata preparada; ' + str(decision['count']) + '/2 aprovações reais. Comando final separado.\n')
           with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
-              f.write('\n\n[Revisar a versão](' + pr['html_url'] + ')\n')
+              f.write('\n\n[Revisar a versão](' + pr['html_url'] + ')\n\n')
+              f.write('Estado inicial: ' + ('2/2 real' if allowed else 'bloqueado; aguarda duas identidades reais') + '.\n\n')
+              f.write('Aprovar ou integrar o registro não publica. Use Publicar agora após os avais.\n')
           PY
+      - name: Avisar no canal privado de ensaio (opcional)
+        continue-on-error: true
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        run: |
+          if [ -z "$SLACK_BOT_TOKEN" ]; then
+            echo 'Aviso Slack não enviado: SLACK_BOT_TOKEN ausente.'
+            exit 0
+          fi
+          python3 tools/delivery/slack_notify.py --event candidate --status "$NOTIFY_STATUS" --candidate "$NOTIFY_CANDIDATE" --source-sha "$NOTIFY_SHA" --url "$NOTIFY_URL" --dry-run --idempotency-key "github-${GITHUB_RUN_ID}-candidate" --outbox "$RUNNER_TEMP/delivery-slack.sqlite3" --send
