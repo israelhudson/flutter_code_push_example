@@ -1,0 +1,29 @@
+name: Delivery - CI da esteira no PR
+on:
+  workflow_call:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  pipeline:
+    name: Política, snapshots e persistência - testes offline
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Testar contratos e estados do laboratório
+        run: python3 -m unittest discover -s tests/delivery -v
+      - name: Mostrar 0/2, 1/2 e 2/2 com fixtures explícitas
+        run: python3 tools/delivery/demo.py >> "$GITHUB_STEP_SUMMARY"
+      - name: Identificar as verificações Flutter complementares
+        run: |
+          python3 - <<'PY'
+          import os
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('# CI da esteira\n\n')
+              f.write('Testes Python verificam política, snapshots, retomada e adaptadores sem publicar.\n\n')
+              f.write('Flutter analyze, Flutter test e build web real continuam no workflow Delivery - preview web.\n\n')
+              f.write('O conjunto dos dois workflows valida o PR. Nenhum cria RC ou executa publicação automática.\n')
+          PY

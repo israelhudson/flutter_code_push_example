@@ -1,0 +1,108 @@
+name: Delivery - Build mobile do snapshot (sem distribuição)
+on:
+  workflow_call:
+    inputs:
+      source_sha:
+        description: SHA completo do snapshot que será compilado
+        required: true
+        type: string
+      platform:
+        description: android ou ios
+        required: true
+        type: string
+    outputs:
+      artifact_id:
+        description: ID imutável do artifact gerado nesta execução
+        value: ${{ jobs.build.outputs.artifact_id }}
+      artifact_url:
+        description: Link do build de laboratório
+        value: ${{ jobs.build.outputs.artifact_url }}
+      artifact_sha256:
+        description: SHA-256 do pacote mobile.zip
+        value: ${{ jobs.build.outputs.artifact_sha256 }}
+      artifact_kind:
+        description: android-aab-laboratory ou ios-xcarchive-unsigned
+        value: ${{ jobs.build.outputs.artifact_kind }}
+permissions:
+  contents: read
+jobs:
+  build:
+    name: Build ${{ inputs.platform }} - sem upload do app
+    runs-on: ${{ inputs.platform == 'android' && 'ubuntu-24.04' || 'macos-15' }}
+    timeout-minutes: 45
+    outputs:
+      artifact_id: ${{ steps.artifact.outputs.artifact-id }}
+      artifact_url: ${{ steps.artifact.outputs.artifact-url }}
+      artifact_sha256: ${{ steps.package.outputs.sha256 }}
+      artifact_kind: ${{ steps.package.outputs.artifact_kind }}
+    steps:
+      - name: Validar contrato do caller
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          PLATFORM: ${{ inputs.platform }}
+        run: |
+          python3 - <<'PY'
+          import os, re
+          if not re.fullmatch(r'[0-9a-f]{40}', os.environ['SOURCE_SHA']):
+              raise ValueError('source_sha precisa ser SHA completo; branches e latest não são permitidos.')
+          if os.environ['PLATFORM'] not in ('android', 'ios'):
+              raise ValueError('platform precisa ser android ou ios.')
+          PY
+      - name: Checkout das ferramentas confiáveis
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          path: pipeline
+          persist-credentials: false
+      - name: Checkout exato da aplicação
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ inputs.source_sha }}
+          path: application
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Java para Android
+        if: inputs.platform == 'android'
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Flutter fixado pelo snapshot
+        uses: ./pipeline/.github/actions/setup-flutter
+        with:
+          build-inputs: application/delivery/build-inputs.json
+      - name: Compilar e identificar artifact mobile
+        id: package
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          PLATFORM: ${{ inputs.platform }}
+          TOOLING_SHA: ${{ github.sha }}
+        run: |
+          python3 pipeline/deploy/mobile_build.py --repo application --source-sha "$SOURCE_SHA" --tooling-sha "$TOOLING_SHA" --platform "$PLATFORM" --output build/mobile-artifact
+      - name: Guardar build de laboratório
+        id: artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: mobile-${{ inputs.platform }}-${{ inputs.source_sha }}
+          path: build/mobile-artifact/
+          if-no-files-found: error
+          retention-days: 30
+          overwrite: false
+      - name: Resumo do resultado
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          PLATFORM: ${{ inputs.platform }}
+          ARTIFACT_KIND: ${{ steps.package.outputs.artifact_kind }}
+          ARTIFACT_URL: ${{ steps.artifact.outputs.artifact-url }}
+        run: |
+          python3 - <<'PY'
+          import os
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('# Build mobile de laboratório\n\n')
+              f.write('Snapshot: `' + os.environ['SOURCE_SHA'] + '`\n\n')
+              f.write('Destino: ' + os.environ['PLATFORM'] + '; artifact: ' + os.environ['ARTIFACT_KIND'] + '.\n\n')
+              f.write('[Baixar build fixo](' + os.environ['ARTIFACT_URL'] + ')\n\n')
+              f.write('Nenhum upload Shorebird, loja ou TestFlight. Este artifact não é patch.\n')
+              if os.environ['PLATFORM'] == 'ios':
+                  f.write('iOS: XCArchive sem assinatura; Flutter pula exportação IPA com --no-codesign.\n')
+          PY

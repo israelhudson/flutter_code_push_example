@@ -1,0 +1,172 @@
+name: Delivery - controle persistente do laboratorio
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Comando (papéis simulados; publish separado)
+        type: choice
+        required: true
+        options: [status, initialize, technical-review, prepare, approve, revoke, publish, reconcile, abandon, next]
+      source_sha:
+        description: SHA40 para initialize, technical-review ou prepare
+        type: string
+      candidate:
+        description: Candidata exata para approve/revoke/publish/reconcile/abandon
+        type: string
+      role:
+        description: Papel simulado por Israel
+        type: choice
+        options: [ian, yan, samuel, vinicius]
+        default: ian
+      manifest_hash:
+        description: SHA256 do manifesto para approve/revoke/publish
+        type: string
+      delivery_id:
+        description: Entrega para prepare, por exemplo entrega-0042
+        type: string
+      rc:
+        description: Número da RC para prepare
+        type: string
+        default: '1'
+      urgent:
+        description: Priorizar correção a partir da produção simulada
+        type: boolean
+        default: false
+      fail_destination:
+        description: Falha fictícia em publish para testar recuperação
+        type: choice
+        options: [none, android-before, ios-after, web-before]
+        default: none
+permissions:
+  contents: read
+concurrency:
+  group: delivery-laboratory-state
+  cancel-in-progress: false
+jobs:
+  preflight:
+    name: Preflight - identidade e contrato
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      operation: ${{ steps.check.outputs.operation }}
+      source_sha: ${{ steps.check.outputs.source_sha }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LAB_REQUEST: ${{ toJSON(inputs) }}
+        run: python3 tools/delivery/runner.py preflight
+  resolve_mode:
+    name: Escolher o caminho do comando
+    needs: preflight
+    runs-on: ubuntu-24.04
+    outputs:
+      build: ${{ steps.mode.outputs.build }}
+    steps:
+      - id: mode
+        env:
+          OPERATION: ${{ needs.preflight.outputs.operation }}
+        run: |
+          if [ "$OPERATION" = prepare ]; then
+            echo 'build=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'build=false' >> "$GITHUB_OUTPUT"
+          fi
+  build_web:
+    name: Build - preview do SHA congelado
+    needs: [preflight, resolve_mode]
+    if: needs.resolve_mode.outputs.build == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Ferramentas confiáveis
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          path: pipeline
+          persist-credentials: false
+      - name: Aplicação do SHA exato
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.preflight.outputs.source_sha }}
+          path: application
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./pipeline/.github/actions/setup-flutter
+        with:
+          build-inputs: application/delivery/build-inputs.json
+      - name: Compilar preview sem credenciais de publicação
+        env:
+          SOURCE_SHA: ${{ needs.preflight.outputs.source_sha }}
+        run: python3 pipeline/tools/delivery/runner.py build-preview --repo application --source-sha "$SOURCE_SHA" --output build/frozen-preview
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: frozen-web-preview
+          path: build/frozen-preview/
+          if-no-files-found: error
+          retention-days: 30
+  build_android:
+    name: Build Android
+    needs: [preflight, resolve_mode]
+    if: needs.resolve_mode.outputs.build == 'true'
+    uses: ./.github/workflows/mobile-build.yaml
+    with:
+      source_sha: ${{ needs.preflight.outputs.source_sha }}
+      platform: android
+  build_ios:
+    name: Build iOS
+    needs: [preflight, resolve_mode]
+    if: needs.resolve_mode.outputs.build == 'true'
+    uses: ./.github/workflows/mobile-build.yaml
+    with:
+      source_sha: ${{ needs.preflight.outputs.source_sha }}
+      platform: ios
+  control:
+    name: Aplicar comando e preservar estado
+    needs: [preflight, resolve_mode, build_web, build_android, build_ios]
+    if: >-
+      always() && needs.preflight.result == 'success' && needs.resolve_mode.result == 'success' &&
+      (needs.resolve_mode.outputs.build == 'false' ||
+      (needs.build_web.result == 'success' && needs.build_android.result == 'success' && needs.build_ios.result == 'success'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - name: Ferramentas e histórico Git confiáveis
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Checkout físico estável entre runners
+        run: |
+          mkdir -p /tmp/flutter-code-push-lab
+          git clone --no-hardlinks --no-checkout . /tmp/flutter-code-push-lab/repository
+      - name: Restaurar preview produzido nesta execução
+        if: needs.resolve_mode.outputs.build == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: frozen-web-preview
+          path: build/frozen-preview
+      - name: Operar laboratório e avisar o canal privado
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          LAB_REQUEST: ${{ toJSON(inputs) }}
+        run: python3 tools/delivery/runner.py control --preview-folder build/frozen-preview --output build/operational-evidence/result.json
+      - name: Preservar evidência de execução e checkpoint incerto
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: delivery-control-${{ github.run_id }}
+          path: |
+            build/operational-evidence/
+            /tmp/flutter-code-push-lab/remote-commit-checkpoint.json
+          if-no-files-found: warn
+          retention-days: 30

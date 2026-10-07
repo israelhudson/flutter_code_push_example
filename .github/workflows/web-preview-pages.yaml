@@ -1,0 +1,104 @@
+name: Web - Preview Pages por snapshot
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: SHA completo do snapshot Flutter a publicar (40 caracteres)
+        type: string
+        required: true
+permissions:
+  contents: read
+concurrency:
+  group: pages-preview
+  cancel-in-progress: false
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main' && (github.event_name != 'workflow_dispatch' || github.actor == 'israelhudson')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    outputs:
+      source_sha: ${{ steps.source.outputs.sha }}
+    steps:
+      - name: Checkout das ferramentas confiáveis
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          path: trusted
+          persist-credentials: false
+      - name: Congelar SHA escolhido
+        id: source
+        env:
+          REQUESTED_SHA: ${{ inputs.source_sha || github.sha }}
+        run: |
+          python3 - <<'PY'
+          import os,re
+          sha=os.environ['REQUESTED_SHA']
+          if not re.fullmatch(r'[0-9a-f]{40}',sha):
+              raise ValueError('Informe SHA40 completo; branch/latest não é permitido.')
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write('sha='+sha+'\n')
+          PY
+      - name: Checkout isolado do aplicativo
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ steps.source.outputs.sha }}
+          path: app
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Recuperar somente o histórico estático
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 trusted/deploy/pages_preview.py history --site "$RUNNER_TEMP/pages-site"
+      - name: Instalar Flutter fixado no snapshot
+        run: |
+          VERSION=$(python3 -c 'import json; print(json.load(open("app/delivery/build-inputs.json"))["flutter_version"])')
+          REVISION=$(python3 -c 'import json; print(json.load(open("app/delivery/build-inputs.json"))["flutter_revision"])')
+          git clone --depth 1 --branch "$VERSION" https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          test "$(git -C "$RUNNER_TEMP/flutter" rev-parse HEAD)" = "$REVISION"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+      - name: Build real e identidade do preview
+        env:
+          SOURCE_SHA: ${{ steps.source.outputs.sha }}
+        run: python3 trusted/deploy/pages_preview.py build --repo app --source-sha "$SOURCE_SHA" --site "$RUNNER_TEMP/pages-site" > "$RUNNER_TEMP/pages-metadata.json"
+      - name: Preservar snapshots sem mover os existentes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 trusted/deploy/pages_preview.py persist --site "$RUNNER_TEMP/pages-site"
+      - name: Publicar somente bytes web no artefato Pages
+        run: python3 trusted/deploy/pages_preview.py export --site "$RUNNER_TEMP/pages-site" --output "$RUNNER_TEMP/pages-public"
+      - name: Empacotar o site sem objetos Git ou estado
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4 verified 2026-10-07
+        with:
+          path: ${{ runner.temp }}/pages-public
+          retention-days: 1
+      - name: Registrar URL e SHA
+        env:
+          SOURCE_SHA: ${{ steps.source.outputs.sha }}
+        run: |
+          python3 - <<'PY'
+          import json,os
+          metadata=json.load(open(os.environ['RUNNER_TEMP']+'/pages-metadata.json'))
+          url='https://israelhudson.github.io/flutter_code_push_example/snapshots/'+os.environ['SOURCE_SHA']+'/'
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
+              f.write('# Preview Flutter web\n\n['+metadata['version']+' · snapshot fixado]('+url+')\n\n')
+              f.write('SHA: `'+metadata['source_sha']+'`\n\nHash web: `'+metadata['web_content_sha256']+'`\n\n')
+              f.write('Base href Pages diferente do ZIP do CI; mesmo código e toolchain, hashes próprios. Sem distribuição mobile.\n')
+          PY
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy do artefato estático
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4 verified 2026-10-07

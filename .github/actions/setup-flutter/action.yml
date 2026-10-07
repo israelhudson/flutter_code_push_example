@@ -1,0 +1,47 @@
+name: Flutter fixado da POC
+description: Instala o SDK oficial pela versão e confere a revisão completa do snapshot.
+inputs:
+  build-inputs:
+    description: Arquivo delivery/build-inputs.json do checkout exato da aplicação
+    required: true
+outputs:
+  flutter-version:
+    description: Versão do SDK declarada pelo snapshot
+    value: ${{ steps.inputs.outputs.version }}
+  flutter-revision:
+    description: Revisão completa conferida no checkout do SDK
+    value: ${{ steps.inputs.outputs.revision }}
+runs:
+  using: composite
+  steps:
+    - id: inputs
+      shell: bash
+      env:
+        BUILD_INPUTS: ${{ inputs.build-inputs }}
+      run: |
+        python3 - <<'PY'
+        import json, os, re
+        from pathlib import Path
+        workspace = Path(os.environ['GITHUB_WORKSPACE']).resolve()
+        path = Path(os.environ['BUILD_INPUTS']).resolve()
+        if not path.is_relative_to(workspace):
+            raise ValueError('Build inputs precisa pertencer ao checkout deste job.')
+        inputs = json.loads(path.read_text())
+        version, revision = inputs['flutter_version'], inputs['flutter_revision']
+        if not re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+', version) or not re.fullmatch(r'[0-9a-f]{40}', revision):
+            raise ValueError('Versão e revisão Flutter precisam estar fixadas.')
+        with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+            f.write('version=' + version + '\nrevision=' + revision + '\n')
+        PY
+    - name: Instalar e conferir o SDK
+      shell: bash
+      env:
+        FLUTTER_VERSION: ${{ steps.inputs.outputs.version }}
+        FLUTTER_REVISION: ${{ steps.inputs.outputs.revision }}
+      run: |
+        set -euo pipefail
+        SDK_PATH="$RUNNER_TEMP/flutter-delivery"
+        git clone --no-checkout --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$SDK_PATH"
+        test "$(git -C "$SDK_PATH" rev-parse HEAD)" = "$FLUTTER_REVISION"
+        git -C "$SDK_PATH" checkout --detach "$FLUTTER_REVISION"
+        echo "$SDK_PATH/bin" >> "$GITHUB_PATH"
