@@ -15,14 +15,7 @@ concurrency:
 jobs:
   policy:
     name: Política 2 de 2 - testes sintéticos
-    runs-on: ubuntu-24.04
-    timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-        with:
-          persist-credentials: false
-      - run: python3 -m unittest discover -s tests/delivery -v
-      - run: python3 tools/delivery/demo.py >> "$GITHUB_STEP_SUMMARY"
+    uses: ./.github/workflows/pull-request.yaml
   preview:
     name: Preview web privado - sem deploy
     runs-on: ubuntu-24.04

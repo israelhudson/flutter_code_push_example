@@ -206,7 +206,7 @@ def _prior(db, key, payload_hash):
             'ts': row[2], 'client_msg_id': row[3]}
 
 
-def send_notice(notice, outbox=DEFAULT_OUTBOX, api=slack_api):
+def send_notice(notice, outbox=DEFAULT_OUTBOX, api=slack_api, checkpoint=None):
     payload = notice['payload']
     if payload.get('channel') != CHANNEL_ID or notice.get('dry_run') is not True:
         raise NoticeError('Aviso fora do destino/modo autorizado.')
@@ -231,6 +231,10 @@ def send_notice(notice, outbox=DEFAULT_OUTBOX, api=slack_api):
                    'VALUES (?,?,?,\'unknown\',?)',
                    (key, payload_hash, payload['client_msg_id'], datetime.now(timezone.utc).isoformat()))
         db.commit()
+        # Ephemeral runners must persist uncertainty remotely before the POST.
+        # If this checkpoint fails, no external message has been attempted.
+        if checkpoint is not None:
+            checkpoint('unknown')
         result = api('chat.postMessage', payload, token)
         if (not isinstance(result, dict) or result.get('ok') is not True
                 or result.get('channel') != CHANNEL_ID
@@ -240,6 +244,8 @@ def send_notice(notice, outbox=DEFAULT_OUTBOX, api=slack_api):
         db.execute('UPDATE notices SET state=\'sent\',slack_ts=?,sent_at=? WHERE event_key=?',
                    (result['ts'], datetime.now(timezone.utc).isoformat(), key))
         db.commit()
+        if checkpoint is not None:
+            checkpoint('sent')
         return {'state': 'sent', 'duplicate': False, 'channel': CHANNEL_ID,
                 'ts': result['ts'], 'client_msg_id': payload['client_msg_id']}
 
