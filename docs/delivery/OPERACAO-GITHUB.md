@@ -93,6 +93,32 @@ Se houver interrupção após iniciar uma publicação, confira os eventos,
 checkpoints e a release/draft existente antes de tentar novamente. Não apague,
 sobrescreva ou refaça os assets congelados para esconder uma tentativa incerta.
 
+### Próxima execução reservada ao proprietário
+
+Em 07/10/2026, o [plano 37702713050](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37702713050)
+foi conferido e a tag `entrega-0100-rc.1` foi criada no SHA aprovado. A primeira
+[tentativa de publicação 37702829375](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37702829375)
+criou o draft `406248758`, mas falhou no primeiro upload; a consulta posterior
+confirmou **draft com zero assets, sem publicação final**.
+
+Israel reservou as execuções manuais para si. Depois de integrar a correção,
+abra [o workflow](https://github.com/israelhudson/flutter_code_push_example/actions/workflows/github-lab-release.yaml)
+e faça uma **nova execução em `main`**, com:
+
+| Campo | Valor |
+|---|---|
+| action | `publish` |
+| candidate | `entrega-0100-rc.1` |
+| manifest_hash | `28a15ae28f273bd13742dfbec2191d907769db53de6d5b3550a35070823acaeb` |
+
+O comando confere a tag já existente e retoma o mesmo draft. Não é necessário
+criar outra tag ou apagar o draft. **Re-run jobs do run antigo usa o código
+antigo**; use `Run workflow` em `main` para executar a correção.
+
+A correção será validada por testes locais e CI. A confirmação de upload e
+publicação reais fica pendente desta nova execução pelo proprietário. Os
+[logs e lições](LICOES-APRENDIDAS.md) distinguem esses resultados.
+
 ## Falha e recuperação no publicador fictício
 
 No `publish`, `fail_destination=ios-after` grava um recibo fictício e simula

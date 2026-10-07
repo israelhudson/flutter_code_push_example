@@ -61,15 +61,31 @@ Foram conferidos mapa de arquivos, metadata, entrada, bootstrap e JavaScript. Os
 
 Fontes locais: `pages-validation.json`, `pages-first-snapshot-preserved.json`, `pages-root-headers.txt` e `pages-manual-browser.jpg`, em `build/operational-evidence/`.
 
-## Registro GitHub autorizado: ainda pendente
+## Registro GitHub: plano e tag confirmados, publicação pendente
 
-O owner autorizou o registro pessoal da versão 1.1.0+2 / `entrega-0100-rc.1`. Nesta baseline essa fase está **planejada e autorizada, sem publicação confirmada**. FakePublisher concluído não cria GitHub Release nem comprova distribuição.
+O owner autorizou o registro pessoal da versão 1.1.0+2 / `entrega-0100-rc.1`. Depois da baseline inicial, plano e tag passaram, mas a tentativa de publicação falhou. **A Release continua em draft, sem publicação confirmada.** FakePublisher concluído não comprova esse registro nem distribuição mobile. O usuário reservou as próximas execuções manuais para ele; o agente prepara a correção e as evidências, sem disparar outro workflow.
+
+| Etapa real | Evidência | Resultado conferido |
+|---|---|---|
+| Plano | [Run 37702713050](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37702713050), [eventos](evidencias/2026-10-07-release-plan-37702713050.jsonl) | Owner autenticado, candidata/fonte/preview conferidos e `plan_ready`; `published=false`. |
+| Bootstrap da tag | [Eventos](evidencias/2026-10-07-tag-entrega-0100-rc.1.jsonl) | Objeto e ref anotada criados e confirmados, sem mover a fonte: tag `entrega-0100-rc.1`, objeto `4650c3c985d1e47f6211bdd1cc47a193ed0c31a2`, commit `08ce07d615905e33f0572f9264808683cab53349`. |
+| Tentativa de publish | [Run 37702829375](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37702829375), [eventos completos](evidencias/2026-10-07-release-publish-failed-37702829375.jsonl) | Draft `406248758` criado; upload do primeiro asset, `candidate.json`, ficou incerto. Resultado `failed`, `published=false`; nenhuma tentativa automática de repetir. |
+
+Identidade do registro: `765134435bdb2ecc8eedd008f62c0907f21e4ecc945a24bb03b59e9189403a40`. O checkpoint conserva `operation=upload_asset`, `asset=candidate.json`, `release_id=406248758` e `status=uncertain`. O log expõe `http_status=null`; não permite inventar código HTTP ou causa técnica. A consulta somente de leitura posterior confirmou `draft=true`, `prerelease=true`, `assets=[]` e `published_at=null`.
+
+**Correção e prova local:** o coordenador confirmou 14 testes do publicador após adicionar `Content-Length: len(data)` em bytes. O teste [test_real_gh_stdin_upload_requires_explicit_byte_length_and_preserves_bytes](../../tests/delivery/test_github_lab_release.py) usa o binário `gh` real 2.101.0, localhost e autenticação sintética: o comando antigo transmitiu stdin sem tamanho explícito e o servidor de teste respondeu 411; o corrigido transmitiu os bytes UTF-8 exatos, sem transferência chunked, e recebeu 201. Tamanho, metadata e digest foram conferidos. São resultados do servidor **local**, não códigos HTTP observados no run remoto anterior; aquele `http_status` continua desconhecido.
+
+A [documentação de upload de assets](https://docs.github.com/en/rest/releases/assets?apiVersion=2026-03-10#upload-a-release-asset) exige `Content-Length` e corpo binário. O [código do gh 2.101.0](https://github.com/cli/cli/blob/v2.101.0/pkg/cmd/api/http.go) trata esse header definindo o tamanho da requisição. Essa leitura e o teste local fundamentam a correção; não comprovam publicação remota.
+
+**Próxima validação:** integrar a correção após os checks; então o usuário executa manualmente `action=publish` com a mesma candidata e o mesmo hash. A retomada precisa descobrir e validar o draft existente, enviar somente os assets ausentes e confirmar hashes e publicação. Não recriar a tag, trocar para latest/main, apagar o draft ou tratar `mutation_returned` de criação como publicação concluída.
+
+Lição para a Amulets, ainda proposta: diferenciar um draft remoto criado, um asset confirmado e uma Release publicada. Um teste offline de argumentos CLI não comprova que o endpoint recebeu bytes válidos. Preservar o erro integral permitido, checkpoint e identidade para recuperar sem duplicar efeitos. A próxima execução real pertence ao usuário; nenhum ajuste desta etapa foi aplicado na empresa.
 
 O caminho histórico de duas reviews reais permanece separado: sua política verifica duas identidades nomeadas no commit do PR. Papéis simulados não satisfazem esse gate. A autorização do owner para registro LAB pessoal deve ter política explícita, sem relaxar silenciosamente o caminho histórico ou a futura política da Amulets.
 
-A [documentação GitHub de Create a release](https://docs.github.com/en/rest/releases/releases#create-a-release), API 2026-03-10, exige escrita de workflows quando o alvo altera `.github/workflows/` em relação à branch padrão. `GITHUB_TOKEN` não recebe essa permissão; erros podem ser 403/404. Isso foi documentação consultada, não criação executada.
+A [documentação GitHub de Create a release](https://docs.github.com/en/rest/releases/releases#create-a-release), API 2026-03-10, exige escrita de workflows quando o alvo altera `.github/workflows/` em relação à branch padrão. `GITHUB_TOKEN` não recebe essa permissão; erros podem ser 403/404. A restrição foi consultada e o bootstrap autenticado pelo owner passou; não houve tentativa de criar essa tag com `GITHUB_TOKEN`. Isso não comprova upload ou publicação concluídos.
 
-Plano do coordenador: produzir `tag-spec.json`; o owner criar tag anotada no SHA exato com autenticação existente; o CI conferir a tag preexistente. Não mover a RC para a main mais recente. Revalidar API, token, anotação, SHA, manifesto, proteção e recibo da Release antes de registrar sucesso.
+O plano de separar `tag-spec.json`, bootstrap autenticado pelo owner e validação da tag preexistente foi executado até a confirmação da tag. A publicação permanece pendente pela falha de upload. Revalidar API, token, anotação, SHA, manifesto, proteção e recibo da Release antes de registrar sucesso.
 
 ## Propostas para discutir na Amulets
 
@@ -89,4 +105,4 @@ Nenhuma proposta foi aplicada na Amulets. Build, patch Shorebird, envio à loja,
 
 Cada linha contém `timestamp_utc`, `recorded_at_utc`, `event_timestamp_utc`, `timestamp_basis`, `historical_backfill`, `action`, `source_evidence`, `result`, `scope`, `lesson` e `next_validation`. `scope.actual` descreve ações executadas; `scope.simulated` descreve fixtures, papéis e efeitos fictícios.
 
-Acrescentar eventos ao fim, sem apagar histórico. Eventos novos usam `historical_backfill=false` e hora UTC observada. Quando uma conclusão mudar, acrescentar correção referenciando a anterior. Registrar falhas/cancelamentos. Não copiar tokens, bancos SQLite, credenciais ou dados de participantes/canais privados.
+Acrescentar eventos ao fim, sem apagar histórico. Eventos novos usam `historical_backfill=false` e hora UTC observada. Quando uma conclusão mudar, acrescentar correção referenciando a anterior. Registrar falhas/cancelamentos. As cópias allowlisted dos eventos originais de plano/tag/publish usam o schema do emissor (`at`, `event`); sua origem e a cópia posterior estão descritas no [índice de evidências](evidencias/README.md). Não copiar tokens, bancos SQLite, credenciais ou dados de participantes/canais privados.
