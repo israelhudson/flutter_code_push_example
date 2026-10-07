@@ -1,7 +1,7 @@
 """Confirm a deployed, SHA-addressed Pages preview using read-only HTTP GETs.
 
-The expected app content digest comes from the trusted build job. This check
-attests the complete app file map and downloads only the entry points and JS;
+The expected app and snapshot-manifest digests come from the trusted build job.
+This check attests the complete file map and downloads only entry points and JS;
 browser interaction and Android/iOS validation remain separate checks.
 """
 import argparse
@@ -107,13 +107,7 @@ class EntryHTML(HTMLParser):
             self.frames.append(attrs.get('src'))
 
 
-def check_once(source_sha, expected_web_hash, get):
-    metadata_bytes = get('metadata.json')
-    metadata = json_object(metadata_bytes)
-    if (metadata.get('schema') != 'pages-preview-v1' or metadata.get('source_sha') != source_sha
-            or metadata.get('snapshot_path') != 'snapshots/' + source_sha + '/'
-            or metadata.get('web_content_sha256') != expected_web_hash):
-        raise SmokeError('Metadata diverge do SHA/hash produzido pelo build confiável.')
+def check_once(source_sha, expected_web_hash, expected_manifest_hash, get):
     manifest = json_object(get('files.json'))
     app_files = {}
     for name, file_hash in manifest.items():
@@ -124,8 +118,16 @@ def check_once(source_sha, expected_web_hash, get):
             app_files[name[4:]] = file_hash
         elif name not in ('index.html', 'metadata.json'):
             raise SmokeError('Arquivo fora do snapshot web permitido.')
+    if digest(manifest) != expected_manifest_hash:
+        raise SmokeError('Manifesto completo diverge do hash do build confiável.')
     if not app_files or digest(app_files) != expected_web_hash:
         raise SmokeError('Mapa de arquivos Flutter diverge do hash do build confiável.')
+    metadata_bytes = get('metadata.json')
+    metadata = json_object(metadata_bytes)
+    if (metadata.get('schema') != 'pages-preview-v1' or metadata.get('source_sha') != source_sha
+            or metadata.get('snapshot_path') != 'snapshots/' + source_sha + '/'
+            or metadata.get('web_content_sha256') != expected_web_hash):
+        raise SmokeError('Metadata diverge do SHA/hash produzido pelo build confiável.')
     if hashlib.sha256(metadata_bytes).hexdigest() != manifest.get('metadata.json'):
         raise SmokeError('Hash da metadata não confere.')
     downloaded = {}
@@ -143,14 +145,16 @@ def check_once(source_sha, expected_web_hash, get):
     wrapper = EntryHTML(downloaded['index.html'])
     if wrapper.frames != ['app/'] or source_sha.encode() not in downloaded['index.html']:
         raise SmokeError('Página de entrada não identifica/abre o snapshot esperado.')
-    return ['metadata.json', 'files.json', *CRITICAL_FILES]
+    return ['files.json', 'metadata.json', *CRITICAL_FILES]
 
 
-def verify(source_sha, expected_web_hash, *, request=fetch, now=time.monotonic, sleep=time.sleep):
+def verify(source_sha, expected_web_hash, expected_manifest_hash, *, request=fetch, now=time.monotonic, sleep=time.sleep):
     if not re.fullmatch(r'[0-9a-f]{40}', source_sha or ''):
         raise SmokeError('Informe SHA40 completo.')
     if not re.fullmatch(r'[0-9a-f]{64}', expected_web_hash or ''):
         raise SmokeError('Informe hash web SHA-256 do build confiável.')
+    if not re.fullmatch(r'[0-9a-f]{64}', expected_manifest_hash or ''):
+        raise SmokeError('Informe hash SHA-256 do manifesto completo do build confiável.')
     snapshot_url = ORIGIN + PROJECT_BASE + 'snapshots/' + source_sha + '/'
     deadline = now() + MAX_WAIT_SECONDS
     attempts = 0
@@ -167,9 +171,10 @@ def verify(source_sha, expected_web_hash, *, request=fetch, now=time.monotonic, 
     while True:
         attempts += 1
         try:
-            verified = check_once(source_sha, expected_web_hash, get)
+            verified = check_once(source_sha, expected_web_hash, expected_manifest_hash, get)
             return {'success': True, 'source_sha': source_sha,
-                    'web_content_sha256': expected_web_hash, 'snapshot_url': snapshot_url,
+                    'web_content_sha256': expected_web_hash,
+                    'snapshot_manifest_sha256': expected_manifest_hash, 'snapshot_url': snapshot_url,
                     'verified_files': verified, 'attempts': attempts}
         except PropagationPending as error:
             remaining = deadline - now()
@@ -183,9 +188,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source-sha', required=True)
     parser.add_argument('--expected-web-content-sha256', required=True)
+    parser.add_argument('--expected-snapshot-manifest-sha256', required=True)
     parser.add_argument('--output')
     args = parser.parse_args()
-    report = verify(args.source_sha, args.expected_web_content_sha256)
+    report = verify(args.source_sha, args.expected_web_content_sha256, args.expected_snapshot_manifest_sha256)
     output = json.dumps(report, ensure_ascii=False, indent=2) + '\n'
     if args.output:
         Path(args.output).write_text(output, encoding='utf-8')

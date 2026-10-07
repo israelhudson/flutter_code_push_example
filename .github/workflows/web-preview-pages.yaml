@@ -23,6 +23,7 @@ jobs:
     outputs:
       source_sha: ${{ steps.source.outputs.sha }}
       web_content_sha256: ${{ steps.identity.outputs.web_content_sha256 }}
+      snapshot_manifest_sha256: ${{ steps.identity.outputs.snapshot_manifest_sha256 }}
     steps:
       - name: Checkout das ferramentas confiáveis
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -81,10 +82,11 @@ jobs:
           python3 - <<'PY'
           import json,os,re
           metadata=json.load(open(os.environ['RUNNER_TEMP']+'/pages-metadata.json'))
-          if metadata['source_sha'] != os.environ['SOURCE_SHA'] or not re.fullmatch(r'[0-9a-f]{64}',metadata['web_content_sha256']):
+          if metadata['source_sha'] != os.environ['SOURCE_SHA'] or any(not re.fullmatch(r'[0-9a-f]{64}',metadata[key]) for key in ('web_content_sha256','snapshot_manifest_sha256')):
               raise ValueError('Identidade produzida pelo build inválida.')
           with open(os.environ['GITHUB_OUTPUT'],'a') as f:
               f.write('web_content_sha256='+metadata['web_content_sha256']+'\n')
+              f.write('snapshot_manifest_sha256='+metadata['snapshot_manifest_sha256']+'\n')
           with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
               f.write('# Preview Flutter web preparado\n\nAguardando deploy e confirmação HTTP no próximo job.\n\n')
               f.write('SHA: `'+metadata['source_sha']+'`\n\nHash web: `'+metadata['web_content_sha256']+'`\n\n')
@@ -115,7 +117,8 @@ jobs:
         env:
           PAGE_SOURCE_SHA: ${{ needs.build.outputs.source_sha }}
           PAGE_EXPECTED_WEB_HASH: ${{ needs.build.outputs.web_content_sha256 }}
-        run: python3 trusted/deploy/pages_smoke.py --source-sha "$PAGE_SOURCE_SHA" --expected-web-content-sha256 "$PAGE_EXPECTED_WEB_HASH" --output "$RUNNER_TEMP/pages-smoke.json"
+          PAGE_EXPECTED_MANIFEST_HASH: ${{ needs.build.outputs.snapshot_manifest_sha256 }}
+        run: python3 trusted/deploy/pages_smoke.py --source-sha "$PAGE_SOURCE_SHA" --expected-web-content-sha256 "$PAGE_EXPECTED_WEB_HASH" --expected-snapshot-manifest-sha256 "$PAGE_EXPECTED_MANIFEST_HASH" --output "$RUNNER_TEMP/pages-smoke.json"
       - name: Mostrar link confirmado
         id: confirmed
         run: |
@@ -129,5 +132,6 @@ jobs:
           with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
               f.write('# Preview Flutter web confirmado\n\n[Abrir snapshot publicado]('+report['snapshot_url']+')\n\n')
               f.write('SHA: `'+report['source_sha']+'`\n\nHash web: `'+report['web_content_sha256']+'`\n\n')
+              f.write('Hash do manifesto completo: `'+report['snapshot_manifest_sha256']+'`\n\n')
               f.write('Metadata, mapa de arquivos, entrada, base href, bootstrap e main.dart.js conferidos por HTTP. Interação no navegador e Android/iOS são validações separadas.\n')
           PY

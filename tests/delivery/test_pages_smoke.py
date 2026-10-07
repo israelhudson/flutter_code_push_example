@@ -41,6 +41,7 @@ class PagesSmokeTests(unittest.TestCase):
         manifest = {name: hashlib.sha256(data).hexdigest() for name, data in self.files.items()
                     if name != 'files.json'}
         self.files['files.json'] = json.dumps(manifest).encode()
+        self.expected_manifest = smoke.digest(manifest)
 
     def get(self, url, timeout):
         self.assertTrue(url.startswith(self.url))
@@ -56,7 +57,7 @@ class PagesSmokeTests(unittest.TestCase):
         self.elapsed += seconds
 
     def verify(self, request=None):
-        return smoke.verify(self.sha, self.expected, request=request or self.get,
+        return smoke.verify(self.sha, self.expected, self.expected_manifest, request=request or self.get,
                             now=lambda: self.elapsed, sleep=self.sleep)
 
     def test_confirms_snapshot_and_attests_full_map_without_downloading_engine(self):
@@ -64,15 +65,41 @@ class PagesSmokeTests(unittest.TestCase):
         self.assertIs(report['success'], True)
         self.assertEqual(report['snapshot_url'], self.url)
         self.assertEqual(report['web_content_sha256'], self.expected)
-        self.assertEqual(self.requests, ['metadata.json', 'files.json', *smoke.CRITICAL_FILES])
+        self.assertEqual(report['snapshot_manifest_sha256'], self.expected_manifest)
+        self.assertEqual(self.requests, ['files.json', 'metadata.json', *smoke.CRITICAL_FILES])
         self.assertNotIn('app/assets/AssetManifest.bin', self.requests)
 
     def test_map_hash_must_match_trusted_build_even_if_metadata_claims_it_does(self):
         manifest = json.loads(self.files['files.json'])
         manifest['app/assets/AssetManifest.bin'] = 'b' * 64
         self.files['files.json'] = json.dumps(manifest).encode()
-        with self.assertRaisesRegex(smoke.SmokeError, 'Mapa de arquivos'):
+        with self.assertRaisesRegex(smoke.SmokeError, 'Manifesto completo'):
             self.verify()
+        self.assertEqual(self.sleeps, [])
+
+    def test_wrapper_tampering_with_recomputed_manifest_keeps_web_hash_but_is_rejected(self):
+        self.files['index.html'] += b'<script src="https://outside/changed.js"></script>'
+        manifest = json.loads(self.files['files.json'])
+        manifest['index.html'] = hashlib.sha256(self.files['index.html']).hexdigest()
+        self.files['files.json'] = json.dumps(manifest).encode()
+        self.assertEqual(smoke.digest({name[4:]: value for name, value in manifest.items()
+                                     if name.startswith('app/')}), self.expected)
+        with self.assertRaisesRegex(smoke.SmokeError, 'Manifesto completo'):
+            self.verify()
+        self.assertEqual(self.requests, ['files.json'])
+        self.assertEqual(self.sleeps, [])
+
+    def test_metadata_tampering_with_recomputed_manifest_keeps_web_hash_but_is_rejected(self):
+        metadata = json.loads(self.files['metadata.json'])
+        metadata['version'] = 'forged version'
+        self.files['metadata.json'] = json.dumps(metadata).encode()
+        manifest = json.loads(self.files['files.json'])
+        manifest['metadata.json'] = hashlib.sha256(self.files['metadata.json']).hexdigest()
+        self.files['files.json'] = json.dumps(manifest).encode()
+        self.assertEqual(metadata['web_content_sha256'], self.expected)
+        with self.assertRaisesRegex(smoke.SmokeError, 'Manifesto completo'):
+            self.verify()
+        self.assertEqual(self.requests, ['files.json'])
         self.assertEqual(self.sleeps, [])
 
     def test_wrong_metadata_or_main_bytes_fail_without_retry(self):
@@ -115,7 +142,7 @@ class PagesSmokeTests(unittest.TestCase):
         attempts = 0
         def eventually(url, timeout):
             nonlocal attempts
-            if url.endswith('/metadata.json'):
+            if url.endswith('/files.json'):
                 attempts += 1
                 if attempts <= 2:
                     raise smoke.PropagationPending('HTTP 404')

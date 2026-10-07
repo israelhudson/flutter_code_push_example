@@ -196,7 +196,9 @@ def build(repo, sha, site):
     (site / '.nojekyll').write_text('')
     (site / 'index.html').write_text('<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=snapshots/' + sha + '/"><a href="snapshots/' + sha + '/">Abrir último preview: ' + sha + '</a>')
     validate_site(site)
-    return metadata
+    # Keep this digest outside metadata.json: the manifest hashes metadata, so
+    # writing the digest inside metadata would create a circular dependency.
+    return {**metadata, 'snapshot_manifest_sha256': digest(json_file(folder / 'files.json'))}
 
 
 def persist(site):

@@ -57,6 +57,9 @@ class PagesPreviewTests(unittest.TestCase):
         self.assertNotEqual(metadata['pages_build_inputs']['command'], metadata['source_build_inputs']['command'])
         self.assertIn(self.sha, (self.site / 'snapshots' / self.sha / 'index.html').read_text())
         self.assertEqual(pages.validate_site(self.site), [self.sha])
+        snapshot = self.site / 'snapshots' / self.sha
+        self.assertEqual(metadata['snapshot_manifest_sha256'], pages.digest(pages.json_file(snapshot / 'files.json')))
+        self.assertNotIn('snapshot_manifest_sha256', pages.json_file(snapshot / 'metadata.json'))
 
     def test_flutter_build_marker_is_not_published(self):
         self.compile()
@@ -83,7 +86,8 @@ class PagesPreviewTests(unittest.TestCase):
         self.repo.git('checkout', '--detach', newer)
         self.compile(newer)
         self.assertEqual(pages.hashes(self.site / 'snapshots' / self.sha), old_hash)
-        self.assertEqual(pages.json_file(self.site / 'snapshots' / self.sha / 'metadata.json'), original)
+        self.assertEqual(pages.json_file(self.site / 'snapshots' / self.sha / 'metadata.json'),
+                         {key: value for key, value in original.items() if key != 'snapshot_manifest_sha256'})
         self.assertEqual(len(pages.validate_site(self.site)), 2)
         self.assertIn(newer, (self.site / 'index.html').read_text())
 
