@@ -44,4 +44,7 @@ runs:
         git clone --no-checkout --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$SDK_PATH"
         test "$(git -C "$SDK_PATH" rev-parse HEAD)" = "$FLUTTER_REVISION"
         git -C "$SDK_PATH" checkout --detach "$FLUTTER_REVISION"
+        # The first invocation bootstraps the tool and prints a welcome banner.
+        # Run it before helpers parse --version --machine as strict JSON.
+        "$SDK_PATH/bin/flutter" --version
         echo "$SDK_PATH/bin" >> "$GITHUB_PATH"
