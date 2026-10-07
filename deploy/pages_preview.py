@@ -172,7 +172,17 @@ def build(repo, sha, site):
         if git(repo, 'status', '--porcelain', '--untracked-files=no'):
             raise ValueError('Build alterou arquivos versionados.')
         folder.mkdir(parents=True)
-        shutil.copytree(repo / 'build/web', folder / 'app', symlinks=True)
+        web = repo / 'build/web'
+        # Flutter's trackSharedBuildDirectory writes this build-control marker
+        # into outputDir. It is not a public asset; all other hidden files still
+        # pass through the strict site validation and are rejected.
+        marker = web / '.last_build_id'
+        if marker.exists() or marker.is_symlink():
+            if marker.is_symlink() or not marker.is_file() or marker.stat().st_nlink != 1:
+                raise ValueError('Marcador Flutter deve ser um arquivo regular.')
+        shutil.copytree(web, folder / 'app', symlinks=True,
+                        ignore=lambda directory, names: {'.last_build_id'}
+                        if Path(directory) == web else set())
         metadata = {'schema': 'pages-preview-v1', 'source_sha': sha,
                     'source_tree': snapshots.source_tree(repo, sha), 'version': version,
                     'source_fingerprint': original_fingerprint, 'source_build_inputs': inputs,
