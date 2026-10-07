@@ -44,7 +44,56 @@ As aprovações da RC anterior não aprovam a nova. Outra entrega entra na fila.
 `next` ativa a próxima quando não houver candidata ativa; se a base mudou,
 ela fica bloqueada e exige nova preparação.
 
-## Falha e recuperação
+## Registrar a release LAB no GitHub
+
+O `publish` da tabela acima grava recibos fictícios no estado persistido. Para
+registrar essa candidata como uma **GitHub pre-release real de laboratório**, o
+proprietário usa outro comando manual. A decisão final de publicar é de Israel;
+Samuel e Vinícius continuam sendo papéis simulados, identificados dessa forma
+no plano, no recibo e nas notas da release.
+
+1. Abra **Actions → Delivery - Registrar release LAB no GitHub → Run workflow**.
+2. Escolha `main`, `action=plan` e copie a candidata e o hash completo do resumo
+   do controle persistente. O comando carrega os registros e os bytes congelados;
+   não compila outra versão nem escolhe a ponta atual da main.
+3. Confira no plano a versão, tag, SHA da fonte, hash do manifesto e preview.
+   O artifact da execução preserva o plano, os eventos e os checkpoints.
+4. Confira também `tag-spec.json`. Se a tag ainda não existir, o proprietário
+   executa, no checkout revisado do projeto e com o `gh` já autenticado:
+
+   ```bash
+   python3 tools/delivery/create_lab_tag.py --spec CAMINHO/tag-spec.json --output build/github-lab-tag
+   ```
+
+   O comando relê o estado remoto e cria **somente a tag anotada descrita nesse
+   arquivo**, no SHA congelado e com a mensagem exata. Uma tag já existente e
+   idêntica é apenas conferida. Para outra candidata, use outra pasta `--output`,
+   preservando os logs anteriores. O
+   `GITHUB_TOKEN` da Action não cria a tag: o snapshot pode ter workflows
+   diferentes dos da main, e essa criação pode exigir permissão `Workflows: write`.
+   A [documentação da API de releases](https://docs.github.com/en/rest/releases/releases#create-a-release)
+   explica essa permissão adicional para commits que alteram workflows.
+   Não troque o SHA aprovado por `main`/`latest` nem crie um PAT para esse ensaio.
+5. Para executar a decisão final, abra **Run workflow** novamente com
+   `action=publish`, a mesma candidata e o mesmo hash. O helper revalida a
+   identidade do proprietário, a tag preexistente e os registros antes de publicar.
+6. Abra o link confirmado mostrado no resumo. A pre-release reúne a candidata,
+   o preview fixo, os hashes e o recibo que declara o caráter de laboratório.
+
+Esse fluxo registra evidência no GitHub. Não cria patch Shorebird, upload em loja,
+IPA para TestFlight ou distribuição do app. O preview continua sendo web.
+Nenhum banco SQLite ou secret entra nos assets ou no artifact de evidência.
+
+O caminho **Delivery - Publicar agora (GitHub LAB)** permanece separado: ele
+exige reviews GitHub reais de `samuelcamilo` e `friasvinicius` no PR de versão
+integrado em `codex/lab-versions`. Os papéis simulados deste novo comando não
+autorizam aquele caminho.
+
+Se houver interrupção após iniciar uma publicação, confira os eventos,
+checkpoints e a release/draft existente antes de tentar novamente. Não apague,
+sobrescreva ou refaça os assets congelados para esconder uma tentativa incerta.
+
+## Falha e recuperação no publicador fictício
 
 No `publish`, `fail_destination=ios-after` grava um recibo fictício e simula
 timeout. Depois execute `reconcile`: ele consulta o journal preservado, confirma
