@@ -97,9 +97,31 @@ globais `--db` e `--provider-dir` aparecem **antes** da ação e permitem separa
    python3 tools/delivery/lab.py status
    ```
 
-   Depois de reconciliar, se ainda houver destinos pendentes, execute `publish`
-   novamente **sem a injeção de falha**, usando outro `command-id` para a retomada.
-   Repetir o ID anterior devolve o resultado daquela tentativa e não repete efeitos.
+   Depois de reconciliar uma falha transitória, se ainda houver destinos
+   pendentes, execute `publish` novamente **sem a injeção de falha**, usando outro
+   `command-id` para a retomada. Repetir o ID anterior devolve o resultado daquela
+   tentativa e não repete efeitos.
+
+   Se um warning no primeiro destino bloqueou tudo e você precisa corrigir
+   código, inputs ou bases, encerre a tentativa **somente após comprovar zero
+   efeitos** no journal do provedor falso:
+
+   ```bash
+   python3 tools/delivery/lab.py abandon --candidate entrega-0042-rc.1 --repo CAMINHO_DO_REPOSITORIO_LOCAL
+   ```
+
+   `abandon` registra `abandon_no_effect`, muda a RC para
+   `encerrada_sem_efeito` e desativa seus avais. Preparar outra RC, preview,
+   manifesto e aprovações permite seguir com a correção. Se qualquer destino
+   tiver recibo no provedor, inclusive após timeout ainda marcado como
+   `resultado_desconhecido`, o encerramento é recusado: reconciliar e retomar
+   a publicação parcial existente.
+
+   Mantenha o mesmo `--db` e `--provider-dir` nos comandos da sessão. O caminho
+   de `provider.sqlite` fica vinculado à tentativa; trocar o provedor é
+   rejeitado. A ausência de recibos nesse journal local síncrono é uma prova
+   disponível no **FakePublisher**. Uma consulta vazia em serviço remoto não
+   oferece automaticamente essa prova; a recuperação real continua pendente.
 
 6. **Continuar a fila.** Use `next` depois de resolver a publicação anterior.
    Uma candidata que ficou obsoleta precisa de preparação e aprovações novas.

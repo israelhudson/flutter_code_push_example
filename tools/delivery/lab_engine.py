@@ -340,6 +340,18 @@ class LabStore:
             raise ValueError('Destino pendente ou loja necessária; sem fallback automático.')
         return row, manifest
 
+    def _provider(self, db, candidate, adapter, allow_new=False):
+        key = 'provider:' + candidate
+        identity = str(adapter.db_path.resolve())
+        row = db.execute('SELECT value FROM settings WHERE key=?', (key,)).fetchone()
+        if row:
+            if json.loads(row['value']) != identity:
+                raise ValueError('Provedor diferente do início da publicação; preserve o mesmo journal.')
+        elif allow_new:
+            self._put(db, key, identity)
+        else:
+            raise ValueError('Publicação sem identidade do provedor; não presumir ausência de efeitos.')
+
     @contextmanager
     def _lease(self):
         with open(str(self.path) + '.publication.lock', 'a') as lease:
@@ -367,6 +379,7 @@ class LabStore:
             try:
                 if actor != self._get(db, 'operator'):
                     raise ValueError('Operador não autorizado para Publicar agora.')
+                self._provider(db, candidate_id, adapter, allow_new=True)
                 old = db.execute('SELECT * FROM commands WHERE id=?', (command_id,)).fetchone()
                 if old:
                     if old['candidate'] != candidate_id or old['hash'] != manifest_hash:
@@ -473,6 +486,7 @@ class LabStore:
             row, manifest = self._candidate(db, candidate_id)
             if row['state'] not in ('publicando', 'parcial') or Path(repo).resolve() != Path(manifest['repository_path']).resolve():
                 raise ValueError('Reconcilie somente a publicação ativa no repositório correto.')
+            self._provider(db, candidate_id, adapter)
             items = db.execute('SELECT * FROM destinations WHERE candidate=?', (candidate_id,)).fetchall()
         for item in items:
             if item['state'] == 'sucesso':
@@ -485,6 +499,36 @@ class LabStore:
                 with self.connection() as db:
                     db.execute("UPDATE destinations SET state='pendente',error=NULL WHERE candidate=? AND destination=?", (candidate_id, item['destination']))
         return self._finish(candidate_id, actor=actor)
+
+    def abandon(self, candidate_id, repo, adapter, actor=OPERATOR):
+        """Close a failed attempt only after authoritative zero-effect lookup.
+
+        This proof is available in the synchronous fake provider, not presumed
+        for an external provider with delayed/uncertain results.
+        """
+        if not isinstance(adapter, FakePublisher):
+            raise ValueError('Encerrar sem efeitos só aceita o provedor local do laboratório.')
+        with self._lease():
+            def apply(db):
+                row, manifest = self._candidate(db, candidate_id)
+                if (row['state'] not in ('publicando', 'parcial')
+                        or Path(repo).resolve() != Path(manifest['repository_path']).resolve()):
+                    raise ValueError('Encerre somente a tentativa ativa no repositório correto.')
+                self._provider(db, candidate_id, adapter)
+                items = db.execute('SELECT * FROM destinations WHERE candidate=?', (candidate_id,)).fetchall()
+                if len(items) != len(manifest['targets']) or not items:
+                    raise ValueError('Registro incompleto de destinos; ausência de efeitos não comprovada.')
+                if any(i['state'] == 'sucesso' or adapter.lookup(i['operation_key']) for i in items):
+                    raise ValueError('Há efeito confirmado no provedor; reconcilie e retome, sem substituir a RC.')
+                db.execute("UPDATE destinations SET state='nao_publicado' WHERE candidate=?", (candidate_id,))
+                db.execute('UPDATE approvals SET active=0 WHERE candidate=?', (candidate_id,))
+                db.execute("UPDATE candidates SET state='encerrada_sem_efeito',version=version+1 WHERE id=?", (candidate_id,))
+                result = self._status(db, candidate_id)
+                db.execute('UPDATE commands SET state=?,result=? WHERE candidate=?',
+                           ('encerrada_sem_efeito', canonical(result), candidate_id))
+                return result
+            return self._write('abandon_no_effect', {'provider_lookup': 'authoritative_local_journal'},
+                               apply, actor, candidate_id)
 
 
 class FakePublisher:

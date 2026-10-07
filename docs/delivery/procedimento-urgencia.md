@@ -25,6 +25,26 @@ por conveniência. Recuperar a operação anterior e confirmar a base por destin
 antes de autorizar outra entrega. Se a recuperação exigir mudar código ou bases,
 documentar outro plano e obter novos avais.
 
+Se a tentativa foi bloqueada antes de qualquer efeito, por exemplo por warning
+no primeiro destino, o laboratório permite um encerramento auditado:
+
+```bash
+python3 tools/delivery/lab.py abandon --candidate CANDIDATA_ANTERIOR --repo REPOSITORIO_LOCAL
+```
+
+O comando consulta o mesmo journal do **FakePublisher** para provar que nenhum
+destino tem recibo, registra `abandon_no_effect`, encerra como
+`encerrada_sem_efeito` e desativa os avais. Depois disso, preparar a urgente ou
+uma RC corrigida com novo preview/manifesto e aprovações próprias. A produção
+confirmada continua sendo a base, pois nenhum destino recebeu a tentativa.
+
+Se houver qualquer recibo, mesmo com timeout/estado desconhecido no banco da
+esteira, `abandon` recusa. Preservar a publicação parcial, reconciliar e retomar.
+Use o mesmo `--db` e `--provider-dir` do início; a identidade do arquivo
+`provider.sqlite` é vinculada à tentativa. A prova de ausência de efeitos vale
+para o journal local síncrono; serviço real pode ter resultado atrasado ou
+incerto e precisa de procedimento de recuperação próprio.
+
 **Evidência:** estado do banco, recibos do provedor falso e eventos de reconciliação.
 Uma publicação parcial nunca recebe estado de sucesso total.
 

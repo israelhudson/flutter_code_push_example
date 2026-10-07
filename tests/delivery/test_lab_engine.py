@@ -153,6 +153,40 @@ class LaboratoryTests(unittest.TestCase):
         self.assertEqual(result['destinations']['android']['state'], 'falha')
         self.assertIn('incompatibilidade', result['destinations']['android']['error'])
         self.assertEqual(self.receipt_count(), 0)
+        closed = self.store.abandon(candidate['candidate_id'], self.repo, self.publisher)
+        self.assertEqual((closed['state'], closed['count']), ('encerrada_sem_efeito', 0))
+        self.assertEqual(self.store.production(), self.production)
+        with self.assertRaises(ValueError):
+            self.publish(candidate, 'repeat-incompatible')
+        corrected = self.prepare(self.manifest(rc=2))
+        self.assertEqual((corrected['state'], corrected['count']), ('em_aprovacao', 0))
+
+    def test_abandon_refuses_confirmed_or_unknown_effect_in_same_provider(self):
+        candidate = self.prepare()
+        self.approve_both(candidate)
+        self.publish(candidate, publisher=FakePublisher(self.publisher.directory, {'android': 'after'}))
+        self.assertEqual(self.store.status(candidate['candidate_id'])['destinations']['android']['state'], 'resultado_desconhecido')
+        with self.assertRaisesRegex(ValueError, 'efeito confirmado'):
+            self.store.abandon(candidate['candidate_id'], self.repo, self.publisher)
+        self.store.reconcile(candidate['candidate_id'], self.repo, self.publisher)
+        with self.assertRaisesRegex(ValueError, 'efeito confirmado'):
+            self.store.abandon(candidate['candidate_id'], self.repo, self.publisher)
+        self.assertEqual(self.store.status(candidate['candidate_id'])['state'], 'parcial')
+        self.assertEqual(self.publish(candidate, 'resume')['state'], 'concluida')
+
+    def test_recovery_cannot_switch_provider_to_claim_no_effects_or_repeat(self):
+        candidate = self.prepare()
+        self.approve_both(candidate)
+        self.publish(candidate, publisher=FakePublisher(self.publisher.directory, {'android': 'after'}))
+        other = FakePublisher(self.folder / 'wrong-provider')
+        with self.assertRaisesRegex(ValueError, 'Provedor diferente'):
+            self.store.reconcile(candidate['candidate_id'], self.repo, other)
+        with self.assertRaisesRegex(ValueError, 'Provedor diferente'):
+            self.store.abandon(candidate['candidate_id'], self.repo, other)
+        with self.assertRaisesRegex(ValueError, 'Provedor diferente'):
+            self.publish(candidate, 'resume-wrong', publisher=other)
+        with closing(sqlite3.connect(other.db_path)) as db:
+            self.assertEqual(db.execute('SELECT count(*) FROM receipts').fetchone()[0], 0)
 
     def test_missing_base_evidence_and_native_change_block_publication(self):
         targets = deepcopy(self.targets)

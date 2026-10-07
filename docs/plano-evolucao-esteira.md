@@ -181,7 +181,7 @@ No MVP, destinos obrigatórios em “pendente” ou “loja necessária” imped
 
 Estado previsto: `preparando → em_aprovacao → autorizada → publicando → concluida`.
 
-Estados de exceção: `bloqueada`, `substituida`, `expirada` e `parcial`. A palavra “autorizada” significa apenas que o comando final pode ser solicitado.
+Estados de exceção: `bloqueada`, `substituida`, `expirada` e `parcial`. O encerramento local comprovadamente sem efeitos usa `encerrada_sem_efeito`. A palavra “autorizada” significa apenas que o comando final pode ser solicitado.
 
 | Situação | Resultado |
 |---|---|
@@ -233,6 +233,8 @@ A identidade real de Israel e os papéis simulados continuam explícitos durante
 Cada destino guarda tentativa, estado, chave de idempotência, base alvo, SHA, identificador remoto, artefato/hash e instante confirmado. Estados mínimos: `pendente`, `executando`, `sucesso`, `falha`, `resultado_desconhecido`.
 
 **Exemplo hipotético:** Android confirmou patch 7; iOS falhou; web confirmou publicação. A entrega fica **parcial**. A retomada consulta o que já ocorreu e tenta apenas o iOS pendente, sem recriar patch Android nem reenviar web. Se mudar o conteúdo ou a base para corrigir a falha, é outra RC.
+
+Se a tentativa falhou antes de qualquer efeito, `lab.py abandon --candidate RC --repo REPOSITORIO` permite encerrá-la após consultar todos os destinos no mesmo journal do FakePublisher. Registra `abandon_no_effect`, muda para `encerrada_sem_efeito` e desativa os avais; a correção segue numa nova RC com preview/manifesto e aprovações novos. Qualquer recibo, mesmo após timeout ainda desconhecido para a esteira, recusa esse encerramento e exige preservar/reconciliar/retomar a publicação parcial. O caminho de `provider.sqlite` fica vinculado à tentativa: manter o mesmo `--provider-dir` na recuperação. Essa prova de zero efeitos vale para o journal local síncrono; não presumir que um lookup vazio de serviço externo ofereça a mesma garantia.
 
 Depois de sucesso confirmado em cada destino, criar a respectiva tag no **mesmo SHA aprovado**. Nomes propostos, ainda sujeitos à revisão das proteções:
 
@@ -382,6 +384,8 @@ Os resultados são critérios de aceite. As suítes `test_lab_engine.py`, `test_
 | Revogação durante execução | Impedir próximos efeitos; registrar e reconciliar os efeitos já confirmados. |
 | Android publicado e iOS falha | Entrega parcial; retomada do iOS sem duplicar Android. |
 | Timeout ou processo cai após sucesso remoto | Consultar provedor e reconciliar antes de repetir; recuperar tags/recibos faltantes. |
+| Warning/falha antes de qualquer efeito no provedor falso | Encerramento auditado `abandon` consulta o journal, desativa avais e permite nova RC; produção permanece na base anterior. |
+| Pedido de encerramento com recibo ou outro provider-dir | Recusar; preservar o journal e reconciliar/retomar os efeitos existentes. |
 | Urgência durante aprovação ou publicação | Invalidar RC anterior; se houver efeito em andamento, reconciliar primeiro. |
 
 ## Decisões pendentes no momento certo

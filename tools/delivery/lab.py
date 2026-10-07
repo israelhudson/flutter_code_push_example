@@ -69,6 +69,9 @@ def build_parser():
     reconcile = commands.add_parser('reconcile', help='Consultar efeitos pendentes no provedor falso.')
     reconcile.add_argument('--candidate', required=True)
     reconcile.add_argument('--repo', required=True)
+    abandon = commands.add_parser('abandon', help='Encerrar tentativa comprovadamente sem efeitos; exige nova RC.')
+    abandon.add_argument('--candidate', required=True)
+    abandon.add_argument('--repo', required=True)
     return parser
 
 
@@ -112,6 +115,8 @@ def execute(args):
     if args.command == 'publish':
         return store.publish(args.candidate, args.manifest_hash, args.command_id,
                              Path(args.repo), adapter, actor=OPERATOR)
+    if args.command == 'abandon':
+        return store.abandon(args.candidate, Path(args.repo), adapter, actor=OPERATOR)
     return store.reconcile(args.candidate, Path(args.repo), adapter, actor=OPERATOR)
 
 
