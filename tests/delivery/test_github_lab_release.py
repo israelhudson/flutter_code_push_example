@@ -3,11 +3,16 @@ import base64
 from contextlib import closing
 import copy
 import hashlib
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
+import os
 from pathlib import Path
 import sqlite3
+import shutil
+import subprocess
 import sys
 import tempfile
+import threading
 import unittest
 from unittest.mock import patch
 
@@ -299,18 +304,90 @@ class GitHubLabReleaseTests(unittest.TestCase):
     def test_upload_uses_absolute_github_uploads_url_and_sanitizes_cli_errors(self):
         with patch.object(release.subprocess, 'run') as command:
             command.return_value.returncode = 0
-            command.return_value.stdout = b'{"id":601}'
+            command.return_value.stdout = b'HTTP/2.0 201 Created\r\nContent-Type: application/json\r\n\r\n{"id":601}'
             release.AssetAPI().upload(500, 'preview.zip', b'frozen zip')
             args = command.call_args.args[0]
             self.assertEqual(args[args.index('--hostname') + 1], 'github.com')
             self.assertIn('https://uploads.github.com/repos/' + release.REPO + '/releases/500/assets?name=preview.zip', args)
             self.assertFalse(any('/api/v3/' in arg for arg in args))
             self.assertEqual(command.call_args.kwargs['input'], b'frozen zip')
+            self.assertIn('Content-Length: 10', args)
+            self.assertIn('--include', args)
             command.return_value.returncode = 1
             command.return_value.stderr = b'deliberately-secret-value'
+            command.return_value.stdout = b'HTTP/2.0 411 Length Required\r\nX-Private: deliberately-secret-value\r\n\r\n{}'
             with self.assertRaises(GitDataAPIError) as error:
                 release.AssetAPI().upload(500, 'preview.zip', b'frozen zip')
+            self.assertEqual(error.exception.status, 411)
             self.assertNotIn('deliberately-secret-value', str(error.exception))
+
+    @unittest.skipUnless(shutil.which('gh'), 'Wire regression needs the GitHub CLI, offline localhost only')
+    def test_real_gh_stdin_upload_requires_explicit_byte_length_and_preserves_bytes(self):
+        data = '{"nota":"versão congelada · laboratório"}'.encode('utf-8')
+        received = []
+        class LocalUpload(BaseHTTPRequestHandler):
+            def log_message(self, *args):
+                pass  # No HTTP headers or credentials printed by the stub.
+
+            def do_POST(self):
+                length = self.headers.get('Content-Length')
+                record = {'length': length, 'transfer_encoding': self.headers.get('Transfer-Encoding'),
+                          'path': self.path, 'body': None}
+                received.append(record)
+                if length is None:
+                    self.send_response(411)
+                    payload = b'{"message":"Content-Length required"}'
+                else:
+                    record['body'] = self.rfile.read(int(length))
+                    self.send_response(201)
+                    payload = json.dumps({'id': 601, 'name': 'candidate.json', 'state': 'uploaded',
+                                          'size': len(record['body']), 'digest': 'sha256:' + release.sha256(record['body'])}).encode()
+                self.send_header('Content-Type', 'application/json')
+                self.send_header('Content-Length', str(len(payload)))
+                self.send_header('Connection', 'close')
+                self.end_headers(); self.wfile.write(payload)
+
+        server = ThreadingHTTPServer(('127.0.0.1', 0), LocalUpload)
+        server.daemon_threads = True
+        worker = threading.Thread(target=server.serve_forever, daemon=True)
+        worker.start()
+        self.addCleanup(server.server_close)
+        self.addCleanup(server.shutdown)
+        config = self.folder / 'empty-gh-config'
+        config.mkdir()
+        environment = {'PATH': os.environ.get('PATH', ''), 'GH_CONFIG_DIR': str(config),
+                       'GH_TOKEN': 'offline-synthetic-token', 'GH_PROMPT_DISABLED': '1',
+                       'GH_TELEMETRY': 'disabled', 'GH_NO_UPDATE_NOTIFIER': '1',
+                       'GH_NO_EXTENSION_UPDATE_NOTIFIER': '1',
+                       'XDG_STATE_HOME': str(self.folder / 'gh-state'),
+                       'XDG_DATA_HOME': str(self.folder / 'gh-data'),
+                       'XDG_CACHE_HOME': str(self.folder / 'gh-cache'),
+                       'NO_PROXY': '127.0.0.1'}
+        endpoint = '/repos/' + release.REPO + '/releases/500/assets?name=candidate.json'
+        local_url = 'http://127.0.0.1:' + str(server.server_port) + endpoint
+        native_run = subprocess.run
+        old = native_run(['gh', 'api', '--hostname', 'github.com', local_url, '--method', 'POST',
+                          '--input', '-', '--include', '-H', 'Content-Type: application/octet-stream'],
+                         input=data, capture_output=True, env=environment, timeout=10, check=False)
+        self.assertNotEqual(old.returncode, 0)
+        self.assertIn(b'411', old.stdout)
+        self.assertIsNone(received[0]['length'])
+
+        def localhost_only(args, **kwargs):
+            args = list(args)
+            remote = 'https://uploads.github.com' + endpoint
+            self.assertIn(remote, args)
+            args[args.index(remote)] = local_url
+            kwargs['env'] = environment
+            return native_run(args, **kwargs)
+        with patch.object(release.subprocess, 'run', side_effect=localhost_only):
+            asset = release.AssetAPI().upload(500, 'candidate.json', data)
+        release.verify_asset(asset, 'candidate.json', data)
+        self.assertEqual(len(received), 2)
+        self.assertEqual(received[1]['length'], str(len(data)))
+        self.assertIsNone(received[1]['transfer_encoding'])
+        self.assertEqual(received[1]['body'], data)
+        self.assertEqual(received[1]['path'], endpoint)
 
 
 if __name__ == '__main__':

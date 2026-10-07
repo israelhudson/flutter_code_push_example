@@ -268,18 +268,28 @@ class AssetAPI:
         if type(release_id) is not int or release_id <= 0 or name not in ASSETS:
             raise ReleaseError('Identidade de upload fora do contrato.')
         path = 'https://uploads.github.com/' + BASE + '/releases/' + str(release_id) + '/assets?name=' + quote(name, safe='')
-        args = ['gh', 'api', '--hostname', 'github.com', path, '--method', 'POST', '--input', '-',
-                '-H', 'Content-Type: application/octet-stream', '-H', 'Accept: application/vnd.github+json']
+        # gh treats stdin as an unknown-size reader. The uploads endpoint requires
+        # Content-Length, so set the byte length rather than sending chunked input.
+        # Include headers only inside this captured subprocess to retain a safe
+        # numeric HTTP status; raw headers/body/stderr never enter the audit log.
+        args = ['gh', 'api', '--hostname', 'github.com', path, '--method', 'POST', '--input', '-', '--include',
+                '-H', 'Content-Type: application/octet-stream', '-H', 'Content-Length: ' + str(len(data)),
+                '-H', 'Accept: application/vnd.github+json']
         try:
             result = subprocess.run(args, input=data, capture_output=True, timeout=60, check=False)
         except (OSError, subprocess.TimeoutExpired):
             raise GitDataAPIError() from None
-        if result.returncode:
-            raise GitDataAPIError()  # Never expose gh stderr, response bytes or credentials.
+        status = re.search(rb'HTTP/[^\s]+\s+(\d{3})', result.stdout)
+        code = int(status[1]) if status else None
+        if result.returncode or code != 201:
+            raise GitDataAPIError(code)  # Never expose gh stderr, response bytes or credentials.
+        parts = re.split(rb'\r?\n\r?\n', result.stdout, maxsplit=1)
+        if len(parts) != 2:
+            raise GitDataAPIError(code)
         try:
-            return json.loads(result.stdout)
+            return json.loads(parts[1])
         except (ValueError, UnicodeDecodeError):
-            raise GitDataAPIError() from None
+            raise GitDataAPIError(code) from None
 
 
 def release_body(plan):
