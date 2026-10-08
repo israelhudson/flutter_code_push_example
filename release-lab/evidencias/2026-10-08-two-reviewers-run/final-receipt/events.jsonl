@@ -1,0 +1,6 @@
+{"action":"prepare","at":"2026-10-08T21:14:53.296616+00:00","candidate":"v1.4.0-rc.1","run_id":"37845381675","source_sha":"9e0320fca6fdfba5931d6c80d9181c362ac33c17"}
+{"action":"evaluation_started","at":"2026-10-08T21:15:07.907407+00:00","candidate":"v1.4.0-rc.1","result":"d38c1a5517e7109fb499057f38fc897c7447c7807a227aa37ad15d672285bc63","run_id":"37845381675"}
+{"action":"report_frozen","at":"2026-10-08T21:17:46.050331+00:00","candidate":"v1.4.0-rc.1","result":"2e8b4f27ab20de7c7f4bb44657220342e14b4a1349f4535a9e4bfe72d5f306ca","run_id":"37845381675"}
+{"action":"approval_second","at":"2026-10-08T21:27:53.296132+00:00","candidate":"v1.4.0-rc.1","result":"00ed3f891845d371b106e86126501a4feb343d0d8c5ff1643038d5e23be5b330","run_id":"37845381675"}
+{"action":"approval_first","at":"2026-10-08T21:30:30.406645+00:00","candidate":"v1.4.0-rc.1","result":"0b8c56bab9445586e60b0edf60c43e63653fb7ea7823398d656c87fd00fe4c1d","run_id":"37845381675"}
+{"action":"human_command_simulated_result","at":"2026-10-08T21:32:38.618546+00:00","candidate":"v1.4.0-rc.1","result":"60e1967c44f7f3fbc0108f1b3843264e3be2688f1302107b82160c9e69637a5f","run_id":"37845381675"}
