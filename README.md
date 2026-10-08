@@ -2,13 +2,15 @@
 
 ## Esteira atual do laboratório
 
-Use **Actions → LAB - Preparar candidata**, informando versão e título. O fluxo cria a RC, valida o app e publica o preview. **Israel E Fabrícia** aprovam; depois **Israel OU Fabrícia** dá PUBLICAR em uma etapa separada. O recibo final é **SIMULADO**, sem distribuição mobile.
+Use **Actions → LAB - Preparar candidata**, informando versão e título. O fluxo cria a RC, valida o app e publica o preview. **Israel E Fabrícia** aprovam; depois **Israel OU Fabrícia** autoriza PUBLICAR em uma etapa separada. A promoção cria **uma nova tag estável e uma Release real no GitHub, no mesmo commit da RC aprovada**, preservando as tags candidatas. Não distribui o app nem gera patch mobile.
 
-[Passo a passo do fluxo com dois aprovadores](docs/delivery/FLUXO-DOIS-APROVADORES.md). Os workflows anteriores foram arquivados em [workflows-historicos](docs/delivery/workflows-historicos/); seus runs e evidências permanecem preservados.
+[Passo a passo do fluxo com dois aprovadores](docs/delivery/FLUXO-DOIS-APROVADORES.md) · [Cenários, logs, evidências e lições para Amulets](docs/delivery/VALIDACAO-E-PROMOCAO.md). A matriz distingue implementação, testes locais e validação remota. O primeiro ensaio tinha resultado final simulado; novas permissões de publicação exigem nova RC e novos avais.
+
+Os workflows anteriores foram arquivados em [workflows-historicos](docs/delivery/workflows-historicos/); seus runs e evidências permanecem preservados. Para uma promoção parcial, use **LAB - Recuperar promoção** com a tag RC original, após conferir o diagnóstico e obter nova autorização final.
 
 Prática do uso do code push do Flutter com ShoreBird.
 
-## Ensaiar a esteira agora
+## Simulação local histórica
 
 ```bash
 python3 tools/delivery/lab.py demo --folder build/delivery-lab/meu-primeiro-ensaio
@@ -165,11 +167,11 @@ Mais informações:
 - [Instalação do Flutter](https://docs.flutter.dev/get-started/install)
 - [Documentação do Shorebird](https://docs.shorebird.dev/)
 
-## Laboratório de aprovação de versões no GitHub
+## Histórico do laboratório de aprovação de versões
 
-[Guia da POC: preview web, aprovação 2/2 e publicação dry-run](docs/delivery/README.md).
-Preparar candidata é manual no Actions; PRs e merges não criam RCs por conta própria.
-Reviews e merge do registro não publicam. Publicar agora é um workflow separado,
-que exige 2/2 real e pode criar somente uma GitHub pre-release de laboratório.
-A sessão local usa SQLite; a fila local e os papéis simulados não viram aprovações
-do GitHub. A implementação não gera patches Shorebird nem distribui aplicativos.
+[Guia anterior da POC: preview web, aprovação 2/2 e publicação dry-run](docs/delivery/README.md).
+A sessão local histórica usa SQLite; a fila local e os papéis simulados não viram
+aprovações do GitHub. O caminho ativo é o [fluxo descrito no início deste README](docs/delivery/FLUXO-DOIS-APROVADORES.md):
+preparação manual, avaliação, dois avais, comando separado e promoção GitHub-only.
+PRs e merges não criam RCs por conta própria. Nenhum desses caminhos gera patches
+Shorebird ou distribui aplicativos.

@@ -1,28 +1,36 @@
-# Laboratório: Israel e Fabrícia aprovam a mesma candidata
+# Laboratório: aprovar a candidata e promover a versão no GitHub
 
-Este fluxo substitui as execuções dos workflows antigos, preservando seus arquivos
-e o histórico. Sua ativação exige integrar a implementação na `main` e conferir
-os Environments e as proteções descritos abaixo. A existência deste guia não
-comprova um ensaio com duas contas humanas.
+A entrega passa por três decisões diferentes: **revisar o código**, **aprovar a
+candidata** e **mandar publicar**. Israel **E** Fabrícia aprovam a mesma RC;
+depois Israel **OU** Fabrícia autoriza a promoção. A promoção cria uma tag estável
+e uma Release real no GitHub, apontando ao commit aprovado. **Não distribui o
+aplicativo**, não gera patch Shorebird e não envia builds às lojas.
 
-**O preview, o changelog, as duas aprovações e a decisão de PUBLICAR são reais.
-Somente o resultado final é SIMULADO.** Não há build mobile, geração de patch,
-envio para lojas ou distribuição de aplicativo neste fluxo.
+Este guia descreve a implementação de promoção GitHub-only. Sua existência não
+prova ativação remota nem a execução de todos os cenários. Consulte a
+[matriz de validação e evidências](VALIDACAO-E-PROMOCAO.md) para separar o que
+passou em testes locais, o que foi observado no GitHub e o que permanece pendente.
+A candidata do primeiro ensaio, `v1.4.0-rc.1`, tinha resultado final simulado;
+suas aprovações não autorizam retroativamente uma publicação real.
 
 ```mermaid
 flowchart TD
-  PR[PR de código revisado] --> Main[Merge na main]
+  PR[PR revisado e CI verde] --> Main[Merge na main]
   Main --> Prepare[Preparar candidata: versão e título]
-  Prepare --> Release[Uma branch release por versão]
+  Prepare --> Release[Branch release por versão]
   Release --> RC[Tag RC imutável]
-  RC --> Eval[Testes + preview web + changelog]
-  Eval --> Israel[Israel aprova]
-  Eval --> Fabricia[Fabrícia aprova]
-  Israel --> Publish[Israel OU Fabrícia: PUBLICAR]
-  Fabricia --> Publish
-  Publish --> Receipt[Recibo SIMULADO: app não distribuído]
-  Eval --> Fix[Correção por PR na release]
-  Fix --> Next[Nova RC: avaliações e aprovações novas]
+  RC --> Eval[Analyze + testes + preview HTTP + changelog]
+  Eval --> Israel[Israel: registrar aprovação]
+  Eval --> Fabricia[Fabrícia: registrar aprovação]
+  Israel --> Both[Os dois jobs concluíram e os avais foram registrados]
+  Fabricia --> Both
+  Both --> Authorize[Israel OU Fabrícia: autorizar PUBLICAR]
+  Authorize --> Verify[Reconferir RC ativa, relatório e três decisões]
+  Verify --> Stable[Tag estável no mesmo commit + Release no GitHub]
+  Stable --> Receipt[Recibo verificado: sem distribuição mobile]
+  Eval --> Reject[Rejeição ou correção necessária]
+  Reject --> Fix[PR revisado para a branch release]
+  Fix --> Next[RC seguinte: novos testes e novos avais]
   Next --> Eval
 ```
 
@@ -30,158 +38,239 @@ flowchart TD
 
 | Responsabilidade | Conta/regra do laboratório |
 |---|---|
-| Preparar a entrega | Israel, `israelhudson` |
+| Preparar uma candidata ou iniciar recuperação | Israel, `israelhudson` |
 | Aprovar a candidata | Israel **E** Fabrícia, `fahnassau30` |
-| Acionar a decisão final | Israel **OU** Fabrícia |
+| Dar o comando final de publicação | Israel **OU** Fabrícia |
 | Revisar PRs de código | Revisor técnico elegível, diferente do autor do PR |
 
-Fabrícia não se torna revisora técnica automaticamente. O autor não pode aprovar
-o próprio PR. A revisão do código é independente da aprovação da entrega.
-No laboratório, uma pessoa pode preparar e aprovar uma candidata; por isso os
-Environments permitem aprovação pelo iniciador. Essa exceção não remove a regra
-de autoria dos PRs.
+Fabrícia não se torna revisora técnica automaticamente. O autor de um PR não
+pode aprovar o próprio PR. Os checks e as reviews do código são independentes
+dos avais da candidata.
 
-Uma única lista de revisores de Environment funciona como **OU**. Para exigir
-os dois, há duas etapas obrigatórias: `aprovacao-israel` e
-`aprovacao-fahnassau30`. A etapa final usa `autorizar-publicacao` com ambos como
-revisores possíveis, depois das duas primeiras etapas. Aprovar a versão não
-executa automaticamente a decisão final.
+Uma lista de revisores em um único GitHub Environment funciona como **OU**.
+Por isso existem duas etapas obrigatórias, com uma conta exclusiva cada:
+`aprovacao-israel` e `aprovacao-fahnassau30`. A terceira etapa usa
+`autorizar-publicacao` com ambas as contas, só depois das duas primeiras terem
+concluído. No LAB, uma conta pode preparar e aprovar uma candidata, mas essa
+exceção não muda a regra de autoria dos PRs. Todos os Environments recusam bypass
+administrativo.
+
+O histórico do GitHub comprova **qual conta autenticada registrou a review**.
+Ele não comprova quem estava operando essa conta nem que houve uma análise
+independente. Ensaios automatizados autorizados com as duas contas devem ser
+identificados como teste de integração; não substituem uma revisão de produto
+por duas pessoas.
 
 ## Preparar a candidata
 
-1. Integre os PRs de código revisados na `main`. Ela acumula as mudanças; este
-   fluxo não usa uma branch beta.
-2. No Actions, abra **Preparar candidata** e selecione **Run workflow**.
-3. Informe a **versão** e um **título da entrega**. Não copie SHA, hash ou ID de
-   artefato: a automação resolve essas identidades e as registra.
-4. Aguarde a avaliação. Ela testa o código, gera um preview Flutter web real e
-   registra o changelog e a classificação preliminar por plataforma.
-5. Abra o link fixo do preview e o registro da candidata no resumo da execução.
+1. Integre os PRs de código revisados na `main`. Ela acumula mudanças; não existe
+   branch beta neste fluxo.
+2. No Actions, abra **LAB - Preparar candidata** e selecione **Run workflow**
+   na `main`.
+3. Informe **versão** e **título**. A automação resolve e registra commit, tags,
+   identidade dos artefatos e ferramenta confiável; ninguém precisa copiar hashes.
+4. Aguarde `flutter analyze`, `flutter test`, build web e publicação do preview.
+   O link é verificado por HTTP antes de abrir as aprovações.
+5. Leia o resumo da candidata: título, versão, tag RC, preview, changelog
+   acumulado, classificação por plataforma e **modo de publicação**.
 
-Para uma versão `1.4.0`, o primeiro corte cria `release/1.4.0` e a tag
-`v1.4.0-rc.1`. O snapshot é código versionado. O preview é o artefato web
-compilado desse código; são evidências diferentes. A candidata vincula tag,
-commit, versão, título, preview e changelog, sem depender de “latest”.
+Para a versão `1.4.0`, o primeiro corte cria `release/1.4.0` e
+`v1.4.0-rc.1`. Uma nova RC da mesma versão usa o HEAD da branch release.
+O código não é reconstruído a partir de uma `main` que avançou durante a revisão.
+O registro congela fonte, ferramentas, política, relatório e preview. Não usa
+“latest” para decidir o que foi aprovado.
 
-Tags criadas pelo `GITHUB_TOKEN` não iniciam automaticamente um workflow de push.
-A preparação chama a avaliação explicitamente. Isso evita depender de um evento
-que o GitHub suprime e evita avaliações duplicadas.
+Tags criadas pelo `GITHUB_TOKEN` não iniciam automaticamente outro workflow de
+push. A preparação chama a avaliação reutilizável explicitamente. Uma tag criada
+fora do diário confiável não autoriza uma entrega: a avaliação a recusa.
 
-Uma tag enviada manualmente só pode avaliar uma candidata que já exista no
-diário confiável. Criar uma tag fora desse registro falha fechado. O caminho
-operacional completo desta versão é **Preparar candidata** no Actions.
+Existe uma candidata ativa de cada vez. Preparar outra candidata preserva a RC
+anterior e invalida sua possibilidade de publicação. Rejeição, cancelamento,
+falha técnica ou etapa ignorada nunca contam como aprovação. Uma promoção
+parcial já iniciada exige recuperação antes de permitir outro corte.
 
-Existe apenas uma candidata ativa. Outra RC preserva o histórico da anterior e
-bloqueia sua decisão final. Falha técnica, rejeição ou cancelamento não contam
-como aprovação.
+## O que significa “Approve and deploy”
 
-Israel e Fabrícia podem aprovar em qualquer ordem. A etapa PUBLICAR exige a
-conclusão bem-sucedida das duas etapas obrigatórias.
+Esse texto pertence à interface do GitHub. **O ambiente selecionado define o que
+o clique libera.** Nos ambientes de aprovação, ele libera somente um job que
+confere a conta autenticada e grava o aval da RC. O job não compila novamente o
+app, não cria uma tag estável e não publica uma Release.
 
-## Aprovar e decidir PUBLICAR
+| Etapa visível no Actions | Efeito depois do clique |
+|---|---|
+| **Registrar aprovação — Israel** | Conferir e registrar somente o aval da conta de Israel |
+| **Registrar aprovação — Fabrícia** | Conferir e registrar somente o aval da conta de Fabrícia |
+| **AUTORIZAR PUBLICAR — Israel OU Fabrícia, após os dois avais** | Registrar o comando final; liberar a reconferência e promoção |
+| **PROMOVER — tag estável e Release no GitHub** | Criar/confirmar a tag estável e a Release no commit aprovado |
 
-1. **Israel** abre a execução da candidata, consulta o preview e o changelog e
-   aprova sua etapa em **Review deployments**.
-2. **Fabrícia**, autenticada na própria conta, consulta os mesmos registros e
-   aprova a etapa dela.
-3. Só depois das duas aprovações, **Israel ou Fabrícia** revisa a etapa
-   **PUBLICAR** e toma a decisão final separadamente.
-4. A automação reconfere a candidata ativa, suas identidades e o histórico real
-   das aprovações. Registra um recibo explícito de **resultado SIMULADO**.
+O número no botão é a quantidade de Environments selecionados, não o número de
+aprovações ainda necessárias. Mesmo que uma pessoa aprove primeiro, **a outra
+aprovação continua obrigatória**. Depois de 2/2, ainda falta o comando final
+separado. Os jobs que registram os avais precisam rodar para validar e guardar
+evidência; vê-los executar não significa que a versão foi publicada.
 
-Ter permissão para iniciar um workflow não é uma aprovação. O iniciador da
-execução não identifica quem aprovou um Environment: a automação confere o
-histórico oficial de reviews, incluindo a identidade da conta e o Environment
-exato. Campos editáveis, comentários, fixtures e um recibo anterior não
+## Aprovar e mandar publicar
+
+1. Israel abre a execução com a própria conta, lê o preview e o changelog e
+   aprova `aprovacao-israel` em **Review deployments**.
+2. Fabrícia faz o mesmo para `aprovacao-fahnassau30`. A ordem é livre.
+3. Aguarde os dois jobs de registro terminarem com sucesso. Um clique seguido
+   de falha de validação não basta para liberar publicação.
+4. Em **Review deployments**, Israel ou Fabrícia seleciona
+   `autorizar-publicacao`. Este é o comando final separado, após os dois avais.
+5. O job de promoção reconfere RC, commit, relatório, política, proteções e
+   histórico das três reviews antes de produzir efeitos no GitHub.
+   As proteções são consultadas novamente depois da espera pelas reviews e
+   antes da criação da tag e da Release; a validação inicial não é suficiente.
+6. Confira o recibo e abra a Release resultante. A automação verifica por GET a
+   tag e a Release; somente então marca a promoção como concluída.
+
+Permissão para iniciar um workflow não equivale a aprovação. `github.actor`
+identifica o iniciador, não necessariamente a conta que aprovou. A automação
+consulta o histórico oficial de reviews do run e os Environments exatos. Recibos
+locais, comentários, hashes digitados e decisões de uma RC anterior não
 substituem essa evidência.
 
-O agente pode preparar e conferir a execução, mas não pode fabricar uma
-aprovação da conta de Fabrícia. As duas contas precisam efetivamente aprovar.
+## Tags e Release: a RC permanece no histórico
 
-## Corrigir uma candidata
+Promover `v1.4.0-rc.2` cria **uma nova tag `v1.4.0`** no mesmo commit. Não renomeia,
+move ou apaga a RC. A GitHub Release usa a tag estável, o título e o changelog do
+relatório aprovado, com `draft=false` e `prerelease=false`.
 
-1. Crie uma branch de correção a partir de `release/1.4.0`.
-2. Abra um PR para essa branch release, obtenha revisão técnica e integre o
-   conserto depois dos testes.
-3. Execute **Preparar candidata** novamente para a mesma versão e um título
-   atualizado. A automação fixa o HEAD da release em `v1.4.0-rc.2`.
-4. Examine o novo preview e changelog. Israel e Fabrícia aprovam novamente; os
-   avais da RC anterior não são reutilizados.
-5. Leve o conserto para a `main` por outro PR, preservando as features novas que
-   já estiverem nela. Não importe essas features para a release nem reescreva
-   o histórico.
+| Objeto | Significado |
+|---|---|
+| `release/1.4.0` | Linha de correções dessa entrega |
+| `v1.4.0-rc.1` | Primeiro snapshot candidato, preservado mesmo se rejeitado |
+| `v1.4.0-rc.2` | Novo snapshot após correção, com avaliações e avais novos |
+| `v1.4.0` | Snapshot estável aprovado; mesmo commit da RC promovida |
+| GitHub Release de `v1.4.0` | Registro real da versão e das evidências no GitHub |
 
-Não use **Re-run jobs** para aproveitar decisões antigas: tentativas posteriores
-da mesma execução são recusadas. Para falha ou alteração da candidata, prepare
-a próxima RC na mesma branch. Tags anteriores nunca são movidas ou apagadas.
+Se a tag estável já existir com outro commit, a operação falha sem sobrescrevê-la.
+Uma Release existente com identidade ou conteúdo divergentes também bloqueia a
+promoção. Receber sucesso de um POST não basta: o estado publicado precisa ser
+lido e conferido. A branch release não é apagada automaticamente.
 
-Em uma futura publicação real, a tag final deverá apontar ao commit aprovado da
-release, mesmo se a `main` já tiver avançado. A branch release só será removida
-depois da entrega e da integração dos consertos. Este laboratório registra
-somente um recibo; não simula que uma entrega mobile aconteceu.
+O rótulo “estável” representa promoção no catálogo GitHub deste LAB. Não prova
+que a versão chegou aos clientes do aplicativo ou à produção da Amulets.
 
-## Classificação antes da aprovação
+## Rejeitar ou corrigir uma candidata: RC1 → RC2
 
-O changelog informa, por plataforma, a base pretendida, a previsão e o motivo:
+1. Registre a rejeição com comentário no Environment, explicando o problema.
+   A candidata não pode avançar com um gate rejeitado.
+2. Crie uma branch de correção a partir de `release/1.4.0`.
+3. Abra PR para `release/1.4.0`, obtenha revisão técnica de uma pessoa elegível
+   e integre somente depois dos checks verdes. Não faça push direto à release.
+4. Execute **Preparar candidata** novamente, com a mesma versão e título
+   atualizado. A automação cria `v1.4.0-rc.2` a partir da release corrigida.
+5. Confira novo preview e changelog. **Nenhum aval da RC1 é reaproveitado**;
+   Israel e Fabrícia aprovam novamente e alguém dá novo comando final.
+6. Promova RC2: a tag estável aponta ao commit de RC2, mesmo que a `main` tenha
+   recebido outras features nesse intervalo.
+7. Leve a correção para a `main` por outro PR revisado. Preserve as features
+   que já estão nela; não importe essas features para a release nem reescreva o
+   histórico para transportar a correção.
+
+Não use **Re-run jobs** para reaproveitar decisões: tentativas posteriores do
+mesmo run são recusadas. Falha antes de iniciar uma promoção pede uma nova RC.
+Falha **depois da intenção de publicar ter sido gravada** segue a recuperação
+abaixo. A candidata simulada do primeiro ensaio fica preservada; prepare outra
+RC com modo real explícito no relatório e obtenha novos avais.
+
+## Recuperar uma promoção parcial
+
+A tag e a Release são duas chamadas diferentes à API. Pode existir tag estável
+sem Release, ou a API pode concluir um POST e a resposta se perder. O diário
+registra a intenção original antes dessas operações e mantém a promoção parcial
+visível. Nessa situação, não corte outra candidata e não apague a tag para tentar
+novamente.
+
+1. Abra **LAB - Recuperar promoção**, na `main`, e informe apenas a **tag RC**.
+2. Leia o diagnóstico. O job inicial consulta a intenção e recupera internamente
+   relatório, commit, ferramentas e run originais; não cria tag ou Release.
+3. Israel ou Fabrícia dá uma **nova autorização de recuperação** no Environment
+   final. A espera humana não segura o bloqueio de publicação.
+4. O job de recuperação reconfere os dois avais e o comando originais, além da
+   nova autorização. Ele completa somente os efeitos ausentes da mesma promoção.
+5. Confira tag, Release, recibo original e registro de quem autorizou a recuperação.
+
+Recuperação não é uma forma de publicar outra RC, trocar o changelog ou dispensar
+avais. Conflito de identidade, política alterada, conta não autorizada ou review
+ambígua bloqueiam a recuperação. O recibo mantém quem deu o comando original e
+registra separadamente a conta que autorizou a recuperação.
+
+## Classificação mobile antes da aprovação
+
+O relatório informa, para Android e iOS, a base pretendida, a previsão e o motivo:
 **Patch possível**, **Loja / nova release nativa** ou **Inconclusivo — alvo
-bloqueado**. A comparação precisa abranger toda a diferença para a release-base,
-incluindo mudanças acumuladas e transitivas; a diferença entre RCs não prova
-compatibilidade mobile.
+bloqueado**. A comparação cobre a diferença acumulada para a release-base;
+o diff entre RCs não prova compatibilidade mobile.
 
-Neste primeiro fluxo não há release-base mobile comprovada. O resultado inicial
-é **Inconclusivo — alvo bloqueado**, claramente registrado antes da aprovação.
-Isso não bloqueia o ensaio web e o recibo simulado, mas impede apresentá-los como
-autorização de patch ou prova de distribuição mobile.
+O LAB ainda não tem release-base mobile comprovada. Portanto a classificação
+inicial é **Inconclusivo — alvo bloqueado**. Isso permite exercitar o catálogo
+GitHub-only, mas não autoriza um patch nem uma entrega móvel. Mudanças nativas,
+SDK e assets incompatíveis exigem nova release nativa. Dependência somente Dart
+exige inspeção do efeito completo; sua presença isolada não prova elegibilidade.
 
-Mudanças nativas, SDK e assets empacotados incompatíveis exigem uma nova release
-nativa. Usar um asset já existente na base ou alterar uma dependência somente
-Dart não força loja automaticamente: é necessário verificar o efeito completo.
-Uma futura geração de patch precisará conferir os artefatos reais do Shorebird,
-sem ignorar incompatibilidades ou trocar silenciosamente o destino aprovado.
+Uma futura integração Shorebird precisa de base e destino exatos, toolchain,
+comparação de artefatos reais, credenciais e verificação no dispositivo. Publicar
+uma Release no GitHub, subir um build à loja e disponibilizá-lo a testers são
+resultados diferentes; cada um precisa de evidência própria.
 
-## Evidências e configuração para ativação
+## Proteções, runners e logs
 
-- Resumos e artefatos do Actions preservam manifesto, changelog, preview, reviews
-  e recibo, com retenção de **90 dias**. Guarde os links e hashes no registro da
-  candidata; um artefato expirado deixa de ser uma evidência consultável.
-- O diário Git mantém os estados ligados à mesma candidata. Proteja sua branch
-  contra exclusão e reescrita; os registros não substituem as reviews oficiais.
-- As tags `v*-rc.*` precisam estar protegidas contra alteração e exclusão, sem
-  bypass. A proteção antiga para `entrega-*-rc.*` não cobre esse novo namespace.
-- Proteja `main` e branches release com revisão técnica. Defina quem pode
-  preparar a candidata e valide a configuração efetiva dos três Environments.
-- Para a instalação inicial, integre o PR de implementação antes de habilitar
-  a nova regra de review técnico. Depois da configuração, PRs exigem uma
-  aprovação de uma pessoa elegível diferente do autor; não fixe Fabrícia nesse
-  papel sem a decisão correspondente.
-- Os dois Environments de aprovação têm um revisor exclusivo cada um. O
-  Environment final contém Israel e Fabrícia. Configure todos sem bypass de
-  administrador e restrinja as referências permitidas ao fluxo confiável.
-- Workflows antigos deixam de aceitar novos eventos; arquivos, runs, releases
-  e capturas anteriores permanecem como histórico. Não use o recibo antigo de
-  um fluxo com uma única conta como prova deste novo fluxo.
+- `main` e `release/**` exigem PR revisado e o check **Flutter analyze e test**.
+  O autor não aprova seu próprio PR; defina quem é revisor técnico elegível.
+- Tags candidatas e estáveis precisam de proteção efetiva contra atualização e
+  exclusão, sem bypass. A proteção antiga `entrega-*-rc.*` não cobre `v*-rc.*`.
+- O diário Git é protegido contra exclusão e reescrita. Cada decisão vincula RC,
+  fonte, relatório, run, conta e Environment. Preserve os registros anteriores.
+  Essa proteção não impede que uma conta com escrita acrescente um commit
+  malicioso em fast-forward ou que um administrador altere as regras. O LAB
+  pressupõe escritores e administradores confiáveis; não é um registro
+  resistente à adulteração por esses atores.
+- Corte, promoção e recuperação usam o mesmo bloqueio curto de mutação. Os jobs
+  de aprovação e autorização não o usam. Assim um corte não pode substituir a
+  RC entre a última conferência e os efeitos externos de uma promoção.
+- O GitHub pode substituir um job que ainda está pendente na mesma concurrency
+  group. Isso não significa sucesso nem deve cancelar uma publicação já rodando;
+  preserve o run cancelado e verifique o diário antes de repetir a ação.
+- Testes e build do aplicativo usam runner com acesso somente de leitura. Um
+  runner novo, com privilégio de Pages, executa só ferramentas confiáveis e
+  valida os bytes recebidos. A promoção e a recuperação também usam runners
+  novos; não executam o app ou dependências com token de escrita.
+- Artefatos do Actions preservam cortes, avaliação, reviews, intenção, recibo e
+  recuperação por 90 dias. Logs, links e checksums precisam ser guardados antes
+  da expiração; um link expirado não é evidência consultável.
+- Workflows antigos permanecem arquivados. Não reative um caminho paralelo para
+  publicar sem os mesmos bloqueios e a mesma identidade aprovada.
 
-Os testes e a compilação do aplicativo rodam em um job com acesso somente de
-leitura. O artefato passa para outro runner, novo, que executa exclusivamente as
-ferramentas confiáveis para publicar. Esse runner confere commit, árvore Git,
-entradas de build, fingerprint e arquivos estáticos antes de importar o preview.
-Repositórios `.git`, links simbólicos, snapshots extras e identidades divergentes
-são recusados; snapshots históricos não são sobrescritos.
+O `GITHUB_TOKEN` precisa ter permissões suficientes para os efeitos no GitHub.
+Criar uma tag em um commit congelado que contém arquivos de workflow pode ser
+recusado quando a autorização de **Workflows write** não estiver disponível,
+especialmente se a `main` avançar durante a revisão. `contents: write` isolado
+não prova que essa operação será aceita. O LAB não contorna uma recusa trocando
+o commit aprovado ou removendo arquivos; guarda a falha e permanece bloqueado.
+Rerun não resolve permissão insuficiente. Uma futura credencial de GitHub App
+com escopo apropriado exige configuração e validação próprias, sem reduzir os
+gates nem expor o token ao build do app.
 
-O aceite inclui: testes falham e bloqueiam; zero ou uma aprovação não liberam
-PUBLICAR; duas aprovações só liberam a decisão separada; uma nova RC exige duas
-novas aprovações; uma RC antiga e tentativas repetidas são recusadas. Testes
-offline desses casos são evidência técnica, não duas aprovações humanas reais.
+## Aplicar à Amulets
 
-## Lições para Amulets
+Migre a política por responsabilidades, e não copiando nomes de contas do LAB.
+O planejamento Amulets usa Samuel **E** Vinícius para a candidata e Samuel
+**OU** Vinícius para o comando final; confirme contas, acessos, preparador e
+revisores técnicos antes de habilitar.
 
-Migre a política por papéis, sem fixar os nomes do laboratório: Samuel **E**
-Vinícius aprovam; Samuel **OU** Vinícius toma a decisão final. Confirme contas,
-acessos, revisão técnica e preparador antes de ativar. Required reviewers de
-Environment para repositório privado dependem do plano GitHub; não presumir que
-os gates deste repositório público estão disponíveis na Amulets privada em Team.
+Confira primeiro o plano GitHub e a disponibilidade de required reviewers no
+repositório privado. Os gates deste LAB público não comprovam disponibilidade
+no privado da Amulets em Team. Defina adaptadores separados para GitHub, stores
+e Shorebird; mantenha plataforma, release-base, destino e resultado congelados.
+O aceite de UI/negócio continua humano, mesmo que os controles sejam ensaiados
+com automação autorizada. Use a [matriz e as lições](VALIDACAO-E-PROMOCAO.md) para
+aplicar apenas comportamentos efetivamente validados.
 
-Fontes oficiais: [Environments e disponibilidade](https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments),
+Fontes oficiais: [Environments e reviewers](https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments),
+[concurrency](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency),
 [eventos e GITHUB_TOKEN](https://docs.github.com/en/actions/concepts/security/github_token),
-[histórico de reviews da execução](https://docs.github.com/en/rest/actions/workflow-runs#get-the-review-history-for-a-workflow-run)
-e [elegibilidade Shorebird](../../referencias/docs/004-shorebird-patch-e-elegibilidade.md).
+[histórico de reviews](https://docs.github.com/en/rest/actions/workflow-runs#get-the-review-history-for-a-workflow-run)
+e [referência Shorebird deste projeto](../../referencias/docs/004-shorebird-patch-e-elegibilidade.md).

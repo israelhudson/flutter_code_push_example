@@ -1,7 +1,8 @@
-"""Two real native approval gates, then a separate human command; LAB receipt only.
+"""Two real approval gates and a separate command for a GitHub-only LAB release.
 
-GitHub contents SHA provides optimistic concurrency for the journal. No app
-publisher, bot approval, store upload or Shorebird command exists in this module.
+GitHub contents SHA provides optimistic concurrency for the journal. Publication
+intents precede every external effect; retries reconcile rather than overwrite.
+No mobile publisher, bot approval, store upload or Shorebird command exists here.
 """
 import argparse
 import base64
@@ -23,6 +24,7 @@ STATE_PATH = 'release-lab/state.json'
 SHA = re.compile(r'[0-9a-f]{40}\Z')
 VERSION = re.compile(r'(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\Z')
 TAG = re.compile(r'v((?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*))-rc\.([1-9][0-9]*)\Z')
+STABLE_TAG = re.compile(r'v((?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*))\Z')
 
 
 class LabError(ValueError):
@@ -48,8 +50,11 @@ def api(path, data=None, method='GET', missing=False):
             '-H', 'Accept: application/vnd.github+json']
     if data is not None:
         args += ['--input', '-']
-    result = subprocess.run(args, input=None if data is None else canonical(data),
-                            text=True, capture_output=True, timeout=60)
+    try:
+        result = subprocess.run(args, input=None if data is None else canonical(data),
+                                text=True, capture_output=True, timeout=60)
+    except subprocess.TimeoutExpired as error:
+        raise LabError('Resposta do GitHub perdida ou indisponível; reconciliar o efeito antes de repetir.') from error
     if result.returncode:
         if missing and '(HTTP 404)' in result.stderr:
             return None
@@ -72,12 +77,22 @@ def identity(person):
     return person.get('id'), person.get('login', '').lower()
 
 
+def publication_mode(policy):
+    # Absence is accepted only for explicitly simulated historical policies.
+    mode = policy.get('publication_mode', 'simulation' if policy.get('result_simulated') is True else None)
+    if (mode not in ('simulation', 'github_release_only')
+            or policy.get('result_simulated') is not (mode == 'simulation')
+            or policy.get('distribution_performed') is not False):
+        raise LabError('Modo de publicação deve distinguir GitHub real de resultado simulado; distribuição mobile permanece bloqueada.')
+    return mode
+
+
 def validate_policy(policy):
     if (policy.get('schema') != 1 or policy.get('repository') != REPOSITORY
             or policy.get('state_branch') != 'codex/release-lab-state'
-            or policy.get('result_simulated') is not True
             or policy.get('distribution_performed') is not False):
         raise LabError('Política fora do laboratório sem distribuição.')
+    publication_mode(policy)
     approvers, publishers, operators = (policy.get(k, []) for k in ('approvers', 'publishers', 'operators'))
     for person in [*approvers, *publishers, *operators]:
         if (not isinstance(person.get('id'), int) or person['id'] <= 0
@@ -112,8 +127,8 @@ def validate_context(policy, operation, env):
     ref = env.get('GITHUB_REF', '')
     if ref != 'refs/heads/main' and not (ref.startswith('refs/tags/') and TAG.fullmatch(ref[10:])):
         raise LabError('Use main para preparar, ou a tag RC conhecida para avaliar.')
-    if operation == 'prepare' and ref != 'refs/heads/main':
-        raise LabError('Preparar candidata exige a main.')
+    if operation in ('prepare', 'recover', 'recovery-inspect') and ref != 'refs/heads/main':
+        raise LabError('Preparação e recuperação manual exigem a main.')
 
 
 def ensure_current(state, tag, source_sha=None):
@@ -191,13 +206,12 @@ def state_write(policy, state, old_sha, message):
     return api(endpoint('contents/' + STATE_PATH), data, 'PUT')
 
 
-def mutate(policy, tag, callback, action):
+def journal_change(policy, callback, action, tag):
     # Retries recompute ONLY the journal operation from current state. No tag,
     # branch, app delivery or external publication is repeated here.
     for attempt in range(5):
         state, sha = state_read(policy)
-        record = ensure_current(state, tag)
-        result = callback(state, record)
+        result = callback(state)
         state['events'].append({'at': now(), 'action': action, 'candidate': tag,
                                 'run_id': os.environ['GITHUB_RUN_ID'], 'result': digest(result)})
         try:
@@ -208,6 +222,10 @@ def mutate(policy, tag, callback, action):
                 raise
             time.sleep(.3)
     raise LabError('Journal em conflito; manter bloqueado.')
+
+
+def mutate(policy, tag, callback, action):
+    return journal_change(policy, lambda state: callback(state, ensure_current(state, tag)), action, tag)
 
 
 def output(folder, name, value):
@@ -275,14 +293,17 @@ def protections(policy):
         'LAB - journal append-only': ('branch', ['refs/heads/' + policy['state_branch']], {'non_fast_forward', 'deletion'}),
         'LAB - main e release revisadas': ('branch', ['refs/heads/main', 'refs/heads/release/**'], {'pull_request', 'required_status_checks', 'non_fast_forward', 'deletion'})
     }
+    if publication_mode(policy) == 'github_release_only':
+        required['LAB - tags estaveis imutaveis'] = ('tag', ['refs/tags/v*'], {'update', 'deletion'})
     rules = api(endpoint('rulesets'))
     for name, (target, patterns, kinds) in required.items():
         matching = [r for r in rules if r['name'] == name]
         if len(matching) != 1:
             raise LabError('Proteção obrigatória ausente: ' + name)
         rule = api(endpoint('rulesets/' + str(matching[0]['id'])))
+        excluded = ['refs/tags/v*-rc.*'] if name == 'LAB - tags estaveis imutaveis' else []
         if (rule.get('enforcement') != 'active' or rule.get('target') != target or rule.get('bypass_actors')
-                or rule.get('conditions', {}).get('ref_name') != {'include': patterns, 'exclude': []}
+                or rule.get('conditions', {}).get('ref_name') != {'include': patterns, 'exclude': excluded}
                 or not kinds <= {r['type'] for r in rule.get('rules', [])}):
             raise LabError('Proteção efetiva divergente: ' + name)
         if target == 'branch' and 'pull_request' in kinds:
@@ -302,39 +323,149 @@ def assert_record(policy, record):
     return environments(policy)
 
 
+def stable_version(version):
+    if not VERSION.fullmatch(str(version)):
+        raise LabError('Versão estável deve usar major.minor.patch sem prefixo ou sufixo.')
+    return tuple(int(part) for part in version.split('.'))
+
+
+def published_versions(state):
+    values = []
+    if state.get('last_stable_version'):
+        values.append(stable_version(state['last_stable_version']))
+    for record in state.get('candidates', {}).values():
+        receipt = record.get('receipt', {})
+        if receipt.get('publication_mode') == 'github_release_only' and receipt.get('github_release_published') is True:
+            values.append(stable_version(record['version']))
+    return values
+
+
+def validate_version_available(policy, state, version, owned_intent=False):
+    """Remote stable refs, not RC counts or a simulated receipt, reserve versions."""
+    requested = stable_version(version)
+    if publication_mode(policy) == 'simulation':
+        return
+    values = published_versions(state)
+    refs = api(endpoint('git/matching-refs/tags/v'))
+    for ref in refs:
+        matched = STABLE_TAG.fullmatch(ref.get('ref', '')[10:])
+        if matched and not (owned_intent and matched[1] == version):
+            values.append(stable_version(matched[1]))
+    for page in range(1, 101):
+        releases = api(endpoint('releases?per_page=100&page=' + str(page)))
+        for release in releases:
+            matched = STABLE_TAG.fullmatch(release.get('tag_name', ''))
+            if matched and not (owned_intent and matched[1] == version):
+                values.append(stable_version(matched[1]))
+        if len(releases) < 100:
+            break
+    else:
+        raise LabError('Histórico de releases excede a janela de consulta; não assumir versão livre.')
+    if values and requested <= max(values):
+        raise LabError('Versão já usada/reservada ou anterior à estável; informe uma versão maior.')
+
+
+def incomplete_publications(state):
+    return [record for record in state.get('candidates', {}).values()
+            if record.get('publication') and record['publication'].get('status') != 'completed']
+
+
+def verify_preparation(policy, preparation):
+    state, _ = state_read(policy)
+    active = state.get('preparation')
+    if not active or active.get('intent_id') != preparation['intent_id']:
+        raise LabError('Intenção de corte mudou; não produzir referências sem journal correspondente.')
+    if incomplete_publications(state):
+        raise LabError('Publicação parcial exige recuperação antes de cortar outra candidata.')
+
+
+def create_ref_verified(ref, source_sha):
+    """Create-only reference effect, including reconciliation of a lost response."""
+    path = endpoint('git/ref/' + quote(ref, safe='/'))
+    existing = api(path, missing=True)
+    if existing is None:
+        try:
+            api(endpoint('git/refs'), {'ref': 'refs/' + ref, 'sha': source_sha}, 'POST')
+        except LabError:
+            existing = api(path, missing=True)
+            if existing is None:
+                raise
+    observed = api(path)
+    if observed['object'].get('type', 'commit') != 'commit' or observed['object']['sha'] != source_sha:
+        raise LabError('Referência existente diverge do commit esperado; não mover nem excluir.')
+    return observed
+
+
 def prepare(policy, version, title, folder):
     if not VERSION.fullmatch(version) or not title.strip() or len(title) > 120 or any(ord(c) < 32 for c in title):
         raise LabError('Informe versão sem prefixo e título de 1 a 120 caracteres, em uma linha.')
     environments(policy)
     protections(policy)
-    state, old_sha = state_read(policy)
+    state, _ = state_read(policy)
+    if incomplete_publications(state):
+        raise LabError('Há publicação parcial; recupere a intenção existente antes de outra RC.')
+    pending = state.get('preparation')
+    if pending and (pending.get('version') != version or pending.get('title') != title
+                    or pending.get('policy_digest') != digest(policy)):
+        raise LabError('Corte parcial preservado. Repita a preparação com a mesma versão, título e política para reconciliar.')
+    validate_version_available(policy, state, version)
     branch = 'release/' + version
     ref = api(endpoint('git/ref/heads/' + quote(branch, safe='')), missing=True)
     if ref is None:
         source_sha = api(endpoint('commits/main'))['sha']
         trusted_source(source_sha)
-        api(endpoint('git/refs'), {'ref': 'refs/heads/' + branch, 'sha': source_sha}, 'POST')
     else:
         source_sha = ref['object']['sha']
         trusted_source(source_sha)
     refs = api(endpoint('git/matching-refs/tags/v' + version + '-rc.'))
     numbers = [int(TAG.fullmatch(r['ref'][10:])[2]) for r in refs if TAG.fullmatch(r['ref'][10:]) and TAG.fullmatch(r['ref'][10:])[1] == version]
-    tag = 'v' + version + '-rc.' + str(max(numbers, default=0) + 1)
-    api(endpoint('git/refs'), {'ref': 'refs/tags/' + tag, 'sha': source_sha}, 'POST')
-    baseline = state.get('last_completed_source_sha') or resolve_tag(policy['changelog_initial_tag'])
+    tag = pending['candidate_tag'] if pending else 'v' + version + '-rc.' + str(max(numbers, default=0) + 1)
+    if pending and pending['source_sha'] != source_sha:
+        raise LabError('Release/main mudou durante o corte parcial; referências preservadas para inspeção.')
+    baseline_key = 'last_stable_source_sha' if publication_mode(policy) == 'github_release_only' else 'last_completed_source_sha'
+    baseline = state.get(baseline_key) or resolve_tag(policy['changelog_initial_tag'])
     record = {'candidate_tag': tag, 'version': version, 'title': title,
               'source_sha': source_sha, 'release_branch': branch,
               'tooling_sha': git('rev-parse', 'HEAD'), 'policy_digest': digest(policy),
+              'publication_mode': publication_mode(policy), 'stable_tag': 'v' + version,
               'changelog_base_sha': baseline, 'created_at': now(),
               'preparer': {'login': os.environ['GITHUB_ACTOR'], 'id': int(os.environ['GITHUB_ACTOR_ID'])},
               'status': 'prepared', 'evaluation_run_id': None}
-    if state.get('active'):
-        state['candidates'][state['active']]['status'] = 'superseded'
-    state['active'] = tag
-    state['candidates'][tag] = record
-    state['events'].append({'at': now(), 'action': 'prepare', 'candidate': tag,
-                            'run_id': os.environ['GITHUB_RUN_ID'], 'source_sha': source_sha})
-    state_write(policy, state, old_sha, 'lab: freeze ' + tag)
+    preparation = pending or {**record, 'intent_id': digest({'candidate': tag, 'source_sha': source_sha,
+                                                           'policy_digest': digest(policy),
+                                                           'run_id': os.environ['GITHUB_RUN_ID']})}
+    def reserve(current):
+        if incomplete_publications(current):
+            raise LabError('PUBLICAR já possui uma intenção. Não substituir a candidata durante efeitos externos.')
+        other = current.get('preparation')
+        if other and other['intent_id'] != preparation['intent_id']:
+            raise LabError('Outro corte em andamento; não criar branch ou tag concorrente.')
+        if not other and tag in current.get('candidates', {}):
+            raise LabError('A RC já foi registrada; nova preparação deve usar o próximo número.')
+        validate_version_available(policy, current, version)
+        current['preparation'] = preparation
+        return preparation
+    journal_change(policy, reserve, 'preparation_intent', tag)
+    verify_preparation(policy, preparation)
+    create_ref_verified('heads/' + branch, source_sha)
+    verify_preparation(policy, preparation)
+    create_ref_verified('tags/' + tag, source_sha)
+    def freeze(current):
+        existing = current.get('candidates', {}).get(tag)
+        if (not current.get('preparation') and current.get('active') == tag
+                and existing == record):
+            return dict(existing)  # Journal PUT committed but its response was lost.
+        if current.get('preparation', {}).get('intent_id') != preparation['intent_id'] or incomplete_publications(current):
+            raise LabError('Corte/publicação concorrente; não trocar a candidata ativa.')
+        if current.get('active'):
+            old = current['candidates'][current['active']]
+            if old.get('status') != 'completed':
+                old['status'] = 'superseded'
+        current['active'] = tag
+        current['candidates'][tag] = record
+        del current['preparation']
+        return record
+    journal_change(policy, freeze, 'prepare', tag)
     output(folder, 'candidate.json', record)
     outputs({k: record[k] for k in ('candidate_tag', 'source_sha', 'tooling_sha')})
 
@@ -391,7 +522,10 @@ def report(policy, tag, smoke_path, metadata_path, folder):
                  'preview': smoke, 'build_inputs': metadata['source_build_inputs'],
                  'pubspec_version': metadata['version'], 'changelog_base_sha': record['changelog_base_sha'],
                  'changes': changes, 'changed_paths': paths, 'platforms': platforms,
-                 'result_simulated': True, 'distribution_performed': False}
+                 'publication_mode': publication_mode(policy), 'stable_tag': record.get('stable_tag', 'v' + record['version']),
+                 'result_simulated': publication_mode(policy) == 'simulation', 'distribution_performed': False}
+        if record.get('publication_mode', 'simulation') != publication_mode(policy):
+            raise LabError('Modo do corte diverge do relatório; prepare outra RC sob a política atual.')
         if record.get('report_digest'):
             raise LabError('Relatório já congelado; nova avaliação requer nova RC.')
         record.update(report=value, report_digest=digest(value), status='awaiting_approvals')
@@ -399,8 +533,9 @@ def report(policy, tag, smoke_path, metadata_path, folder):
     value = mutate(policy, tag, register, 'report_frozen')
     output(folder, 'report.json', value)
     report_url = 'https://github.com/' + REPOSITORY + '/actions/runs/' + os.environ['GITHUB_RUN_ID']
+    target = 'resultado final SIMULADO' if value['result_simulated'] else 'tag estável **' + value['stable_tag'] + '** + Release GitHub reais; aplicativo não distribuído'
     lines = ['# ' + value['version'] + ' — ' + html.escape(value['title']), '',
-             '**' + tag + '** · preview real · resultado final SIMULADO', '',
+             '**' + tag + '** · preview real · ' + target, '',
              '[Abrir preview](' + value['preview']['snapshot_url'] + ')', '', '## Mudanças', '']
     lines += ['- ' + html.escape(c) for c in value['changes']] or ['- Sem commits adicionais desde a base registrada.']
     lines += ['', '## Previsão mobile — não é patch validado', '', '| Plataforma | Base | Previsão | Motivo |', '|---|---|---|---|']
@@ -417,15 +552,19 @@ def report(policy, tag, smoke_path, metadata_path, folder):
     outputs({'report_digest': digest(value), 'report_url': report_url, 'preview_url': value['preview']['snapshot_url']})
 
 
-def current_reviews(policy, record):
-    same_run(record)
+def current_reviews(policy, record, run_id=None):
+    if run_id is None:
+        same_run(record)
+        run_id = os.environ['GITHUB_RUN_ID']
+    elif str(run_id) != str(record.get('evaluation_run_id')):
+        raise LabError('Reviews só podem vir da avaliação original desta candidata.')
     if not record.get('report') or digest(record['report']) != record.get('report_digest'):
         raise LabError('Relatório congelado foi alterado; não reutilizar avais.')
     ids = assert_record(policy, record)
-    run = api(endpoint('actions/runs/' + os.environ['GITHUB_RUN_ID']))
+    run = api(endpoint('actions/runs/' + str(run_id)))
     if run.get('run_attempt') != 1 or identity(run['actor']) != identity(record['preparer']):
         raise LabError('Run/ator não corresponde à avaliação original.')
-    reviews = api(endpoint('actions/runs/' + os.environ['GITHUB_RUN_ID'] + '/approvals'))
+    reviews = api(endpoint('actions/runs/' + str(run_id) + '/approvals'))
     return reviews, ids
 
 
@@ -445,7 +584,305 @@ def approval(policy, tag, role, report_digest, folder):
     outputs({'reviewer': value['review']['reviewer']['login'], 'report_digest': report_digest})
 
 
+def frozen_publication(policy, record):
+    mode = publication_mode(policy)
+    value = record.get('report', {})
+    expected_tag = 'v' + record['version']
+    if (mode != 'github_release_only' or record.get('publication_mode') != mode
+            or value.get('publication_mode') != mode
+            or record.get('stable_tag') != expected_tag or value.get('stable_tag') != expected_tag
+            or value.get('source_sha') != record['source_sha']
+            or value.get('candidate_tag') != record['candidate_tag']
+            or value.get('result_simulated') is not False or value.get('distribution_performed') is not False):
+        raise LabError('Tag/destino real não estavam congelados antes dos avais. Uma decisão simulada não autoriza uma Release real.')
+    return expected_tag
+
+
+def final_authorization(policy, record, report_digest, original_run=False):
+    if not record.get('report_digest') or record['report_digest'] != report_digest:
+        raise LabError('Relatório final divergente.')
+    kwargs = {'run_id': record['evaluation_run_id']} if original_run else {}
+    reviews, ids = current_reviews(policy, record, **kwargs)
+    result = validate_reviews(reviews, policy, ids, stage='final')
+    receipts = record.get('approval_receipts', {})
+    if set(receipts) != {'first', 'second'} or any(r.get('report_digest') != report_digest for r in receipts.values()):
+        raise LabError('Os dois jobs obrigatórios ainda não registraram sucesso.')
+    if publication_mode(policy) == 'github_release_only':
+        for person in policy['approvers']:
+            item = receipts[person['role']]
+            review = next(r for r in result['approvers'] if r['environment'] == person['environment'])
+            if (item.get('candidate_tag') != record['candidate_tag'] or item.get('source_sha') != record['source_sha']
+                    or str(item.get('run_id')) != str(record['evaluation_run_id']) or item.get('run_attempt') != 1
+                    or item.get('review') != review):
+                raise LabError('Recibo de gate não corresponde à candidata e à review oficial do run original.')
+    jobs = api(endpoint('actions/runs/' + str(record['evaluation_run_id']) + '/jobs?per_page=100'))['jobs']
+    for role in ('first', 'second'):
+        matches = [j for j in jobs if j['name'].endswith('Gate ' + role)]
+        if len(matches) != 1 or matches[0].get('conclusion') != 'success':
+            raise LabError('Gate obrigatório rejeitado, ignorado, cancelado ou ainda sem sucesso.')
+    return result
+
+
+def publication_identity(record):
+    return {'candidate_tag': record['candidate_tag'], 'stable_tag': record['stable_tag'],
+            'source_sha': record['source_sha'], 'report_digest': record['report_digest'],
+            'policy_digest': record['policy_digest'], 'authorized_run_id': str(record['evaluation_run_id']),
+            'publication_mode': 'github_release_only'}
+
+
+def release_payload(record, decision, intent_id):
+    report_url = 'https://github.com/' + REPOSITORY + '/actions/runs/' + str(record['evaluation_run_id'])
+    lines = ['# ' + record['version'] + ' — ' + html.escape(record['title']), '',
+             'Registro de versão do laboratório no GitHub. **Nenhum aplicativo ou patch foi distribuído.**', '',
+             '- Candidata aprovada: `' + record['candidate_tag'] + '` (preservada).',
+             '- Tag estável: `' + record['stable_tag'] + '`.',
+             '- Código aprovado: `' + record['source_sha'] + '`.',
+             '- Aprovações verificadas nas contas: ' + ' e '.join(r['reviewer']['login'] for r in decision['approvers']) + '.',
+             '- Comando final: ' + decision['publisher']['reviewer']['login'] + '.',
+             '- [Preview avaliado](' + record['report']['preview']['snapshot_url'] + ').',
+             '- [Relatório e execução aprovados](' + report_url + ').', '', '## Changelog aprovado', '']
+    lines += ['- ' + html.escape(change) for change in record['report'].get('changes', [])] or ['- Sem commits adicionais desde a base registrada.']
+    lines += ['', 'Reviews de contas verificadas não demonstram independência das pessoas que operaram essas contas.', '',
+              '<!-- release-lab-intent:' + intent_id + ' -->',
+              '<!-- release-lab-report:' + record['report_digest'] + ' -->']
+    return {'tag_name': record['stable_tag'], 'target_commitish': record['source_sha'],
+            'name': record['version'] + ' — ' + record['title'], 'body': '\n'.join(lines) + '\n',
+            'draft': False, 'prerelease': False, 'generate_release_notes': False, 'make_latest': 'true'}
+
+
+def verify_intent(policy, record, intent):
+    frozen_publication(policy, record)
+    expected = publication_identity(record)
+    if (any(intent.get(key) != value for key, value in expected.items())
+            or intent.get('decision_digest') != digest(intent.get('decision'))
+            or intent.get('intent_id') != digest({**expected, 'decision_digest': intent.get('decision_digest')})
+            or intent.get('release_payload') != release_payload(record, intent['decision'], intent['intent_id'])):
+        raise LabError('Intenção de publicação diverge da identidade aprovada; não reutilizar autorização.')
+
+
+def live_intent(policy, tag, intent_id):
+    state, _ = state_read(policy)
+    record = ensure_current(state, tag)
+    intent = record.get('publication', {})
+    if state.get('preparation') or intent.get('intent_id') != intent_id:
+        raise LabError('Corte/intenção concorrente; não executar outro efeito externo.')
+    verify_intent(policy, record, intent)
+    assert_record(policy, record)
+    protections(policy)
+    return state, record, intent
+
+
+def publication_checkpoint(policy, tag, intent_id, status, **details):
+    def checkpoint(state, record):
+        intent = record.get('publication', {})
+        if intent.get('intent_id') != intent_id or state.get('preparation'):
+            raise LabError('Journal mudou durante a publicação; não registrar sucesso para outra intenção.')
+        verify_intent(policy, record, intent)
+        if intent.get('status') != 'completed':
+            intent.update(status=status, updated_at=now(), **details)
+            record['status'] = 'publishing' if status != 'failed' else 'publication_failed'
+        return dict(intent)
+    return mutate(policy, tag, checkpoint, 'publication_' + status)
+
+
+def verify_release(release, intent):
+    expected = intent['release_payload']
+    expected_url = 'https://github.com/' + REPOSITORY + '/releases/tag/' + intent['stable_tag']
+    if (not isinstance(release, dict) or any(release.get(k) != expected[k] for k in ('tag_name', 'target_commitish', 'name', 'body', 'draft', 'prerelease'))
+            or not isinstance(release.get('id'), int) or release['id'] <= 0
+            or not release.get('published_at') or release.get('html_url') != expected_url):
+        raise LabError('Release existente diverge da intenção ou ainda não foi publicada; não sobrescrever.')
+    return {'id': release['id'], 'url': release['html_url'], 'tag_name': release['tag_name'],
+            'published_at': release['published_at'], 'payload_digest': digest(expected)}
+
+
+def promote_effects(policy, tag, intent_id):
+    """Only create-and-GET effects. This function never runs inside mutate."""
+    state, record, intent = live_intent(policy, tag, intent_id)
+    tag_path = endpoint('git/ref/tags/' + quote(intent['stable_tag'], safe=''))
+    release_path = endpoint('releases/tags/' + quote(intent['stable_tag'], safe=''))
+    # A preexisting matching effect is owned only by the previously persisted
+    # intent. No absent-intent caller can adopt a hand-created stable release.
+    ref = api(tag_path, missing=True)
+    release = api(release_path, missing=True)
+    if ref is None:
+        if release is not None:
+            raise LabError('Release existe sem a tag esperada; não fabricar outro vínculo.')
+        validate_version_available(policy, state, record['version'])
+        live_intent(policy, tag, intent_id)
+        create_ref_verified('tags/' + intent['stable_tag'], intent['source_sha'])
+    if resolve_tag(intent['stable_tag']) != intent['source_sha']:
+        raise LabError('Tag estável aponta a outro código; não mover ou apagar referências.')
+    publication_checkpoint(policy, tag, intent_id, 'tag_verified', stable_tag_verified=True)
+    state, record, intent = live_intent(policy, tag, intent_id)
+    release = api(release_path, missing=True)
+    if release is None:
+        validate_version_available(policy, state, record['version'], owned_intent=True)
+        live_intent(policy, tag, intent_id)
+        try:
+            api(endpoint('releases'), intent['release_payload'], 'POST')
+        except LabError:
+            release = api(release_path, missing=True)
+            if release is None:
+                raise
+    # Never declare completed from POST success alone or from an old receipt.
+    release = api(release_path)
+    release_value = verify_release(release, intent)
+    if resolve_tag(intent['stable_tag']) != intent['source_sha'] or resolve_tag(tag) != intent['source_sha']:
+        raise LabError('Tag estável/RC divergiu após a publicação; recibo bloqueado.')
+    publication_checkpoint(policy, tag, intent_id, 'release_verified', github_release=release_value)
+    def complete(state, record):
+        active = record['publication']
+        verify_intent(policy, record, active)
+        if active['intent_id'] != intent_id or state.get('preparation'):
+            raise LabError('A intenção mudou antes de gravar o recibo.')
+        if active.get('receipt'):
+            return active['receipt']
+        value = {'schema': 1, 'candidate_tag': tag, 'version': record['version'], 'title': record['title'],
+                 'stable_tag': intent['stable_tag'], 'source_sha': record['source_sha'],
+                 'report_digest': record['report_digest'], 'intent_id': intent_id,
+                 'run_id': record['evaluation_run_id'], 'run_attempt': 1, 'preparer': record['preparer'],
+                 **active['decision'], 'recorded_at': now(),
+                 'recovery_authorizations': active.get('recovery_authorizations', []),
+                 'platforms': record['report']['platforms'], 'preview': record['report']['preview'],
+                 'account_review_verified': True, 'approval_evidence_kind': 'github_account_review',
+                 'review_independence_verified': False, 'publication_mode': 'github_release_only',
+                 'result_simulated': False, 'distribution_performed': False, 'patch_generated': False,
+                 'stable_tag_created': True, 'github_release_published': True,
+                 'github_release': release_value, 'release_url': release_value['url']}
+        active.update(status='completed', receipt=value, updated_at=now())
+        record.update(receipt=value, status='completed')
+        state['last_completed_source_sha'] = record['source_sha']
+        state['last_stable_version'] = record['version']
+        state['last_stable_tag'] = intent['stable_tag']
+        state['last_stable_source_sha'] = record['source_sha']
+        return value
+    return mutate(policy, tag, complete, 'github_release_completed')
+
+
+def preserve_publication_failure(policy, tag, intent_id, error):
+    try:
+        publication_checkpoint(policy, tag, intent_id, 'failed',
+                               last_error={'message': str(error), 'at': now(), 'run_id': os.environ['GITHUB_RUN_ID']})
+    except LabError:
+        # The original persisted intent is the recovery anchor even if the
+        # journal is temporarily unavailable. Do not mask the initial failure.
+        pass
+
+
+def write_real_receipt(policy, tag, folder, value):
+    output(folder, 'receipt.json', value)
+    state, _ = state_read(policy)
+    output(folder, 'publication.json', state['candidates'][tag]['publication'])
+    Path(folder, 'events.jsonl').write_text(''.join(canonical(event) + '\n' for event in state['events'] if event['candidate'] == tag))
+    message = ('# Tag estável e Release GitHub confirmadas\n\n'
+               '[' + value['stable_tag'] + '](' + value['release_url'] + ') foi publicada a partir da candidata aprovada. '
+               'A tag RC foi preservada. Nenhum aplicativo ou patch foi distribuído.\n\n'
+               'Os registros confirmam reviews das contas GitHub; a independência das pessoas não foi comprovada.\n')
+    if os.environ.get('GITHUB_STEP_SUMMARY'):
+        with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as stream:
+            stream.write(message)
+    outputs({'status': 'completed', 'stable_tag': value['stable_tag'], 'release_url': value['release_url'],
+             'result_simulated': 'false', 'distribution_performed': 'false'})
+
+
+def finish_real(policy, tag, report_digest, folder):
+    def authorize(state, record):
+        if state.get('preparation'):
+            raise LabError('Nova preparação em andamento; a decisão desta RC não inicia efeitos concorrentes.')
+        frozen_publication(policy, record)
+        protections(policy)
+        decision = final_authorization(policy, record, report_digest)
+        expected = publication_identity(record)
+        existing = record.get('publication')
+        if existing:
+            verify_intent(policy, record, existing)
+            if existing['decision'] != decision:
+                raise LabError('A decisão do run original mudou; não substituir o publicador aprovado.')
+            return dict(existing)
+        if incomplete_publications(state):
+            raise LabError('Outra intenção parcial impede publicar esta candidata.')
+        validate_version_available(policy, state, record['version'])
+        decision_digest = digest(decision)
+        intent = {**expected, 'decision_digest': decision_digest,
+                  'intent_id': digest({**expected, 'decision_digest': decision_digest}), 'decision': decision,
+                  'created_at': now(), 'status': 'intent_recorded', 'recovery_authorizations': []}
+        intent['release_payload'] = release_payload(record, decision, intent['intent_id'])
+        record.update(publication=intent, status='publishing')
+        return dict(intent)
+    intent = mutate(policy, tag, authorize, 'publication_intent')
+    output(folder, 'publication-intent.json', intent)
+    try:
+        value = promote_effects(policy, tag, intent['intent_id'])
+    except (LabError, KeyError, ValueError) as error:
+        preserve_publication_failure(policy, tag, intent['intent_id'], error)
+        state, _ = state_read(policy)
+        output(folder, 'publication-failure.json', state['candidates'][tag]['publication'])
+        raise
+    write_real_receipt(policy, tag, folder, value)
+
+
+def recovery_inspect(policy, tag, folder):
+    state, _ = state_read(policy)
+    record = ensure_current(state, tag)
+    intent = record.get('publication')
+    if not intent or state.get('preparation'):
+        raise LabError('Recuperação exige uma intenção real já autorizada, sem corte concorrente.')
+    verify_intent(policy, record, intent)
+    assert_record(policy, record)
+    output(folder, 'publication.json', intent)
+    report_url = 'https://github.com/' + REPOSITORY + '/actions/runs/' + str(record['evaluation_run_id'])
+    outputs({'candidate_tag': tag, 'report_digest': record['report_digest'],
+             'tooling_sha': record['tooling_sha'], 'final_environment': policy['final_environment'],
+             'report_url': report_url, 'stable_tag': record['stable_tag']})
+
+
+def recover(policy, tag, folder, report_digest=None):
+    def authorize(state, record):
+        if state.get('preparation'):
+            raise LabError('Corte concorrente impede recuperar uma publicação.')
+        intent = record.get('publication')
+        if not intent:
+            raise LabError('Recuperação não inicia outra publicação nem adota uma tag externa.')
+        verify_intent(policy, record, intent)
+        if str(record['evaluation_run_id']) == os.environ['GITHUB_RUN_ID']:
+            raise LabError('Recuperação exige nova execução manual, com nova decisão no gate final.')
+        if report_digest is not None and report_digest != record['report_digest']:
+            raise LabError('Relatório da recuperação diverge da intenção original.')
+        original = final_authorization(policy, record, record['report_digest'], original_run=True)
+        if original != intent['decision']:
+            raise LabError('Decisões originais divergiram; não reaproveitar avais de outra candidata.')
+        ids = environments(policy)
+        run_id = os.environ['GITHUB_RUN_ID']
+        run = api(endpoint('actions/runs/' + run_id))
+        actor = (int(os.environ['GITHUB_ACTOR_ID']), os.environ['GITHUB_ACTOR'].lower())
+        if run.get('run_attempt') != 1 or identity(run['actor']) != actor or git('rev-parse', 'HEAD') != record['tooling_sha']:
+            raise LabError('Recuperação deve partir das ferramentas aprovadas e de operador autorizado, em tentativa nova.')
+        reviews = api(endpoint('actions/runs/' + run_id + '/approvals'))
+        review = review_for(reviews, policy['final_environment'], ids[policy['final_environment']], policy['publishers'])
+        authorization = {'run_id': run_id, 'review': review, 'recorded_at': now()}
+        prior = [a for a in intent.get('recovery_authorizations', []) if a['run_id'] == run_id]
+        if prior:
+            if len(prior) != 1 or prior[0]['review'] != review:
+                raise LabError('Decisão de recuperação ambígua; não substituir autoria.')
+        else:
+            intent.setdefault('recovery_authorizations', []).append(authorization)
+        return dict(intent)
+    intent = mutate(policy, tag, authorize, 'recovery_authorized')
+    output(folder, 'recovery-intent.json', intent)
+    try:
+        value = promote_effects(policy, tag, intent['intent_id'])
+    except (LabError, KeyError, ValueError) as error:
+        preserve_publication_failure(policy, tag, intent['intent_id'], error)
+        state, _ = state_read(policy)
+        output(folder, 'publication-failure.json', state['candidates'][tag]['publication'])
+        raise
+    write_real_receipt(policy, tag, folder, value)
+
+
 def finish(policy, tag, report_digest, folder):
+    if publication_mode(policy) == 'github_release_only':
+        return finish_real(policy, tag, report_digest, folder)
     def final_decision(state, record):
         if not record.get('report_digest') or record['report_digest'] != report_digest:
             raise LabError('Relatório final divergente.')
@@ -534,12 +971,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest='command', required=True)
     p = sub.add_parser('prepare'); p.add_argument('--version', required=True); p.add_argument('--title', required=True)
-    for name in ('preflight', 'report', 'approval', 'finish', 'merge-preview'):
+    for name in ('preflight', 'report', 'approval', 'finish', 'merge-preview', 'recovery-inspect', 'recover'):
         p = sub.add_parser(name); p.add_argument('--candidate-tag', required=True)
         if name == 'report':
             p.add_argument('--preview-report', required=True); p.add_argument('--preview-metadata', required=True)
         if name in ('approval', 'finish'):
             p.add_argument('--report-digest', required=True)
+        if name == 'recover':
+            p.add_argument('--report-digest')
         if name == 'approval':
             p.add_argument('--role', choices=('first', 'second'), required=True)
         if name == 'merge-preview':
@@ -558,6 +997,10 @@ def main():
         approval(policy, args.candidate_tag, args.role, args.report_digest, args.output)
     elif args.command == 'merge-preview':
         merge_preview(policy, args.candidate_tag, args.incoming, args.site, args.output)
+    elif args.command == 'recovery-inspect':
+        recovery_inspect(policy, args.candidate_tag, args.output)
+    elif args.command == 'recover':
+        recover(policy, args.candidate_tag, args.output, args.report_digest)
     else:
         finish(policy, args.candidate_tag, args.report_digest, args.output)
 
