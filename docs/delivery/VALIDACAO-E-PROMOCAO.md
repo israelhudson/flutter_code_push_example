@@ -42,6 +42,12 @@ Release e não autoriza reaproveitar esses avais em modo real. O
 [passo a passo histórico com prints e logs](https://github.com/israelhudson/flutter_code_push_example/blob/codex/release-lab-state/release-lab/evidencias/2026-10-08-two-reviewers-run/PASSO-A-PASSO.md)
 permanece preservado; o efeito final e os nomes das etapas mudam nesta versão.
 
+## Resultados do ensaio real de 8 de outubro
+
+A [execução da RC2](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37851607911) terminou com sucesso: a [Release estável v1.5.0](https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.5.0) e sua tag apontam ao mesmo commit aprovado de `v1.5.0-rc.2`. RC1 foi rejeitada, a correção passou por PR para a release e RC2 exigiu novos avais. Ambos os gates e o comando final foram executados em ensaio automatizado autorizado por Israel; não constituem revisão humana independente.
+
+Os [resultados completos e atualizados](https://github.com/israelhudson/flutter_code_push_example/blob/codex/release-lab-state/release-lab/evidencias/2026-10-08-real-promotion-live/PASSO-A-PASSO-E-LICOES.md), a [matriz por cenário e subcaso](https://github.com/israelhudson/flutter_code_push_example/blob/codex/release-lab-state/release-lab/evidencias/2026-10-08-real-promotion-live/MATRIZ-RESULTADOS.json) e a [auditoria independente](https://github.com/israelhudson/flutter_code_push_example/blob/codex/release-lab-state/release-lab/evidencias/2026-10-08-real-promotion-live/LIVE-SECURITY-AUDIT.md) guardam prints, reviews, logs, GETs e recibos. A matriz abaixo registra o alcance de cada família; variantes offline não passam a ser provas remotas.
+
 ## Matriz de pelo menos cinco cenários
 
 Os nove IDs correspondem ao ensaio `tools/delivery/rehearse_release_lab.py`.
@@ -50,12 +56,12 @@ fixtures. As colunas são independentes: PASS offline não vira PASS remoto.
 
 | ID | Cenário | Observável esperado | Offline | GitHub com promoção real |
 |---|---|---|---|---|
-| VAL-01 | Feliz: 0/2 → 1/2 → 2/2 → comando | 0/2 e 1/2 bloqueiam; 2/2 libera só comando; terceiro aval promove o mesmo commit | PASS | PENDENTE |
-| VAL-02 | RC1 negada → correção → RC2 | RC1 preservada, RC2 sem avais antigos, estável no commit corrigido de RC2 | PASS | PENDENTE |
+| VAL-01 | Feliz: 0/2 → 1/2 → 2/2 → comando | 0/2 e 1/2 bloqueiam; 2/2 libera só comando; terceiro aval promove o mesmo commit | PASS | PASS — [recibo, GETs e run](https://github.com/israelhudson/flutter_code_push_example/blob/codex/release-lab-state/release-lab/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-state.json) |
+| VAL-02 | RC1 negada → correção → RC2 | RC1 preservada, RC2 sem avais antigos, estável no commit corrigido de RC2 | PASS | Ciclo comprovado; integração na main e evidência do PR na [matriz atualizada](https://github.com/israelhudson/flutter_code_push_example/blob/codex/release-lab-state/release-lab/evidencias/2026-10-08-real-promotion-live/MATRIZ-RESULTADOS.json) |
 | VAL-03 | Deriva de fonte, relatório ou política | Identidade divergente bloqueia; nada de trocar fonte ou destino silenciosamente | PASS | PENDENTE |
 | VAL-04 | Conflito de tag estável | Tag divergente preservada; nenhum overwrite | PASS | PENDENTE |
 | VAL-05 | Falha parcial e resposta API perdida | Intenção persistida; recuperação autorizada completa só o ausente e verifica por GET | PASS | PENDENTE |
-| VAL-06 | Versão antiga, ator inválido, bot, rerun | Entrada recusada antes de efeitos de promoção | PASS | PENDENTE |
+| VAL-06 | Versão antiga, ator inválido, bot, rerun | Entrada recusada antes de efeitos de promoção | PASS | Parcial — conta errada e rerun comprovados; demais variantes na matriz atualizada |
 | VAL-07 | Dois writers concorrentes no diário | CAS retry preserva os dois avais e um evento por papel | PASS | PENDENTE |
 | VAL-08 | Preview não confirmado | Sem relatório aprovado, sem gate válido e sem promoção | PASS | PENDENTE |
 | VAL-09 | Proteções removidas após as reviews ou entre efeitos | Sem proteção antes da intenção, nada publica; após a tag, Release/recibo bloqueiam sem apagar a tag | PASS | PENDENTE |
