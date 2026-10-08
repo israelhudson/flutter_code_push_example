@@ -7,6 +7,6 @@ void main() {
     await tester.pumpWidget(const App());
 
     expect(find.text('Flutter Code Push Example'), findsOneWidget);
-    expect(find.text('Hello Shorebird!'), findsOneWidget);
+    expect(find.text('Laboratório de atualizações'), findsOneWidget);
   });
 }
