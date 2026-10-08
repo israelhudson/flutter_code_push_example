@@ -1,0 +1,820 @@
+Flutter analyze e test	Set up job	﻿2026-10-08T21:55:26.8879494Z Current runner version: '2.337.0'
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8915263Z ##[group]Runner Image Provisioner
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8916915Z Hosted Compute Agent
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8918011Z Version: 20261002.596
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8919049Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8920211Z Build Date: 2026-10-02T22:28:27Z
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8921443Z Worker ID: {2eb99e4a-8220-4754-a342-5a39c087789c}
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8922655Z Region: eastus
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8923597Z Cloud: Azure
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8924446Z ##[endgroup]
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8927044Z ##[group]Operating System
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8928163Z Ubuntu
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8929062Z 24.04.5
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8930061Z LTS
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8930861Z ##[endgroup]
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8931694Z ##[group]Runner Image
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8932876Z Image: ubuntu-24.04
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8933787Z Version: 20261004.327.1
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8935583Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8938972Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8940924Z ##[endgroup]
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8942786Z ##[group]GITHUB_TOKEN Permissions
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8945348Z Contents: read
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8946284Z Metadata: read
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8947558Z ##[endgroup]
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8950667Z Secret source: Actions
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8952248Z Cache mode: write
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.8953470Z Prepare workflow directory
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.9434046Z Prepare all required actions
+Flutter analyze e test	Set up job	2026-10-08T21:55:26.9506041Z Getting action download info
+Flutter analyze e test	Set up job	2026-10-08T21:55:27.1585612Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+Flutter analyze e test	Set up job	2026-10-08T21:55:27.3540403Z Complete job name: Flutter analyze e test
+Flutter analyze e test	Checkout das ferramentas da base revisada	﻿2026-10-08T21:55:27.4382158Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.4383240Z with:
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.4383758Z   ref: 9e0320fca6fdfba5931d6c80d9181c362ac33c17
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.4384356Z   path: trusted
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.4384825Z   persist-credentials: false
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.4385413Z   repository: israelhudson/flutter_code_push_example
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.4389492Z   token: ***
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.4389937Z   ssh-strict: true
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.4390380Z   ssh-user: git
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.4390803Z   clean: true
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.4391258Z   sparse-checkout-cone-mode: true
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.4391773Z   fetch-depth: 1
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.4392192Z   fetch-tags: false
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.4392642Z   show-progress: true
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.4393094Z   lfs: false
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.4393506Z   submodules: false
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.4393958Z   set-safe-directory: true
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.4394466Z   allow-unsafe-pr-checkout: false
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.4395250Z ##[endgroup]
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5469396Z Syncing repository: israelhudson/flutter_code_push_example
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5472316Z ##[group]Getting Git version info
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5473499Z Working directory is '/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted'
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5475705Z [command]/usr/bin/git version
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5559938Z git version 2.55.0
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5593877Z ##[endgroup]
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5603278Z Temporarily overriding HOME='/home/runner/work/_temp/7d1d1ee1-9235-48cb-9021-77fbdf0e8ffa' before making global git config changes
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5605808Z Adding repository directory to the temporary git global config as a safe directory
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5608665Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5662335Z ##[group]Initializing the repository
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5667577Z [command]/usr/bin/git init /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5797254Z hint: Using 'master' as the name for the initial branch. This default branch name
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5799602Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5801105Z hint: to use in all of your new repositories, which will suppress this warning,
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5802696Z hint: call:
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5803387Z hint:
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5804199Z hint: 	git config --global init.defaultBranch <name>
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5805169Z hint:
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5806076Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5815948Z hint: 'development'. The just-created branch can be renamed via this command:
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5822028Z hint:
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5822765Z hint: 	git branch -m <name>
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5823572Z hint:
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5824571Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5826902Z Initialized empty Git repository in /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5830360Z [command]/usr/bin/git remote add origin https://github.com/israelhudson/flutter_code_push_example
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5864031Z ##[endgroup]
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5865318Z ##[group]Disabling automatic garbage collection
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5866692Z [command]/usr/bin/git config --local gc.auto 0
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5899024Z ##[endgroup]
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5900215Z ##[group]Setting up auth
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5908069Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.5959072Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.6372834Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.6418500Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.6689683Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.6730733Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.6962572Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.7007416Z ##[endgroup]
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.7008334Z ##[group]Fetching the repository
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.7016406Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 9e0320fca6fdfba5931d6c80d9181c362ac33c17
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9361765Z From https://github.com/israelhudson/flutter_code_push_example
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9363088Z  * branch            9e0320fca6fdfba5931d6c80d9181c362ac33c17 -> FETCH_HEAD
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9366799Z ##[endgroup]
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9367836Z ##[group]Determining the checkout info
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9369459Z ##[endgroup]
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9375705Z [command]/usr/bin/git sparse-checkout disable
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9429862Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9472664Z ##[group]Checking out the ref
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9477140Z [command]/usr/bin/git checkout --progress --force 9e0320fca6fdfba5931d6c80d9181c362ac33c17
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9697263Z Note: switching to '9e0320fca6fdfba5931d6c80d9181c362ac33c17'.
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9698430Z 
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9699207Z You are in 'detached HEAD' state. You can look around, make experimental
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9701105Z changes and commit them, and you can discard any commits you make in this
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9702910Z state without impacting any branches by switching back to a branch.
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9703957Z 
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9704686Z If you want to create a new branch to retain commits you create, you may
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9706697Z do so (now or later) by using -c with the switch command. Example:
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9707719Z 
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9708040Z   git switch -c <new-branch-name>
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9708456Z 
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9708709Z Or undo this operation with:
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9709067Z 
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9709276Z   git switch -
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9709581Z 
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9710020Z Turn off this advice by setting config variable advice.detachedHead to false
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9710639Z 
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9711178Z HEAD is now at 9e0320f Merge pull request #13 from israelhudson/codex/release-lab-two-approvers
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9713376Z ##[endgroup]
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9752101Z [command]/usr/bin/git log -1 --format=%H
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9779438Z 9e0320fca6fdfba5931d6c80d9181c362ac33c17
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9788354Z ##[group]Removing auth
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9791915Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:27.9825217Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:28.0045991Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:28.0074829Z http.https://github.com/.extraheader
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:28.0082443Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:28.0119284Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:28.0359360Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:28.0391875Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Flutter analyze e test	Checkout das ferramentas da base revisada	2026-10-08T21:55:28.0612217Z ##[endgroup]
+Flutter analyze e test	Checkout da combinação proposta pelo PR	﻿2026-10-08T21:55:28.0977275Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.0978176Z with:
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.0978640Z   path: app
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.0979121Z   persist-credentials: false
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.0979771Z   repository: israelhudson/flutter_code_push_example
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.0983841Z   token: ***
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.0984317Z   ssh-strict: true
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.0984799Z   ssh-user: git
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.0985256Z   clean: true
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.0985744Z   sparse-checkout-cone-mode: true
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.0986316Z   fetch-depth: 1
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.0986986Z   fetch-tags: false
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.0987483Z   show-progress: true
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.0987970Z   lfs: false
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.0988424Z   submodules: false
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.0988919Z   set-safe-directory: true
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.0989477Z   allow-unsafe-pr-checkout: false
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.0990039Z ##[endgroup]
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.1841698Z Syncing repository: israelhudson/flutter_code_push_example
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.1844773Z ##[group]Getting Git version info
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.1847414Z Working directory is '/home/runner/work/flutter_code_push_example/flutter_code_push_example/app'
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.1882629Z [command]/usr/bin/git version
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.1925514Z git version 2.55.0
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.1949646Z ##[endgroup]
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.1963629Z Temporarily overriding HOME='/home/runner/work/_temp/cfc33682-2e57-4489-97c7-f05d4ab032b8' before making global git config changes
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.1967030Z Adding repository directory to the temporary git global config as a safe directory
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.1970209Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/flutter_code_push_example/flutter_code_push_example/app
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2004004Z ##[group]Initializing the repository
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2010226Z [command]/usr/bin/git init /home/runner/work/flutter_code_push_example/flutter_code_push_example/app
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2060663Z hint: Using 'master' as the name for the initial branch. This default branch name
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2063610Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2066723Z hint: to use in all of your new repositories, which will suppress this warning,
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2069176Z hint: call:
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2070497Z hint:
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2071850Z hint: 	git config --global init.defaultBranch <name>
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2074352Z hint:
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2075693Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2077864Z hint: 'development'. The just-created branch can be renamed via this command:
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2079426Z hint:
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2080368Z hint: 	git branch -m <name>
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2081416Z hint:
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2082735Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2085307Z Initialized empty Git repository in /home/runner/work/flutter_code_push_example/flutter_code_push_example/app/.git/
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2090074Z [command]/usr/bin/git remote add origin https://github.com/israelhudson/flutter_code_push_example
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2158456Z ##[endgroup]
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2160125Z ##[group]Disabling automatic garbage collection
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2162334Z [command]/usr/bin/git config --local gc.auto 0
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2195664Z ##[endgroup]
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2197655Z ##[group]Setting up auth
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2202972Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2239267Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2517965Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2565701Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2900100Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.2939616Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.3167618Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.3208679Z ##[endgroup]
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.3209937Z ##[group]Fetching the repository
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.3219686Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +8704cb030e52aa00b9d9bf734b35fb4ada298d26:refs/remotes/pull/14/merge
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5428524Z From https://github.com/israelhudson/flutter_code_push_example
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5432220Z  * [new ref]         8704cb030e52aa00b9d9bf734b35fb4ada298d26 -> pull/14/merge
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5439032Z ##[endgroup]
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5441765Z ##[group]Determining the checkout info
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5444671Z ##[endgroup]
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5446831Z [command]/usr/bin/git sparse-checkout disable
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5480965Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5524982Z ##[group]Checking out the ref
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5528227Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/14/merge
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5742038Z Note: switching to 'refs/remotes/pull/14/merge'.
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5743350Z 
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5744395Z You are in 'detached HEAD' state. You can look around, make experimental
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5748231Z changes and commit them, and you can discard any commits you make in this
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5751918Z state without impacting any branches by switching back to a branch.
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5754122Z 
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5755947Z If you want to create a new branch to retain commits you create, you may
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5759538Z do so (now or later) by using -c with the switch command. Example:
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5761436Z 
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5762265Z   git switch -c <new-branch-name>
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5763813Z 
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5764486Z Or undo this operation with:
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5765401Z 
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5765896Z   git switch -
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5766939Z 
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5768029Z Turn off this advice by setting config variable advice.detachedHead to false
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5769610Z 
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5771397Z HEAD is now at 8704cb0 Merge be6b79afecdd219809bee5dc0c66e70809207b2c into 9e0320fca6fdfba5931d6c80d9181c362ac33c17
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5778231Z ##[endgroup]
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5794648Z [command]/usr/bin/git log -1 --format=%H
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5821875Z 8704cb030e52aa00b9d9bf734b35fb4ada298d26
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5832113Z ##[group]Removing auth
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5835276Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.5869344Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.6098243Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.6124615Z http.https://github.com/.extraheader
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.6135810Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.6174102Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.6397170Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.6430974Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Flutter analyze e test	Checkout da combinação proposta pelo PR	2026-10-08T21:55:28.6674675Z ##[endgroup]
+Flutter analyze e test	Instalar Flutter fixado na candidata	﻿2026-10-08T21:55:28.7045196Z Prepare all required actions
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7227744Z ##[group]Run ./trusted/.github/actions/setup-flutter
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7229036Z with:
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7229967Z   build-inputs: app/delivery/build-inputs.json
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7231186Z ##[endgroup]
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7299270Z ##[start-action display=Run python3 - <<'PY';id=__self.inputs]
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7364510Z ##[group]Run python3 - <<'PY'
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7365670Z ^[[36;1mpython3 - <<'PY'^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7366944Z ^[[36;1mimport json, os, re^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7368021Z ^[[36;1mfrom pathlib import Path^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7369444Z ^[[36;1mworkspace = Path(os.environ['GITHUB_WORKSPACE']).resolve()^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7371150Z ^[[36;1mpath = Path(os.environ['BUILD_INPUTS']).resolve()^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7372612Z ^[[36;1mif not path.is_relative_to(workspace):^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7374349Z ^[[36;1m    raise ValueError('Build inputs precisa pertencer ao checkout deste job.')^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7376102Z ^[[36;1minputs = json.loads(path.read_text())^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7377990Z ^[[36;1mversion, revision = inputs['flutter_version'], inputs['flutter_revision']^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7380229Z ^[[36;1mif not re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+', version) or not re.fullmatch(r'[0-9a-f]{40}', revision):^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7382496Z ^[[36;1m    raise ValueError('Versão e revisão Flutter precisam estar fixadas.')^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7384299Z ^[[36;1mwith open(os.environ['GITHUB_OUTPUT'], 'a') as f:^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7385953Z ^[[36;1m    f.write('version=' + version + '\nrevision=' + revision + '\n')^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7387503Z ^[[36;1mPY^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7668934Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7670321Z env:
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7671243Z   BUILD_INPUTS: app/delivery/build-inputs.json
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.7672683Z ##[endgroup]
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.8102303Z ##[end-action id=__self.inputs;outcome=success;conclusion=success;duration_ms=80]
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.8113293Z ##[start-action display=Instalar e conferir o SDK;id=__self.__run]
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.8161338Z ##[group]Run set -euo pipefail
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.8162430Z ^[[36;1mset -euo pipefail^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.8163561Z ^[[36;1mSDK_PATH="$RUNNER_TEMP/flutter-delivery"^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.8165749Z ^[[36;1mgit clone --no-checkout --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$SDK_PATH"^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.8168345Z ^[[36;1mtest "$(git -C "$SDK_PATH" rev-parse HEAD)" = "$FLUTTER_REVISION"^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.8170053Z ^[[36;1mgit -C "$SDK_PATH" checkout --detach "$FLUTTER_REVISION"^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.8171877Z ^[[36;1m# The first invocation bootstraps the tool and prints a welcome banner.^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.8173794Z ^[[36;1m# Run it before helpers parse --version --machine as strict JSON.^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.8175362Z ^[[36;1m"$SDK_PATH/bin/flutter" --version^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.8176755Z ^[[36;1mecho "$SDK_PATH/bin" >> "$GITHUB_PATH"^[[0m
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.8243243Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.8244556Z env:
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.8245373Z   FLUTTER_VERSION: 3.44.1
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.8246712Z   FLUTTER_REVISION: 924134a44c189315be2148659913dda1671cbe99
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.8248010Z ##[endgroup]
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:28.8352423Z Cloning into '/home/runner/work/_temp/flutter-delivery'...
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:36.6798286Z HEAD is now at 924134a4 Update CHANGELOG with Flutter 3.44 changes (#187258)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:36.7208332Z Downloading Linux x64 Dart SDK from Flutter engine c416acfeb8126e097f758c664aaa3da929e27da0...
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:36.7305622Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:36.7307155Z                                  Dload  Upload   Total   Spent    Left  Speed
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:36.7308029Z 
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:36.9289891Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:37.4889778Z   9  222M    9 21.9M    0     0   110M      0  0:00:02 --:--:--  0:00:02  110M
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:37.4891041Z 100  222M  100  222M    0     0   293M      0 --:--:-- --:--:-- --:--:--  292M
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:42.0464248Z Building flutter tool...
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:42.0630272Z Resolving dependencies...
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:42.4354191Z Downloading packages...
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3562151Z + _fe_analyzer_shared 95.0.0 (109.0.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3562868Z + analyzer 10.1.0 (14.5.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3563401Z + archive 3.6.1 (4.3.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3563858Z + args 2.7.0
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3564324Z + async 2.13.1
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3564666Z + boolean_selector 2.1.2
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3565291Z + browser_launcher 1.1.3 (1.2.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3565953Z + built_collection 5.1.1 (5.1.2 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3566813Z + built_value 8.12.5 (8.13.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3567430Z + checked_yaml 2.0.4
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3567822Z + cli_config 0.2.0
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3568208Z + clock 1.1.2 (1.1.3 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3568697Z + code_assets 1.0.0 (2.1.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3569168Z + code_builder 4.11.1 (4.12.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3569628Z + collection 1.19.1
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3569990Z + completion 1.0.2
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3570330Z + convert 3.1.2
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3570728Z + coverage 1.15.0 (1.15.1 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3571295Z + crypto 3.0.7
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3571719Z + csslib 1.0.2
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3572131Z + dap 1.4.0
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3572538Z + dart_service_protocol_shared 0.0.3
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3573097Z + dart_style 3.1.7 (3.1.13 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3573655Z + data_assets 0.19.6 (0.20.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3574185Z + dds 5.3.0 (5.4.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3574698Z + dds_service_extensions 2.1.0
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3575231Z + devtools_shared 12.1.0 (14.0.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3576170Z + dtd 4.0.0
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3576854Z + dwds 26.2.5 (27.1.4 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3577334Z + extension_discovery 2.1.0
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3577848Z + fake_async 1.3.3
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3578204Z + ffi 2.2.0
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3578503Z + file 7.0.1
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3578906Z + file_testing 3.0.2 (3.1.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3579332Z + fixnum 1.1.1
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3579747Z + flutter_template_images 5.0.0 (5.0.1 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3580372Z + frontend_server_client 4.0.0 (4.1.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3580903Z + glob 2.1.3 (2.2.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3581320Z + graphs 2.3.2
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3581699Z + hooks 1.0.2 (2.2.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3582149Z + hooks_runner 1.1.1 (1.6.4 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3582622Z + html 0.15.6 (0.15.7 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3583044Z + http 1.6.0
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3583417Z + http_multi_server 3.2.2
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3583831Z + http_parser 4.1.2
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3584332Z + intl 0.20.2 (0.20.3 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3584768Z + io 1.0.5 (1.1.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3585195Z + js 0.7.2 (discontinued)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3585691Z + json_annotation 4.11.0 (4.12.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3586211Z + json_rpc_2 4.1.0
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3586900Z + logging 1.3.0
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3587326Z + matcher 0.12.19 (0.12.20 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3587806Z + meta 1.18.0 (1.19.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3588249Z + mime 2.0.0 (2.1.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3588699Z + multicast_dns 0.3.3 (0.3.3+1 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3589221Z + mustache_template 2.0.4 (2.0.6 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3589767Z + native_stack_traces 0.6.1 (0.7.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3590267Z + node_preamble 2.0.2
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3590683Z + package_config 2.2.0 (3.0.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3591162Z + path 1.9.1
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3591551Z + petitparser 7.0.2 (7.1.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3592036Z + platform 3.1.6 (3.2.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3592516Z + pool 1.5.2 (1.5.3 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3592968Z + process 5.0.5 (5.0.6 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3593442Z + pub_semver 2.2.0 (2.2.1 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3594293Z + pubspec_parse 1.5.0 (1.6.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3594857Z + record_use 0.6.0 (1.1.1 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3595295Z + shelf 1.4.2
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3595682Z + shelf_packages_handler 3.0.2
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3596143Z + shelf_proxy 1.0.4 (1.0.5 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3596941Z + shelf_static 1.1.3
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3597369Z + shelf_web_socket 3.0.0
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3597808Z + source_map_stack_trace 2.1.2
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3598292Z + source_maps 0.10.13 (0.10.14 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3598787Z + source_span 1.10.2
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3599191Z + sprintf 7.0.0
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3599573Z + sse 4.1.8 (4.2.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3600033Z + stack_trace 1.12.1 (1.12.2 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3600603Z + standard_message_codec 0.0.1+4 (0.0.1+5 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3601207Z + stream_channel 2.1.4
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3601627Z + string_scanner 1.4.1
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3602023Z + sync_http 0.3.1
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3602425Z + term_glyph 1.2.2
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3602812Z + test 1.31.0 (1.33.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3603266Z + test_api 0.7.11 (0.7.15 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3603751Z + test_core 0.6.17 (0.6.21 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3604227Z + typed_data 1.4.0
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3604671Z + unified_analytics 8.0.14 (8.0.18 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3605201Z + usage 4.1.1 (discontinued)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3605661Z + uuid 4.5.3 (4.6.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3606146Z + vm_service 15.0.2 (15.3.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3606962Z + vm_service_interface 2.0.1
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3607448Z + vm_snapshot_analysis 0.7.6
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3607903Z + watcher 1.2.1
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3608268Z + web 1.1.1
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3608619Z + web_socket 1.0.1
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3609021Z + web_socket_channel 3.0.3
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3609838Z + webdriver 3.1.0 (3.2.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3610376Z + webkit_inspection_protocol 1.2.1
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3610909Z + xml 6.6.1 (7.1.0 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3611397Z + yaml 3.1.3 (3.1.4 available)
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3611847Z + yaml_edit 2.2.4
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3612282Z Changed 102 dependencies!
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3612787Z 2 packages are discontinued.
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3613461Z 53 packages have newer versions incompatible with dependency constraints.
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:55:45.3614236Z Try `dart pub outdated` for more information.
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:56:01.0644087Z Flutter 3.44.1 • channel [user-branch] • unknown source
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:56:01.0644719Z Framework • revision 924134a44c (4 months ago) • 2026-05-29 12:13:22 -0400
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:56:01.0645588Z Engine • hash 39b1f7043775b9578bbb26a1676e79c4e31c8b5e (revision c416acfeb8) (4 months ago) • 2026-05-27 20:19:31.000Z
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:56:01.0646619Z Tools • Dart 3.12.1 • DevTools 2.57.0
+Flutter analyze e test	Instalar Flutter fixado na candidata	2026-10-08T21:56:01.0685373Z ##[end-action id=__self.__run;outcome=success;conclusion=success;duration_ms=32257]
+Flutter analyze e test	Verificar aplicativo	﻿2026-10-08T21:56:01.0775409Z ##[group]Run flutter pub get --enforce-lockfile
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:01.0775838Z ^[[36;1mflutter pub get --enforce-lockfile^[[0m
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:01.0776150Z ^[[36;1mflutter analyze^[[0m
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:01.0776386Z ^[[36;1mflutter test^[[0m
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:01.0844526Z shell: /usr/bin/bash -e {0}
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:01.0844804Z ##[endgroup]
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:01.4404501Z [1/10] Material Fonts                                              206ms
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:01.4983663Z [2/10] Gradle Wrapper                                                8ms
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:01.5090621Z [3/10] Flutter SDK
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:01.6271235Z   ├─ [1/5] sky_engine                                              112ms
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:01.7366947Z   ├─ [2/5] flutter_gpu                                              38ms
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:01.9646142Z   ├─ [3/5] flutter_patched_sdk                                     213ms
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:02.2323215Z   ├─ [4/5] flutter_patched_sdk_product                             178ms
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:03.1592606Z   └─ [5/5] linux-x64                                               836ms
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:03.8473731Z [10/10] linux-x64/font-subset                                       91ms
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:03.9602593Z Resolving dependencies...
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:04.0831352Z Downloading packages...
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.0980254Z   clock 1.1.2 (1.1.3 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.0980975Z   cupertino_icons 1.0.9 (2.0.0 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.0981457Z   matcher 0.12.19 (0.12.20 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.0981969Z   material_color_utilities 0.13.0 (0.13.1 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.0982513Z   meta 1.18.0 (1.19.0 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.0982967Z   stack_trace 1.12.1 (1.12.2 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.0983450Z   test_api 0.7.11 (0.7.15 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.0984001Z   vector_math 2.2.0 (2.4.3 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.0984464Z   vm_service 15.2.0 (15.3.0 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.0984957Z Got dependencies!
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.0985554Z 9 packages have newer versions incompatible with dependency constraints.
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.0986320Z Try `flutter pub outdated` for more information.
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.4777456Z Resolving dependencies...
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.5026730Z Downloading packages...
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.5040765Z   clock 1.1.2 (1.1.3 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.5041559Z   cupertino_icons 1.0.9 (2.0.0 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.5042077Z   matcher 0.12.19 (0.12.20 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.5042590Z   material_color_utilities 0.13.0 (0.13.1 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.5043138Z   meta 1.18.0 (1.19.0 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.5043588Z   stack_trace 1.12.1 (1.12.2 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.5044063Z   test_api 0.7.11 (0.7.15 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.5044510Z   vector_math 2.2.0 (2.4.3 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.5044968Z   vm_service 15.2.0 (15.3.0 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.5045414Z Got dependencies!
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.5045991Z 9 packages have newer versions incompatible with dependency constraints.
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:05.5047395Z Try `flutter pub outdated` for more information.
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:13.0986302Z Analyzing app...                                                
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:13.1023786Z No issues found! (ran in 7.1s)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:13.3875857Z Resolving dependencies...
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:13.4126796Z Downloading packages...
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:13.4138530Z   clock 1.1.2 (1.1.3 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:13.4138990Z   cupertino_icons 1.0.9 (2.0.0 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:13.4139493Z   matcher 0.12.19 (0.12.20 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:13.4140041Z   material_color_utilities 0.13.0 (0.13.1 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:13.4140553Z   meta 1.18.0 (1.19.0 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:13.4140954Z   stack_trace 1.12.1 (1.12.2 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:13.4141235Z   test_api 0.7.11 (0.7.15 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:13.4141495Z   vector_math 2.2.0 (2.4.3 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:13.4141749Z   vm_service 15.2.0 (15.3.0 available)
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:13.4142025Z Got dependencies!
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:13.4142344Z 9 packages have newer versions incompatible with dependency constraints.
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:13.4143084Z Try `flutter pub outdated` for more information.
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:14.0357071Z 
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:22.1658959Z ##[group]✅ exibe a mensagem inicial
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:22.1659677Z -------------------------------------------------------------------------------
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:22.1660484Z The Shorebird Updater is unavailable in the current environment.
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:22.1661229Z -------------------------------------------------------------------------------
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:22.1662041Z This occurs when using pkg:shorebird_code_push in an app that does not
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:22.1662905Z contain the Shorebird Engine. Most commonly this is due to building with
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:22.1663836Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:22.1664784Z It can also occur when running on an unsupported platform (e.g. web).
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:22.1665328Z 
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:22.1665620Z -------------------------------------------------------------------------------
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:22.1666426Z The Shorebird Updater is unavailable in the current environment.
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:22.1667492Z -------------------------------------------------------------------------------
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:22.1668325Z This occurs when using pkg:shorebird_code_push in an app that does not
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:22.1669181Z contain the Shorebird Engine. Most commonly this is due to building with
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:22.1670055Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:22.1670971Z It can also occur when running on an unsupported platform (e.g. web).
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:22.1671500Z 
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:22.1672021Z ##[endgroup]
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:22.1880078Z 
+Flutter analyze e test	Verificar aplicativo	2026-10-08T21:56:22.1887007Z 🎉 1 test passed.
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	﻿2026-10-08T21:56:22.2519133Z ##[group]Run python3 -m unittest discover -s tests/delivery -v
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:22.2519662Z ^[[36;1mpython3 -m unittest discover -s tests/delivery -v^[[0m
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:22.2585249Z shell: /usr/bin/bash -e {0}
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:22.2585521Z ##[endgroup]
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:22.6158389Z test_admin_bypass_divergence_remains_blocked_without_overwriting (test_configure_release_lab.ConfigureIdempotenceTests.test_admin_bypass_divergence_remains_blocked_without_overwriting) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:22.6195515Z test_real_required_review_count_divergence_remains_blocked_without_overwriting (test_configure_release_lab.ConfigureIdempotenceTests.test_real_required_review_count_divergence_remains_blocked_without_overwriting) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:22.6232747Z test_repeated_configuration_accepts_safe_github_defaults_without_creating_more_rulesets (test_configure_release_lab.ConfigureIdempotenceTests.test_repeated_configuration_accepts_safe_github_defaults_without_creating_more_rulesets) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:22.6277243Z test_unexpected_required_reviewer_defaults_are_not_silently_ignored (test_configure_release_lab.ConfigureIdempotenceTests.test_unexpected_required_reviewer_defaults_are_not_silently_ignored) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:22.6310660Z test_unsafe_extra_approval_default_is_not_treated_as_safe_normalization (test_configure_release_lab.ConfigureIdempotenceTests.test_unsafe_extra_approval_default_is_not_treated_as_safe_normalization) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:22.9275331Z test_creates_one_verified_object_and_ref_with_owner_audit_without_state_writes (test_create_lab_tag.CreateLabTagTests.test_creates_one_verified_object_and_ref_with_owner_audit_without_state_writes) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:23.1964397Z test_existing_exact_tag_is_read_only_idempotent (test_create_lab_tag.CreateLabTagTests.test_existing_exact_tag_is_read_only_idempotent) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:23.4650596Z test_existing_wrong_tag_is_never_replaced (test_create_lab_tag.CreateLabTagTests.test_existing_wrong_tag_is_never_replaced) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:23.7378468Z test_lost_ref_reply_manual_get_confirms_existing_tag_without_another_post (test_create_lab_tag.CreateLabTagTests.test_lost_ref_reply_manual_get_confirms_existing_tag_without_another_post) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:24.0122403Z test_lost_tag_object_reply_preserves_uncertainty_without_creating_ref_or_retry (test_create_lab_tag.CreateLabTagTests.test_lost_tag_object_reply_preserves_uncertainty_without_creating_ref_or_retry) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:24.2585445Z test_spec_cannot_substitute_another_manifest_hash (test_create_lab_tag.CreateLabTagTests.test_spec_cannot_substitute_another_manifest_hash) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:24.5547537Z test_tampered_source_message_ref_identity_and_extra_field_never_mutate (test_create_lab_tag.CreateLabTagTests.test_tampered_source_message_ref_identity_and_extra_field_never_mutate) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:24.8041461Z test_unprotected_namespace_blocks_before_any_post (test_create_lab_tag.CreateLabTagTests.test_unprotected_namespace_blocks_before_any_post) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:25.0402403Z test_user_api_error_is_sanitized_and_never_echoes_cli_stderr (test_create_lab_tag.CreateLabTagTests.test_user_api_error_is_sanitized_and_never_echoes_cli_stderr) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:25.2777851Z test_wrong_owner_login_or_id_and_actions_identity_are_rejected (test_create_lab_tag.CreateLabTagTests.test_wrong_owner_login_or_id_and_actions_identity_are_rejected) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:25.5265697Z test_wrong_tag_object_reply_blocks_ref_and_keeps_uncertain_checkpoint (test_create_lab_tag.CreateLabTagTests.test_wrong_tag_object_reply_blocks_ref_and_keeps_uncertain_checkpoint) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:25.5320207Z test_legacy_signature_and_first_baseline_remain_supported (test_github_candidate.CandidateTests.test_legacy_signature_and_first_baseline_remain_supported) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:25.5324267Z test_missing_baseline_and_invalid_delivery_reject_without_remote_access (test_github_candidate.CandidateTests.test_missing_baseline_and_invalid_delivery_reject_without_remote_access) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:25.5360497Z test_namespace_rules_are_required_before_any_mutation (test_github_candidate.CandidateTests.test_namespace_rules_are_required_before_any_mutation) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:25.5372665Z test_neutral_rc_and_release_branch_bind_exact_snapshot (test_github_candidate.CandidateTests.test_neutral_rc_and_release_branch_bind_exact_snapshot) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:25.5387666Z test_open_candidate_blocks_new_rc_without_mutations (test_github_candidate.CandidateTests.test_open_candidate_blocks_new_rc_without_mutations) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:25.5399890Z test_rc2_fixes_release_without_using_new_main_or_rc1_as_baseline (test_github_candidate.CandidateTests.test_rc2_fixes_release_without_using_new_main_or_rc1_as_baseline) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:25.5405596Z test_unrelated_release_snapshot_cannot_force_push (test_github_candidate.CandidateTests.test_unrelated_release_snapshot_cannot_force_push) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:25.5409697Z test_adds_neutral_rule_without_replacing_legacy_or_weakening_two_reviews (test_github_candidate.ConfigureTests.test_adds_neutral_rule_without_replacing_legacy_or_weakening_two_reviews) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:25.5412857Z test_conflicting_existing_rule_causes_no_mutations (test_github_candidate.ConfigureTests.test_conflicting_existing_rule_causes_no_mutations) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:25.5422990Z test_delivery_identity_mismatch_rejects_before_tag_read (test_github_candidate.InspectTests.test_delivery_identity_mismatch_rejects_before_tag_read) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:25.5431487Z test_neutral_manifest_preserves_real_review_gate_and_fixed_snapshot (test_github_candidate.InspectTests.test_neutral_manifest_preserves_real_review_gate_and_fixed_snapshot) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:25.5438744Z test_original_snapshot_cannot_replace_corrected_snapshot (test_github_candidate.InspectTests.test_original_snapshot_cannot_replace_corrected_snapshot) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:25.5444844Z test_old_rc_cannot_publish_after_newer_tag_exists (test_github_candidate.RealApprovalBoundaryTests.test_old_rc_cannot_publish_after_newer_tag_exists) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:25.5459412Z test_rc_created_during_asset_upload_leaves_release_in_draft (test_github_candidate.RealApprovalBoundaryTests.test_rc_created_during_asset_upload_leaves_release_in_draft) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:25.5461504Z test_simulated_required_names_do_not_count_as_real_reviews (test_github_candidate.RealApprovalBoundaryTests.test_simulated_required_names_do_not_count_as_real_reviews) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:25.5462949Z test_two_reviews_only_release_the_manual_command (test_github_candidate.RealApprovalBoundaryTests.test_two_reviews_only_release_the_manual_command) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:25.8860222Z test_asset_id_drift_after_effect_prevents_success_confirmation (test_github_lab_promote.GitHubLabPromoteTests.test_asset_id_drift_after_effect_prevents_success_confirmation) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:26.1798707Z test_asset_id_replaced_before_patch_fails_even_with_identical_digest (test_github_lab_promote.GitHubLabPromoteTests.test_asset_id_replaced_before_patch_fails_even_with_identical_digest) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:26.4803404Z test_comment_identity_and_dates_cannot_claim_other_issue (test_github_lab_promote.GitHubLabPromoteTests.test_comment_identity_and_dates_cannot_claim_other_issue) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:26.7959662Z test_comment_pagination_limit_duplicate_ids_and_invalid_ids_fail_closed (test_github_lab_promote.GitHubLabPromoteTests.test_comment_pagination_limit_duplicate_ids_and_invalid_ids_fail_closed) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:27.0871546Z test_deleted_selected_approval_is_not_accepted (test_github_lab_promote.GitHubLabPromoteTests.test_deleted_selected_approval_is_not_accepted) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:27.3832988Z test_edited_latest_command_invalidates_earlier_approval (test_github_lab_promote.GitHubLabPromoteTests.test_edited_latest_command_invalidates_earlier_approval) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:27.6816633Z test_harmless_download_count_changes_do_not_block_promotion (test_github_lab_promote.GitHubLabPromoteTests.test_harmless_download_count_changes_do_not_block_promotion) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:28.0418514Z test_issue_must_be_open_owner_assigned_exact_record_and_not_a_pr (test_github_lab_promote.GitHubLabPromoteTests.test_issue_must_be_open_owner_assigned_exact_record_and_not_a_pr) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:28.3364646Z test_latest_owner_decisive_comment_wins_by_id (test_github_lab_promote.GitHubLabPromoteTests.test_latest_owner_decisive_comment_wins_by_id) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:28.6628501Z test_missing_draft_changed_release_tag_or_asset_is_blocked (test_github_lab_promote.GitHubLabPromoteTests.test_missing_draft_changed_release_tag_or_asset_is_blocked) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:28.9589523Z test_newer_edited_owner_comment_cannot_resurrect_older_approval (test_github_lab_promote.GitHubLabPromoteTests.test_newer_edited_owner_comment_cannot_resurrect_older_approval) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:29.2670080Z test_old_owner_comment_edited_after_approval_requires_new_decision (test_github_lab_promote.GitHubLabPromoteTests.test_old_owner_comment_edited_after_approval_requires_new_decision) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:29.5614389Z test_only_exact_owner_user_command_without_simulation_counts (test_github_lab_promote.GitHubLabPromoteTests.test_only_exact_owner_user_command_without_simulation_counts) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:29.8298181Z test_owner_workflow_branch_and_actor_numeric_id_required (test_github_lab_promote.GitHubLabPromoteTests.test_owner_workflow_branch_and_actor_numeric_id_required) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:30.1515059Z test_plan_after_revocation_reports_stable_history_without_rewriting (test_github_lab_promote.GitHubLabPromoteTests.test_plan_after_revocation_reports_stable_history_without_rewriting) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:30.4302932Z test_plan_without_approval_is_read_only_and_awaits_real_issue_review (test_github_lab_promote.GitHubLabPromoteTests.test_plan_without_approval_is_read_only_and_awaits_real_issue_review) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:30.7214699Z test_promotion_preserves_same_id_tag_source_asset_ids_and_bytes (test_github_lab_promote.GitHubLabPromoteTests.test_promotion_preserves_same_id_tag_source_asset_ids_and_bytes) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:31.0412448Z test_repeat_after_promotion_verifies_same_receipt_without_remote_writes (test_github_lab_promote.GitHubLabPromoteTests.test_repeat_after_promotion_verifies_same_receipt_without_remote_writes) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:31.3324505Z test_review_revoke_or_issue_edit_during_recheck_blocks_only_patch (test_github_lab_promote.GitHubLabPromoteTests.test_review_revoke_or_issue_edit_during_recheck_blocks_only_patch) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:31.6502933Z test_revoked_candidate_during_recheck_blocks_promotion (test_github_lab_promote.GitHubLabPromoteTests.test_revoked_candidate_during_recheck_blocks_promotion) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:31.9637472Z test_uncertain_promotion_reply_recovers_on_next_manual_run_without_retry (test_github_lab_promote.GitHubLabPromoteTests.test_uncertain_promotion_reply_recovers_on_next_manual_run_without_retry) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:32.2393812Z test_wrong_manifest_hash_never_promotes (test_github_lab_promote.GitHubLabPromoteTests.test_wrong_manifest_hash_never_promotes) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:32.5159052Z test_ambiguous_upload_is_not_retried_and_manual_run_recovers_same_draft (test_github_lab_release.GitHubLabReleaseTests.test_ambiguous_upload_is_not_retried_and_manual_run_recovers_same_draft) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:32.7969427Z test_lost_publication_reply_preserves_checkpoint_then_manual_read_confirms (test_github_lab_release.GitHubLabReleaseTests.test_lost_publication_reply_preserves_checkpoint_then_manual_read_confirms) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:33.0248276Z test_owner_repository_main_workflow_and_triggering_identity_gates (test_github_lab_release.GitHubLabReleaseTests.test_owner_repository_main_workflow_and_triggering_identity_gates) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:33.2573179Z test_plan_has_no_effects_or_database_assets_and_labels_two_simulated_zero_real (test_github_lab_release.GitHubLabReleaseTests.test_plan_has_no_effects_or_database_assets_and_labels_two_simulated_zero_real) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:33.5234708Z test_publish_draft_uploads_confirmed_assets_then_records_prerelease (test_github_lab_release.GitHubLabReleaseTests.test_publish_draft_uploads_confirmed_assets_then_records_prerelease) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:33.7858298Z test_publish_requires_existing_owner_tag_and_existing_protection (test_github_lab_release.GitHubLabReleaseTests.test_publish_requires_existing_owner_tag_and_existing_protection) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:34.0938432Z test_published_matching_identity_is_read_only_idempotent_across_runs (test_github_lab_release.GitHubLabReleaseTests.test_published_matching_identity_is_read_only_idempotent_across_runs) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:35.0681828Z test_real_gh_stdin_upload_requires_explicit_byte_length_and_preserves_bytes (test_github_lab_release.GitHubLabReleaseTests.test_real_gh_stdin_upload_requires_explicit_byte_length_and_preserves_bytes) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:35.3594084Z test_revocation_during_upload_keeps_draft_unpublished (test_github_lab_release.GitHubLabReleaseTests.test_revocation_during_upload_keeps_draft_unpublished) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:35.6054821Z test_unsafe_zip_or_wrong_zip_bytes_are_rejected_before_release_creation (test_github_lab_release.GitHubLabReleaseTests.test_unsafe_zip_or_wrong_zip_bytes_are_rejected_before_release_creation) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:35.8248721Z test_upload_uses_absolute_github_uploads_url_and_sanitizes_cli_errors (test_github_lab_release.GitHubLabReleaseTests.test_upload_uses_absolute_github_uploads_url_and_sanitizes_cli_errors) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:36.0898268Z test_wrong_existing_draft_asset_fails_without_overwrite_or_delete (test_github_lab_release.GitHubLabReleaseTests.test_wrong_existing_draft_asset_fails_without_overwrite_or_delete) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:36.3728013Z test_wrong_manifest_hash_source_tree_and_missing_simulated_approval_fail (test_github_lab_release.GitHubLabReleaseTests.test_wrong_manifest_hash_source_tree_and_missing_simulated_approval_fail) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:36.6300325Z test_wrong_tag_source_or_annotation_is_never_overwritten (test_github_lab_release.GitHubLabReleaseTests.test_wrong_tag_source_or_annotation_is_never_overwritten) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:37.0346360Z test_abandon_refuses_confirmed_or_unknown_effect_in_same_provider (test_lab_engine.LaboratoryTests.test_abandon_refuses_confirmed_or_unknown_effect_in_same_provider) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:37.3574804Z test_audit_history_and_manifests_are_immutable_and_seed_cannot_reset_production (test_lab_engine.LaboratoryTests.test_audit_history_and_manifests_are_immutable_and_seed_cannot_reset_production) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:37.6567355Z test_concurrent_preparations_leave_exactly_one_active_candidate (test_lab_engine.LaboratoryTests.test_concurrent_preparations_leave_exactly_one_active_candidate) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:38.0468188Z test_failure_after_effect_but_before_receipt_record_is_reconciled (test_lab_engine.LaboratoryTests.test_failure_after_effect_but_before_receipt_record_is_reconciled) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:38.3839113Z test_final_command_does_not_follow_advanced_branch_and_is_repeatable (test_lab_engine.LaboratoryTests.test_final_command_does_not_follow_advanced_branch_and_is_repeatable) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:38.7274553Z test_missing_base_evidence_and_native_change_block_publication (test_lab_engine.LaboratoryTests.test_missing_base_evidence_and_native_change_block_publication) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:39.1153397Z test_provider_warning_blocks_and_never_falls_back_to_store (test_lab_engine.LaboratoryTests.test_provider_warning_blocks_and_never_falls_back_to_store) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:39.7623629Z test_queue_revisions_replace_queued_rc_and_old_production_requires_new_rc (test_lab_engine.LaboratoryTests.test_queue_revisions_replace_queued_rc_and_old_production_requires_new_rc) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:40.0475638Z test_recovery_cannot_switch_provider_to_claim_no_effects_or_repeat (test_lab_engine.LaboratoryTests.test_recovery_cannot_switch_provider_to_claim_no_effects_or_repeat) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:40.4244627Z test_reopened_database_preserves_roles_gate_and_explicit_final_command (test_lab_engine.LaboratoryTests.test_reopened_database_preserves_roles_gate_and_explicit_final_command) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:40.6131969Z test_request_ids_are_idempotent_and_payload_bound (test_lab_engine.LaboratoryTests.test_request_ids_are_idempotent_and_payload_bound) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:40.9343751Z test_revision_invalidates_old_hash_and_zeroes_approvals (test_lab_engine.LaboratoryTests.test_revision_invalidates_old_hash_and_zeroes_approvals) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:41.3169741Z test_source_older_than_confirmed_production_is_rejected (test_lab_engine.LaboratoryTests.test_source_older_than_confirmed_production_is_rejected) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:41.5972251Z test_tampered_preview_wrong_identity_and_destination_reduction_block (test_lab_engine.LaboratoryTests.test_tampered_preview_wrong_identity_and_destination_reduction_block) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:42.0174854Z test_timeout_requires_lookup_before_resume_and_does_not_duplicate (test_lab_engine.LaboratoryTests.test_timeout_requires_lookup_before_resume_and_does_not_duplicate) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:42.4615897Z test_two_publishers_cannot_run_and_revocation_stops_remaining_destinations (test_lab_engine.LaboratoryTests.test_two_publishers_cannot_run_and_revocation_stops_remaining_destinations) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:42.8634573Z test_urgency_is_blocked_until_partial_result_is_reconciled (test_lab_engine.LaboratoryTests.test_urgency_is_blocked_until_partial_result_is_reconciled) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:43.4404619Z test_urgent_fix_excludes_main_features_then_reintegration_gets_new_approvals (test_lab_engine.LaboratoryTests.test_urgent_fix_excludes_main_features_then_reintegration_gets_new_approvals) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:43.4432514Z test_android_packages_exact_snapshot_and_records_no_distribution_or_patch (test_mobile_build.MobileBuildTests.test_android_packages_exact_snapshot_and_records_no_distribution_or_patch) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:43.4449302Z test_build_cannot_package_artifact_left_by_prior_attempt (test_mobile_build.MobileBuildTests.test_build_cannot_package_artifact_left_by_prior_attempt) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:43.4451819Z test_build_flags_are_fixed_and_defines_are_arguments_without_shell (test_mobile_build.MobileBuildTests.test_build_flags_are_fixed_and_defines_are_arguments_without_shell) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:43.4461780Z test_bundle_cannot_reference_files_outside_itself (test_mobile_build.MobileBuildTests.test_bundle_cannot_reference_files_outside_itself) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:43.4474237Z test_compiler_error_produces_no_metadata (test_mobile_build.MobileBuildTests.test_compiler_error_produces_no_metadata) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:43.4482856Z test_ios_linux_runner_is_rejected (test_mobile_build.MobileBuildTests.test_ios_linux_runner_is_rejected) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:43.4518890Z test_ios_without_codesign_packages_xcarchive_and_does_not_claim_ipa (test_mobile_build.MobileBuildTests.test_ios_without_codesign_packages_xcarchive_and_does_not_claim_ipa) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:43.4527846Z test_mutable_ref_and_wrong_checkout_never_start_compiler (test_mobile_build.MobileBuildTests.test_mutable_ref_and_wrong_checkout_never_start_compiler) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:43.4535153Z test_tools_checkout_must_match_the_caller_commit (test_mobile_build.MobileBuildTests.test_tools_checkout_must_match_the_caller_commit) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:43.4553704Z test_tracked_change_during_build_invalidates_result (test_mobile_build.MobileBuildTests.test_tracked_change_during_build_invalidates_result) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:43.4572659Z test_wrong_sdk_version_or_revision_blocks_build (test_mobile_build.MobileBuildTests.test_wrong_sdk_version_or_revision_blocks_build) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:43.5302413Z test_existing_bytes_cannot_be_replaced (test_pages_preview.PagesPreviewTests.test_existing_bytes_cannot_be_replaced) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:43.6060696Z test_existing_snapshot_reuses_bytes_without_rebuilding (test_pages_preview.PagesPreviewTests.test_existing_snapshot_reuses_bytes_without_rebuilding) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:43.6815059Z test_export_excludes_git_and_blocks_state (test_pages_preview.PagesPreviewTests.test_export_excludes_git_and_blocks_state) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:43.7413609Z test_flutter_build_marker_is_not_published (test_pages_preview.PagesPreviewTests.test_flutter_build_marker_is_not_published) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:43.7813299Z test_mutable_checkout_and_unknown_sha_are_rejected (test_pages_preview.PagesPreviewTests.test_mutable_checkout_and_unknown_sha_are_rejected) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:43.8923100Z test_new_snapshot_retains_previous_and_updates_root (test_pages_preview.PagesPreviewTests.test_new_snapshot_retains_previous_and_updates_root) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:43.9966302Z test_other_hidden_files_are_still_rejected (test_pages_preview.PagesPreviewTests.test_other_hidden_files_are_still_rejected) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.0581966Z test_site_rejects_links_and_banks_hidden_as_assets (test_pages_preview.PagesPreviewTests.test_site_rejects_links_and_banks_hidden_as_assets) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1222221Z test_snapshot_metadata_matches_code_and_preserves_ci_identity (test_pages_preview.PagesPreviewTests.test_snapshot_metadata_matches_code_and_preserves_ci_identity) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1230757Z test_base_href_and_bootstrap_reference_are_checked_beyond_hashes (test_pages_smoke.PagesSmokeTests.test_base_href_and_bootstrap_reference_are_checked_beyond_hashes) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1234821Z test_confirms_snapshot_and_attests_full_map_without_downloading_engine (test_pages_smoke.PagesSmokeTests.test_confirms_snapshot_and_attests_full_map_without_downloading_engine) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1279161Z test_http_only_retries_selected_statuses_and_refuses_redirects (test_pages_smoke.PagesSmokeTests.test_http_only_retries_selected_statuses_and_refuses_redirects) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1281967Z test_map_hash_must_match_trusted_build_even_if_metadata_claims_it_does (test_pages_smoke.PagesSmokeTests.test_map_hash_must_match_trusted_build_even_if_metadata_claims_it_does) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1284087Z test_metadata_tampering_with_recomputed_manifest_keeps_web_hash_but_is_rejected (test_pages_smoke.PagesSmokeTests.test_metadata_tampering_with_recomputed_manifest_keeps_web_hash_but_is_rejected) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1286289Z test_retries_propagation_and_stops_at_190_seconds (test_pages_smoke.PagesSmokeTests.test_retries_propagation_and_stops_at_190_seconds) ... Aguardando propagação Pages: HTTP 404
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1287483Z Aguardando propagação Pages: HTTP 404
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1288171Z Aguardando propagação Pages: HTTP 503
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1288704Z Aguardando propagação Pages: HTTP 503
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1289227Z Aguardando propagação Pages: HTTP 503
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1289746Z Aguardando propagação Pages: HTTP 503
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1290263Z Aguardando propagação Pages: HTTP 503
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1290777Z Aguardando propagação Pages: HTTP 503
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1291307Z Aguardando propagação Pages: HTTP 503
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1291634Z Aguardando propagação Pages: HTTP 503
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1291934Z Aguardando propagação Pages: HTTP 503
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1292237Z Aguardando propagação Pages: HTTP 503
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1292549Z Aguardando propagação Pages: HTTP 503
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1292857Z Aguardando propagação Pages: HTTP 503
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1293157Z Aguardando propagação Pages: HTTP 503
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1293457Z Aguardando propagação Pages: HTTP 503
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1293758Z Aguardando propagação Pages: HTTP 503
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1294056Z Aguardando propagação Pages: HTTP 503
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1294353Z Aguardando propagação Pages: HTTP 503
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1294662Z Aguardando propagação Pages: HTTP 503
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1294977Z Aguardando propagação Pages: HTTP 503
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1295226Z ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1304562Z test_unsafe_manifest_paths_fail_before_asset_requests (test_pages_smoke.PagesSmokeTests.test_unsafe_manifest_paths_fail_before_asset_requests) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1307120Z test_wrapper_tampering_with_recomputed_manifest_keeps_web_hash_but_is_rejected (test_pages_smoke.PagesSmokeTests.test_wrapper_tampering_with_recomputed_manifest_keeps_web_hash_but_is_rejected) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1311543Z test_wrong_metadata_or_main_bytes_fail_without_retry (test_pages_smoke.PagesSmokeTests.test_wrong_metadata_or_main_bytes_fail_without_retry) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1313014Z test_bot_and_pending_do_not_count (test_policy.ApprovalTests.test_bot_and_pending_do_not_count) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1314408Z test_comment_does_not_revoke_and_api_order_does_not_matter (test_policy.ApprovalTests.test_comment_does_not_revoke_and_api_order_does_not_matter) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1315344Z test_commit_change_invalidates_approvals (test_policy.ApprovalTests.test_commit_change_invalidates_approvals) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1316162Z test_dismissal_and_changes_requested_revoke (test_policy.ApprovalTests.test_dismissal_and_changes_requested_revoke) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1321399Z test_no_publish_side_effect_at_zero_one_or_unmerged_two (test_policy.ApprovalTests.test_no_publish_side_effect_at_zero_one_or_unmerged_two) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1322767Z test_only_one_new_manifest (test_policy.ApprovalTests.test_only_one_new_manifest) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1324035Z test_other_people_and_author_cannot_substitute (test_policy.ApprovalTests.test_other_people_and_author_cannot_substitute) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1325340Z test_reapproval_after_changes (test_policy.ApprovalTests.test_reapproval_after_changes) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1326870Z test_record_hash_binds_source_preview_and_changelog (test_policy.ApprovalTests.test_record_hash_binds_source_preview_and_changelog) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1328056Z test_same_person_twice_cannot_approve_alone (test_policy.ApprovalTests.test_same_person_twice_cannot_approve_alone) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1328926Z test_submission_time_wins_over_draft_creation_id (test_policy.ApprovalTests.test_submission_time_wins_over_draft_creation_id) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1329646Z test_zero_one_and_two (test_policy.ApprovalTests.test_zero_one_and_two) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1330269Z test_expiration_and_changed_inputs (test_policy.PreviewTests.test_expiration_and_changed_inputs) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1765277Z test_squash_sha_difference_preserves_content_identity (test_policy.PreviewTests.test_squash_sha_difference_preserves_content_identity) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1781351Z test_revocation_during_upload_never_publishes_draft (test_policy.PublisherBoundaryTests.test_revocation_during_upload_never_publishes_draft) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1795446Z test_two_current_review_payloads_allow_only_lab_release_and_receipt (test_policy.PublisherBoundaryTests.test_two_current_review_payloads_allow_only_lab_release_and_receipt) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1797484Z test_changed_source_cannot_reuse_candidate_authorization (test_release_lab.CandidateStateTests.test_changed_source_cannot_reuse_candidate_authorization) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1799005Z test_current_candidate_is_bound_to_its_exact_source_commit (test_release_lab.CandidateStateTests.test_current_candidate_is_bound_to_its_exact_source_commit) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1800371Z test_missing_record_does_not_get_created_by_the_gate (test_release_lab.CandidateStateTests.test_missing_record_does_not_get_created_by_the_gate) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1801741Z test_new_rc_blocks_old_rc_without_deleting_its_history (test_release_lab.CandidateStateTests.test_new_rc_blocks_old_rc_without_deleting_its_history) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1803207Z test_dart_only_is_a_preliminary_forecast_with_a_reason (test_release_lab.ClassificationTests.test_dart_only_is_a_preliminary_forecast_with_a_reason) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1804549Z test_dependency_change_remains_unknown_without_compatibility_evidence (test_release_lab.ClassificationTests.test_dependency_change_remains_unknown_without_compatibility_evidence) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1806042Z test_native_sdk_and_packaged_asset_changes_require_a_store_release (test_release_lab.ClassificationTests.test_native_sdk_and_packaged_asset_changes_require_a_store_release) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1808003Z test_unknown_mobile_base_blocks_patch_forecast_even_for_dart_only (test_release_lab.ClassificationTests.test_unknown_mobile_base_blocks_patch_forecast_even_for_dart_only) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1809741Z test_bot_cannot_be_counted_as_a_human_review (test_release_lab.EnvironmentReviewTests.test_bot_cannot_be_counted_as_a_human_review) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1810872Z test_changed_environment_id_invalidates_a_familiar_name (test_release_lab.EnvironmentReviewTests.test_changed_environment_id_invalidates_a_familiar_name) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1812250Z test_conflicting_history_cannot_choose_a_convenient_api_order (test_release_lab.EnvironmentReviewTests.test_conflicting_history_cannot_choose_a_convenient_api_order) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1813765Z test_duplicate_person_in_two_environments_is_not_two_approvals (test_release_lab.EnvironmentReviewTests.test_duplicate_person_in_two_environments_is_not_two_approvals) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1815072Z test_either_required_approver_can_take_the_final_decision (test_release_lab.EnvironmentReviewTests.test_either_required_approver_can_take_the_final_decision) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1816885Z test_final_decision_does_not_replace_a_missing_version_approval (test_release_lab.EnvironmentReviewTests.test_final_decision_does_not_replace_a_missing_version_approval) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1818022Z test_final_requires_a_third_separate_human_decision (test_release_lab.EnvironmentReviewTests.test_final_requires_a_third_separate_human_decision) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1819122Z test_login_alone_cannot_substitute_numeric_account_identity (test_release_lab.EnvironmentReviewTests.test_login_alone_cannot_substitute_numeric_account_identity) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1820237Z test_numeric_id_alone_cannot_substitute_another_login (test_release_lab.EnvironmentReviewTests.test_numeric_id_alone_cannot_substitute_another_login) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1821295Z test_rejection_or_pending_cannot_count_as_approval (test_release_lab.EnvironmentReviewTests.test_rejection_or_pending_cannot_count_as_approval) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1822440Z test_two_real_identities_enable_approval_stage_without_publishing (test_release_lab.EnvironmentReviewTests.test_two_real_identities_enable_approval_stage_without_publishing) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1823622Z test_unlisted_publisher_cannot_use_the_final_environment (test_release_lab.EnvironmentReviewTests.test_unlisted_publisher_cannot_use_the_final_environment) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1824821Z test_wrong_identity_in_history_cannot_be_hidden_behind_a_valid_approval (test_release_lab.EnvironmentReviewTests.test_wrong_identity_in_history_cannot_be_hidden_behind_a_valid_approval) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1825994Z test_zero_or_one_approval_cannot_enable_final_command (test_release_lab.EnvironmentReviewTests.test_zero_or_one_approval_cannot_enable_final_command) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1867883Z test_failed_cancelled_skipped_or_pending_job_cannot_complete (test_release_lab.FinalReceiptTests.test_failed_cancelled_skipped_or_pending_job_cannot_complete) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1881207Z test_old_run_cannot_complete_after_rc2_replaced_it (test_release_lab.FinalReceiptTests.test_old_run_cannot_complete_after_rc2_replaced_it) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1895112Z test_report_drift_cannot_complete_or_write_a_receipt (test_release_lab.FinalReceiptTests.test_report_drift_cannot_complete_or_write_a_receipt) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1907875Z test_reviews_without_both_successful_job_receipts_cannot_complete (test_release_lab.FinalReceiptTests.test_reviews_without_both_successful_job_receipts_cannot_complete) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1930071Z test_success_records_real_decisions_but_only_simulated_result (test_release_lab.FinalReceiptTests.test_success_records_real_decisions_but_only_simulated_result) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1936164Z test_advanced_release_requires_new_rc_instead_of_old_approval (test_release_lab.FrozenIdentityTests.test_advanced_release_requires_new_rc_instead_of_old_approval) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1939118Z test_changed_policy_does_not_reuse_frozen_approvals (test_release_lab.FrozenIdentityTests.test_changed_policy_does_not_reuse_frozen_approvals) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1942786Z test_moved_tag_blocks_before_reading_environment_rules (test_release_lab.FrozenIdentityTests.test_moved_tag_blocks_before_reading_environment_rules) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1969096Z test_invalid_version_or_title_is_rejected_before_any_remote_mutation (test_release_lab.InputValidationTests.test_invalid_version_or_title_is_rejected_before_any_remote_mutation) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1971361Z test_distinct_roles_cannot_share_one_environment (test_release_lab.PolicyTests.test_distinct_roles_cannot_share_one_environment) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1972655Z test_empty_or_ambiguous_account_identity_is_rejected (test_release_lab.PolicyTests.test_empty_or_ambiguous_account_identity_is_rejected) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1973787Z test_final_decision_has_its_own_environment (test_release_lab.PolicyTests.test_final_decision_has_its_own_environment) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1975482Z test_final_publishers_must_be_the_required_approver_set (test_release_lab.PolicyTests.test_final_publishers_must_be_the_required_approver_set) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1977516Z test_policy_accepts_distinct_mandatory_approvers_and_either_publisher (test_release_lab.PolicyTests.test_policy_accepts_distinct_mandatory_approvers_and_either_publisher) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.1978820Z test_same_person_cannot_fill_both_mandatory_roles (test_release_lab.PolicyTests.test_same_person_cannot_fill_both_mandatory_roles) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.2759798Z test_an_extra_valid_snapshot_cannot_cross_the_candidate_boundary (test_release_lab.StaticArtifactBoundaryTests.test_an_extra_valid_snapshot_cannot_cross_the_candidate_boundary) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.3648231Z test_divergent_historical_snapshot_is_preserved_instead_of_overwritten (test_release_lab.StaticArtifactBoundaryTests.test_divergent_historical_snapshot_is_preserved_instead_of_overwritten) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.4312291Z test_root_or_nested_git_payload_is_rejected_before_import (test_release_lab.StaticArtifactBoundaryTests.test_root_or_nested_git_payload_is_rejected_before_import) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.5492671Z test_self_consistent_metadata_must_still_match_trusted_git_inputs (test_release_lab.StaticArtifactBoundaryTests.test_self_consistent_metadata_must_still_match_trusted_git_inputs) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.6100330Z test_symlink_as_artifact_root_is_rejected_without_following_it (test_release_lab.StaticArtifactBoundaryTests.test_symlink_as_artifact_root_is_rejected_without_following_it) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.6101622Z test_operator_can_prepare_only_once_from_main (test_release_lab.TrustedContextTests.test_operator_can_prepare_only_once_from_main) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.6103076Z test_repository_account_and_trusted_ref_cannot_be_substituted (test_release_lab.TrustedContextTests.test_repository_account_and_trusted_ref_cannot_be_substituted) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.6104338Z test_rerun_cannot_reuse_earlier_human_approvals (test_release_lab.TrustedContextTests.test_rerun_cannot_reuse_earlier_human_approvals) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.6962171Z test_conflicting_release_name_body_or_state_is_not_patched (test_release_lab_promotion.PromotionFlowTests.test_conflicting_release_name_body_or_state_is_not_patched) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.7815783Z test_conflicting_stable_ref_is_never_moved_or_deleted (test_release_lab_promotion.PromotionFlowTests.test_conflicting_stable_ref_is_never_moved_or_deleted) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.8560136Z test_failed_preview_cannot_produce_report_approval_or_publication (test_release_lab_promotion.PromotionFlowTests.test_failed_preview_cannot_produce_report_approval_or_publication) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:44.9644750Z test_interleaved_approval_writers_retry_cas_without_losing_either_receipt (test_release_lab_promotion.PromotionFlowTests.test_interleaved_approval_writers_retry_cas_without_losing_either_receipt) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:45.0640367Z test_lost_release_post_response_is_read_back_before_receipt (test_release_lab_promotion.PromotionFlowTests.test_lost_release_post_response_is_read_back_before_receipt) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:45.1180298Z test_lost_response_after_final_cut_journal_commit_returns_the_same_rc (test_release_lab_promotion.PromotionFlowTests.test_lost_response_after_final_cut_journal_commit_returns_the_same_rc) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:45.2303791Z test_lost_responses_and_partial_failure_reconcile_exactly_one_release (test_release_lab_promotion.PromotionFlowTests.test_lost_responses_and_partial_failure_reconcile_exactly_one_release) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:45.3290887Z test_lost_tag_post_response_is_proven_by_get_before_release_post (test_release_lab_promotion.PromotionFlowTests.test_lost_tag_post_response_is_proven_by_get_before_release_post) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:45.5018615Z test_old_completed_version_wrong_initiator_rerun_and_bot_are_blocked (test_release_lab_promotion.PromotionFlowTests.test_old_completed_version_wrong_initiator_rerun_and_bot_are_blocked) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:45.5871470Z test_pending_or_cancelled_review_job_blocks_external_effects_even_if_reviews_exist (test_release_lab_promotion.PromotionFlowTests.test_pending_or_cancelled_review_job_blocks_external_effects_even_if_reviews_exist) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:45.6862676Z test_publication_failure_keeps_intent_and_blocks_new_candidate (test_release_lab_promotion.PromotionFlowTests.test_publication_failure_keeps_intent_and_blocks_new_candidate) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:45.7957162Z test_recovery_cannot_continue_after_a_correction_changed_release_branch (test_release_lab_promotion.PromotionFlowTests.test_recovery_cannot_continue_after_a_correction_changed_release_branch) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:45.9140697Z test_recovery_requires_new_final_decision_and_preserves_original_approval_evidence (test_release_lab_promotion.PromotionFlowTests.test_recovery_requires_new_final_decision_and_preserves_original_approval_evidence) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:46.0845834Z test_rejected_rc1_is_preserved_corrected_rc2_starts_at_zero_and_is_promoted (test_release_lab_promotion.PromotionFlowTests.test_rejected_rc1_is_preserved_corrected_rc2_starts_at_zero_and_is_promoted) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:46.1703461Z test_removed_rules_after_approvals_and_final_command_prevent_publication_intent (test_release_lab_promotion.PromotionFlowTests.test_removed_rules_after_approvals_and_final_command_prevent_publication_intent) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:46.2712508Z test_removed_rules_after_stable_creation_block_release_and_preserve_partial_intent (test_release_lab_promotion.PromotionFlowTests.test_removed_rules_after_stable_creation_block_release_and_preserve_partial_intent) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:46.3642685Z test_report_tag_release_branch_and_base_drift_do_not_reuse_approvals (test_release_lab_promotion.PromotionFlowTests.test_report_tag_release_branch_and_base_drift_do_not_reuse_approvals) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:46.4768196Z test_same_attempt_process_retry_reuses_intent_and_cannot_duplicate_release (test_release_lab_promotion.PromotionFlowTests.test_same_attempt_process_retry_reuses_intent_and_cannot_duplicate_release) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:46.5907895Z test_second_successful_finish_is_idempotent_without_a_second_post (test_release_lab_promotion.PromotionFlowTests.test_second_successful_finish_is_idempotent_without_a_second_post) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:46.6455578Z test_simulated_completion_cannot_replace_the_real_stable_changelog_baseline (test_release_lab_promotion.PromotionFlowTests.test_simulated_completion_cannot_replace_the_real_stable_changelog_baseline) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:46.7471428Z test_successful_post_without_published_get_proof_cannot_write_receipt (test_release_lab_promotion.PromotionFlowTests.test_successful_post_without_published_get_proof_cannot_write_receipt) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:46.8327499Z test_unowned_stable_tag_at_same_commit_does_not_imply_publication_authority (test_release_lab_promotion.PromotionFlowTests.test_unowned_stable_tag_at_same_commit_does_not_imply_publication_authority) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:46.8640591Z test_version_comparison_is_numeric_instead_of_lexicographic (test_release_lab_promotion.PromotionFlowTests.test_version_comparison_is_numeric_instead_of_lexicographic) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:46.9736078Z test_zero_one_two_approvals_require_separate_command_before_github_promotion (test_release_lab_promotion.PromotionFlowTests.test_zero_one_two_approvals_require_separate_command_before_github_promotion) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:47.1521206Z test_absent_provider_is_not_silently_recreated_or_treated_as_negative (test_remote_state.RemoteStateTests.test_absent_provider_is_not_silently_recreated_or_treated_as_negative) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:47.3465557Z test_bootstrap_race_cannot_replace_another_initialized_ref (test_remote_state.RemoteStateTests.test_bootstrap_race_cannot_replace_another_initialized_ref) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:47.5357856Z test_checkpoint_exists_before_ref_mutation (test_remote_state.RemoteStateTests.test_checkpoint_exists_before_ref_mutation) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:47.7377781Z test_checksums_and_truncated_tree_or_extra_files_block_before_import (test_remote_state.RemoteStateTests.test_checksums_and_truncated_tree_or_extra_files_block_before_import) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:47.9729808Z test_concurrent_sibling_writer_is_conflict_never_rebased_or_reapplied (test_remote_state.RemoteStateTests.test_concurrent_sibling_writer_is_conflict_never_rebased_or_reapplied) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:48.2283429Z test_confirmation_after_another_writer_advances_still_identifies_our_commit (test_remote_state.RemoteStateTests.test_confirmation_after_another_writer_advances_still_identifies_our_commit) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:48.4605387Z test_denied_update_can_only_retry_same_proposal_with_same_payload (test_remote_state.RemoteStateTests.test_denied_update_can_only_retry_same_proposal_with_same_payload) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:48.6653682Z test_empty_directory_allowed_but_existing_state_is_not_overwritten (test_remote_state.RemoteStateTests.test_empty_directory_allowed_but_existing_state_is_not_overwritten) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:48.8603769Z test_lost_ref_reply_is_reconciled_without_second_update (test_remote_state.RemoteStateTests.test_lost_ref_reply_is_reconciled_without_second_update) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:49.0547934Z test_opaque_credential_setting_or_unexpected_secret_column_is_rejected (test_remote_state.RemoteStateTests.test_opaque_credential_setting_or_unexpected_secret_column_is_rejected) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:49.2302264Z test_restriction_to_personal_repository_and_dedicated_ref (test_remote_state.RemoteStateTests.test_restriction_to_personal_repository_and_dedicated_ref) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:49.4490600Z test_round_trip_preserves_hash_approvals_all_journals_and_path_plan (test_remote_state.RemoteStateTests.test_round_trip_preserves_hash_approvals_all_journals_and_path_plan) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:49.6322647Z test_secret_values_are_rejected_and_never_written_to_git (test_remote_state.RemoteStateTests.test_secret_values_are_rejected_and_never_written_to_git) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:49.8372036Z test_sqlite_wal_is_exported_by_backup_and_remote_journal_remains_consistent (test_remote_state.RemoteStateTests.test_sqlite_wal_is_exported_by_backup_and_remote_journal_remains_consistent) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:50.0975960Z test_two_actions_advance_one_parent_without_force_and_preserve_zero_to_two (test_remote_state.RemoteStateTests.test_two_actions_advance_one_parent_without_force_and_preserve_zero_to_two) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:50.3265508Z test_unknown_confirmation_preserves_checkpoint_and_exact_proposal_for_retry (test_remote_state.RemoteStateTests.test_unknown_confirmation_preserves_checkpoint_and_exact_proposal_for_retry) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:50.9162764Z test_reopened_actions_preserve_zero_one_two_and_publish_exact_snapshot_once (test_runner.CoordinatorTests.test_reopened_actions_preserve_zero_one_two_and_publish_exact_snapshot_once) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.0392421Z test_slack_checkpoint_failure_prevents_post_and_keeps_unknown_locally (test_runner.CoordinatorTests.test_slack_checkpoint_failure_prevents_post_and_keeps_unknown_locally) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.1893045Z test_slack_unknown_checkpoint_is_remote_before_post_and_sent_rerun_does_not_duplicate (test_runner.CoordinatorTests.test_slack_unknown_checkpoint_is_remote_before_post_and_sent_rerun_does_not_duplicate) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.1896904Z test_metadata_read_is_allowed_but_repo_root_mutation_is_rejected (test_runner.RequestTests.test_metadata_read_is_allowed_but_repo_root_mutation_is_rejected) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.1899327Z test_only_authenticated_owner_on_personal_main_can_operate (test_runner.RequestTests.test_only_authenticated_owner_on_personal_main_can_operate) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.1901773Z test_rc_and_urgency_do_not_silently_coerce_other_json_types (test_runner.RequestTests.test_rc_and_urgency_do_not_silently_coerce_other_json_types) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.1903987Z test_sha_candidate_and_hash_require_text_before_regex_checks (test_runner.RequestTests.test_sha_candidate_and_hash_require_text_before_regex_checks) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.1905839Z test_extra_human_or_another_bot_or_missing_israel_blocks (test_slack_notify.DestinationTests.test_extra_human_or_another_bot_or_missing_israel_blocks) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.1908122Z test_membership_is_checked_through_all_pages (test_slack_notify.DestinationTests.test_membership_is_checked_through_all_pages) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.1909778Z test_only_exact_private_channel_and_bot_plus_israel_are_accepted (test_slack_notify.DestinationTests.test_only_exact_private_channel_and_bot_plus_israel_are_accepted) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.1917182Z test_repeated_or_malformed_cursor_fails_closed (test_slack_notify.DestinationTests.test_repeated_or_malformed_cursor_fails_closed) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.1918558Z test_user_token_cannot_impersonate_israel (test_slack_notify.DestinationTests.test_user_token_cannot_impersonate_israel) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.1919603Z test_wrong_public_shared_archived_or_renamed_channel_has_no_post (test_slack_notify.DestinationTests.test_wrong_public_shared_archived_or_renamed_channel_has_no_post) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.1962265Z test_concurrent_attempt_is_blocked_while_first_post_is_in_flight (test_slack_notify.OutboxTests.test_concurrent_attempt_is_blocked_while_first_post_is_in_flight) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.2001075Z test_confirmed_send_is_persisted_and_retry_has_no_api_call (test_slack_notify.OutboxTests.test_confirmed_send_is_persisted_and_retry_has_no_api_call) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.2022564Z test_failed_destination_check_creates_no_attempt_and_never_posts (test_slack_notify.OutboxTests.test_failed_destination_check_creates_no_attempt_and_never_posts) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.2042541Z test_missing_token_cannot_read_or_post_to_slack (test_slack_notify.OutboxTests.test_missing_token_cannot_read_or_post_to_slack) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.2144559Z test_post_response_without_exact_channel_ts_is_unknown (test_slack_notify.OutboxTests.test_post_response_without_exact_channel_ts_is_unknown) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.2181135Z test_same_key_with_changed_payload_blocks_repetition (test_slack_notify.OutboxTests.test_same_key_with_changed_payload_blocks_repetition) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.2214212Z test_transport_uncertainty_stays_unknown_and_never_retries (test_slack_notify.OutboxTests.test_transport_uncertainty_stays_unknown_and_never_retries) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.2216568Z test_client_id_is_stable_and_bound_to_candidate_and_content (test_slack_notify.RenderTests.test_client_id_is_stable_and_bound_to_candidate_and_content) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.2234323Z test_default_cli_renders_without_token_network_or_outbox (test_slack_notify.RenderTests.test_default_cli_renders_without_token_network_or_outbox) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.2236669Z test_github_links_cannot_redirect_to_other_repositories_or_mentions (test_slack_notify.RenderTests.test_github_links_cannot_redirect_to_other_repositories_or_mentions) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.2238747Z test_lab_flags_are_explicit_and_real_notice_cannot_claim_distribution (test_slack_notify.RenderTests.test_lab_flags_are_explicit_and_real_notice_cannot_claim_distribution) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.2241054Z test_status_uses_plain_text_and_does_not_enable_mentions (test_slack_notify.RenderTests.test_status_uses_plain_text_and_does_not_enable_mentions) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.2242735Z test_cross_host_redirect_is_never_followed (test_slack_notify.TransportTests.test_cross_host_redirect_is_never_followed) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.2249368Z test_network_errors_never_echo_token_or_raw_response (test_slack_notify.TransportTests.test_network_errors_never_echo_token_or_raw_response) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.2252811Z test_token_is_header_only_and_write_is_json_to_fixed_slack_endpoint (test_slack_notify.TransportTests.test_token_is_header_only_and_write_is_json_to_fixed_slack_endpoint) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.2254146Z test_unknown_method_does_not_call_network (test_slack_notify.TransportTests.test_unknown_method_does_not_call_network) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.3036333Z test_complex_yaml_is_pending_instead_of_guessed (test_snapshots.PreAnalysisTests.test_complex_yaml_is_pending_instead_of_guessed) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.3648064Z test_dart_prediction_is_distinct_from_web_and_native_validation (test_snapshots.PreAnalysisTests.test_dart_prediction_is_distinct_from_web_and_native_validation) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.5127632Z test_dependency_manifest_lock_and_unknown_files_fail_closed (test_snapshots.PreAnalysisTests.test_dependency_manifest_lock_and_unknown_files_fail_closed) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.5922813Z test_docs_and_tools_do_not_force_store_but_do_affect_preview_identity (test_snapshots.PreAnalysisTests.test_docs_and_tools_do_not_force_store_but_do_affect_preview_identity) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.6612415Z test_each_platform_uses_its_own_release_base_not_last_rc (test_snapshots.PreAnalysisTests.test_each_platform_uses_its_own_release_base_not_last_rc) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.6899629Z test_missing_candidate_input_is_pending_not_assumed_from_base (test_snapshots.PreAnalysisTests.test_missing_candidate_input_is_pending_not_assumed_from_base) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.7354403Z test_missing_or_mismatched_base_evidence_blocks_prediction (test_snapshots.PreAnalysisTests.test_missing_or_mismatched_base_evidence_blocks_prediction) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.8745367Z test_packaged_asset_and_resolution_variant_require_store (test_snapshots.PreAnalysisTests.test_packaged_asset_and_resolution_variant_require_store) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.9250130Z test_platform_inputs_are_separate (test_snapshots.PreAnalysisTests.test_platform_inputs_are_separate) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:51.9865563Z test_pubspec_asset_declarations_require_store (test_snapshots.PreAnalysisTests.test_pubspec_asset_declarations_require_store) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:52.1278312Z test_toolchain_entrypoint_or_flavor_change_requires_store (test_snapshots.PreAnalysisTests.test_toolchain_entrypoint_or_flavor_change_requires_store) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:52.1692147Z test_verified_release_needs_provider_identifier (test_snapshots.PreAnalysisTests.test_verified_release_needs_provider_identifier) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:52.2500867Z test_build_fingerprint_is_conservative_and_json_is_finite (test_snapshots.PreviewTests.test_build_fingerprint_is_conservative_and_json_is_finite) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:52.2936761Z test_cannot_substitute_origin_sha_even_with_claimed_candidate_fingerprint (test_snapshots.PreviewTests.test_cannot_substitute_origin_sha_even_with_claimed_candidate_fingerprint) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:52.3371220Z test_changed_code_or_build_inputs_refuses_reuse (test_snapshots.PreviewTests.test_changed_code_or_build_inputs_refuses_reuse) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:52.3974413Z test_equal_tree_with_different_commit_and_docs_can_reuse (test_snapshots.PreviewTests.test_equal_tree_with_different_commit_and_docs_can_reuse) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:52.4529609Z test_fixture_format_is_explicit_and_flutter_zip_is_checked (test_snapshots.PreviewTests.test_fixture_format_is_explicit_and_flutter_zip_is_checked) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:52.4877097Z test_flutter_zip_rejects_path_traversal (test_snapshots.PreviewTests.test_flutter_zip_rejects_path_traversal) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:52.5463146Z test_hash_expiration_and_incomplete_metadata_block (test_snapshots.PreviewTests.test_hash_expiration_and_incomplete_metadata_block) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:52.6163550Z test_candidate_requires_production_ancestor_and_exact_shas (test_snapshots.SnapshotTests.test_candidate_requires_production_ancestor_and_exact_shas) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:52.6807273Z test_exception_in_build_still_removes_clone (test_snapshots.SnapshotTests.test_exception_in_build_still_removes_clone) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:52.7022172Z test_latest_and_mutable_release_base_are_rejected (test_snapshots.SnapshotTests.test_latest_and_mutable_release_base_are_rejected) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:52.7385447Z test_orphan_history_is_rejected_even_with_similar_versioned_files (test_snapshots.SnapshotTests.test_orphan_history_is_rejected_even_with_similar_versioned_files) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:52.8691040Z test_release_correction_does_not_import_main_features (test_snapshots.SnapshotTests.test_release_correction_does_not_import_main_features) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:52.9871662Z test_returning_to_a_branch_or_new_commit_blocks_even_if_source_files_match (test_snapshots.SnapshotTests.test_returning_to_a_branch_or_new_commit_blocks_even_if_source_files_match) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:53.0740079Z test_snapshot_is_fixed_even_when_original_checkout_is_dirty (test_snapshots.SnapshotTests.test_snapshot_is_fixed_even_when_original_checkout_is_dirty) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:53.1140191Z test_tracked_symlink_requires_audited_strategy (test_snapshots.SnapshotTests.test_tracked_symlink_requires_audited_strategy) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:53.1910585Z test_wrong_tree_or_mutating_checkout_blocks_and_cleans_up (test_snapshots.SnapshotTests.test_wrong_tree_or_mutating_checkout_blocks_and_cleans_up) ... ok
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:53.1911726Z 
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:53.1911988Z ----------------------------------------------------------------------
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:53.1912572Z Ran 273 tests in 30.579s
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:53.1912817Z 
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:53.1912986Z OK
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:53.1913348Z https://github.com/example/pull/4
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:53.1913852Z https://github.com/example/pull/4
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:53.1914309Z https://github.com/example/pull/4
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:53.1917354Z Laboratório protegido: 2 reviews, status obrigatório, admins incluídos; RC legado e neutro sem update/delete.
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:53.1918047Z main e permissões de pessoas/Actions não foram alteradas.
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-08T21:56:53.1918432Z https://github.com/example/releases/tag/lab
+Flutter analyze e test	Explicar o alcance das verificações	﻿2026-10-08T21:56:53.2206150Z ##[group]Run python3 - <<'PY'
+Flutter analyze e test	Explicar o alcance das verificações	2026-10-08T21:56:53.2206767Z ^[[36;1mpython3 - <<'PY'^[[0m
+Flutter analyze e test	Explicar o alcance das verificações	2026-10-08T21:56:53.2207018Z ^[[36;1mimport os^[[0m
+Flutter analyze e test	Explicar o alcance das verificações	2026-10-08T21:56:53.2207335Z ^[[36;1mwith open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:^[[0m
+Flutter analyze e test	Explicar o alcance das verificações	2026-10-08T21:56:53.2207993Z ^[[36;1m    summary.write('# Verificar PR\n\nFlutter analyze, Flutter test e testes dos contratos da esteira concluídos.\n\n')^[[0m
+Flutter analyze e test	Explicar o alcance das verificações	2026-10-08T21:56:53.2208888Z ^[[36;1m    summary.write('Revisão técnica continua humana. Este check não prepara RC, não pede avais e não distribui o aplicativo.\n')^[[0m
+Flutter analyze e test	Explicar o alcance das verificações	2026-10-08T21:56:53.2209495Z ^[[36;1mPY^[[0m
+Flutter analyze e test	Explicar o alcance das verificações	2026-10-08T21:56:53.2271266Z shell: /usr/bin/bash -e {0}
+Flutter analyze e test	Explicar o alcance das verificações	2026-10-08T21:56:53.2271537Z ##[endgroup]
+Flutter analyze e test	Post Checkout da combinação proposta pelo PR	﻿2026-10-08T21:56:53.2648552Z Post job cleanup.
+Flutter analyze e test	Post Checkout da combinação proposta pelo PR	2026-10-08T21:56:53.3490625Z [command]/usr/bin/git version
+Flutter analyze e test	Post Checkout da combinação proposta pelo PR	2026-10-08T21:56:53.3532927Z git version 2.55.0
+Flutter analyze e test	Post Checkout da combinação proposta pelo PR	2026-10-08T21:56:53.3575776Z Temporarily overriding HOME='/home/runner/work/_temp/d61b82ce-50b8-4e8d-990f-3578b44fe455' before making global git config changes
+Flutter analyze e test	Post Checkout da combinação proposta pelo PR	2026-10-08T21:56:53.3577756Z Adding repository directory to the temporary git global config as a safe directory
+Flutter analyze e test	Post Checkout da combinação proposta pelo PR	2026-10-08T21:56:53.3582504Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/flutter_code_push_example/flutter_code_push_example/app
+Flutter analyze e test	Post Checkout da combinação proposta pelo PR	2026-10-08T21:56:53.3621377Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Flutter analyze e test	Post Checkout da combinação proposta pelo PR	2026-10-08T21:56:53.3656757Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Flutter analyze e test	Post Checkout da combinação proposta pelo PR	2026-10-08T21:56:53.3902125Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Flutter analyze e test	Post Checkout da combinação proposta pelo PR	2026-10-08T21:56:53.3937673Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Flutter analyze e test	Post Checkout da combinação proposta pelo PR	2026-10-08T21:56:53.4199883Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Flutter analyze e test	Post Checkout da combinação proposta pelo PR	2026-10-08T21:56:53.4239191Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Flutter analyze e test	Post Checkout das ferramentas da base revisada	﻿2026-10-08T21:56:53.4674457Z Post job cleanup.
+Flutter analyze e test	Post Checkout das ferramentas da base revisada	2026-10-08T21:56:53.5617211Z [command]/usr/bin/git version
+Flutter analyze e test	Post Checkout das ferramentas da base revisada	2026-10-08T21:56:53.5664195Z git version 2.55.0
+Flutter analyze e test	Post Checkout das ferramentas da base revisada	2026-10-08T21:56:53.5714252Z Temporarily overriding HOME='/home/runner/work/_temp/0046a458-80f2-4586-b50d-2fa593c92c54' before making global git config changes
+Flutter analyze e test	Post Checkout das ferramentas da base revisada	2026-10-08T21:56:53.5716016Z Adding repository directory to the temporary git global config as a safe directory
+Flutter analyze e test	Post Checkout das ferramentas da base revisada	2026-10-08T21:56:53.5717734Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+Flutter analyze e test	Post Checkout das ferramentas da base revisada	2026-10-08T21:56:53.5768529Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Flutter analyze e test	Post Checkout das ferramentas da base revisada	2026-10-08T21:56:53.5812035Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Flutter analyze e test	Post Checkout das ferramentas da base revisada	2026-10-08T21:56:53.6177738Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Flutter analyze e test	Post Checkout das ferramentas da base revisada	2026-10-08T21:56:53.6189797Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Flutter analyze e test	Post Checkout das ferramentas da base revisada	2026-10-08T21:56:53.6448652Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Flutter analyze e test	Post Checkout das ferramentas da base revisada	2026-10-08T21:56:53.6484256Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Flutter analyze e test	Complete job	﻿2026-10-08T21:56:53.6897378Z Cleaning up orphan processes
+Flutter analyze e test	Complete job	2026-10-08T21:56:53.7193578Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

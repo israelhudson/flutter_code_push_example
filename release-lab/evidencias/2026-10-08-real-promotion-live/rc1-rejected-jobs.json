@@ -1,0 +1,570 @@
+{
+  "total_count": 8,
+  "jobs": [
+    {
+      "id": 113561839441,
+      "run_id": 37850467026,
+      "workflow_name": "Preparar 1.5.0 — Ensaio de rejeição, correção e promoção no GitHub",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/runs/37850467026",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTxnIY88AAAAacNAnUQ",
+      "head_sha": "9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0",
+      "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/jobs/113561839441",
+      "html_url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37850467026/job/113561839441",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-08T21:58:46Z",
+      "started_at": "2026-10-08T21:58:48Z",
+      "completed_at": "2026-10-08T21:59:06Z",
+      "name": "Congelar candidata revisada",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-08T21:58:49Z",
+          "completed_at": "2026-10-08T21:58:49Z"
+        },
+        {
+          "name": "Checkout das ferramentas confiáveis da main",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-08T21:58:49Z",
+          "completed_at": "2026-10-08T21:58:51Z"
+        },
+        {
+          "name": "Criar branch release e tag RC imutável com identidade interna",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-08T21:58:51Z",
+          "completed_at": "2026-10-08T21:59:04Z"
+        },
+        {
+          "name": "Preservar registro do corte",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-08T21:59:04Z",
+          "completed_at": "2026-10-08T21:59:05Z"
+        },
+        {
+          "name": "Post Checkout das ferramentas confiáveis da main",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-08T21:59:05Z",
+          "completed_at": "2026-10-08T21:59:05Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-08T21:59:05Z",
+          "completed_at": "2026-10-08T21:59:05Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/check-runs/113561839441",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000000192,
+      "runner_name": "GitHub Actions 1000000192",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 113561968055,
+      "run_id": 37850467026,
+      "workflow_name": "Preparar 1.5.0 — Ensaio de rejeição, correção e promoção no GitHub",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/runs/37850467026",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTxnIY88AAAAacNIdtw",
+      "head_sha": "9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0",
+      "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/jobs/113561968055",
+      "html_url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37850467026/job/113561968055",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-08T21:59:07Z",
+      "started_at": "2026-10-08T21:59:09Z",
+      "completed_at": "2026-10-08T21:59:22Z",
+      "name": "Avaliar a mesma candidata / Conferir RC ativa, papéis e proteções",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-08T21:59:10Z",
+          "completed_at": "2026-10-08T21:59:11Z"
+        },
+        {
+          "name": "Checkout das ferramentas confiáveis da main",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-08T21:59:11Z",
+          "completed_at": "2026-10-08T21:59:12Z"
+        },
+        {
+          "name": "Vincular uma única avaliação à candidata",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-08T21:59:12Z",
+          "completed_at": "2026-10-08T21:59:17Z"
+        },
+        {
+          "name": "Preservar identidade verificada",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-08T21:59:17Z",
+          "completed_at": "2026-10-08T21:59:19Z"
+        },
+        {
+          "name": "Post Checkout das ferramentas confiáveis da main",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-08T21:59:19Z",
+          "completed_at": "2026-10-08T21:59:19Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-08T21:59:19Z",
+          "completed_at": "2026-10-08T21:59:19Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/check-runs/113561968055",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000000193,
+      "runner_name": "GitHub Actions 1000000193",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 113562058700,
+      "run_id": 37850467026,
+      "workflow_name": "Preparar 1.5.0 — Ensaio de rejeição, correção e promoção no GitHub",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/runs/37850467026",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTxnIY88AAAAacNN_zA",
+      "head_sha": "9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0",
+      "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/jobs/113562058700",
+      "html_url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37850467026/job/113562058700",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-08T21:59:22Z",
+      "started_at": "2026-10-08T21:59:24Z",
+      "completed_at": "2026-10-08T22:01:02Z",
+      "name": "Avaliar a mesma candidata / Verificar e compilar web sem permissões de publicação",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-08T21:59:25Z",
+          "completed_at": "2026-10-08T21:59:26Z"
+        },
+        {
+          "name": "Checkout das ferramentas confiáveis congeladas",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-08T21:59:26Z",
+          "completed_at": "2026-10-08T21:59:27Z"
+        },
+        {
+          "name": "Checkout exato do aplicativo aprovado para avaliação",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-08T21:59:27Z",
+          "completed_at": "2026-10-08T21:59:29Z"
+        },
+        {
+          "name": "Instalar Flutter fixado no snapshot",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-08T21:59:29Z",
+          "completed_at": "2026-10-08T22:00:04Z"
+        },
+        {
+          "name": "Flutter analyze e Flutter test",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-08T22:00:04Z",
+          "completed_at": "2026-10-08T22:00:26Z"
+        },
+        {
+          "name": "Compilar snapshot web sem histórico ou credenciais",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-08T22:00:26Z",
+          "completed_at": "2026-10-08T22:00:56Z"
+        },
+        {
+          "name": "Entregar somente bytes compilados para outro runner",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-08T22:00:56Z",
+          "completed_at": "2026-10-08T22:00:59Z"
+        },
+        {
+          "name": "Post Checkout exato do aplicativo aprovado para avaliação",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-08T22:00:59Z",
+          "completed_at": "2026-10-08T22:00:59Z"
+        },
+        {
+          "name": "Post Checkout das ferramentas confiáveis congeladas",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-08T22:00:59Z",
+          "completed_at": "2026-10-08T22:00:59Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-08T22:00:59Z",
+          "completed_at": "2026-10-08T22:00:59Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/check-runs/113562058700",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000000194,
+      "runner_name": "GitHub Actions 1000000194",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 113562690530,
+      "run_id": 37850467026,
+      "workflow_name": "Preparar 1.5.0 — Ensaio de rejeição, correção e promoção no GitHub",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/runs/37850467026",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTxnIY88AAAAacN0j4g",
+      "head_sha": "9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0",
+      "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/jobs/113562690530",
+      "html_url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37850467026/job/113562690530",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-08T22:01:02Z",
+      "started_at": "2026-10-08T22:01:06Z",
+      "completed_at": "2026-10-08T22:02:10Z",
+      "name": "Avaliar a mesma candidata / Publicar bytes verificados, confirmar preview e changelog",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-08T22:01:06Z",
+          "completed_at": "2026-10-08T22:01:08Z"
+        },
+        {
+          "name": "Checkout exclusivo das ferramentas confiáveis congeladas",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-08T22:01:08Z",
+          "completed_at": "2026-10-08T22:01:10Z"
+        },
+        {
+          "name": "Receber artefato estático da mesma execução",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-08T22:01:10Z",
+          "completed_at": "2026-10-08T22:01:11Z"
+        },
+        {
+          "name": "Recuperar somente o histórico estático",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-08T22:01:11Z",
+          "completed_at": "2026-10-08T22:01:14Z"
+        },
+        {
+          "name": "Validar identidade e importar sem sobrescrever snapshots",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-08T22:01:14Z",
+          "completed_at": "2026-10-08T22:01:20Z"
+        },
+        {
+          "name": "Preservar snapshots sem sobrescrever",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-08T22:01:20Z",
+          "completed_at": "2026-10-08T22:01:24Z"
+        },
+        {
+          "name": "Exportar somente o site estático",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-08T22:01:24Z",
+          "completed_at": "2026-10-08T22:01:28Z"
+        },
+        {
+          "name": "Empacotar artefato Pages",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-08T22:01:28Z",
+          "completed_at": "2026-10-08T22:01:40Z"
+        },
+        {
+          "name": "Publicar preview no Pages",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-08T22:01:40Z",
+          "completed_at": "2026-10-08T22:02:02Z"
+        },
+        {
+          "name": "Ler identidade dos bytes preparados",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-10-08T22:02:02Z",
+          "completed_at": "2026-10-08T22:02:02Z"
+        },
+        {
+          "name": "Confirmar identidade e arquivos por HTTP",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-08T22:02:02Z",
+          "completed_at": "2026-10-08T22:02:03Z"
+        },
+        {
+          "name": "Registrar changelog, previsão e preview antes dos avais",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-08T22:02:03Z",
+          "completed_at": "2026-10-08T22:02:08Z"
+        },
+        {
+          "name": "Preservar relatório e confirmação HTTP",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-08T22:02:08Z",
+          "completed_at": "2026-10-08T22:02:09Z"
+        },
+        {
+          "name": "Post Checkout exclusivo das ferramentas confiáveis congeladas",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 26,
+          "started_at": "2026-10-08T22:02:09Z",
+          "completed_at": "2026-10-08T22:02:09Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27,
+          "started_at": "2026-10-08T22:02:09Z",
+          "completed_at": "2026-10-08T22:02:09Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/check-runs/113562690530",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000000195,
+      "runner_name": "GitHub Actions 1000000195",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 113563115783,
+      "run_id": 37850467026,
+      "workflow_name": "Preparar 1.5.0 — Ensaio de rejeição, correção e promoção no GitHub",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/runs/37850467026",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTxnIY88AAAAacOOhBw",
+      "head_sha": "9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0",
+      "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/jobs/113563115783",
+      "html_url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37850467026/job/113563115783",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-08T22:02:11Z",
+      "started_at": "2026-10-08T22:05:14Z",
+      "completed_at": "2026-10-08T22:05:27Z",
+      "name": "Avaliar a mesma candidata / Registrar aprovação — israelhudson / Gate first",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-08T22:05:15Z",
+          "completed_at": "2026-10-08T22:05:16Z"
+        },
+        {
+          "name": "Checkout das ferramentas congeladas",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-08T22:05:16Z",
+          "completed_at": "2026-10-08T22:05:18Z"
+        },
+        {
+          "name": "Confirmar primeira conta autorizada, relatório e RC ainda ativa",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-08T22:05:18Z",
+          "completed_at": "2026-10-08T22:05:23Z"
+        },
+        {
+          "name": "Preservar evidência do primeiro aval",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-08T22:05:23Z",
+          "completed_at": "2026-10-08T22:05:24Z"
+        },
+        {
+          "name": "Post Checkout das ferramentas congeladas",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-08T22:05:24Z",
+          "completed_at": "2026-10-08T22:05:24Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-08T22:05:24Z",
+          "completed_at": "2026-10-08T22:05:24Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/check-runs/113563115783",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000000196,
+      "runner_name": "GitHub Actions 1000000196",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 113563115800,
+      "run_id": 37850467026,
+      "workflow_name": "Preparar 1.5.0 — Ensaio de rejeição, correção e promoção no GitHub",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/runs/37850467026",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTxnIY88AAAAacOOhGA",
+      "head_sha": "9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0",
+      "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/jobs/113563115800",
+      "html_url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37850467026/job/113563115800",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-10-08T22:02:11Z",
+      "started_at": "2026-10-08T22:02:11Z",
+      "completed_at": "2026-10-08T22:05:58Z",
+      "name": "Avaliar a mesma candidata / Registrar aprovação — fahnassau30 / Gate second",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/check-runs/113563115800",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 0,
+      "runner_name": "",
+      "runner_group_id": 0,
+      "runner_group_name": ""
+    },
+    {
+      "id": 113564492241,
+      "run_id": 37850467026,
+      "workflow_name": "Preparar 1.5.0 — Ensaio de rejeição, correção e promoção no GitHub",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/runs/37850467026",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTxnIY88AAAAacPih0Q",
+      "head_sha": "9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0",
+      "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/jobs/113564492241",
+      "html_url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37850467026/job/113564492241",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-10-08T22:05:58Z",
+      "started_at": "2026-10-08T22:05:58Z",
+      "completed_at": "2026-10-08T22:05:58Z",
+      "name": "Avaliar a mesma candidata / AUTORIZAR PUBLICAR — Israel OU Fabrícia, após os dois avais",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/check-runs/113564492241",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 113564492381,
+      "run_id": 37850467026,
+      "workflow_name": "Preparar 1.5.0 — Ensaio de rejeição, correção e promoção no GitHub",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/runs/37850467026",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTxnIY88AAAAacPiiXQ",
+      "head_sha": "9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0",
+      "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/jobs/113564492381",
+      "html_url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37850467026/job/113564492381",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-10-08T22:05:58Z",
+      "started_at": "2026-10-08T22:05:58Z",
+      "completed_at": "2026-10-08T22:05:58Z",
+      "name": "Avaliar a mesma candidata / PROMOVER — tag estável e Release no GitHub, sem distribuição mobile",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/check-runs/113564492381",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    }
+  ]
+}
