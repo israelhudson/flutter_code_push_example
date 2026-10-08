@@ -198,7 +198,7 @@ jobs:
           retention-days: 90
           overwrite: false
   approve_first:
-    name: Aprovação obrigatória — ${{ needs.preflight.outputs.first_login }} / Gate first
+    name: Registrar aprovação — ${{ needs.preflight.outputs.first_login }} / Gate first
     needs: [preflight, web]
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -215,7 +215,7 @@ jobs:
           ref: ${{ needs.preflight.outputs.tooling_sha }}
           path: trusted
           persist-credentials: false
-      - name: Confirmar pessoa real, relatório e RC ainda ativa
+      - name: Confirmar primeira conta autorizada, relatório e RC ainda ativa
         env:
           GH_TOKEN: ${{ github.token }}
           CANDIDATE_TAG: ${{ needs.preflight.outputs.candidate_tag }}
@@ -231,7 +231,7 @@ jobs:
           retention-days: 90
           overwrite: false
   approve_second:
-    name: Aprovação obrigatória — ${{ needs.preflight.outputs.second_login }} / Gate second
+    name: Registrar aprovação — ${{ needs.preflight.outputs.second_login }} / Gate second
     needs: [preflight, web]
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -248,7 +248,7 @@ jobs:
           ref: ${{ needs.preflight.outputs.tooling_sha }}
           path: trusted
           persist-credentials: false
-      - name: Confirmar outra pessoa real, relatório e RC ainda ativa
+      - name: Confirmar segunda conta autorizada, relatório e RC ainda ativa
         env:
           GH_TOKEN: ${{ github.token }}
           CANDIDATE_TAG: ${{ needs.preflight.outputs.candidate_tag }}
@@ -263,20 +263,41 @@ jobs:
           if-no-files-found: ignore
           retention-days: 90
           overwrite: false
-  publish:
-    name: PUBLICAR — comando humano separado, resultado SIMULADO
+  authorize_publish:
+    name: AUTORIZAR PUBLICAR — Israel OU Fabrícia, após os dois avais
     needs: [preflight, web, approve_first, approve_second]
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    permissions:
+      contents: read
+    environment:
+      name: ${{ needs.preflight.outputs.final_environment }}
+      url: ${{ needs.web.outputs.report_url }}
+    steps:
+      - name: Registrar autorização final da conta para a promoção
+        run: |
+          python3 - <<'PY'
+          import os
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write('# Comando final autorizado\n\n')
+              summary.write('Este gate registra a decisão final separada dos dois avais. ')
+              summary.write('O próximo job reconfere a candidata e as reviews antes de criar a tag estável e a Release no GitHub. ')
+              summary.write('Nenhum aplicativo ou patch mobile será distribuído.\n')
+          PY
+  publish:
+    name: PROMOVER — tag estável e Release no GitHub, sem distribuição mobile
+    needs: [preflight, web, approve_first, approve_second, authorize_publish]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    # No Environment gate here: only the short effectful job owns the lock.
+    # Prepare and recovery use the same group, so no cut can supersede this RC
+    # between the last identity check and the tag/Release API writes.
     concurrency:
-      group: release-lab-state-finalization
+      group: release-lab-mutation
       cancel-in-progress: false
     permissions:
       contents: write
       actions: read
-    environment:
-      name: ${{ needs.preflight.outputs.final_environment }}
-      url: ${{ needs.web.outputs.report_url }}
     steps:
       - name: Checkout das ferramentas congeladas
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -284,17 +305,17 @@ jobs:
           ref: ${{ needs.preflight.outputs.tooling_sha }}
           path: trusted
           persist-credentials: false
-      - name: Conferir 2 de 2, identificar publicador e registrar recibo SIMULADO
+      - name: Reconferir 2 de 2 e comando final, promover a mesma RC no GitHub
         env:
           GH_TOKEN: ${{ github.token }}
           CANDIDATE_TAG: ${{ needs.preflight.outputs.candidate_tag }}
           REPORT_DIGEST: ${{ needs.web.outputs.report_digest }}
         run: python3 trusted/tools/delivery/release_lab.py finish --candidate-tag "$CANDIDATE_TAG" --report-digest "$REPORT_DIGEST" --output "$RUNNER_TEMP/release-lab"
-      - name: Preservar recibo e logs do ensaio
+      - name: Preservar intenção, recibo e logs da promoção
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: release-lab-simulated-receipt
+          name: release-lab-publication
           path: ${{ runner.temp }}/release-lab/
           if-no-files-found: ignore
           retention-days: 90

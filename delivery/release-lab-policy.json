@@ -14,6 +14,7 @@
   "final_environment": "autorizar-publicacao",
   "changelog_initial_tag": "entrega-0100-rc.1",
   "mobile_bases": {"android": null, "ios": null},
-  "result_simulated": true,
+  "publication_mode": "github_release_only",
+  "result_simulated": false,
   "distribution_performed": false
 }

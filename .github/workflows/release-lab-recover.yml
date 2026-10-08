@@ -1,0 +1,104 @@
+name: LAB - Recuperar promoção
+run-name: Recuperar promoção de ${{ inputs.candidate_tag }}
+on:
+  workflow_dispatch:
+    inputs:
+      candidate_tag:
+        description: RC cuja promoção ficou parcial, por exemplo v1.4.0-rc.2
+        type: string
+        required: true
+permissions:
+  contents: read
+jobs:
+  inspect:
+    name: Conferir intenção parcial e identidade original
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: read
+    outputs:
+      candidate_tag: ${{ steps.identity.outputs.candidate_tag }}
+      report_digest: ${{ steps.identity.outputs.report_digest }}
+      tooling_sha: ${{ steps.identity.outputs.tooling_sha }}
+      final_environment: ${{ steps.identity.outputs.final_environment }}
+      report_url: ${{ steps.identity.outputs.report_url }}
+    steps:
+      - name: Checkout das ferramentas confiáveis da main
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: refs/heads/main
+          path: trusted
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Ler o registro original sem publicar ou cortar outra RC
+        id: identity
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CANDIDATE_TAG: ${{ inputs.candidate_tag }}
+        run: python3 trusted/tools/delivery/release_lab.py recovery-inspect --candidate-tag "$CANDIDATE_TAG" --output "$RUNNER_TEMP/release-lab"
+      - name: Preservar diagnóstico da publicação parcial
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-lab-recovery-inspection
+          path: ${{ runner.temp }}/release-lab/
+          if-no-files-found: ignore
+          retention-days: 90
+          overwrite: false
+  authorize:
+    name: AUTORIZAR RECUPERAÇÃO — Israel OU Fabrícia
+    needs: inspect
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    environment:
+      name: ${{ needs.inspect.outputs.final_environment }}
+      url: ${{ needs.inspect.outputs.report_url }}
+    steps:
+      - name: Registrar nova autorização de recuperação sem refazer os avais da RC
+        run: |
+          python3 - <<'PY'
+          import os
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write('# Recuperação autorizada\n\n')
+              summary.write('O próximo job revalida as duas aprovações e o comando originais, além desta autorização de recuperação. ')
+              summary.write('Ele completa somente os efeitos que faltarem para a mesma tag, commit e Release. ')
+              summary.write('Nenhum aplicativo ou patch mobile será distribuído.\n')
+          PY
+  recover:
+    name: Completar promoção original sem duplicar tag ou Release
+    needs: [inspect, authorize]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    # Same short mutation lock as prepare and finish; no human wait owns it.
+    concurrency:
+      group: release-lab-mutation
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - name: Checkout das ferramentas congeladas na candidata original
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.inspect.outputs.tooling_sha }}
+          path: trusted
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Revalidar decisões e completar somente a promoção autorizada
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CANDIDATE_TAG: ${{ needs.inspect.outputs.candidate_tag }}
+          REPORT_DIGEST: ${{ needs.inspect.outputs.report_digest }}
+        run: python3 trusted/tools/delivery/release_lab.py recover --candidate-tag "$CANDIDATE_TAG" --report-digest "$REPORT_DIGEST" --output "$RUNNER_TEMP/release-lab"
+      - name: Preservar recibo, recuperação e logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-lab-recovered-publication
+          path: ${{ runner.temp }}/release-lab/
+          if-no-files-found: ignore
+          retention-days: 90
+          overwrite: false

@@ -5,6 +5,19 @@ from pathlib import Path
 from release_lab import api, endpoint, environments, git, load_policy, now, output
 
 
+def ruleset_matches(current, spec):
+    """Accept only known safe server defaults; never rewrite a divergent rule."""
+    normalized = json.loads(json.dumps(current))
+    for rule in normalized.get('rules', []):
+        if rule.get('type') == 'pull_request':
+            parameters = rule.get('parameters', {})
+            if parameters.get('required_reviewers') == []:
+                parameters.pop('required_reviewers')
+            if parameters.get('require_extra_approval_for_unattributed_changes') is True:
+                parameters.pop('require_extra_approval_for_unattributed_changes')
+    return all(normalized.get(key) == value for key, value in spec.items())
+
+
 def configure(folder, protect_branches=False):
     policy = load_policy()
     audit = {'at': now(), 'repository': policy['repository'], 'changes': []}
@@ -38,6 +51,14 @@ def configure(folder, protect_branches=False):
          'conditions': {'ref_name': {'include': ['refs/heads/' + policy['state_branch']], 'exclude': []}},
          'rules': [{'type': 'deletion'}, {'type': 'non_fast_forward'}]}
     ]
+    if policy.get('publication_mode') == 'github_release_only':
+        expected.append({
+            'name': 'LAB - tags estaveis imutaveis', 'target': 'tag',
+            'enforcement': 'active', 'bypass_actors': [],
+            'conditions': {'ref_name': {'include': ['refs/tags/v*'],
+                                        'exclude': ['refs/tags/v*-rc.*']}},
+            'rules': [{'type': 'update'}, {'type': 'deletion'}]
+        })
     if protect_branches:
         expected.append({'name': 'LAB - main e release revisadas', 'target': 'branch', 'enforcement': 'active', 'bypass_actors': [],
                          'conditions': {'ref_name': {'include': ['refs/heads/main', 'refs/heads/release/**'], 'exclude': []}},
@@ -55,7 +76,7 @@ def configure(folder, protect_branches=False):
             raise ValueError('Ruleset duplicado; não sobrescrever.')
         if matching:
             current = api(endpoint('rulesets/' + str(matching[0]['id'])))
-            if any(current.get(k) != v for k, v in spec.items()):
+            if not ruleset_matches(current, spec):
                 raise ValueError('Ruleset diverge; revisar antes de alterar.')
         else:
             created = api(endpoint('rulesets'), spec, 'POST')

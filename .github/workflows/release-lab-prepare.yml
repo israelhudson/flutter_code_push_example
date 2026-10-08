@@ -18,9 +18,10 @@ jobs:
     name: Congelar candidata revisada
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    # This lock ends when the cut completes; human approvals do not hold it.
+    # The same short lock protects cutting, promoting and recovering a release.
+    # It ends when this cut completes; approval jobs never hold it.
     concurrency:
-      group: release-lab-prepare
+      group: release-lab-mutation
       cancel-in-progress: false
     permissions:
       contents: write
@@ -37,7 +38,7 @@ jobs:
           path: trusted
           fetch-depth: 0
           persist-credentials: false
-      - name: Criar release e RC imutável com identidade interna
+      - name: Criar branch release e tag RC imutável com identidade interna
         id: candidate
         env:
           GH_TOKEN: ${{ github.token }}
