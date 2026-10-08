@@ -2,6 +2,10 @@
 
 Estes arquivos documentam o laboratório em `israelhudson/flutter_code_push_example`. Ações GitHub, builds e Pages podem ser reais; os papéis de aprovação e os recibos FakePublisher são simulados. Nenhuma evidência aqui aplica mudanças na Amulets ou comprova distribuição mobile de produção.
 
+A revisão para promoção tem outro tipo de prova: decisão real de Israel,
+autenticada pelo GitHub e vinculada à candidata/hash na issue atribuída a ele.
+Ela não reclassifica as aprovações históricas como reviews reais de PR.
+
 | Arquivo | Origem e leitura |
 |---|---|
 | [2026-10-07.jsonl](2026-10-07.jsonl) | Baseline reconstruída: runs, incidentes, builds, Pages e persistência. Usa `historical_backfill` e declara quando a hora original não está disponível. |
@@ -10,6 +14,7 @@ Estes arquivos documentam o laboratório em `israelhudson/flutter_code_push_exam
 | [Tag entrega-0100-rc.1](2026-10-07-tag-entrega-0100-rc.1.jsonl) | Seis eventos originais de `build/operational-evidence/github-release/tag-entrega-0100-rc.1/release-events.jsonl`. Bootstrap real autenticado pelo owner; objeto e ref exatos confirmados. |
 | [Publish falho 37702829375](2026-10-07-release-publish-failed-37702829375.jsonl) | Onze eventos originais de `build/operational-evidence/github-release/publish-failed-37702829375/release-events.jsonl`, incluindo intenção, resposta, upload incerto e falha. Não omite a interrupção. |
 | [Publish manual confirmado 37704202085](2026-10-07-release-published-37704202085.jsonl) | Dezoito eventos originais de `build/operational-evidence/github-release/published-37704202085/release-events.jsonl`. Retomada pelo usuário, mesma Release e identidade; último evento `publication_confirmed`. |
+| [Preparação da promoção com revisão](2026-10-07-promotion.jsonl) | Configuração do controle e issue #10 atribuída a Israel. Registra preparação e validações, sem declarar aprovação ou promoção remotas ainda não executadas. |
 
 As três cópias do emissor foram produzidas posteriormente em `2026-10-07T23:34:46Z`. Preservam os horários UTC originais em `at` e a ordem dos eventos; não fingem observação em tempo real pelo agente que fez a cópia. São logs instrumentados com `event` e somente campos permitidos de identidade, hash, estado e operação. A reconstrução de baseline tem outro schema, descrito em [Lições aprendidas](../LICOES-APRENDIDAS.md#continuidade-do-log).
 
@@ -26,6 +31,31 @@ Quatro assets uploaded — `candidate.json`, `receipt.json`, `preview.zip`, `che
 O log registra quatro operações `upload_asset` e uma `publish_draft`, todas para `release_id=406248758`, sem `create_draft` na retomada. A confirmação final ocorreu às `2026-10-07T23:47:42Z`. O coordenador também conferiu que o estado do core permaneceu em `b90cf65c3a47d507ee40649001176d663269b350`.
 
 Essa fase GitHub está concluída; não há outra publicação pendente para a mesma RC. Novas execuções manuais continuam reservadas ao usuário. A conclusão não apaga a falha nem implica patch Shorebird, envio a lojas ou validação mobile de produção.
+
+## Evidência de promoção após revisão
+
+O [registro de preparação](2026-10-07-promotion.jsonl) documenta a
+[issue #10](https://github.com/israelhudson/flutter_code_push_example/issues/10),
+atribuída a Israel, sem comentário de aprovação ou run de promoção na preparação;
+a mesma release continua como pre-release.
+
+O workflow **Delivery - Promover candidata LAB após revisão** preserva plano,
+resultado, eventos e checkpoint próprios. O plano consulta a pre-release e a
+issue; não promove. A promoção só ocorre após comentário de aprovação do
+próprio Israel para candidata/hash exatos e execução manual `action=promote`.
+Comentários e revogações precisam ser conferidos novamente antes do efeito.
+
+Ao registrar uma execução futura, conservar o número da issue, a identidade
+do revisor, o ID do comentário, candidata/hash, Release ID, decisão observada,
+intenção de atualização e a consulta final. Copiar somente os campos permitidos
+pelo emissor de promoção, sem respostas brutas ou credenciais. Preservar a
+evidência original de publicação e acrescentar os eventos de promoção como
+novos arquivos; não alterar o recibo original ou o histórico de papéis simulados.
+
+Uma promoção confirmada deve manter Release `406248758`, tag, fonte e todos os
+assets, agora com `draft=false` e `prerelease=false`. O resultado continua com
+`distribution_performed=false`. Não existe neste índice prova de execução ou
+aprovação dessa etapa enquanto o run manual do usuário não for conferido.
 
 ## Histórico: estado observado após a tentativa falha
 

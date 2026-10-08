@@ -90,12 +90,59 @@ A [documentação GitHub de Create a release](https://docs.github.com/en/rest/re
 
 O processo separou `tag-spec.json`, bootstrap autenticado pelo owner e validação da tag preexistente. A conclusão foi registrada somente após a retomada e as verificações de identidade, assets e recibo, conservando a tentativa falha como histórico.
 
+## Promoção com revisão real do proprietário
+
+O próximo controle atribui a Israel a revisão da candidata congelada, usando
+a [issue #10](https://github.com/israelhudson/flutter_code_push_example/issues/10)
+do próprio repositório. A decisão precisa ser um comentário novo da
+conta real `israelhudson`, com `APROVAR PRODUCAO`, candidata e hash completos.
+Uma nova decisão `REVOGAR PRODUCAO` retira o aceite antes da promoção. O plano
+é consultivo; o comando manual `promote` exige a aprovação atual e revalida
+fonte, tag e assets antes de mudar a pre-release existente para release estável.
+
+A [regra oficial de reviews GitHub](https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/approving-a-pull-request-with-required-reviews)
+impede que o autor aprove seu próprio PR. Os [required reviewers de environments
+nos planos Free, Pro e Team ficam disponíveis apenas em repositórios públicos](https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments).
+A issue registra uma decisão real de publicação do proprietário para o
+laboratório privado; não substitui uma revisão de código independente nem
+altera a política histórica de Samuel e Vinícius.
+
+Promover conserva a Release `406248758`, a tag `entrega-0100-rc.1`, a versão
+`1.1.0+2`, a fonte `08ce07d...`, o manifesto e os quatro assets publicados.
+Somente o registro GitHub passa a estável, com nome e notas de promoção; não há
+rebuild, criação de ref, novo upload, alteração de estado do core ou distribuição
+mobile. O recibo original conserva **2 papéis simulados e 0 reviews reais de PR**;
+os eventos de promoção distinguem a revisão real de Israel desse histórico.
+
+O [log de preparação da promoção](evidencias/2026-10-07-promotion.jsonl) registra
+a configuração e a issue atribuída ao revisor, conservando os eventos da
+publicação anterior em arquivos separados.
+
+**Evidência ainda pendente:** a issue #10 existe e está atribuída a Israel,
+mas ainda não há comentário de aprovação, execução manual ou `prerelease=false` remoto.
+A confirmação precisa vir do run do usuário e da conferência final da mesma
+identidade. Falhas e efeitos incertos devem permanecer nos logs.
+
+O gate consulta a lista atual de comentários: a API não reconstrói comandos
+apagados. Uma edição posterior de Israel bloqueia a aprovação antiga, mas uma
+decisão excluída deixa de ser observável. No laboratório, o proprietário preserva
+o histórico e revoga por comentário novo; ele também executa o comando final.
+Para uma política independente na Amulets, avaliar proteção nativa e registros
+de decisão que conservem alterações e exclusões, conforme o plano da empresa.
+
+Lição proposta para a Amulets: registrar separadamente quem revisou o código,
+quem autorizou a promoção e quem executou o comando; vincular cada decisão à
+candidata e aos seus bytes, conferir revogações e preservar a identidade na
+promoção. A equipe precisa escolher pessoas e proteção adequadas ao plano e à
+política da empresa. Nenhuma dessas regras foi aplicada na Amulets.
+
 ## Propostas para discutir na Amulets
 
 | Proposta | Evidência | Próxima validação antes de aplicar |
 |---|---|---|
 | Congelar fonte e toolchain por candidata | Mesma fonte/hash nos sete comandos. | Conferir versionamento, flavor, entrypoint, bases e artifacts assinados da empresa. |
 | Separar avais do comando final | 1/2 não publicou; 2/2 só autorizou. | Definir pessoas reais, owner, revogação, nova RC e critério de validação pelo usuário. |
+| Separar review de PR, aceite de promoção e execução | Controle preparado com decisão autenticada do proprietário vinculada a candidata/hash; execução remota ainda pendente. | Escolher revisores independentes e proteção compatível com a política e o plano GitHub da empresa. |
 | Recuperar por destino e chave | iOS reconciliado pelo recibo original; mobile não repetiu. | Verificar APIs autoritativas Shorebird/lojas e efeito incerto sob autorização própria. |
 | Persistir intenção e confirmação | Estado/journal/outbox avançaram juntos. | Ensaiar conflito, resposta perdida, recuperação sem reset, retenção e armazenamento. |
 | Confirmar conteúdo e conservar previews | Hashes ao vivo e snapshot anterior preservados. | Decidir hospedagem/acesso e verificar conteúdo no ambiente aprovado. |

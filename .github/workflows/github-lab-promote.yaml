@@ -1,0 +1,104 @@
+name: Delivery - Promover candidata LAB após revisão
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: Revisar o plano antes da promoção após aprovação na issue
+        type: choice
+        required: true
+        default: plan
+        options: [plan, promote]
+      candidate:
+        description: Tag da candidata já publicada; não usar main/latest
+        type: string
+        required: true
+        default: entrega-0100-rc.1
+      manifest_hash:
+        description: SHA-256 completo do manifesto revisado
+        type: string
+        required: true
+        default: 28a15ae28f273bd13742dfbec2191d907769db53de6d5b3550a35070823acaeb
+      review_issue:
+        description: Número da issue de revisão atribuída a Israel
+        type: string
+        required: true
+        default: '10'
+permissions:
+  contents: read
+concurrency:
+  group: delivery-laboratory-state
+  cancel-in-progress: false
+jobs:
+  promotion:
+    name: Promoção GitHub LAB - ${{ inputs.action }}
+    if: github.ref == 'refs/heads/main' && github.actor == 'israelhudson' && github.triggering_actor == 'israelhudson'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      issues: read
+      actions: read
+    steps:
+      - name: Checkout das ferramentas no commit confiável
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Conferir candidata, revisão real e promoção
+        id: command
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PROMOTION_ACTION: ${{ inputs.action }}
+          LAB_CANDIDATE: ${{ inputs.candidate }}
+          LAB_MANIFEST_HASH: ${{ inputs.manifest_hash }}
+          LAB_REVIEW_ISSUE: ${{ inputs.review_issue }}
+        run: |
+          python3 tools/delivery/github_lab_promote.py --action "$PROMOTION_ACTION" --candidate "$LAB_CANDIDATE" --manifest-hash "$LAB_MANIFEST_HASH" --review-issue "$LAB_REVIEW_ISSUE" --output build/github-lab-promotion
+      - name: Mostrar revisão e resultado confirmado
+        if: always() && !cancelled()
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          root = Path('build/github-lab-promotion')
+          result_path, plan_path = root / 'result.json', root / 'plan.json'
+          result = json.loads(result_path.read_text()) if result_path.is_file() else {}
+          plan = json.loads(plan_path.read_text()) if plan_path.is_file() else {}
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('# Revisão e promoção GitHub LAB\n\n')
+              if not plan:
+                  f.write('Plano não produzido. Consulte result.json, eventos e checkpoint no artifact.\n')
+                  raise SystemExit(0)
+              f.write('| Campo | Valor |\n|---|---|\n')
+              for label, key in [('Versão', 'version'), ('Tag preservada', 'tag'), ('Fonte congelada', 'source_sha'), ('Manifesto revisado', 'manifest_hash')]:
+                  f.write('| ' + label + ' | `' + plan[key] + '` |\n')
+              f.write('\nResultado: `' + result.get('status', 'não confirmado') + '`\n\n')
+              f.write('Revisor: **Israel (`israelhudson`)**. A aprovação precisa ser registrada por comentário na issue.\n\n')
+              f.write('Revisão atual: `' + result.get('approval_status', 'não confirmada') + '`\n\n')
+              f.write('[Revisar a candidata](https://github.com/israelhudson/flutter_code_push_example/issues/' + os.environ['LAB_REVIEW_ISSUE'] + ')\n\n')
+              f.write('[Preview congelado](' + plan['preview']['pages_url'] + ')\n\n')
+              if result.get('promoted') is True:
+                  f.write('[Abrir release estável confirmada](' + result['release_url'] + ')\n\n')
+              else:
+                  f.write('Para aprovar, comente na issue, pela sua conta:\n\n```text\nAPROVAR PRODUCAO ' + plan['candidate_id'] + ' ' + plan['manifest_hash'] + '\n```\n\n')
+                  f.write('Depois execute este workflow na **main** com **action=promote**, mantendo candidata, hash e issue.\n\n')
+              f.write('A promoção mantém a mesma release, tag e quatro assets; altera o registro para estável. Não recompila nem distribui para Shorebird, lojas ou TestFlight. Os dois papéis simulados históricos não substituem sua revisão.\n')
+          PY
+        env:
+          LAB_REVIEW_ISSUE: ${{ inputs.review_issue }}
+      - name: Preservar plano, revisão, eventos e checkpoints
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: github-lab-promotion-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            build/github-lab-promotion/plan.json
+            build/github-lab-promotion/tag-spec.json
+            build/github-lab-promotion/result.json
+            build/github-lab-promotion/promotion-receipt.json
+            build/github-lab-promotion/release-events.jsonl
+            build/github-lab-promotion/checkpoint.json
+          if-no-files-found: warn
+          retention-days: 90
+          overwrite: false

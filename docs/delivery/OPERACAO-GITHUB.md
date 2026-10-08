@@ -5,6 +5,8 @@ Samuel e Vinícius são papéis **simulados por Israel**. Dois papéis aprovados
 representam duas pessoas reais. O fluxo nativo de reviews reais continua separado.
 As execuções manuais são reservadas a Israel; o agente prepara mudanças,
 revisões e evidências, sem disparar esses controles em seu lugar.
+A promoção de uma pre-release tem uma decisão real separada: Israel revisa a
+candidata e registra seu próprio aceite no GitHub, sem representar outros papéis.
 
 ## Preview que abre no navegador
 
@@ -133,6 +135,77 @@ revise a fonte nova, prepare uma nova candidata e obtenha novos avais. Não
 reinicialize a produção, reaproveite aprovações antigas ou mova a tag publicada.
 Esta é a referência do processo futuro, não uma instrução para publicar novamente
 a entrega já concluída.
+
+## Promover a candidata após revisão de Israel
+
+O fluxo **Delivery - Promover candidata LAB após revisão** promove a pre-release
+existente para uma **release estável no GitHub**. Neste laboratório, “produção”
+significa esse registro estável; a aplicação não é enviada ao Shorebird ou às
+lojas. Israel é o revisor real e o operador final. Os dois papéis simulados da
+preparação continuam no histórico e não contam como reviews reais de PR.
+
+O GitHub [não permite que o autor aprove seu próprio PR](https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/approving-a-pull-request-with-required-reviews).
+Além disso, os [required reviewers de environments nos planos Free, Pro e Team
+ficam disponíveis somente para repositórios públicos](https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments).
+Por isso, este laboratório privado usa uma issue de revisão atribuída a Israel,
+com decisão autenticada por comentário. É uma aprovação do proprietário para
+promover uma versão; não é uma aprovação de PR nem uma revisão independente.
+
+1. Abra a [issue #10 — Revisar promoção de entrega-0100-rc.1](https://github.com/israelhudson/flutter_code_push_example/issues/10),
+   atribuída a Israel, e confira o preview, a versão, a fonte, os hashes e os
+   assets da pre-release. Para esta candidata, informe `review_issue=10`.
+2. Abra **Actions → Delivery - Promover candidata LAB após revisão → Run workflow**.
+   Escolha `main` e `action=plan`. Informe a candidata, o hash completo e o número
+   da issue. O plano somente consulta a identidade e os bytes congelados; ele
+   não promove a release.
+3. Quando concluir sua revisão, publique você mesmo na issue um novo comentário,
+   contendo somente esta linha:
+
+   ```text
+   APROVAR PRODUCAO entrega-0100-rc.1 28a15ae28f273bd13742dfbec2191d907769db53de6d5b3550a35070823acaeb
+   ```
+
+   A aprovação precisa ser da conta real `israelhudson`, para a candidata e o
+   hash exatos. O agente não escreve esse aceite por você. Para retirar uma
+   aprovação antes da promoção, publique um novo comentário:
+
+   ```text
+   REVOGAR PRODUCAO entrega-0100-rc.1 28a15ae28f273bd13742dfbec2191d907769db53de6d5b3550a35070823acaeb
+   ```
+
+   O controle consulta comentários atualmente visíveis; não recupera decisões
+   apagadas. Conserve o histórico e revogue por um comentário novo. Um comentário
+   editado de Israel após a decisão bloqueia o aceite antigo até uma nova decisão.
+
+4. Execute **Run workflow** novamente na `main`, agora com `action=promote` e os
+   mesmos três campos. O helper revalida a decisão atual do revisor, a tag, a
+   fonte e os quatro assets antes de atualizar a release existente.
+5. Confira `result.json`, os eventos e o link do resumo. Só a consulta final com
+   `draft=false` e `prerelease=false`, mantendo a identidade congelada, confirma
+   a promoção. Uma falha ou timeout exige conferir o checkpoint e a release
+   antes de tentar novamente.
+
+| Campo desta candidata | Valor preservado na promoção |
+|---|---|
+| Versão | `1.1.0+2` |
+| Candidata/tag | `entrega-0100-rc.1` |
+| Fonte | `08ce07d615905e33f0572f9264808683cab53349` |
+| Hash do manifesto | `28a15ae28f273bd13742dfbec2191d907769db53de6d5b3550a35070823acaeb` |
+| Release ID | `406248758` |
+| Assets | `candidate.json`, `receipt.json`, `preview.zip`, `checksums.sha256` |
+
+O nome passa a ser **[LAB · ESTÁVEL] 1.1.0+2 · entrega-0100-rc.1**. A tag conserva o sufixo
+`rc.1` porque já identifica os bytes revisados: promover não cria uma tag nova,
+não move a tag existente, não recompila nem substitui assets. O recibo original
+continua registrando a preparação com dois papéis simulados e zero reviews
+reais de PR; a decisão real de Israel fica nos eventos próprios da promoção.
+O estado persistente do publicador fictício também não muda.
+
+**Preparação registrada em 07/10/2026:** a pre-release estava publicada e a
+issue #10 foi atribuída a Israel, sem comentário de aprovação ou execução de
+promoção naquele momento. A aprovação atual deve ser conferida na issue, e a
+promoção precisa de um resultado remoto confirmado. As execuções manuais e o
+comentário de aprovação continuam sendo do usuário.
 
 ## Falha e recuperação no publicador fictício
 
