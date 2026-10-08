@@ -4,7 +4,9 @@ import '../update/update_service.dart';
 import '../update/widgets/update_available_sheet.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, this.service});
+  const HomePage({super.key, this.service, required this.onToggleTheme});
+
+  final VoidCallback onToggleTheme;
 
   /// Injetável para teste; em produção o serviço padrão dá conta.
   final UpdateService? service;
@@ -60,7 +62,8 @@ class _HomePageState extends State<HomePage> {
       _status = switch (result) {
         UpdateUpToDate() => 'Nenhuma atualização disponível.',
         UpdateReady() => 'Atualização baixada, aguardando reinício.',
-        UpdateUnavailable() => 'Serviço de atualização indisponível no momento.',
+        UpdateUnavailable() =>
+          'Serviço de atualização indisponível no momento.',
         UpdateFailed(:final message) => 'Erro ao atualizar: $message',
       };
     });
@@ -72,8 +75,19 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Flutter Code Push Example')),
+      appBar: AppBar(
+        title: const Text('Flutter Code Push Example'),
+        actions: [
+          IconButton(
+            tooltip: isDark ? 'Ativar tema claro' : 'Ativar tema escuro',
+            onPressed: widget.onToggleTheme,
+            icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
+          ),
+        ],
+      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(24),

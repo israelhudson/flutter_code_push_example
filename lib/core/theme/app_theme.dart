@@ -7,9 +7,63 @@ abstract final class AppColors {
   static const champagne = Color(0xFFC6A15B);
   static const cream = Color(0xFFF8F1E7);
   static const porcelain = Color(0xFFFFFCF8);
+  static const petroleum = Color(0xFF0B2930);
+  static const petroleumSurface = Color(0xFF123943);
+  static const mist = Color(0xFFD3E2E5);
 }
 
 abstract final class AppTheme {
+  static ThemeData get dark {
+    final colorScheme =
+        ColorScheme.fromSeed(
+          seedColor: AppColors.petroleum,
+          brightness: Brightness.dark,
+        ).copyWith(
+          primary: AppColors.champagne,
+          onPrimary: AppColors.espresso,
+          secondary: AppColors.champagne,
+          onSecondary: AppColors.espresso,
+          surface: AppColors.petroleumSurface,
+          onSurface: AppColors.cream,
+          onSurfaceVariant: AppColors.mist,
+          inversePrimary: AppColors.espresso,
+        );
+
+    return ThemeData(
+      colorScheme: colorScheme,
+      scaffoldBackgroundColor: AppColors.petroleum,
+      useMaterial3: true,
+      fontFamily: 'Georgia',
+      appBarTheme: const AppBarTheme(
+        backgroundColor: AppColors.petroleumSurface,
+        foregroundColor: AppColors.cream,
+        centerTitle: true,
+        elevation: 0,
+        titleTextStyle: TextStyle(
+          color: AppColors.cream,
+          fontFamily: 'Georgia',
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 0.4,
+        ),
+      ),
+      textTheme: const TextTheme(
+        bodyLarge: TextStyle(color: AppColors.cream, fontSize: 18),
+        bodyMedium: TextStyle(color: AppColors.mist, fontSize: 16),
+        headlineMedium: TextStyle(
+          color: AppColors.cream,
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 0.5,
+        ),
+      ),
+      dividerTheme: const DividerThemeData(
+        color: AppColors.champagne,
+        thickness: 1,
+      ),
+    );
+  }
+
   static ThemeData get light {
     final colorScheme =
         ColorScheme.fromSeed(

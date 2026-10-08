@@ -1,6 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flutter_code_push_example/app/app.dart';
+import 'package:flutter_code_push_example/features/home/home_page.dart';
+import 'package:flutter_code_push_example/features/update/widgets/update_available_sheet.dart';
 
 void main() {
   testWidgets('exibe a mensagem inicial', (WidgetTester tester) async {
@@ -9,4 +12,105 @@ void main() {
     expect(find.text('Flutter Code Push Example'), findsOneWidget);
     expect(find.text('Laboratório de atualizações'), findsOneWidget);
   });
+
+  testWidgets('inicia claro e ignora mudanças do tema do sistema', (
+    WidgetTester tester,
+  ) async {
+    tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
+    addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
+
+    await tester.pumpWidget(const App());
+    await tester.pumpAndSettle();
+
+    expect(_brightness(tester), Brightness.light);
+    expect(find.byTooltip('Ativar tema escuro'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Ativar tema escuro'));
+    await tester.pumpAndSettle();
+
+    tester.platformDispatcher.platformBrightnessTestValue = Brightness.light;
+    await tester.pumpAndSettle();
+
+    expect(_brightness(tester), Brightness.dark);
+    expect(find.byTooltip('Ativar tema claro'), findsOneWidget);
+  });
+
+  testWidgets('alterna pelo botão e reinicia claro sem persistir a escolha', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const App());
+    await tester.pumpAndSettle();
+
+    final homeState = tester.state(find.byType(HomePage));
+
+    await tester.tap(find.byTooltip('Ativar tema escuro'));
+    await tester.pumpAndSettle();
+    expect(_brightness(tester), Brightness.dark);
+    expect(tester.state(find.byType(HomePage)), same(homeState));
+
+    await tester.tap(find.byTooltip('Ativar tema claro'));
+    await tester.pumpAndSettle();
+    expect(_brightness(tester), Brightness.light);
+
+    await tester.tap(find.byTooltip('Ativar tema escuro'));
+    await tester.pumpAndSettle();
+    expect(_brightness(tester), Brightness.dark);
+
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pumpWidget(const App());
+    await tester.pumpAndSettle();
+
+    expect(_brightness(tester), Brightness.light);
+    expect(find.byTooltip('Ativar tema escuro'), findsOneWidget);
+  });
+
+  testWidgets('aviso de atualização acompanha as cores do tema escuro', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const App());
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Ativar tema escuro'));
+    await tester.pumpAndSettle();
+
+    final context = tester.element(find.byType(HomePage));
+    final colors = Theme.of(context).colorScheme;
+    final closed = showUpdateAvailableSheet(context, patchNumber: 2);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Nova versão disponível'), findsOneWidget);
+    expect(
+      tester.widget<BottomSheet>(find.byType(BottomSheet)).backgroundColor,
+      colors.surface,
+    );
+    expect(
+      tester.widget<Icon>(find.byIcon(Icons.system_update_alt)).color,
+      colors.primary,
+    );
+    expect(tester.takeException(), isNull);
+
+    await tester.tap(find.text('Entendi'));
+    await tester.pumpAndSettle();
+    await closed;
+  });
+
+  testWidgets('botão de tema funciona em tela estreita', (
+    WidgetTester tester,
+  ) async {
+    tester.view.physicalSize = const Size(375, 667);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(const App());
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Ativar tema escuro'));
+    await tester.pumpAndSettle();
+
+    expect(_brightness(tester), Brightness.dark);
+    expect(tester.takeException(), isNull);
+  });
+}
+
+Brightness _brightness(WidgetTester tester) {
+  return Theme.of(tester.element(find.byType(HomePage))).brightness;
 }
