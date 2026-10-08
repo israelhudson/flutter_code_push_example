@@ -1,0 +1,65 @@
+{
+  "authorized_run_id": "9001",
+  "candidate_tag": "v1.4.0-rc.1",
+  "created_at": "2026-10-08T21:52:44.373018+00:00",
+  "decision": {
+    "approvers": [
+      {
+        "comment": "OFFLINE fixture; no human decision submitted",
+        "environment": "aprovacao-israel",
+        "environment_id": 101,
+        "reviewer": {
+          "id": 18661493,
+          "login": "israelhudson"
+        },
+        "state": "approved"
+      },
+      {
+        "comment": "OFFLINE fixture; no human decision submitted",
+        "environment": "aprovacao-fahnassau30",
+        "environment_id": 102,
+        "reviewer": {
+          "id": 339824994,
+          "login": "fahnassau30"
+        },
+        "state": "approved"
+      }
+    ],
+    "publisher": {
+      "comment": "OFFLINE fixture; no human decision submitted",
+      "environment": "autorizar-publicacao",
+      "environment_id": 103,
+      "reviewer": {
+        "id": 339824994,
+        "login": "fahnassau30"
+      },
+      "state": "approved"
+    }
+  },
+  "decision_digest": "ed66a444a32b9a4884c80d18ac3ce7012c6b4b04d32d28a846915689db47750a",
+  "intent_id": "50b187a9424f6b9d71402fa95401df74a9b9042af70cf70c06ab5358cc5ba207",
+  "last_error": {
+    "at": "2026-10-08T21:52:44.404302+00:00",
+    "message": "Proteção obrigatória ausente: LAB - novas RCs imutaveis",
+    "run_id": "9001"
+  },
+  "policy_digest": "cf976ff2b78fef243c81f99eb3c75cf3e4a191eadc6a2f1efe6f08179dc6c78d",
+  "publication_mode": "github_release_only",
+  "recovery_authorizations": [],
+  "release_payload": {
+    "body": "# 1.4.0 — Ensaio offline 1.4.0\n\nRegistro de versão do laboratório no GitHub. **Nenhum aplicativo ou patch foi distribuído.**\n\n- Candidata aprovada: `v1.4.0-rc.1` (preservada).\n- Tag estável: `v1.4.0`.\n- Código aprovado: `b358db34f6071c790a4a16078e1d7f75419411cb`.\n- Aprovações verificadas nas contas: israelhudson e fahnassau30.\n- Comando final: fahnassau30.\n- [Preview avaliado](https://israelhudson.github.io/flutter_code_push_example/snapshots/b358db34f6071c790a4a16078e1d7f75419411cb/).\n- [Relatório e execução aprovados](https://github.com/israelhudson/flutter_code_push_example/actions/runs/9001).\n\n## Changelog aprovado\n\n- feat: offline candidata\n\nReviews de contas verificadas não demonstram independência das pessoas que operaram essas contas.\n\n<!-- release-lab-intent:50b187a9424f6b9d71402fa95401df74a9b9042af70cf70c06ab5358cc5ba207 -->\n<!-- release-lab-report:8cad9bfd82029771e96da7561c89de010a6fbe49ab4a8ee8e1301278dc2828f6 -->\n",
+    "draft": false,
+    "generate_release_notes": false,
+    "make_latest": "true",
+    "name": "1.4.0 — Ensaio offline 1.4.0",
+    "prerelease": false,
+    "tag_name": "v1.4.0",
+    "target_commitish": "b358db34f6071c790a4a16078e1d7f75419411cb"
+  },
+  "report_digest": "8cad9bfd82029771e96da7561c89de010a6fbe49ab4a8ee8e1301278dc2828f6",
+  "source_sha": "b358db34f6071c790a4a16078e1d7f75419411cb",
+  "stable_tag": "v1.4.0",
+  "stable_tag_verified": true,
+  "status": "failed",
+  "updated_at": "2026-10-08T21:52:44.404601+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "executed_at": "2026-10-08T21:53:30.751377+00:00",
+  "tool": "actionlint",
+  "version": "1.7.12",
+  "exit_code": 0,
+  "status": "PASS",
+  "stdout": "",
+  "stderr": "",
+  "files": {
+    ".github/workflows/release-lab-evaluate.yml": "4c7616c2113661f591b498ca20cc324a921a5376079ed6e86099b9023b589de7",
+    ".github/workflows/release-lab-pr.yml": "be236161d0ac0c62af06b643c5b8b6443089dc8f02209adbad8ca658403e631c",
+    ".github/workflows/release-lab-prepare.yml": "2c0367ba573305975ec147d60401cf1c6daba5efcb3e1ba7f9adf604abee770a",
+    ".github/workflows/release-lab-recover.yml": "4efbf88d4e58671ad0ce78a2bf78e24a6a2cb5fe2bced46c68fcdace00abecff"
+  },
+  "scope": "Syntax, expressions and job dependencies; no remote execution; shellcheck and pyflakes disabled"
+}

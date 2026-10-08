@@ -1,0 +1,5 @@
+{
+  "status": "FAILED_CLOSED",
+  "error": "Ruleset diverge; revisar antes de alterar.",
+  "existing_rules_not_overwritten": true
+}

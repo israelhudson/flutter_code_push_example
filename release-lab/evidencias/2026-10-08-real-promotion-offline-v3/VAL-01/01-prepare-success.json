@@ -1,0 +1,63 @@
+{
+  "scope": "offline",
+  "state": {
+    "active": "v1.4.0-rc.1",
+    "candidates": {
+      "v1.4.0-rc.1": {
+        "candidate_tag": "v1.4.0-rc.1",
+        "changelog_base_sha": "411217f261e2501f21cc77528275739be7ace66d",
+        "created_at": "2026-10-08T21:52:36.663583+00:00",
+        "evaluation_run_id": null,
+        "policy_digest": "cf976ff2b78fef243c81f99eb3c75cf3e4a191eadc6a2f1efe6f08179dc6c78d",
+        "preparer": {
+          "id": 18661493,
+          "login": "israelhudson"
+        },
+        "publication_mode": "github_release_only",
+        "release_branch": "release/1.4.0",
+        "source_sha": "812fba24dc2efe077f11d08155585e336d3244ae",
+        "stable_tag": "v1.4.0",
+        "status": "prepared",
+        "title": "Ensaio offline 1.4.0",
+        "tooling_sha": "812fba24dc2efe077f11d08155585e336d3244ae",
+        "version": "1.4.0"
+      }
+    },
+    "events": [
+      {
+        "action": "preparation_intent",
+        "at": "2026-10-08T21:52:36.664268+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "67d1c52a5af598c8afe4c9a582b28724fd63fa43a3eca26ee5cf90dbca75b555",
+        "run_id": "9001"
+      },
+      {
+        "action": "prepare",
+        "at": "2026-10-08T21:52:36.699814+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "aa1b2b380eaca96dfc3552f4bab7745f076caa6ed134ab16d6b610879b894134",
+        "run_id": "9001"
+      }
+    ],
+    "schema": 1
+  },
+  "refs": {
+    "heads/main": "812fba24dc2efe077f11d08155585e336d3244ae",
+    "tags/entrega-0100-rc.1": "411217f261e2501f21cc77528275739be7ace66d",
+    "heads/release/1.4.0": "812fba24dc2efe077f11d08155585e336d3244ae",
+    "tags/v1.4.0-rc.1": "812fba24dc2efe077f11d08155585e336d3244ae"
+  },
+  "releases": [],
+  "runs": {
+    "9001": {
+      "id": 9001,
+      "run_attempt": 1,
+      "actor": {
+        "id": 18661493,
+        "login": "israelhudson"
+      },
+      "reviews": [],
+      "jobs": []
+    }
+  }
+}

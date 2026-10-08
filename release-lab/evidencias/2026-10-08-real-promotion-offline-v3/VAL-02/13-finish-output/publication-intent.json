@@ -1,0 +1,58 @@
+{
+  "candidate_tag": "v1.4.0-rc.2",
+  "stable_tag": "v1.4.0",
+  "source_sha": "491f3ce08a03f1d14f309688c93628f1130cc6c1",
+  "report_digest": "a4ddf7562b49e7476b7c404b8d24669fb4c00c41c9c8a784ae8eb7b477c3abeb",
+  "policy_digest": "cf976ff2b78fef243c81f99eb3c75cf3e4a191eadc6a2f1efe6f08179dc6c78d",
+  "authorized_run_id": "9002",
+  "publication_mode": "github_release_only",
+  "decision_digest": "65c4d52830abd71bdf25803f93bc7e6b823c369d445bf1c400d8b0950cfdac7d",
+  "intent_id": "88a0f92c829db6ca58c8cbbdc6b81a40b85f9b06e0c559388d1451ff6b48f9df",
+  "decision": {
+    "approvers": [
+      {
+        "environment": "aprovacao-israel",
+        "environment_id": 101,
+        "reviewer": {
+          "id": 18661493,
+          "login": "israelhudson"
+        },
+        "state": "approved",
+        "comment": "OFFLINE fixture; no human decision submitted"
+      },
+      {
+        "environment": "aprovacao-fahnassau30",
+        "environment_id": 102,
+        "reviewer": {
+          "id": 339824994,
+          "login": "fahnassau30"
+        },
+        "state": "approved",
+        "comment": "OFFLINE fixture; no human decision submitted"
+      }
+    ],
+    "publisher": {
+      "environment": "autorizar-publicacao",
+      "environment_id": 103,
+      "reviewer": {
+        "id": 18661493,
+        "login": "israelhudson"
+      },
+      "state": "approved",
+      "comment": "OFFLINE fixture; no human decision submitted"
+    }
+  },
+  "created_at": "2026-10-08T21:52:38.447139+00:00",
+  "status": "intent_recorded",
+  "recovery_authorizations": [],
+  "release_payload": {
+    "tag_name": "v1.4.0",
+    "target_commitish": "491f3ce08a03f1d14f309688c93628f1130cc6c1",
+    "name": "1.4.0 — Ensaio offline 1.4.0",
+    "body": "# 1.4.0 — Ensaio offline 1.4.0\n\nRegistro de versão do laboratório no GitHub. **Nenhum aplicativo ou patch foi distribuído.**\n\n- Candidata aprovada: `v1.4.0-rc.2` (preservada).\n- Tag estável: `v1.4.0`.\n- Código aprovado: `491f3ce08a03f1d14f309688c93628f1130cc6c1`.\n- Aprovações verificadas nas contas: israelhudson e fahnassau30.\n- Comando final: israelhudson.\n- [Preview avaliado](https://israelhudson.github.io/flutter_code_push_example/snapshots/491f3ce08a03f1d14f309688c93628f1130cc6c1/).\n- [Relatório e execução aprovados](https://github.com/israelhudson/flutter_code_push_example/actions/runs/9002).\n\n## Changelog aprovado\n\n- fix: corrigir candidata recusada offline\n- feat: offline candidata\n\nReviews de contas verificadas não demonstram independência das pessoas que operaram essas contas.\n\n<!-- release-lab-intent:88a0f92c829db6ca58c8cbbdc6b81a40b85f9b06e0c559388d1451ff6b48f9df -->\n<!-- release-lab-report:a4ddf7562b49e7476b7c404b8d24669fb4c00c41c9c8a784ae8eb7b477c3abeb -->\n",
+    "draft": false,
+    "prerelease": false,
+    "generate_release_notes": false,
+    "make_latest": "true"
+  }
+}

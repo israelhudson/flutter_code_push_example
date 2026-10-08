@@ -1,0 +1,19 @@
+{
+  "candidate_tag": "v1.5.0-rc.1",
+  "version": "1.5.0",
+  "title": "Ensaio offline 1.5.0",
+  "source_sha": "4639e5112e571ca1f33192be7f7ab70d5fb4b4e6",
+  "release_branch": "release/1.5.0",
+  "tooling_sha": "4639e5112e571ca1f33192be7f7ab70d5fb4b4e6",
+  "policy_digest": "cf976ff2b78fef243c81f99eb3c75cf3e4a191eadc6a2f1efe6f08179dc6c78d",
+  "publication_mode": "github_release_only",
+  "stable_tag": "v1.5.0",
+  "changelog_base_sha": "4639e5112e571ca1f33192be7f7ab70d5fb4b4e6",
+  "created_at": "2026-10-08T21:52:41.851896+00:00",
+  "preparer": {
+    "login": "israelhudson",
+    "id": 18661493
+  },
+  "status": "prepared",
+  "evaluation_run_id": null
+}

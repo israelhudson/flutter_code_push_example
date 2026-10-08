@@ -1,0 +1,8 @@
+{
+  "scenario": "VAL-09",
+  "description": "Proteções removidas após reviews ou após stable bloqueiam o próximo efeito",
+  "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+  "expected": "All assertions pass; no real external action",
+  "status": "PASS",
+  "obtained": "All explicit state/ref/receipt assertions passed"
+}

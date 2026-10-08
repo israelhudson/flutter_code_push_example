@@ -1,0 +1,10 @@
+{"action":"preparation_intent","at":"2026-10-08T21:52:42.561731+00:00","candidate":"v1.4.0-rc.1","result":"9ee3549397076f3eb1e4f5df6be80a299b2df7f6f4769aab8d4e7e17f6fe64ef","run_id":"9001"}
+{"action":"prepare","at":"2026-10-08T21:52:42.598246+00:00","candidate":"v1.4.0-rc.1","result":"5c18e71866ee033ec8eb6d691a52b38a244f4867ace71d8d943a30e37e97df98","run_id":"9001"}
+{"action":"evaluation_started","at":"2026-10-08T21:52:42.772586+00:00","candidate":"v1.4.0-rc.1","result":"78de1833bc33d3e4d45a2457f9521f26b562bf0aa629580fd55b94216a1d3339","run_id":"9001"}
+{"action":"report_frozen","at":"2026-10-08T21:52:42.815039+00:00","candidate":"v1.4.0-rc.1","result":"7f70f0a004b6f2ca328aadc50c82d479d63c164d5e2512cf18bf83b7baac2d29","run_id":"9001"}
+{"action":"approval_second","at":"2026-10-08T21:52:42.825562+00:00","candidate":"v1.4.0-rc.1","result":"5b0290b0d8ec6cbac7b1c571e7187e606d84fe105874f45e6fef7c822f9458b9","run_id":"9001"}
+{"action":"approval_first","at":"2026-10-08T21:52:42.829976+00:00","candidate":"v1.4.0-rc.1","result":"74cc9251933ec3907d0584de3960e6b3e00f5d38aa78317c0037a7df71460d52","run_id":"9001"}
+{"action":"publication_intent","at":"2026-10-08T21:52:42.834564+00:00","candidate":"v1.4.0-rc.1","result":"f254b9b52686a224c070ab56644d140b8756258747ea2b1685abb62ca477bbd9","run_id":"9001"}
+{"action":"publication_tag_verified","at":"2026-10-08T21:52:42.861168+00:00","candidate":"v1.4.0-rc.1","result":"5a8f325e34ab413c2e3f8175a27bacd4d077174a1544ae5d98515285139e447b","run_id":"9001"}
+{"action":"publication_release_verified","at":"2026-10-08T21:52:42.865715+00:00","candidate":"v1.4.0-rc.1","result":"151e91817f123ba80109296ff262a7f125ae0beedd534286348880d075eaeb05","run_id":"9001"}
+{"action":"github_release_completed","at":"2026-10-08T21:52:42.866366+00:00","candidate":"v1.4.0-rc.1","result":"48cf24842486da978b57312434891fd612b236334bc254379bd737725a20e525","run_id":"9001"}

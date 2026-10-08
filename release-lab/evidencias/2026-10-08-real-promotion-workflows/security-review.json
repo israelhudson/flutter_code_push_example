@@ -1,0 +1,11 @@
+{
+  "status": "NO_REMAINING_BLOCKER_IN_NORMAL_PIPELINE",
+  "finding": "Missing promotion-time ruleset recheck",
+  "fix": "protections(policy) before finish intent and before effects in live_intent",
+  "negative_reproduction": "No publication intent/tag/Release when rulesets absent after 2/2+final",
+  "limits": [
+    "Journal trusted storage, not resistant to malicious contents writer/admin",
+    "Account reviews do not prove independent humans",
+    "GITHUB_TOKEN may be unable to release frozen commit when default-branch workflows advance"
+  ]
+}

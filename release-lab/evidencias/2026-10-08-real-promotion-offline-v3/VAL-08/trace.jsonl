@@ -1,0 +1,73 @@
+{"event":"scope","human_reviews":"synthetic fixtures","mode":"offline","real_distribution":false,"real_git":true,"real_network":false,"sequence":1}
+{"context":{"GITHUB_ACTOR":"israelhudson","GITHUB_ACTOR_ID":"18661493","GITHUB_REF":"refs/heads/main","GITHUB_RUN_ATTEMPT":"1","GITHUB_RUN_ID":"9001","GITHUB_TRIGGERING_ACTOR":"israelhudson"},"event":"operation_started","operation":"prepare","scope":"offline","sequence":2}
+{"endpoint":"environments/aprovacao-israel","event":"api","method":"GET","request_sha":null,"sequence":3}
+{"endpoint":"environments/aprovacao-israel/deployment-branch-policies","event":"api","method":"GET","request_sha":null,"sequence":4}
+{"endpoint":"environments/aprovacao-fahnassau30","event":"api","method":"GET","request_sha":null,"sequence":5}
+{"endpoint":"environments/aprovacao-fahnassau30/deployment-branch-policies","event":"api","method":"GET","request_sha":null,"sequence":6}
+{"endpoint":"environments/autorizar-publicacao","event":"api","method":"GET","request_sha":null,"sequence":7}
+{"endpoint":"environments/autorizar-publicacao/deployment-branch-policies","event":"api","method":"GET","request_sha":null,"sequence":8}
+{"endpoint":"rulesets","event":"api","method":"GET","request_sha":null,"sequence":9}
+{"endpoint":"rulesets/1","event":"api","method":"GET","request_sha":null,"sequence":10}
+{"endpoint":"rulesets/3","event":"api","method":"GET","request_sha":null,"sequence":11}
+{"endpoint":"rulesets/4","event":"api","method":"GET","request_sha":null,"sequence":12}
+{"endpoint":"rulesets/2","event":"api","method":"GET","request_sha":null,"sequence":13}
+{"endpoint":"contents/release-lab/state.json?ref=codex%2Frelease-lab-state","event":"api","method":"GET","request_sha":null,"sequence":14}
+{"endpoint":"git/matching-refs/tags/v","event":"api","method":"GET","request_sha":null,"sequence":15}
+{"endpoint":"releases?per_page=100&page=1","event":"api","method":"GET","request_sha":null,"sequence":16}
+{"endpoint":"git/ref/heads/release%2F1.4.0","event":"api","method":"GET","request_sha":null,"sequence":17}
+{"endpoint":"commits/main","event":"api","method":"GET","request_sha":null,"sequence":18}
+{"endpoint":"git/matching-refs/tags/v1.4.0-rc.","event":"api","method":"GET","request_sha":null,"sequence":19}
+{"endpoint":"git/ref/tags/entrega-0100-rc.1","event":"api","method":"GET","request_sha":null,"sequence":20}
+{"endpoint":"contents/release-lab/state.json?ref=codex%2Frelease-lab-state","event":"api","method":"GET","request_sha":null,"sequence":21}
+{"endpoint":"git/matching-refs/tags/v","event":"api","method":"GET","request_sha":null,"sequence":22}
+{"endpoint":"releases?per_page=100&page=1","event":"api","method":"GET","request_sha":null,"sequence":23}
+{"endpoint":"contents/release-lab/state.json","event":"api","method":"PUT","request_sha":"5d756704c17a67fcb3a92c3955b344898eb777ed0d7dfe12389c8aeb565d254b","sequence":24}
+{"endpoint":"contents/release-lab/state.json?ref=codex%2Frelease-lab-state","event":"api","method":"GET","request_sha":null,"sequence":25}
+{"endpoint":"git/ref/heads/release/1.4.0","event":"api","method":"GET","request_sha":null,"sequence":26}
+{"endpoint":"git/refs","event":"api","method":"POST","request_sha":"a4c26a8a0d689c5ade1a75c8baa61e3868c9e49282d6c45954f83cd051eed216","sequence":27}
+{"endpoint":"git/ref/heads/release/1.4.0","event":"api","method":"GET","request_sha":null,"sequence":28}
+{"endpoint":"contents/release-lab/state.json?ref=codex%2Frelease-lab-state","event":"api","method":"GET","request_sha":null,"sequence":29}
+{"endpoint":"git/ref/tags/v1.4.0-rc.1","event":"api","method":"GET","request_sha":null,"sequence":30}
+{"endpoint":"git/refs","event":"api","method":"POST","request_sha":"43f1adcee663000b68610fbd957024027ea6265605f3a24c3d4e2fb5023a6962","sequence":31}
+{"endpoint":"git/ref/tags/v1.4.0-rc.1","event":"api","method":"GET","request_sha":null,"sequence":32}
+{"endpoint":"contents/release-lab/state.json?ref=codex%2Frelease-lab-state","event":"api","method":"GET","request_sha":null,"sequence":33}
+{"endpoint":"contents/release-lab/state.json","event":"api","method":"PUT","request_sha":"acbf78e3251e861f745375bf83e16b0ce15e4efcf770ac899d09225e8fc45ecf","sequence":34}
+{"event":"operation_succeeded","operation":"prepare","sequence":35,"stdout":"{\"candidate_tag\": \"v1.4.0-rc.1\", \"source_sha\": \"b358db34f6071c790a4a16078e1d7f75419411cb\", \"tooling_sha\": \"b358db34f6071c790a4a16078e1d7f75419411cb\"}\n"}
+{"context":{"GITHUB_ACTOR":"israelhudson","GITHUB_ACTOR_ID":"18661493","GITHUB_REF":"refs/heads/main","GITHUB_RUN_ATTEMPT":"1","GITHUB_RUN_ID":"9001","GITHUB_TRIGGERING_ACTOR":"israelhudson"},"event":"operation_started","operation":"preflight","scope":"offline","sequence":36}
+{"endpoint":"contents/release-lab/state.json?ref=codex%2Frelease-lab-state","event":"api","method":"GET","request_sha":null,"sequence":37}
+{"endpoint":"git/ref/tags/v1.4.0-rc.1","event":"api","method":"GET","request_sha":null,"sequence":38}
+{"endpoint":"git/ref/heads/release%2F1.4.0","event":"api","method":"GET","request_sha":null,"sequence":39}
+{"endpoint":"environments/aprovacao-israel","event":"api","method":"GET","request_sha":null,"sequence":40}
+{"endpoint":"environments/aprovacao-israel/deployment-branch-policies","event":"api","method":"GET","request_sha":null,"sequence":41}
+{"endpoint":"environments/aprovacao-fahnassau30","event":"api","method":"GET","request_sha":null,"sequence":42}
+{"endpoint":"environments/aprovacao-fahnassau30/deployment-branch-policies","event":"api","method":"GET","request_sha":null,"sequence":43}
+{"endpoint":"environments/autorizar-publicacao","event":"api","method":"GET","request_sha":null,"sequence":44}
+{"endpoint":"environments/autorizar-publicacao/deployment-branch-policies","event":"api","method":"GET","request_sha":null,"sequence":45}
+{"endpoint":"rulesets","event":"api","method":"GET","request_sha":null,"sequence":46}
+{"endpoint":"rulesets/1","event":"api","method":"GET","request_sha":null,"sequence":47}
+{"endpoint":"rulesets/3","event":"api","method":"GET","request_sha":null,"sequence":48}
+{"endpoint":"rulesets/4","event":"api","method":"GET","request_sha":null,"sequence":49}
+{"endpoint":"rulesets/2","event":"api","method":"GET","request_sha":null,"sequence":50}
+{"endpoint":"contents/release-lab/state.json","event":"api","method":"PUT","request_sha":"6eba66136f5044dd085b9c8e02ce19c27951da5d20f02eac11a081feb2abe2c6","sequence":51}
+{"event":"operation_succeeded","operation":"preflight","sequence":52,"stdout":"{\"candidate_tag\": \"v1.4.0-rc.1\", \"source_sha\": \"b358db34f6071c790a4a16078e1d7f75419411cb\", \"tooling_sha\": \"b358db34f6071c790a4a16078e1d7f75419411cb\", \"first_environment\": \"aprovacao-israel\", \"first_login\": \"israelhudson\", \"second_environment\": \"aprovacao-fahnassau30\", \"second_login\": \"fahnassau30\", \"final_environment\": \"autorizar-publicacao\"}\n"}
+{"context":{"GITHUB_ACTOR":"israelhudson","GITHUB_ACTOR_ID":"18661493","GITHUB_REF":"refs/heads/main","GITHUB_RUN_ATTEMPT":"1","GITHUB_RUN_ID":"9001","GITHUB_TRIGGERING_ACTOR":"israelhudson"},"event":"operation_started","operation":"report","scope":"offline","sequence":53}
+{"endpoint":"contents/release-lab/state.json?ref=codex%2Frelease-lab-state","event":"api","method":"GET","request_sha":null,"sequence":54}
+{"endpoint":"git/ref/tags/v1.4.0-rc.1","event":"api","method":"GET","request_sha":null,"sequence":55}
+{"endpoint":"git/ref/heads/release%2F1.4.0","event":"api","method":"GET","request_sha":null,"sequence":56}
+{"endpoint":"environments/aprovacao-israel","event":"api","method":"GET","request_sha":null,"sequence":57}
+{"endpoint":"environments/aprovacao-israel/deployment-branch-policies","event":"api","method":"GET","request_sha":null,"sequence":58}
+{"endpoint":"environments/aprovacao-fahnassau30","event":"api","method":"GET","request_sha":null,"sequence":59}
+{"endpoint":"environments/aprovacao-fahnassau30/deployment-branch-policies","event":"api","method":"GET","request_sha":null,"sequence":60}
+{"endpoint":"environments/autorizar-publicacao","event":"api","method":"GET","request_sha":null,"sequence":61}
+{"endpoint":"environments/autorizar-publicacao/deployment-branch-policies","event":"api","method":"GET","request_sha":null,"sequence":62}
+{"event":"operation_failed","exception":"LabError","operation":"report","reason":"Preview HTTP diverge da candidata; gate bloqueado.","sequence":63,"stdout":""}
+{"event":"expected_block_observed","reason":"Preview HTTP diverge da candidata; gate bloqueado.","sequence":64}
+{"context":{"GITHUB_ACTOR":"israelhudson","GITHUB_ACTOR_ID":"18661493","GITHUB_REF":"refs/heads/main","GITHUB_RUN_ATTEMPT":"1","GITHUB_RUN_ID":"9001","GITHUB_TRIGGERING_ACTOR":"israelhudson"},"event":"operation_started","operation":"approval","scope":"offline","sequence":65}
+{"endpoint":"contents/release-lab/state.json?ref=codex%2Frelease-lab-state","event":"api","method":"GET","request_sha":null,"sequence":66}
+{"event":"operation_failed","exception":"LabError","operation":"approval","reason":"Relatório aprovado não corresponde à RC.","sequence":67,"stdout":""}
+{"event":"expected_block_observed","reason":"Relatório aprovado não corresponde à RC.","sequence":68}
+{"context":{"GITHUB_ACTOR":"israelhudson","GITHUB_ACTOR_ID":"18661493","GITHUB_REF":"refs/heads/main","GITHUB_RUN_ATTEMPT":"1","GITHUB_RUN_ID":"9001","GITHUB_TRIGGERING_ACTOR":"israelhudson"},"event":"operation_started","operation":"finish","scope":"offline","sequence":69}
+{"endpoint":"contents/release-lab/state.json?ref=codex%2Frelease-lab-state","event":"api","method":"GET","request_sha":null,"sequence":70}
+{"event":"operation_failed","exception":"LabError","operation":"finish","reason":"Tag/destino real não estavam congelados antes dos avais. Uma decisão simulada não autoriza uma Release real.","sequence":71,"stdout":""}
+{"event":"expected_block_observed","reason":"Tag/destino real não estavam congelados antes dos avais. Uma decisão simulada não autoriza uma Release real.","sequence":72}
+{"cannot_publish_without_report":true,"cannot_register_approval_without_report":true,"event":"assertions_passed","failed_preview_prevents_frozen_report":true,"sequence":73}

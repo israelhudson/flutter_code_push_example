@@ -1,0 +1,8 @@
+{
+  "scenario": "VAL-06",
+  "description": "Versão antiga/concluída, iniciador errado, rerun e bot bloqueados",
+  "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+  "expected": "All assertions pass; no real external action",
+  "status": "PASS",
+  "obtained": "All explicit state/ref/receipt assertions passed"
+}

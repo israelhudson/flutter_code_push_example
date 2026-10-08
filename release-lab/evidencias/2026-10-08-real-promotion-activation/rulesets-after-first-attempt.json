@@ -1,0 +1,261 @@
+[
+  {
+    "id": 24751354,
+    "name": "LAB - journal append-only",
+    "target": "branch",
+    "source_type": "Repository",
+    "source": "israelhudson/flutter_code_push_example",
+    "enforcement": "active",
+    "conditions": {
+      "ref_name": {
+        "exclude": [],
+        "include": [
+          "refs/heads/codex/release-lab-state"
+        ]
+      }
+    },
+    "rules": [
+      {
+        "type": "deletion"
+      },
+      {
+        "type": "non_fast_forward"
+      }
+    ],
+    "node_id": "RRS_lACqUmVwb3NpdG9yec5PGchjzgF5rPo",
+    "created_at": "2026-10-08T18:10:11.174-03:00",
+    "updated_at": "2026-10-08T18:10:11.198-03:00",
+    "bypass_actors": [],
+    "current_user_can_bypass": "never",
+    "_links": {
+      "self": {
+        "href": "https://api.github.com/repos/israelhudson/flutter_code_push_example/rulesets/24751354"
+      },
+      "html": {
+        "href": "https://github.com/israelhudson/flutter_code_push_example/rules/24751354"
+      }
+    }
+  },
+  {
+    "id": 24751515,
+    "name": "LAB - main e release revisadas",
+    "target": "branch",
+    "source_type": "Repository",
+    "source": "israelhudson/flutter_code_push_example",
+    "enforcement": "active",
+    "conditions": {
+      "ref_name": {
+        "exclude": [],
+        "include": [
+          "refs/heads/main",
+          "refs/heads/release/**"
+        ]
+      }
+    },
+    "rules": [
+      {
+        "type": "deletion"
+      },
+      {
+        "type": "non_fast_forward"
+      },
+      {
+        "type": "pull_request",
+        "parameters": {
+          "required_approving_review_count": 1,
+          "dismiss_stale_reviews_on_push": true,
+          "required_reviewers": [],
+          "require_code_owner_review": false,
+          "require_last_push_approval": false,
+          "required_review_thread_resolution": true,
+          "require_extra_approval_for_unattributed_changes": true,
+          "allowed_merge_methods": [
+            "merge",
+            "squash",
+            "rebase"
+          ]
+        }
+      },
+      {
+        "type": "required_status_checks",
+        "parameters": {
+          "strict_required_status_checks_policy": true,
+          "do_not_enforce_on_create": true,
+          "required_status_checks": [
+            {
+              "context": "Flutter analyze e test"
+            }
+          ]
+        }
+      }
+    ],
+    "node_id": "RRS_lACqUmVwb3NpdG9yec5PGchjzgF5rZs",
+    "created_at": "2026-10-08T18:14:09.777-03:00",
+    "updated_at": "2026-10-08T18:14:09.859-03:00",
+    "bypass_actors": [],
+    "current_user_can_bypass": "never",
+    "_links": {
+      "self": {
+        "href": "https://api.github.com/repos/israelhudson/flutter_code_push_example/rulesets/24751515"
+      },
+      "html": {
+        "href": "https://github.com/israelhudson/flutter_code_push_example/rules/24751515"
+      }
+    }
+  },
+  {
+    "id": 24751353,
+    "name": "LAB - novas RCs imutaveis",
+    "target": "tag",
+    "source_type": "Repository",
+    "source": "israelhudson/flutter_code_push_example",
+    "enforcement": "active",
+    "conditions": {
+      "ref_name": {
+        "exclude": [],
+        "include": [
+          "refs/tags/v*-rc.*"
+        ]
+      }
+    },
+    "rules": [
+      {
+        "type": "update"
+      },
+      {
+        "type": "deletion"
+      }
+    ],
+    "node_id": "RRS_lACqUmVwb3NpdG9yec5PGchjzgF5rPk",
+    "created_at": "2026-10-08T18:10:10.512-03:00",
+    "updated_at": "2026-10-08T18:10:10.534-03:00",
+    "bypass_actors": [],
+    "current_user_can_bypass": "never",
+    "_links": {
+      "self": {
+        "href": "https://api.github.com/repos/israelhudson/flutter_code_push_example/rulesets/24751353"
+      },
+      "html": {
+        "href": "https://github.com/israelhudson/flutter_code_push_example/rules/24751353"
+      }
+    }
+  },
+  {
+    "id": 24752630,
+    "name": "LAB - tags estaveis imutaveis",
+    "target": "tag",
+    "source_type": "Repository",
+    "source": "israelhudson/flutter_code_push_example",
+    "enforcement": "active",
+    "conditions": {
+      "ref_name": {
+        "exclude": [
+          "refs/tags/v*-rc.*"
+        ],
+        "include": [
+          "refs/tags/v*"
+        ]
+      }
+    },
+    "rules": [
+      {
+        "type": "update"
+      },
+      {
+        "type": "deletion"
+      }
+    ],
+    "node_id": "RRS_lACqUmVwb3NpdG9yec5PGchjzgF5sfY",
+    "created_at": "2026-10-08T18:50:18.959-03:00",
+    "updated_at": "2026-10-08T18:50:18.986-03:00",
+    "bypass_actors": [],
+    "current_user_can_bypass": "never",
+    "_links": {
+      "self": {
+        "href": "https://api.github.com/repos/israelhudson/flutter_code_push_example/rulesets/24752630"
+      },
+      "html": {
+        "href": "https://github.com/israelhudson/flutter_code_push_example/rules/24752630"
+      }
+    }
+  },
+  {
+    "id": 24612293,
+    "name": "Laboratorio - RC imutavel",
+    "target": "tag",
+    "source_type": "Repository",
+    "source": "israelhudson/flutter_code_push_example",
+    "enforcement": "active",
+    "conditions": {
+      "ref_name": {
+        "exclude": [],
+        "include": [
+          "refs/tags/lab/delivery/**",
+          "refs/tags/entrega-*-rc.*"
+        ]
+      }
+    },
+    "rules": [
+      {
+        "type": "update"
+      },
+      {
+        "type": "deletion"
+      }
+    ],
+    "node_id": "RRS_lACqUmVwb3NpdG9yec5PGchjzgF3jcU",
+    "created_at": "2026-10-06T18:58:42.415-03:00",
+    "updated_at": "2026-10-07T18:51:01.996-03:00",
+    "bypass_actors": [],
+    "current_user_can_bypass": "never",
+    "_links": {
+      "self": {
+        "href": "https://api.github.com/repos/israelhudson/flutter_code_push_example/rulesets/24612293"
+      },
+      "html": {
+        "href": "https://github.com/israelhudson/flutter_code_push_example/rules/24612293"
+      }
+    }
+  },
+  {
+    "id": 24680589,
+    "name": "Laboratorio - historicos append-only",
+    "target": "branch",
+    "source_type": "Repository",
+    "source": "israelhudson/flutter_code_push_example",
+    "enforcement": "active",
+    "conditions": {
+      "ref_name": {
+        "exclude": [],
+        "include": [
+          "refs/heads/codex/delivery-state",
+          "refs/heads/codex/pages-previews"
+        ]
+      }
+    },
+    "rules": [
+      {
+        "type": "deletion"
+      },
+      {
+        "type": "non_fast_forward"
+      },
+      {
+        "type": "required_linear_history"
+      }
+    ],
+    "node_id": "RRS_lACqUmVwb3NpdG9yec5PGchjzgF4mI0",
+    "created_at": "2026-10-07T18:47:05.870-03:00",
+    "updated_at": "2026-10-07T18:47:05.929-03:00",
+    "bypass_actors": [],
+    "current_user_can_bypass": "never",
+    "_links": {
+      "self": {
+        "href": "https://api.github.com/repos/israelhudson/flutter_code_push_example/rulesets/24680589"
+      },
+      "html": {
+        "href": "https://github.com/israelhudson/flutter_code_push_example/rules/24680589"
+      }
+    }
+  }
+]

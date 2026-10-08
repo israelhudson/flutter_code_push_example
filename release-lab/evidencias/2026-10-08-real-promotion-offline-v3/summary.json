@@ -1,0 +1,135 @@
+{
+  "schema": 1,
+  "executed_at": "2026-10-08T21:52:44.435848+00:00",
+  "mode": "offline",
+  "real_network": false,
+  "real_human_reviews": false,
+  "real_pages_validation": false,
+  "real_github_release": false,
+  "helper_sha256": "082492a7083f8b5df6ebdf18b042092834cec449c89ef12b4c769c4c87b8abcf",
+  "results": [
+    {
+      "scenario": "VAL-01",
+      "description": "0/2, 1/2 e 2/2 sem PUBLICAR bloqueiam; terceiro comando promove",
+      "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+      "expected": "All assertions pass; no real external action",
+      "status": "PASS",
+      "obtained": "All explicit state/ref/receipt assertions passed"
+    },
+    {
+      "scenario": "VAL-02",
+      "description": "RC1 negada, código corrigido e RC2 sem herdar avais",
+      "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+      "expected": "All assertions pass; no real external action",
+      "status": "PASS",
+      "obtained": "All explicit state/ref/receipt assertions passed"
+    },
+    {
+      "scenario": "VAL-03",
+      "description": "Relatório, tag, ramo ou release-base alterados bloqueiam avais antigos",
+      "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+      "expected": "All assertions pass; no real external action",
+      "status": "PASS",
+      "obtained": "All explicit state/ref/receipt assertions passed"
+    },
+    {
+      "scenario": "VAL-04",
+      "description": "Tag estável conflitante preservada sem sobrescrita",
+      "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+      "expected": "All assertions pass; no real external action",
+      "status": "PASS",
+      "obtained": "All explicit state/ref/receipt assertions passed"
+    },
+    {
+      "scenario": "VAL-05",
+      "description": "Falha parcial e resposta perdida: reconciliação sem Release duplicada",
+      "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+      "expected": "All assertions pass; no real external action",
+      "status": "PASS",
+      "obtained": "All explicit state/ref/receipt assertions passed"
+    },
+    {
+      "scenario": "VAL-06",
+      "description": "Versão antiga/concluída, iniciador errado, rerun e bot bloqueados",
+      "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+      "expected": "All assertions pass; no real external action",
+      "status": "PASS",
+      "obtained": "All explicit state/ref/receipt assertions passed"
+    },
+    {
+      "scenario": "VAL-07",
+      "description": "Dois writers intercalados preservam ambos os avais por retry CAS",
+      "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+      "expected": "All assertions pass; no real external action",
+      "status": "PASS",
+      "obtained": "All explicit state/ref/receipt assertions passed"
+    },
+    {
+      "scenario": "VAL-08",
+      "description": "Preview reprovado bloqueia relatório, registro do aval e publicação",
+      "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+      "expected": "All assertions pass; no real external action",
+      "status": "PASS",
+      "obtained": "All explicit state/ref/receipt assertions passed"
+    },
+    {
+      "scenario": "VAL-09",
+      "description": "Proteções removidas após reviews ou após stable bloqueiam o próximo efeito",
+      "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+      "expected": "All assertions pass; no real external action",
+      "status": "PASS",
+      "obtained": "All explicit state/ref/receipt assertions passed"
+    }
+  ],
+  "passed": 9,
+  "total": 9,
+  "lessons_learned": [
+    {
+      "scenario": "VAL-01",
+      "lesson": "Two approval receipts do not replace the separate final publication decision."
+    },
+    {
+      "scenario": "VAL-02",
+      "lesson": "A corrected commit requires a new RC tag and fresh reviews; keep rejected RC refs for audit."
+    },
+    {
+      "scenario": "VAL-03",
+      "lesson": "Bind reviews to code, frozen report and policy; a review count alone cannot authorize promotion."
+    },
+    {
+      "scenario": "VAL-04",
+      "lesson": "An existing stable ref reserves its version; never adopt, move or delete a conflicting ref."
+    },
+    {
+      "scenario": "VAL-05",
+      "lesson": "Persist publication intent before effects, then GET the exact tag and Release after lost responses; do not repeat a blind POST."
+    },
+    {
+      "scenario": "VAL-06",
+      "lesson": "Compare versions numerically and distinguish the original operator, real account identity and run attempt."
+    },
+    {
+      "scenario": "VAL-07",
+      "lesson": "A journal writer must recompute from fresh state after a CAS conflict, preserving the other approver receipt."
+    },
+    {
+      "scenario": "VAL-08",
+      "lesson": "An unsuccessful preview cannot become a reviewable frozen report or a publication authorization."
+    },
+    {
+      "scenario": "VAL-09",
+      "lesson": "Recheck effective protections after human waiting and before each external effect; preserve an already-created stable tag if protections disappear."
+    },
+    {
+      "scenario": "all",
+      "lesson": "Offline fixtures prove helper behavior only; repeat human reviews, permissions and GitHub publication checks on the real service."
+    }
+  ],
+  "limitations": [
+    "Synthetic reviews are not human E2E evidence.",
+    "Local correction is not a remote reviewed PR.",
+    "Preview HTTP success is fixture input, not a live Pages check.",
+    "Offline API cannot prove real GitHub permissions or UI behavior.",
+    "No mobile build, Shorebird patch, store or tester distribution."
+  ]
+}

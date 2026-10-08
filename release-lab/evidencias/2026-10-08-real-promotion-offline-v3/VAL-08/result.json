@@ -1,0 +1,8 @@
+{
+  "scenario": "VAL-08",
+  "description": "Preview reprovado bloqueia relatório, registro do aval e publicação",
+  "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+  "expected": "All assertions pass; no real external action",
+  "status": "PASS",
+  "obtained": "All explicit state/ref/receipt assertions passed"
+}

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "executed_at": "2026-10-08T21:46:27.087878+00:00",
+  "tool": "actionlint",
+  "version": "1.7.12",
+  "arguments": [
+    "-shellcheck=",
+    "-pyflakes=",
+    ".github/workflows/release-lab-evaluate.yml",
+    ".github/workflows/release-lab-prepare.yml",
+    ".github/workflows/release-lab-pr.yml",
+    ".github/workflows/release-lab-recover.yml"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "",
+  "status": "PASS",
+  "files": {
+    ".github/workflows/release-lab-evaluate.yml": "442b2228d71fd600903af849253d71409aff01f1d0f156908d066216eef67f6f",
+    ".github/workflows/release-lab-prepare.yml": "2c0367ba573305975ec147d60401cf1c6daba5efcb3e1ba7f9adf604abee770a",
+    ".github/workflows/release-lab-pr.yml": "be236161d0ac0c62af06b643c5b8b6443089dc8f02209adbad8ca658403e631c",
+    ".github/workflows/release-lab-recover.yml": "47c930786e55fe57768913bc21fc3d274efeaa12a9a69cd8ba132f73694ea43f"
+  },
+  "scope": "Static workflow syntax, expressions and job dependencies; shellcheck and pyflakes disabled; no remote execution or approval",
+  "short_mutation_lock": "release-lab-mutation",
+  "gate_jobs_do_not_hold_mutation_lock": true,
+  "mobile_distribution": false
+}
