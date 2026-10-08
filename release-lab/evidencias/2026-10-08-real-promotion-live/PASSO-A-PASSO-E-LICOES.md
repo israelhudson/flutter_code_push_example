@@ -11,9 +11,16 @@ um comando final separado. Os bloqueios 0/2, 1/2, rejeição, conta incorreta e
 rerun foram observados. A publicação foi conferida por GET e pelo recibo final.
 **Nenhum aplicativo ou patch foi distribuído.** Reviews foram de ensaio
 automatizado por contas autorizadas, sem comprovação de independência humana.
-Versão já publicada e versão antiga foram recusadas sem efeitos novos. O
-backport da correção à main permanece PENDENTE até seus registros. Os nove
-cenários offline são registrados separadamente.
+Versão já publicada e versão antiga foram recusadas sem efeitos novos. A
+correção também foi integrada à main por outro PR, com check verde e review
+técnica de ensaio. Os nove cenários offline são registrados separadamente;
+subcasos sem ensaio remoto permanecem explicitamente PENDENTE na matriz.
+
+A [matriz consolidada](MATRIZ-RESULTADOS.json) registra **9/9 cenários offline
+PASS** e **15/20 verificações ou subcasos no GitHub PASS**. Os cinco restantes
+permanecem pendentes no serviço real; seus testes locais não alteram esse estado.
+A leitura dos objetos Git também confirmou que o helper congelado da fonte e
+das ferramentas usadas no run é o mesmo hash da rodada offline final.
 
 ## A diferença entre aprovação, comando e publicação
 
@@ -97,12 +104,15 @@ PR não pode aprová-lo; o branch protegido e o check obrigatório permanecem at
 | Avaliação RC2 | [Run da candidata corrigida](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37851607911) |
 | Preview RC2 | [Snapshot corrigido verificado](https://israelhudson.github.io/flutter_code_push_example/snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/) |
 | Versão estável | [Release real v1.5.0](https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.5.0), ID `407306454` |
+| Correção preservada na main | [PR: preservar na main a correção validada na RC2](https://github.com/israelhudson/flutter_code_push_example/pull/16) |
+| CI do backport | [Run com Flutter analyze/test e 273 testes](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37852801282) |
 | Preview RC1 | [Snapshot verificado](https://israelhudson.github.io/flutter_code_push_example/snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/) |
 | Diário das observações | [actions.jsonl](actions.jsonl) |
 | Fonte de estado/recibo | Branch `codex/release-lab-state`, `release-lab/state.json` |
 | Testes offline finais | [9 cenários e suas limitações](../2026-10-08-real-promotion-offline-v3/summary.json) |
 | Testes de promoção/configuração | [24 testes](../2026-10-08-real-promotion-offline-v3/unit-tests.log) e [5 testes](../2026-10-08-real-promotion-offline-v3/configuration-tests.log) |
 | YAML final | [actionlint-final.json](../2026-10-08-real-promotion-workflows/actionlint-final.json) |
+| Auditoria dos resultados | [MATRIZ-RESULTADOS.json](MATRIZ-RESULTADOS.json) e [auditoria de segurança da execução](LIVE-SECURITY-AUDIT.md) |
 
 Os links relativos deste relatório apontam a evidências na mesma branch de
 estado, fora da main. Os snapshots de teste não são adicionados ao PR de código.
@@ -411,6 +421,26 @@ Os snapshots completos `same-version-blocked-*` e `old-version-blocked-*`
 preservam run/jobs/estado/reviews/refs/Release. Nenhuma tag foi atualizada ou
 apagada para repetir o teste, e o catálogo permaneceu na versão aprovada.
 
+## Passo 7 — preservar a correção na main sem mudar a versão publicada
+
+**PASS.** Um PR separado levou à main a mensagem corrigida e a expectativa já
+validadas na RC2, junto de atualização dos links de evidência. Não se fez merge
+do histórico completo da branch release na main. A CI passou em Flutter
+analyze/test e 273 testes Python; a review técnica registrada pela conta Fabrícia
+identificou novamente a automação autorizada de ensaio e a ausência de revisão
+independente.
+
+O PR foi integrado às **19h22**, no commit
+`f9898028405e577ee8998b1c5f0274870089ffac`. A comparação das branches após o merge
+encontrou diferença apenas na documentação de validação; app, testes, workflows,
+helpers e política ficaram iguais. A main avançou depois da publicação; isso não
+move a tag estável nem muda o commit da RC2 aprovada.
+
+Provas: [check antes do merge](backport-pr-before-merge.json),
+[review técnica de ensaio](backport-pr-reviews.json),
+[merge na main](backport-pr-merged.json), [log da CI](backport-ci.log) e
+[print da correção integrada](13-correcao-integrada-na-main.jpg).
+
 ## Matriz: local, remoto e pendências separados
 
 | Cenário/subcaso | Offline | Remoto até a observação atual | Prova exigida |
@@ -425,7 +455,7 @@ apagada para repetir o teste, e o catálogo permaneceu na versão aprovada.
 | VAL-02: rejeição RC1 | PASS sintético | PASS | Review rejeitada, final/promoção skipped e ausência de estável/Release |
 | VAL-02: correção PR release | Git temporário PASS; sem PR remoto | PASS: review técnica automatizada de ensaio | PR, CI, review e merge |
 | VAL-02: RC2 não herda avais | PASS | PASS no corte, avaliação e promoção | Fonte/report novos, zero receipts até novos avais; estável no commit RC2 |
-| VAL-02: correção também main | Roteiro; não comprovado pelo fixture | PENDENTE | Outro PR revisado |
+| VAL-02: correção também main | Roteiro; não comprovado pelo fixture | PASS: PR separado com CI/review de ensaio | Merge, 273 testes e correção preservada sem alterar a tag aprovada |
 | VAL-03: deriva de fonte/report/política | PASS | PENDENTE; não provocar deriva de tag protegida real | Bloqueio e nenhum efeito |
 | VAL-04: tag conflitante | PASS | PENDENTE; catálogo real não adulterado | Objeto preservado sem overwrite |
 | VAL-05: parcial/POST resposta perdida/recovery | PASS | PENDENTE; nenhuma falha remota forçada | Intent, fresh gate e GET idempotente |
@@ -471,6 +501,7 @@ helpers e testes, sem centenas de snapshots de execução.
 | Job de aval não é publicação | Helper valida e grava receipt; job final só após ambos | Explicar estado visível por ação, não só por runner rodando |
 | Gate rejeitado não executa o helper | Run RC1 falhou e review rejeitou, mas journal manteve awaiting_approvals | Conciliar run/reviews e journal ao mostrar estados de rejeição/cancelamento |
 | Mudança RC exige novos avais | VAL-02 local preserva RC1 e promove commit corrigido RC2 | Nova fonte, report e preview; jamais reutilizar antigas decisões |
+| Correção de release precisa voltar à main | PR separado passou CI/review e preservou app corrigido | Backport revisado; não importar features novas da main para a release |
 | Link de run muda a tentativa visível | RC1 attempt1 rejeitada e attempt2 rerun recusada | Guardar run_attempt e links de attempts explícitos nos incidentes |
 | RC não é renomeada para estável | Tag estável é outro ref no mesmo commit aprovado | Preservar candidatas rejeitadas e o histórico de porquês |
 | Tag/Release são efeitos separados | VAL-05 reconciliou resposta perdida e parcial | Persistir intent; GET exato; recovery fresh sem duplicar |

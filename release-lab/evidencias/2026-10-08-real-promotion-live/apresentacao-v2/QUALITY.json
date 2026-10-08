@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "created_at": "2026-10-08T22:33:58.987114+00:00",
+  "status": "PASS",
+  "deliverable": "/Users/israelhudson/.codex/worktrees/github-release-approval-poc/flutter_code_push_example/docs/delivery/evidencias/2026-10-08-real-promotion-live/apresentacao-v2/output/workflow-lab-validado-v2.pptx",
+  "sha256": "f1a6968cdc0780ab7c04c4e3eb689a5a18112258174ff33643975d106d0ca5f2",
+  "bytes": 1307486,
+  "slides": 13,
+  "speaker_notes": 13,
+  "native_tables": 4,
+  "native_diagrams": 2,
+  "native_shapes": 99,
+  "native_connectors": 7,
+  "embedded_source_images": 5,
+  "image_media_types_match_bytes": true,
+  "font": "Helvetica Neue",
+  "format": "16:9",
+  "validation": "build/validation-rev05.json",
+  "final_pptx_import_and_render": "build/render-final-13-slides.log",
+  "all_final_slides_rendered": true,
+  "all_final_slides_visually_reviewed_at_full_size": true,
+  "unexpected_overlap_clipping_or_arrow_direction_errors_remaining": false,
+  "powerpoint_application_opened": false,
+  "template_picker_available": false,
+  "preserves_previous_decks": true,
+  "edited_scope": "apresentacao-v2 only; no code, previous decks, or GitHub mutations",
+  "sources": [
+    {
+      "file": "PASSO-A-PASSO-E-LICOES.md",
+      "sha256": "6315056e3d0bf69a3661ecd313c929562fc69e0bd6b7beff4839c066f730d3af"
+    },
+    {
+      "file": "MATRIZ-RESULTADOS.json",
+      "sha256": "97431044018c8f94565e322dcb3f34a39657286cf2fbd1e12e9d3b1af6fca308"
+    },
+    {
+      "file": "LIVE-SECURITY-AUDIT.md",
+      "sha256": "f48f081bcc1a10044983c6c8cc0829782abf760eb560de480c4ce3fc2927449a"
+    },
+    {
+      "file": "FALHAS-E-PREVENCAO.md",
+      "sha256": "535ffd7918edd907c8362c183054e2424956bf892c4bd2fae0a3dc25ec3c1fee"
+    }
+  ],
+  "factual_boundaries": {
+    "github_release_real": "v1.5.0 from corrected v1.5.0-rc.2",
+    "offline_scenarios_passed": 9,
+    "offline_scenarios_total": 9,
+    "remote_subcases_passed": 15,
+    "remote_subcases_total": 20,
+    "mobile_distribution": false,
+    "independent_human_review_verified": false,
+    "reviews": "Codex automated LAB test explicitly authorized by Israel",
+    "unexpected_remote_promotion_failure_observed": false,
+    "remote_partial_failure_recovery_exercised": false,
+    "backport_to_main": "Confirmed by reviewed PR merge evidence"
+  },
+  "authoring_incidents_preserved": [
+    "Missing runtime package environment made automatic font discovery fail on first attempt. Reused bundled runtime with RUNTIME_NODE_MODULES set.",
+    "Visual review corrected the editable connector end direction and screenshot framing. Previous exports and authoring logs are preserved privately.",
+    "Final late requirement added a dedicated slide distinguishing expected negative jobs from defects corrected and prevention."
+  ],
+  "claim_boundary": "Package, geometry, import, rendered visual review, content traceability and media checks. Does not claim native Microsoft PowerPoint inspection, independent human approvals or mobile distribution."
+}

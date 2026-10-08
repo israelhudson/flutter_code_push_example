@@ -1,0 +1,1204 @@
+{
+  "schema": 1,
+  "generated_at": "2026-10-08T22:23:31.040805+00:00",
+  "audit_kind": "Independent local reading of saved GitHub API responses and logs; no remote actions executed by this auditor",
+  "repository": "israelhudson/flutter_code_push_example",
+  "candidate_version": "1.5.0",
+  "remote_review_evidence": "GitHub account reviews, explicitly automated by Codex in source comments; not independent human review",
+  "limits": [
+    "PASS offline does not imply PASS on GitHub.",
+    "Remote cases remain PENDING where files or required subcases are missing.",
+    "Approval account identities are evidenced; distinct human actors were not established.",
+    "No mobile distribution, Shorebird patch, store release or tester availability was validated."
+  ],
+  "remote_count_basis": "Counts explicitly listed remote subcases only; unexercised variants never inherit PASS from offline tests.",
+  "offline_helper_sha256": "082492a7083f8b5df6ebdf18b042092834cec449c89ef12b4c769c4c87b8abcf",
+  "live_frozen_helper_objects": [
+    {
+      "role": "source_sha",
+      "git_commit": "b8763ec5adc5e24ce34f474a66a079b48a9ffa0f",
+      "helper_sha256": "082492a7083f8b5df6ebdf18b042092834cec449c89ef12b4c769c4c87b8abcf",
+      "matches_offline_helper": true,
+      "inspection_scope": "local Git object read; no remote query"
+    },
+    {
+      "role": "tooling_sha",
+      "git_commit": "9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0",
+      "helper_sha256": "082492a7083f8b5df6ebdf18b042092834cec449c89ef12b4c769c4c87b8abcf",
+      "matches_offline_helper": true,
+      "inspection_scope": "local Git object read; no remote query"
+    }
+  ],
+  "offline_scenarios_passed": 9,
+  "offline_scenarios_total": 9,
+  "remote_subcases_passed": 15,
+  "remote_subcases_total": 20,
+  "scenarios": [
+    {
+      "scenario": "VAL-01",
+      "description": "0/2, 1/2 e 2/2 sem PUBLICAR bloqueiam; terceiro comando promove",
+      "offline": {
+        "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+        "status": "PASS",
+        "evidence_paths": [
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/summary.json",
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-01/result.json",
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-01/trace.jsonl"
+        ],
+        "human_reviews_real": false
+      },
+      "remote": {
+        "scope": "GitHub real; operações automatizadas autorizadas via contas do LAB",
+        "status_scope": "Descrição integral do cenário offline; variantes não exercitadas mantêm PENDING",
+        "status": "PASS",
+        "offline_variants_not_exercised_remotely": [],
+        "passed_subcases": 4,
+        "total_subcases": 4,
+        "subcases": [
+          {
+            "subcase": "0/2",
+            "description": "Nenhum aval: publicação bloqueada",
+            "scope": "remote_github",
+            "status": "PASS",
+            "obtained": "Dois gates aguardando; tag estável e Release ausentes (GET 404).",
+            "evidence_paths": [
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-zero-approvals-state.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-zero-approvals-run.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-zero-approvals-jobs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-zero-approvals-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-zero-approvals-pending.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-zero-approvals-stable-ref.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-zero-approvals-stable-release.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-zero-approvals-rc-refs.json"
+            ],
+            "review_independence_verified": false
+          },
+          {
+            "subcase": "1/2",
+            "description": "Um aval não autoriza publicar",
+            "scope": "remote_github",
+            "status": "PASS",
+            "obtained": "Gate Israel concluiu e recibo first registrado; segundo aguardando; tag/Release ausentes.",
+            "evidence_paths": [
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-one-approval-state.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-one-approval-run.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-one-approval-jobs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-one-approval-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-one-approval-pending.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-one-approval-stable-ref.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-one-approval-stable-release.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-one-approval-rc-refs.json"
+            ],
+            "review_independence_verified": false
+          },
+          {
+            "subcase": "2/2-awaiting-final",
+            "description": "Dois avais aguardam terceiro comando separado",
+            "scope": "remote_github",
+            "status": "PASS",
+            "obtained": "Dois gates success; autorizar-publicacao pendente; nenhuma promoção.",
+            "evidence_paths": [
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-two-approvals-awaiting-final-state.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-two-approvals-awaiting-final-run.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-two-approvals-awaiting-final-jobs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-two-approvals-awaiting-final-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-two-approvals-awaiting-final-pending.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-two-approvals-awaiting-final-stable-ref.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-two-approvals-awaiting-final-stable-release.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-two-approvals-awaiting-final-rc-refs.json"
+            ],
+            "review_independence_verified": false
+          },
+          {
+            "subcase": "promotion-get",
+            "description": "Comando final promove RC2, confirmado por GET",
+            "scope": "remote_github",
+            "status": "PASS",
+            "obtained": "Tag estável e Release publicadas no commit RC2; journal/receipt completed, RC1 preservada.",
+            "evidence_paths": [
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-state.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-run.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-jobs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-pending.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-stable-ref.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-stable-release.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-rc-refs.json"
+            ],
+            "review_independence_verified": false
+          }
+        ],
+        "human_review_independence_verified": false
+      }
+    },
+    {
+      "scenario": "VAL-02",
+      "description": "RC1 negada, código corrigido e RC2 sem herdar avais",
+      "offline": {
+        "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+        "status": "PASS",
+        "evidence_paths": [
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/summary.json",
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-02/result.json",
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-02/trace.jsonl"
+        ],
+        "human_reviews_real": false
+      },
+      "remote": {
+        "scope": "GitHub real; operações automatizadas autorizadas via contas do LAB",
+        "status_scope": "Descrição integral do cenário offline; variantes não exercitadas mantêm PENDING",
+        "status": "PASS",
+        "offline_variants_not_exercised_remotely": [],
+        "passed_subcases": 6,
+        "total_subcases": 6,
+        "subcases": [
+          {
+            "subcase": "reject-rc1",
+            "description": "Rejeição RC1 impede promoção",
+            "scope": "remote_github",
+            "status": "PASS",
+            "obtained": "Gate second failure; autorização/promover skipped; tag/Release 404.",
+            "evidence_paths": [
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rejected-state.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rejected-run.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rejected-jobs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rejected-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rejected-pending.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rejected-stable-ref.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rejected-stable-release.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rejected-rc-refs.json"
+            ],
+            "review_independence_verified": false
+          },
+          {
+            "subcase": "release-correction-pr",
+            "description": "Correção revisada por PR para release",
+            "scope": "remote_github",
+            "status": "PASS",
+            "obtained": "PR MERGED em release/1.5.0, check Flutter SUCCESS e review da conta para o head.",
+            "evidence_paths": [
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/correction-pr-before-merge.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/correction-pr-merged.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/correction-pr-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/correction-ci.log"
+            ],
+            "review_independence_verified": false
+          },
+          {
+            "subcase": "rc2-fresh",
+            "description": "RC2 possui novo commit e começa com zero avais",
+            "scope": "remote_github",
+            "status": "PASS",
+            "obtained": "RC2=merge da correção, source diferente; dois gates pendentes e nenhum recibo herdado.",
+            "evidence_paths": [
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-state.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-run.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-jobs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-pending.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-stable-ref.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-stable-release.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-rc-refs.json"
+            ],
+            "review_independence_verified": false
+          },
+          {
+            "subcase": "rc1-preserved-superseded",
+            "description": "RC1 permanece imutável e deixa de ser ativa",
+            "scope": "remote_github",
+            "status": "PASS",
+            "obtained": "Tag RC1 mantém SHA original; journal RC1 superseded.",
+            "evidence_paths": [
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-state.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-run.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-jobs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-pending.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-stable-ref.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-stable-release.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-rc-refs.json"
+            ],
+            "review_independence_verified": false
+          },
+          {
+            "subcase": "promote-corrected-rc2",
+            "description": "Versão estável aponta para RC2 corrigida",
+            "scope": "remote_github",
+            "status": "PASS",
+            "obtained": "Tag v1.5.0 e Release confirmadas no source da RC2.",
+            "evidence_paths": [
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-state.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-run.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-jobs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-pending.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-stable-ref.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-stable-release.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-rc-refs.json"
+            ],
+            "review_independence_verified": false
+          },
+          {
+            "subcase": "backport-pr-main",
+            "description": "Correção retorna à main por PR revisado",
+            "scope": "remote_github",
+            "status": "PASS",
+            "obtained": "Backport MERGED em main com check obrigatório SUCCESS e review.",
+            "evidence_paths": [
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/backport-pr-before-merge.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/backport-pr-merged.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/backport-pr-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/backport-ci.log"
+            ],
+            "review_independence_verified": false
+          }
+        ],
+        "human_review_independence_verified": false
+      }
+    },
+    {
+      "scenario": "VAL-03",
+      "description": "Relatório, tag, ramo ou release-base alterados bloqueiam avais antigos",
+      "offline": {
+        "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+        "status": "PASS",
+        "evidence_paths": [
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/summary.json",
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-03/result.json",
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-03/trace.jsonl"
+        ],
+        "human_reviews_real": false
+      },
+      "remote": {
+        "scope": "GitHub real; operações automatizadas autorizadas via contas do LAB",
+        "status_scope": "Descrição integral do cenário offline; variantes não exercitadas mantêm PENDING",
+        "status": "PENDING",
+        "offline_variants_not_exercised_remotely": [
+          "Alteração deliberada de relatório congelado",
+          "Movimentação deliberada de tag",
+          "Alteração da política/base mobile após review"
+        ],
+        "passed_subcases": 1,
+        "total_subcases": 1,
+        "subcases": [
+          {
+            "subcase": "rc1-superseded-zero-reuse",
+            "description": "RC1 superseded e RC2 não reutiliza recibos",
+            "scope": "remote_github",
+            "status": "PASS",
+            "obtained": "Substituição e zero reaproveitamento observados.",
+            "evidence_paths": [
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-state.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-run.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-jobs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-pending.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-stable-ref.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-stable-release.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-rc-refs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-state.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-run.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-jobs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-pending.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-stable-ref.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-stable-release.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-rc-refs.json"
+            ],
+            "review_independence_verified": false,
+            "not_exercised": [
+              "alteração deliberada do relatório congelado",
+              "tag movida",
+              "política da release-base alterada"
+            ]
+          }
+        ],
+        "human_review_independence_verified": false
+      }
+    },
+    {
+      "scenario": "VAL-04",
+      "description": "Tag estável conflitante preservada sem sobrescrita",
+      "offline": {
+        "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+        "status": "PASS",
+        "evidence_paths": [
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/summary.json",
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-04/result.json",
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-04/trace.jsonl"
+        ],
+        "human_reviews_real": false
+      },
+      "remote": {
+        "scope": "GitHub real; operações automatizadas autorizadas via contas do LAB",
+        "status_scope": "Descrição integral do cenário offline; variantes não exercitadas mantêm PENDING",
+        "status": "PENDING",
+        "offline_variants_not_exercised_remotely": [],
+        "passed_subcases": 0,
+        "total_subcases": 1,
+        "subcases": [
+          {
+            "subcase": "conflicting-existing-stable",
+            "description": "Conflito stable preservado sem sobrescrita",
+            "scope": "remote_github",
+            "status": "PENDING",
+            "obtained": "Não provocamos colisão deliberada de tag/Release no GitHub; PASS offline somente.",
+            "evidence_paths": [],
+            "review_independence_verified": false
+          }
+        ],
+        "human_review_independence_verified": false
+      }
+    },
+    {
+      "scenario": "VAL-05",
+      "description": "Falha parcial e resposta perdida: reconciliação sem Release duplicada",
+      "offline": {
+        "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+        "status": "PASS",
+        "evidence_paths": [
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/summary.json",
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-05/result.json",
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-05/trace.jsonl"
+        ],
+        "human_reviews_real": false
+      },
+      "remote": {
+        "scope": "GitHub real; operações automatizadas autorizadas via contas do LAB",
+        "status_scope": "Descrição integral do cenário offline; variantes não exercitadas mantêm PENDING",
+        "status": "PENDING",
+        "offline_variants_not_exercised_remotely": [],
+        "passed_subcases": 0,
+        "total_subcases": 1,
+        "subcases": [
+          {
+            "subcase": "partial-lost-response-recovery",
+            "description": "Falha parcial e resposta perdida reconciliadas",
+            "scope": "remote_github",
+            "status": "PENDING",
+            "obtained": "Não foram injetados timeouts ou falhas parciais no serviço real; PASS offline somente.",
+            "evidence_paths": [],
+            "review_independence_verified": false
+          }
+        ],
+        "human_review_independence_verified": false
+      }
+    },
+    {
+      "scenario": "VAL-06",
+      "description": "Versão antiga/concluída, iniciador errado, rerun e bot bloqueados",
+      "offline": {
+        "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+        "status": "PASS",
+        "evidence_paths": [
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/summary.json",
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-06/result.json",
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-06/trace.jsonl"
+        ],
+        "human_reviews_real": false
+      },
+      "remote": {
+        "scope": "GitHub real; operações automatizadas autorizadas via contas do LAB",
+        "status_scope": "Descrição integral do cenário offline; variantes não exercitadas mantêm PENDING",
+        "status": "PENDING",
+        "offline_variants_not_exercised_remotely": [
+          "Operador/iniciador não autorizado",
+          "Tentativa de review por bot"
+        ],
+        "passed_subcases": 4,
+        "total_subcases": 4,
+        "subcases": [
+          {
+            "subcase": "wrong-exclusive-review-account",
+            "description": "Conta Israel não aprova o gate exclusivo da Fabrícia",
+            "scope": "remote_github",
+            "status": "PASS",
+            "obtained": "POST rejeitado (422), gate da Fabrícia já pendente com current_user_can_approve=false; nenhum aval/recibo acrescentado.",
+            "evidence_paths": [
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-wrong-account-request.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-wrong-account-response.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-zero-approvals-state.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-zero-approvals-run.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-zero-approvals-jobs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-zero-approvals-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-zero-approvals-pending.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-zero-approvals-stable-ref.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-zero-approvals-stable-release.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-zero-approvals-rc-refs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-wrong-account-blocked-state.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-wrong-account-blocked-run.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-wrong-account-blocked-jobs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-wrong-account-blocked-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-wrong-account-blocked-pending.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-wrong-account-blocked-stable-ref.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-wrong-account-blocked-stable-release.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-wrong-account-blocked-rc-refs.json"
+            ],
+            "review_independence_verified": false
+          },
+          {
+            "subcase": "rerun-blocked",
+            "description": "Rerun não reutiliza avais",
+            "scope": "remote_github",
+            "status": "PASS",
+            "obtained": "Run de rerun concluiu failure e log registra bloqueio de nova tentativa.",
+            "evidence_paths": [
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-assessment.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-dispatch.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-jobs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked.log",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-dispatch.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-state.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked.log",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-pending.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-run.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-rc-refs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-run.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-rc-refs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-log-collection.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-state.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-stable-release.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-jobs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-pending.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-state.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-pending.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-assessment.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-rc-refs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-attempt2.log",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-log-collection.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-stable-ref.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-run.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-stable-ref.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-stable-release.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-stable-release.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-jobs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-stable-ref.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-request.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-log-collection.json"
+            ],
+            "review_independence_verified": false
+          },
+          {
+            "subcase": "same-version-blocked",
+            "description": "Versão estável já concluída não pode ser preparada novamente",
+            "scope": "remote_github",
+            "status": "PASS",
+            "obtained": "Preparação concluiu failure por versão já usada/reservada.",
+            "evidence_paths": [
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-jobs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked.log",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-dispatch.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-rc-refs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-state.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-stable-release.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-pending.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-assessment.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-run.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-stable-ref.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-log-collection.json"
+            ],
+            "review_independence_verified": false
+          },
+          {
+            "subcase": "old-version-blocked",
+            "description": "Versão inferior à estável bloqueada",
+            "scope": "remote_github",
+            "status": "PASS",
+            "obtained": "Preparação concluiu failure por versão usada ou inferior à estável.",
+            "evidence_paths": [
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-assessment.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-dispatch.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-jobs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked.log",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-dispatch.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-state.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked.log",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-pending.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-run.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-rc-refs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-run.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-rc-refs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-log-collection.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-state.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-stable-release.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-jobs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-pending.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-state.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-pending.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-assessment.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-rc-refs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-attempt2.log",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-log-collection.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-stable-ref.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-run.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-stable-ref.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-stable-release.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-stable-release.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-jobs.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-reviews.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-stable-ref.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-request.json",
+              "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-log-collection.json"
+            ],
+            "review_independence_verified": false
+          }
+        ],
+        "human_review_independence_verified": false
+      }
+    },
+    {
+      "scenario": "VAL-07",
+      "description": "Dois writers intercalados preservam ambos os avais por retry CAS",
+      "offline": {
+        "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+        "status": "PASS",
+        "evidence_paths": [
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/summary.json",
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-07/result.json",
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-07/trace.jsonl"
+        ],
+        "human_reviews_real": false
+      },
+      "remote": {
+        "scope": "GitHub real; operações automatizadas autorizadas via contas do LAB",
+        "status_scope": "Descrição integral do cenário offline; variantes não exercitadas mantêm PENDING",
+        "status": "PENDING",
+        "offline_variants_not_exercised_remotely": [],
+        "passed_subcases": 0,
+        "total_subcases": 1,
+        "subcases": [
+          {
+            "subcase": "cas-interleaving",
+            "description": "Concorrência de writers preserva avais",
+            "scope": "remote_github",
+            "status": "PENDING",
+            "obtained": "Ambos os gates remotos não provam CAS conflict; interleaving foi controlado offline somente.",
+            "evidence_paths": [],
+            "review_independence_verified": false
+          }
+        ],
+        "human_review_independence_verified": false
+      }
+    },
+    {
+      "scenario": "VAL-08",
+      "description": "Preview reprovado bloqueia relatório, registro do aval e publicação",
+      "offline": {
+        "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+        "status": "PASS",
+        "evidence_paths": [
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/summary.json",
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-08/result.json",
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-08/trace.jsonl"
+        ],
+        "human_reviews_real": false
+      },
+      "remote": {
+        "scope": "GitHub real; operações automatizadas autorizadas via contas do LAB",
+        "status_scope": "Descrição integral do cenário offline; variantes não exercitadas mantêm PENDING",
+        "status": "PENDING",
+        "offline_variants_not_exercised_remotely": [],
+        "passed_subcases": 0,
+        "total_subcases": 1,
+        "subcases": [
+          {
+            "subcase": "failed-preview-blocks",
+            "description": "Preview falho impede aprovação/publicação",
+            "scope": "remote_github",
+            "status": "PENDING",
+            "obtained": "CI/preview positivos não provam bloqueio com preview falho; falha controlada somente offline.",
+            "evidence_paths": [],
+            "review_independence_verified": false
+          }
+        ],
+        "human_review_independence_verified": false
+      }
+    },
+    {
+      "scenario": "VAL-09",
+      "description": "Proteções removidas após reviews ou após stable bloqueiam o próximo efeito",
+      "offline": {
+        "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+        "status": "PASS",
+        "evidence_paths": [
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/summary.json",
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-09/result.json",
+          "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-09/trace.jsonl"
+        ],
+        "human_reviews_real": false
+      },
+      "remote": {
+        "scope": "GitHub real; operações automatizadas autorizadas via contas do LAB",
+        "status_scope": "Descrição integral do cenário offline; variantes não exercitadas mantêm PENDING",
+        "status": "PENDING",
+        "offline_variants_not_exercised_remotely": [],
+        "passed_subcases": 0,
+        "total_subcases": 1,
+        "subcases": [
+          {
+            "subcase": "removed-protections-before-effects",
+            "description": "Proteções removidas bloqueiam próximo efeito",
+            "scope": "remote_github",
+            "status": "PENDING",
+            "obtained": "Não removemos proteções reais para provocar a falha; negativo controlado somente offline.",
+            "evidence_paths": [],
+            "review_independence_verified": false
+          }
+        ],
+        "human_review_independence_verified": false
+      }
+    }
+  ],
+  "observation_prefixes": [
+    "old-version-blocked",
+    "rc1-one-approval",
+    "rc1-preparing",
+    "rc1-rejected",
+    "rc1-rerun",
+    "rc1-zero-approvals",
+    "rc2-after-backport",
+    "rc2-cut",
+    "rc2-final-authorized",
+    "rc2-one-approval",
+    "rc2-preparing",
+    "rc2-preview-publishing",
+    "rc2-promotion-completed",
+    "rc2-second-approved-starting",
+    "rc2-two-approvals-awaiting-final",
+    "rc2-verified-result",
+    "rc2-wrong-account-blocked",
+    "rc2-zero-approvals",
+    "same-version-blocked"
+  ],
+  "evidence_manifest": [
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/backport-ci.log",
+      "sha256": "f9bef0660b9c1851e7894a77ca388e3ee927ddef13500332de14b3d9b8ab01d6"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/backport-pr-before-merge.json",
+      "sha256": "8d70eaf8cad1a801869f142028b4904dba4a55bfb611b83e231f8a05ebd2d67b"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/backport-pr-merged.json",
+      "sha256": "274d94fb7d8ea3568ae4eb524d1819e44445db8eaee86ddbd8a0f6a60e3feac1"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/backport-pr-reviews.json",
+      "sha256": "69de71017441890f7772013b26354f150ad79deb7b331d14dd0f89fb79d800e9"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/correction-ci.log",
+      "sha256": "fa93ded796b4fa2924c629846054f318c985218e9377cdedc2c3e2a5aacdf672"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/correction-pr-before-merge.json",
+      "sha256": "dda977b0a58a65475338c491b9b7748c0afe5eb400c0fb616d8041bd7946a612"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/correction-pr-merged.json",
+      "sha256": "131a955b25a3cfd7a8f19099918982d2b377c2298d78412aad7f2c3c02a569fe"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/correction-pr-reviews.json",
+      "sha256": "1718477f12e0d8399fce82c84c2b2ec2c569702758cefa50996b0544e5ae147a"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-assessment.json",
+      "sha256": "ad30177fac4f18a5a25f6c502814199ad249d8f237f973ebb5f2825e9ecea1cd"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-jobs.json",
+      "sha256": "8763e5413367cc262835c57f11c581c2c2ac99f30b6b74d8ae17fcb62d3720e7"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-pending.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-rc-refs.json",
+      "sha256": "3e5f9ac83af54c19f3148a32e155d5aa52323c4f8a9a6edf3dcec26b6aec7f44"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-reviews.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-run.json",
+      "sha256": "0630d91ab0120488e2084bd5a637ae44169d411ce895118c0ac1cd7aaaa5bbc5"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-stable-ref.json",
+      "sha256": "bb9b3cb680e33d38703cc35ef54557ac4f9cce17c642282004a0750513d47355"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-stable-release.json",
+      "sha256": "1cb4cfdd50e7697acc90001663b7bdca4d939ae45a7247decc6d6d1ed2d8abec"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked-state.json",
+      "sha256": "82b163a26b2c87fb8cacbdac28025f2449428e46cea1aed257f33dea51d561a8"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-blocked.log",
+      "sha256": "2771a954a86b4a62f69d059b7c81d185f9c5ff1b4e42aada7dd36b61506c91de"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-dispatch.json",
+      "sha256": "775a7c337604bf0088e819cdd34dabfbf84f01a91c3ed3ab58d799a2483610c0"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/old-version-log-collection.json",
+      "sha256": "23f096a6200d574c734b8ce84971b26dd28c72a464ccf5389626fc0e52a37637"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-one-approval-jobs.json",
+      "sha256": "9f5412c9cb7beb93dee3988c4b43e11a480f15ee0ed744bcef5b8fbdbc9cbfc1"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-one-approval-pending.json",
+      "sha256": "20eedc311ad8a813fd889504dcb12aab9dc7431be58ac6368d10bbb9452c1e46"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-one-approval-rc-refs.json",
+      "sha256": "89899817f828edc64036c9b58555c1d18392a34ab19e8c6db1e1fae44a04e08a"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-one-approval-reviews.json",
+      "sha256": "e1a3250e259fb9e1a0c558e49d530dc5b4f8920bf5570af5763b65d8bb6a02b4"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-one-approval-run.json",
+      "sha256": "caf34c01baceaf7f9a055e14c1e7db8882f66af4e714bf0139223a0e7f34d1eb"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-one-approval-stable-ref.json",
+      "sha256": "6dfd0fe2b874faa446d579de81e0311429bcc6ff571adc2ecffb5c6cea9d6f0f"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-one-approval-stable-release.json",
+      "sha256": "6dfd0fe2b874faa446d579de81e0311429bcc6ff571adc2ecffb5c6cea9d6f0f"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-one-approval-state.json",
+      "sha256": "1e3b6c09ed72132b8826fad856c078fdc603cb98f758698ab9056cbdc1e0aa00"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rejected-jobs.json",
+      "sha256": "b0e8a38718a316d9fab6cfa0663dca0bb6ba20e501e1093e7297bd01731a6231"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rejected-pending.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rejected-rc-refs.json",
+      "sha256": "89899817f828edc64036c9b58555c1d18392a34ab19e8c6db1e1fae44a04e08a"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rejected-reviews.json",
+      "sha256": "1cdea8421d4413aea2cdc446b58bdd77ae25a12fd20d44418e97be3017caee36"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rejected-run.json",
+      "sha256": "592c00614ca197dc58e84e4b0516b7d9385f8c91de28ca54c58024aab89f09e2"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rejected-stable-ref.json",
+      "sha256": "6dfd0fe2b874faa446d579de81e0311429bcc6ff571adc2ecffb5c6cea9d6f0f"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rejected-stable-release.json",
+      "sha256": "6dfd0fe2b874faa446d579de81e0311429bcc6ff571adc2ecffb5c6cea9d6f0f"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rejected-state.json",
+      "sha256": "1e3b6c09ed72132b8826fad856c078fdc603cb98f758698ab9056cbdc1e0aa00"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-attempt2.log",
+      "sha256": "c6aee2a535e864d50b032c5a9cf7f4124bdb7a659f916d926708e940c3c566fb"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-jobs.json",
+      "sha256": "97ce404b4179c98d0bc1ba126bfd8c213121ac3ca4b8c5fc34e757b603156f88"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-log-collection.json",
+      "sha256": "23f096a6200d574c734b8ce84971b26dd28c72a464ccf5389626fc0e52a37637"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-pending.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-rc-refs.json",
+      "sha256": "3e5f9ac83af54c19f3148a32e155d5aa52323c4f8a9a6edf3dcec26b6aec7f44"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-request.json",
+      "sha256": "a53162fa8c32bbf3f5d22517374dc6ed1b5ffa849c53f97ad49549f31b9ab0ad"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-reviews.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-run.json",
+      "sha256": "210657168b672bca88ac113ad4f1ba5c0e746b508752b01996e3bd3c6b72d853"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-stable-ref.json",
+      "sha256": "6dfd0fe2b874faa446d579de81e0311429bcc6ff571adc2ecffb5c6cea9d6f0f"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-stable-release.json",
+      "sha256": "6dfd0fe2b874faa446d579de81e0311429bcc6ff571adc2ecffb5c6cea9d6f0f"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-rerun-state.json",
+      "sha256": "4bcd679ce1db1c093ca221ba55991b11a5f54d6b62386158789cc56a0d2e0f72"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-zero-approvals-jobs.json",
+      "sha256": "d39d9b8ad87532a31f6fb7edf23de8a19111abfb6ad1e60c5080ca4d2e7c2279"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-zero-approvals-pending.json",
+      "sha256": "5dec2e87800b3692b591cec704ed67c25213f6926778c977a5620897095d58ea"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-zero-approvals-rc-refs.json",
+      "sha256": "89899817f828edc64036c9b58555c1d18392a34ab19e8c6db1e1fae44a04e08a"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-zero-approvals-reviews.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-zero-approvals-run.json",
+      "sha256": "caf34c01baceaf7f9a055e14c1e7db8882f66af4e714bf0139223a0e7f34d1eb"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-zero-approvals-stable-ref.json",
+      "sha256": "6dfd0fe2b874faa446d579de81e0311429bcc6ff571adc2ecffb5c6cea9d6f0f"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-zero-approvals-stable-release.json",
+      "sha256": "6dfd0fe2b874faa446d579de81e0311429bcc6ff571adc2ecffb5c6cea9d6f0f"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-zero-approvals-state.json",
+      "sha256": "53a29e8ad866fce8bdc5de8069c7756c277c7e22ebcc7df7ee77f5349b098d14"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-jobs.json",
+      "sha256": "a4a4503cc6154b1eb0d2493d1cd1f5eced4ce7105f544d667b11060f0abb5452"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-pending.json",
+      "sha256": "5dec2e87800b3692b591cec704ed67c25213f6926778c977a5620897095d58ea"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-rc-refs.json",
+      "sha256": "3e5f9ac83af54c19f3148a32e155d5aa52323c4f8a9a6edf3dcec26b6aec7f44"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-reviews.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-run.json",
+      "sha256": "393f8b54843d3b3bcb6d251a6da3236b91450c59ef0f1413b3c89b67617bf2c8"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-stable-ref.json",
+      "sha256": "6dfd0fe2b874faa446d579de81e0311429bcc6ff571adc2ecffb5c6cea9d6f0f"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-stable-release.json",
+      "sha256": "6dfd0fe2b874faa446d579de81e0311429bcc6ff571adc2ecffb5c6cea9d6f0f"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-preview-publishing-state.json",
+      "sha256": "7b6adcc41448a897b90d992046471b66c59dacf9aa184141f3fe007323e0a656"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-two-approvals-awaiting-final-jobs.json",
+      "sha256": "dd8f4861ca4399abeb1fa27c2013de2d6940631c94260580296db583027900ab"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-two-approvals-awaiting-final-pending.json",
+      "sha256": "5607c91e054f2e1f92281f4fb5e8d0b3610f9a5ca17ca1d9379ffab74fe11fc5"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-two-approvals-awaiting-final-rc-refs.json",
+      "sha256": "3e5f9ac83af54c19f3148a32e155d5aa52323c4f8a9a6edf3dcec26b6aec7f44"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-two-approvals-awaiting-final-reviews.json",
+      "sha256": "291e72cee980592c6e766aee5866979dd68baddacaf04a6621afa7c245f4cf49"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-two-approvals-awaiting-final-run.json",
+      "sha256": "71a8fb6c8683edee3c20bc48e21bc0eddcd64daf8a2baa7553c43795f9419f83"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-two-approvals-awaiting-final-stable-ref.json",
+      "sha256": "6dfd0fe2b874faa446d579de81e0311429bcc6ff571adc2ecffb5c6cea9d6f0f"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-two-approvals-awaiting-final-stable-release.json",
+      "sha256": "6dfd0fe2b874faa446d579de81e0311429bcc6ff571adc2ecffb5c6cea9d6f0f"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-two-approvals-awaiting-final-state.json",
+      "sha256": "ce9bd14be44499ba613c49cbfca667f37bec1d8220aab83ad15d98286ea2c4be"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-jobs.json",
+      "sha256": "275c5d131d560dc6187de1453d6bc346f32bc0574bd52a0cb6df89a52ca6dce1"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-pending.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-rc-refs.json",
+      "sha256": "3e5f9ac83af54c19f3148a32e155d5aa52323c4f8a9a6edf3dcec26b6aec7f44"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-reviews.json",
+      "sha256": "054f6e94295cfe05da0c178a5b3eef7283a47863b3a89e22b5039dc251b321d7"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-run.json",
+      "sha256": "ce6a2c3fc9376a1d881afef056da5b90a9159959357319708851967bab9cf9dc"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-stable-ref.json",
+      "sha256": "bb9b3cb680e33d38703cc35ef54557ac4f9cce17c642282004a0750513d47355"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-stable-release.json",
+      "sha256": "1cb4cfdd50e7697acc90001663b7bdca4d939ae45a7247decc6d6d1ed2d8abec"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-verified-result-state.json",
+      "sha256": "82b163a26b2c87fb8cacbdac28025f2449428e46cea1aed257f33dea51d561a8"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-wrong-account-blocked-jobs.json",
+      "sha256": "a4a4503cc6154b1eb0d2493d1cd1f5eced4ce7105f544d667b11060f0abb5452"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-wrong-account-blocked-pending.json",
+      "sha256": "5dec2e87800b3692b591cec704ed67c25213f6926778c977a5620897095d58ea"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-wrong-account-blocked-rc-refs.json",
+      "sha256": "3e5f9ac83af54c19f3148a32e155d5aa52323c4f8a9a6edf3dcec26b6aec7f44"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-wrong-account-blocked-reviews.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-wrong-account-blocked-run.json",
+      "sha256": "393f8b54843d3b3bcb6d251a6da3236b91450c59ef0f1413b3c89b67617bf2c8"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-wrong-account-blocked-stable-ref.json",
+      "sha256": "6dfd0fe2b874faa446d579de81e0311429bcc6ff571adc2ecffb5c6cea9d6f0f"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-wrong-account-blocked-stable-release.json",
+      "sha256": "6dfd0fe2b874faa446d579de81e0311429bcc6ff571adc2ecffb5c6cea9d6f0f"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-wrong-account-blocked-state.json",
+      "sha256": "7b6adcc41448a897b90d992046471b66c59dacf9aa184141f3fe007323e0a656"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-wrong-account-request.json",
+      "sha256": "5cd7306db0c3bb9ae9d9fda8d178157c0c827961d5f65debe63d4b20e8843889"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-wrong-account-response.json",
+      "sha256": "68e86d0c0705e46f662651e169382c1344fa69cd6ccb58ef1381a0893aef52c4"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-zero-approvals-jobs.json",
+      "sha256": "a4a4503cc6154b1eb0d2493d1cd1f5eced4ce7105f544d667b11060f0abb5452"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-zero-approvals-pending.json",
+      "sha256": "5dec2e87800b3692b591cec704ed67c25213f6926778c977a5620897095d58ea"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-zero-approvals-rc-refs.json",
+      "sha256": "3e5f9ac83af54c19f3148a32e155d5aa52323c4f8a9a6edf3dcec26b6aec7f44"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-zero-approvals-reviews.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-zero-approvals-run.json",
+      "sha256": "393f8b54843d3b3bcb6d251a6da3236b91450c59ef0f1413b3c89b67617bf2c8"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-zero-approvals-stable-ref.json",
+      "sha256": "6dfd0fe2b874faa446d579de81e0311429bcc6ff571adc2ecffb5c6cea9d6f0f"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-zero-approvals-stable-release.json",
+      "sha256": "6dfd0fe2b874faa446d579de81e0311429bcc6ff571adc2ecffb5c6cea9d6f0f"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc2-zero-approvals-state.json",
+      "sha256": "7b6adcc41448a897b90d992046471b66c59dacf9aa184141f3fe007323e0a656"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-assessment.json",
+      "sha256": "f0097722a926e7a1979b42acd51b72e6ab20e1ab6cbbb1d94d026382e82dbe59"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-jobs.json",
+      "sha256": "d7b7d6d8b8c4f77b3bf65176e116d2decd30314933db3f055e7ff12ec2d0e764"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-pending.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-rc-refs.json",
+      "sha256": "3e5f9ac83af54c19f3148a32e155d5aa52323c4f8a9a6edf3dcec26b6aec7f44"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-reviews.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-run.json",
+      "sha256": "ec45a84d4b63bb003449c39dad81289ee06ff23fc081806f4c653f614b6e1b16"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-stable-ref.json",
+      "sha256": "bb9b3cb680e33d38703cc35ef54557ac4f9cce17c642282004a0750513d47355"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-stable-release.json",
+      "sha256": "1cb4cfdd50e7697acc90001663b7bdca4d939ae45a7247decc6d6d1ed2d8abec"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked-state.json",
+      "sha256": "82b163a26b2c87fb8cacbdac28025f2449428e46cea1aed257f33dea51d561a8"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-blocked.log",
+      "sha256": "887d902c059e7dff7b72fbcd8cf40b6acccb07e1b82dd9b031fe143276172e8d"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-dispatch.json",
+      "sha256": "529024b619ef10b7f3862591f9eff52020e48d6ec221cfb3c9458102911a491f"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/same-version-log-collection.json",
+      "sha256": "23f096a6200d574c734b8ce84971b26dd28c72a464ccf5389626fc0e52a37637"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-01/result.json",
+      "sha256": "6d71eb7c84ac0d645ac8355bcce1c6bc4a4b6d6e8ec6f61d805f8a8f9366a56e"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-01/trace.jsonl",
+      "sha256": "6cfffe4154060232663a5df09de03178a7d29ae457b25a12f4bc007b705b2f77"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-02/result.json",
+      "sha256": "2ec8ae9dd6715e069054e8cab6a7b5367dc45daa27c2b262fb82f2fee248ee10"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-02/trace.jsonl",
+      "sha256": "ec76757e923ec4972966387709cff063d8f0126d6c331800491345449c8c7f15"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-03/result.json",
+      "sha256": "b2d7a88328da65a8358af0052d64110c6463ff3751a7d19867b49a04b000fa67"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-03/trace.jsonl",
+      "sha256": "997716fb8a81376ec2891021a8a765ae66b1562c8f52e68b008d881562137504"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-04/result.json",
+      "sha256": "dbcb1cc855a354fc6e3702eafee2a761239aa350821b7f408ab87c9aa3b1ab89"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-04/trace.jsonl",
+      "sha256": "5a1a3dc5f70d67e662d603991e5499379ca0cd50945bf3dc26bc7814363c2e3e"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-05/result.json",
+      "sha256": "d76facd266d80e67e1aa4833478ebdfd90e1a676c367f20ca6c2b1b2e384e688"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-05/trace.jsonl",
+      "sha256": "fac73b3209f91b41a406a35df6a748af03050e182929ac8fc84dbda416e72d9c"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-06/result.json",
+      "sha256": "b774eccd3425610da22ebd6899782577126c7bb5b58d2934f5dbd83868a68e9d"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-06/trace.jsonl",
+      "sha256": "f1a103b80cda1faa2b9a14c62e5bcedc2fc95782272ee7338eb1e0d8bc7ef09a"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-07/result.json",
+      "sha256": "7d5c81c4cea3397642cd77bbcc253c57aac8f41d94f8e80ce13a2ba488cf38b4"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-07/trace.jsonl",
+      "sha256": "2af7a0dd933d76f29c075d79bd8b612471f516565e3ea32dac2fc829d0980715"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-08/result.json",
+      "sha256": "3abc386e1d955da701302bc7bd7d1029d257a05e06f22221b07f953ddb0af9e1"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-08/trace.jsonl",
+      "sha256": "829992d3ede40dfb8438345d0b9841bfe1fcaa8ec266a2d5f331e65b2629c965"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-09/result.json",
+      "sha256": "fd9f6cb4d09287d1146a767aed2ab6a114fe45283750c7e3ada0e5e4384dfe27"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/VAL-09/trace.jsonl",
+      "sha256": "9e4aa7f8c90b3941e7a539f80e1a8961d3049454504c726465ce448a1757f96a"
+    },
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-offline-v3/summary.json",
+      "sha256": "a79aa166d18afae9dd9b0ac93ce788a20cd8ed941e8696e4907f96ef3d4d598f"
+    }
+  ],
+  "log_collection_notes": [
+    {
+      "path": "docs/delivery/evidencias/2026-10-08-real-promotion-live/rc1-log-collection.json",
+      "observed": {
+        "exit_code": 1,
+        "log_bytes": 391589,
+        "stderr": "log not found: 113563115800\n"
+      },
+      "interpretation": "Aggregate log collection recorded an error; snapshots prove statuses, but do not imply every job log was collected."
+    }
+  ]
+}

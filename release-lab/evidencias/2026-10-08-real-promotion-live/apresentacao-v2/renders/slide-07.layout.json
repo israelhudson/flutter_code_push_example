@@ -1,0 +1,11 @@
+{"schema":"openai.presentation.layout/v5","unit":"px","slide":{"id":"sl/lwlnv0","index":6,"layout":{"id":"ly/0zexs7qx","name":"Blank"},"backgroundColor":"rgba(245,247,250,1)","position":{"left":0,"top":0,"width":1600,"height":900}},
+"elements":[
+{"id":"sh/xcbe147y","kind":"textbox","position":{"left":88,"top":62,"width":1424,"height":100},"text":"Rejeição da RC1 e correção","style":{"fontSize":56,"typeface":"Helvetica Neue","color":"#12243A","bold":true,"alignment":"left"},"geometry":"rect","lineWidth":0},
+{"id":"sh/a9kv6p87","kind":"textbox","position":{"left":1445,"top":844,"width":67,"height":28},"text":"07","style":{"fontSize":20,"typeface":"Helvetica Neue","color":"#4A6076","alignment":"right"},"geometry":"rect","lineWidth":0},
+{"id":"im/6xsr6p0j","kind":"image","position":{"left":88,"top":260,"width":879,"height":356},"crop":{"left":0,"top":0.24,"right":0,"bottom":0.025},"fit":"contain","alt":"Captura original do ensaio: 04-rc1-rejeitada-sem-promocao.jpg"},
+{"id":"sh/kzmxcj69","kind":"textbox","position":{"left":1040,"top":205,"width":472,"height":64},"text":"1  RC1 rejeitada","style":{"fontSize":34,"typeface":"Helvetica Neue","color":"#AB3744","bold":true,"alignment":"left"},"geometry":"rect","lineWidth":0},
+{"id":"sh/l0ve5o7u","kind":"textbox","position":{"left":1040,"top":314,"width":472,"height":105},"text":"2  Correção revisada\n    na release","style":{"fontSize":33,"typeface":"Helvetica Neue","color":"#12243A","bold":true,"alignment":"left"},"geometry":"rect","lineWidth":0},
+{"id":"sh/ydkva9o3","kind":"textbox","position":{"left":1040,"top":457,"width":472,"height":111},"text":"3  RC2 começa\n    com zero avais","style":{"fontSize":33,"typeface":"Helvetica Neue","color":"#087F71","bold":true,"alignment":"left"},"geometry":"rect","lineWidth":0},
+{"id":"sh/zedw3epo","kind":"textbox","position":{"left":1040,"top":606,"width":472,"height":111},"text":"4  Novos dois avais\n    e comando final","style":{"fontSize":33,"typeface":"Helvetica Neue","color":"#12243A","bold":true,"alignment":"left"},"geometry":"rect","lineWidth":0},
+{"id":"sh/83mxgj6l","kind":"textbox","position":{"left":88,"top":780,"width":1424,"height":47},"text":"Correção também integrada à main por PR","style":{"fontSize":28,"typeface":"Helvetica Neue","color":"#087F71","alignment":"left"},"geometry":"rect","lineWidth":0}
+]}
