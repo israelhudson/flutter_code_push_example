@@ -1,5 +1,11 @@
 # flutter_code_push_example
 
+## Esteira atual do laboratório
+
+Use **Actions → LAB - Preparar candidata**, informando versão e título. O fluxo cria a RC, valida o app e publica o preview. **Israel E Fabrícia** aprovam; depois **Israel OU Fabrícia** dá PUBLICAR em uma etapa separada. O recibo final é **SIMULADO**, sem distribuição mobile.
+
+[Passo a passo do fluxo com dois aprovadores](docs/delivery/FLUXO-DOIS-APROVADORES.md). Os workflows anteriores foram arquivados em [workflows-historicos](docs/delivery/workflows-historicos/); seus runs e evidências permanecem preservados.
+
 Prática do uso do code push do Flutter com ShoreBird.
 
 ## Ensaiar a esteira agora

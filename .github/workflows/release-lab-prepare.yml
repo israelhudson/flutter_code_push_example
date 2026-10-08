@@ -1,0 +1,68 @@
+name: LAB - Preparar candidata
+run-name: Preparar ${{ inputs.version }} — ${{ inputs.title }}
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Versão da entrega, por exemplo 1.4.0 (sem v ou rc)
+        type: string
+        required: true
+      title:
+        description: Título que aparecerá no changelog da candidata
+        type: string
+        required: true
+permissions:
+  contents: read
+jobs:
+  prepare:
+    name: Congelar candidata revisada
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    # This lock ends when the cut completes; human approvals do not hold it.
+    concurrency:
+      group: release-lab-prepare
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      actions: read
+    outputs:
+      candidate_tag: ${{ steps.candidate.outputs.candidate_tag }}
+      source_sha: ${{ steps.candidate.outputs.source_sha }}
+      tooling_sha: ${{ steps.candidate.outputs.tooling_sha }}
+    steps:
+      - name: Checkout das ferramentas confiáveis da main
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: refs/heads/main
+          path: trusted
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Criar release e RC imutável com identidade interna
+        id: candidate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_VERSION: ${{ inputs.version }}
+          RELEASE_TITLE: ${{ inputs.title }}
+        run: python3 trusted/tools/delivery/release_lab.py prepare --version "$RELEASE_VERSION" --title "$RELEASE_TITLE" --output "$RUNNER_TEMP/release-lab"
+      - name: Preservar registro do corte
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-lab-preparation
+          path: ${{ runner.temp }}/release-lab/
+          if-no-files-found: ignore
+          retention-days: 90
+          overwrite: false
+  evaluate:
+    name: Avaliar a mesma candidata
+    needs: prepare
+    permissions:
+      contents: write
+      actions: read
+      pages: write
+      id-token: write
+    # GITHUB_TOKEN tag pushes do not start another push workflow. Calling the
+    # reusable evaluator explicitly avoids relying on that suppressed event.
+    uses: ./.github/workflows/release-lab-evaluate.yml
+    with:
+      candidate_tag: ${{ needs.prepare.outputs.candidate_tag }}
