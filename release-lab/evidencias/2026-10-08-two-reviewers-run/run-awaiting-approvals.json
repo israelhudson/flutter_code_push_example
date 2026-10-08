@@ -1,0 +1,29 @@
+{
+  "run": {
+    "id": 37845381675,
+    "name": "Preparar 1.4.0 — Ensaio com aprovação real de Israel e Fabrícia",
+    "status": "waiting",
+    "conclusion": null,
+    "html_url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37845381675",
+    "head_sha": "9e0320fca6fdfba5931d6c80d9181c362ac33c17",
+    "created_at": "2026-10-08T21:14:39Z",
+    "updated_at": "2026-10-08T21:17:51Z"
+  },
+  "review_history": [],
+  "pending_environments": [
+    {
+      "name": "aprovacao-fahnassau30",
+      "current_user_can_approve": false,
+      "reviewers": [
+        "fahnassau30"
+      ]
+    },
+    {
+      "name": "aprovacao-israel",
+      "current_user_can_approve": true,
+      "reviewers": [
+        "israelhudson"
+      ]
+    }
+  ]
+}
