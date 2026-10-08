@@ -1,0 +1,699 @@
+{
+  "scope": "offline",
+  "state": {
+    "active": "v1.4.0-rc.2",
+    "candidates": {
+      "v1.4.0-rc.1": {
+        "approval_receipts": {
+          "first": {
+            "candidate_tag": "v1.4.0-rc.1",
+            "report_digest": "0d6333399b48d2c12f85c17af4b5e16ea4accf7f44266bf26fcef15e54a39725",
+            "review": {
+              "comment": "OFFLINE fixture; no human decision submitted",
+              "environment": "aprovacao-israel",
+              "environment_id": 101,
+              "reviewer": {
+                "id": 18661493,
+                "login": "israelhudson"
+              },
+              "state": "approved"
+            },
+            "run_attempt": 1,
+            "run_id": "9001",
+            "source_sha": "faf7c84f6c37525c4863cd83380907fe1551c6ce"
+          }
+        },
+        "candidate_tag": "v1.4.0-rc.1",
+        "changelog_base_sha": "f5fc55f0745b70510cb29eca8a6f8d434a129ad7",
+        "created_at": "2026-10-08T21:46:30.628996+00:00",
+        "evaluation_run_id": "9001",
+        "policy_digest": "cf976ff2b78fef243c81f99eb3c75cf3e4a191eadc6a2f1efe6f08179dc6c78d",
+        "preparer": {
+          "id": 18661493,
+          "login": "israelhudson"
+        },
+        "publication_mode": "github_release_only",
+        "release_branch": "release/1.4.0",
+        "report": {
+          "build_inputs": {
+            "flutter": "offline fixture"
+          },
+          "candidate_tag": "v1.4.0-rc.1",
+          "changed_paths": [
+            "lib/main.dart"
+          ],
+          "changelog_base_sha": "f5fc55f0745b70510cb29eca8a6f8d434a129ad7",
+          "changes": [
+            "feat: offline candidata"
+          ],
+          "distribution_performed": false,
+          "platforms": {
+            "android": {
+              "base": null,
+              "classification": "Inconclusivo — alvo bloqueado",
+              "evidence": "Git diff acumulado; nenhuma compilação mobile ou comparação Shorebird.",
+              "reason": "Release-base mobile real não configurada.",
+              "target_blocked": true
+            },
+            "ios": {
+              "base": null,
+              "classification": "Inconclusivo — alvo bloqueado",
+              "evidence": "Git diff acumulado; nenhuma compilação mobile ou comparação Shorebird.",
+              "reason": "Release-base mobile real não configurada.",
+              "target_blocked": true
+            }
+          },
+          "policy_digest": "cf976ff2b78fef243c81f99eb3c75cf3e4a191eadc6a2f1efe6f08179dc6c78d",
+          "preview": {
+            "snapshot_manifest_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "snapshot_url": "https://israelhudson.github.io/flutter_code_push_example/snapshots/faf7c84f6c37525c4863cd83380907fe1551c6ce/",
+            "source_sha": "faf7c84f6c37525c4863cd83380907fe1551c6ce",
+            "success": true,
+            "web_content_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          },
+          "publication_mode": "github_release_only",
+          "pubspec_version": "1.4.0+1",
+          "result_simulated": false,
+          "run_id": "9001",
+          "schema": 1,
+          "source_sha": "faf7c84f6c37525c4863cd83380907fe1551c6ce",
+          "stable_tag": "v1.4.0",
+          "title": "Ensaio offline 1.4.0",
+          "version": "1.4.0"
+        },
+        "report_digest": "0d6333399b48d2c12f85c17af4b5e16ea4accf7f44266bf26fcef15e54a39725",
+        "source_sha": "faf7c84f6c37525c4863cd83380907fe1551c6ce",
+        "stable_tag": "v1.4.0",
+        "status": "superseded",
+        "title": "Ensaio offline 1.4.0",
+        "tooling_sha": "faf7c84f6c37525c4863cd83380907fe1551c6ce",
+        "version": "1.4.0"
+      },
+      "v1.4.0-rc.2": {
+        "approval_receipts": {
+          "first": {
+            "candidate_tag": "v1.4.0-rc.2",
+            "report_digest": "642458c2535131b9c7814205b3a69fad6b642e3201c12b237a4efb75d6dd509f",
+            "review": {
+              "comment": "OFFLINE fixture; no human decision submitted",
+              "environment": "aprovacao-israel",
+              "environment_id": 101,
+              "reviewer": {
+                "id": 18661493,
+                "login": "israelhudson"
+              },
+              "state": "approved"
+            },
+            "run_attempt": 1,
+            "run_id": "9002",
+            "source_sha": "2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d"
+          },
+          "second": {
+            "candidate_tag": "v1.4.0-rc.2",
+            "report_digest": "642458c2535131b9c7814205b3a69fad6b642e3201c12b237a4efb75d6dd509f",
+            "review": {
+              "comment": "OFFLINE fixture; no human decision submitted",
+              "environment": "aprovacao-fahnassau30",
+              "environment_id": 102,
+              "reviewer": {
+                "id": 339824994,
+                "login": "fahnassau30"
+              },
+              "state": "approved"
+            },
+            "run_attempt": 1,
+            "run_id": "9002",
+            "source_sha": "2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d"
+          }
+        },
+        "candidate_tag": "v1.4.0-rc.2",
+        "changelog_base_sha": "f5fc55f0745b70510cb29eca8a6f8d434a129ad7",
+        "created_at": "2026-10-08T21:46:31.098151+00:00",
+        "evaluation_run_id": "9002",
+        "policy_digest": "cf976ff2b78fef243c81f99eb3c75cf3e4a191eadc6a2f1efe6f08179dc6c78d",
+        "preparer": {
+          "id": 18661493,
+          "login": "israelhudson"
+        },
+        "publication": {
+          "authorized_run_id": "9002",
+          "candidate_tag": "v1.4.0-rc.2",
+          "created_at": "2026-10-08T21:46:31.299827+00:00",
+          "decision": {
+            "approvers": [
+              {
+                "comment": "OFFLINE fixture; no human decision submitted",
+                "environment": "aprovacao-israel",
+                "environment_id": 101,
+                "reviewer": {
+                  "id": 18661493,
+                  "login": "israelhudson"
+                },
+                "state": "approved"
+              },
+              {
+                "comment": "OFFLINE fixture; no human decision submitted",
+                "environment": "aprovacao-fahnassau30",
+                "environment_id": 102,
+                "reviewer": {
+                  "id": 339824994,
+                  "login": "fahnassau30"
+                },
+                "state": "approved"
+              }
+            ],
+            "publisher": {
+              "comment": "OFFLINE fixture; no human decision submitted",
+              "environment": "autorizar-publicacao",
+              "environment_id": 103,
+              "reviewer": {
+                "id": 18661493,
+                "login": "israelhudson"
+              },
+              "state": "approved"
+            }
+          },
+          "decision_digest": "65c4d52830abd71bdf25803f93bc7e6b823c369d445bf1c400d8b0950cfdac7d",
+          "github_release": {
+            "id": 100,
+            "payload_digest": "94a170b8f48062088e4602d61b60ed34c256c61a67ce43dbae6ab41723fe2d07",
+            "published_at": "2026-10-08T21:00:00Z",
+            "tag_name": "v1.4.0",
+            "url": "https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.4.0"
+          },
+          "intent_id": "1b687ed2223ba68e03ffd1751e42fa14887b676f711eec9960440e2dc67a9768",
+          "policy_digest": "cf976ff2b78fef243c81f99eb3c75cf3e4a191eadc6a2f1efe6f08179dc6c78d",
+          "publication_mode": "github_release_only",
+          "receipt": {
+            "account_review_verified": true,
+            "approval_evidence_kind": "github_account_review",
+            "approvers": [
+              {
+                "comment": "OFFLINE fixture; no human decision submitted",
+                "environment": "aprovacao-israel",
+                "environment_id": 101,
+                "reviewer": {
+                  "id": 18661493,
+                  "login": "israelhudson"
+                },
+                "state": "approved"
+              },
+              {
+                "comment": "OFFLINE fixture; no human decision submitted",
+                "environment": "aprovacao-fahnassau30",
+                "environment_id": 102,
+                "reviewer": {
+                  "id": 339824994,
+                  "login": "fahnassau30"
+                },
+                "state": "approved"
+              }
+            ],
+            "candidate_tag": "v1.4.0-rc.2",
+            "distribution_performed": false,
+            "github_release": {
+              "id": 100,
+              "payload_digest": "94a170b8f48062088e4602d61b60ed34c256c61a67ce43dbae6ab41723fe2d07",
+              "published_at": "2026-10-08T21:00:00Z",
+              "tag_name": "v1.4.0",
+              "url": "https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.4.0"
+            },
+            "github_release_published": true,
+            "intent_id": "1b687ed2223ba68e03ffd1751e42fa14887b676f711eec9960440e2dc67a9768",
+            "patch_generated": false,
+            "platforms": {
+              "android": {
+                "base": null,
+                "classification": "Inconclusivo — alvo bloqueado",
+                "evidence": "Git diff acumulado; nenhuma compilação mobile ou comparação Shorebird.",
+                "reason": "Release-base mobile real não configurada.",
+                "target_blocked": true
+              },
+              "ios": {
+                "base": null,
+                "classification": "Inconclusivo — alvo bloqueado",
+                "evidence": "Git diff acumulado; nenhuma compilação mobile ou comparação Shorebird.",
+                "reason": "Release-base mobile real não configurada.",
+                "target_blocked": true
+              }
+            },
+            "preparer": {
+              "id": 18661493,
+              "login": "israelhudson"
+            },
+            "preview": {
+              "snapshot_manifest_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "snapshot_url": "https://israelhudson.github.io/flutter_code_push_example/snapshots/2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d/",
+              "source_sha": "2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d",
+              "success": true,
+              "web_content_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            },
+            "publication_mode": "github_release_only",
+            "publisher": {
+              "comment": "OFFLINE fixture; no human decision submitted",
+              "environment": "autorizar-publicacao",
+              "environment_id": 103,
+              "reviewer": {
+                "id": 18661493,
+                "login": "israelhudson"
+              },
+              "state": "approved"
+            },
+            "recorded_at": "2026-10-08T21:46:31.321260+00:00",
+            "recovery_authorizations": [],
+            "release_url": "https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.4.0",
+            "report_digest": "642458c2535131b9c7814205b3a69fad6b642e3201c12b237a4efb75d6dd509f",
+            "result_simulated": false,
+            "review_independence_verified": false,
+            "run_attempt": 1,
+            "run_id": "9002",
+            "schema": 1,
+            "source_sha": "2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d",
+            "stable_tag": "v1.4.0",
+            "stable_tag_created": true,
+            "title": "Ensaio offline 1.4.0",
+            "version": "1.4.0"
+          },
+          "recovery_authorizations": [],
+          "release_payload": {
+            "body": "# 1.4.0 — Ensaio offline 1.4.0\n\nRegistro de versão do laboratório no GitHub. **Nenhum aplicativo ou patch foi distribuído.**\n\n- Candidata aprovada: `v1.4.0-rc.2` (preservada).\n- Tag estável: `v1.4.0`.\n- Código aprovado: `2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d`.\n- Aprovações verificadas nas contas: israelhudson e fahnassau30.\n- Comando final: israelhudson.\n- [Preview avaliado](https://israelhudson.github.io/flutter_code_push_example/snapshots/2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d/).\n- [Relatório e execução aprovados](https://github.com/israelhudson/flutter_code_push_example/actions/runs/9002).\n\n## Changelog aprovado\n\n- fix: corrigir candidata recusada offline\n- feat: offline candidata\n\nReviews de contas verificadas não demonstram independência das pessoas que operaram essas contas.\n\n<!-- release-lab-intent:1b687ed2223ba68e03ffd1751e42fa14887b676f711eec9960440e2dc67a9768 -->\n<!-- release-lab-report:642458c2535131b9c7814205b3a69fad6b642e3201c12b237a4efb75d6dd509f -->\n",
+            "draft": false,
+            "generate_release_notes": false,
+            "make_latest": "true",
+            "name": "1.4.0 — Ensaio offline 1.4.0",
+            "prerelease": false,
+            "tag_name": "v1.4.0",
+            "target_commitish": "2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d"
+          },
+          "report_digest": "642458c2535131b9c7814205b3a69fad6b642e3201c12b237a4efb75d6dd509f",
+          "source_sha": "2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d",
+          "stable_tag": "v1.4.0",
+          "stable_tag_verified": true,
+          "status": "completed",
+          "updated_at": "2026-10-08T21:46:31.321267+00:00"
+        },
+        "publication_mode": "github_release_only",
+        "receipt": {
+          "account_review_verified": true,
+          "approval_evidence_kind": "github_account_review",
+          "approvers": [
+            {
+              "comment": "OFFLINE fixture; no human decision submitted",
+              "environment": "aprovacao-israel",
+              "environment_id": 101,
+              "reviewer": {
+                "id": 18661493,
+                "login": "israelhudson"
+              },
+              "state": "approved"
+            },
+            {
+              "comment": "OFFLINE fixture; no human decision submitted",
+              "environment": "aprovacao-fahnassau30",
+              "environment_id": 102,
+              "reviewer": {
+                "id": 339824994,
+                "login": "fahnassau30"
+              },
+              "state": "approved"
+            }
+          ],
+          "candidate_tag": "v1.4.0-rc.2",
+          "distribution_performed": false,
+          "github_release": {
+            "id": 100,
+            "payload_digest": "94a170b8f48062088e4602d61b60ed34c256c61a67ce43dbae6ab41723fe2d07",
+            "published_at": "2026-10-08T21:00:00Z",
+            "tag_name": "v1.4.0",
+            "url": "https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.4.0"
+          },
+          "github_release_published": true,
+          "intent_id": "1b687ed2223ba68e03ffd1751e42fa14887b676f711eec9960440e2dc67a9768",
+          "patch_generated": false,
+          "platforms": {
+            "android": {
+              "base": null,
+              "classification": "Inconclusivo — alvo bloqueado",
+              "evidence": "Git diff acumulado; nenhuma compilação mobile ou comparação Shorebird.",
+              "reason": "Release-base mobile real não configurada.",
+              "target_blocked": true
+            },
+            "ios": {
+              "base": null,
+              "classification": "Inconclusivo — alvo bloqueado",
+              "evidence": "Git diff acumulado; nenhuma compilação mobile ou comparação Shorebird.",
+              "reason": "Release-base mobile real não configurada.",
+              "target_blocked": true
+            }
+          },
+          "preparer": {
+            "id": 18661493,
+            "login": "israelhudson"
+          },
+          "preview": {
+            "snapshot_manifest_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "snapshot_url": "https://israelhudson.github.io/flutter_code_push_example/snapshots/2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d/",
+            "source_sha": "2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d",
+            "success": true,
+            "web_content_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          },
+          "publication_mode": "github_release_only",
+          "publisher": {
+            "comment": "OFFLINE fixture; no human decision submitted",
+            "environment": "autorizar-publicacao",
+            "environment_id": 103,
+            "reviewer": {
+              "id": 18661493,
+              "login": "israelhudson"
+            },
+            "state": "approved"
+          },
+          "recorded_at": "2026-10-08T21:46:31.321260+00:00",
+          "recovery_authorizations": [],
+          "release_url": "https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.4.0",
+          "report_digest": "642458c2535131b9c7814205b3a69fad6b642e3201c12b237a4efb75d6dd509f",
+          "result_simulated": false,
+          "review_independence_verified": false,
+          "run_attempt": 1,
+          "run_id": "9002",
+          "schema": 1,
+          "source_sha": "2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d",
+          "stable_tag": "v1.4.0",
+          "stable_tag_created": true,
+          "title": "Ensaio offline 1.4.0",
+          "version": "1.4.0"
+        },
+        "release_branch": "release/1.4.0",
+        "report": {
+          "build_inputs": {
+            "flutter": "offline fixture"
+          },
+          "candidate_tag": "v1.4.0-rc.2",
+          "changed_paths": [
+            "lib/main.dart"
+          ],
+          "changelog_base_sha": "f5fc55f0745b70510cb29eca8a6f8d434a129ad7",
+          "changes": [
+            "fix: corrigir candidata recusada offline",
+            "feat: offline candidata"
+          ],
+          "distribution_performed": false,
+          "platforms": {
+            "android": {
+              "base": null,
+              "classification": "Inconclusivo — alvo bloqueado",
+              "evidence": "Git diff acumulado; nenhuma compilação mobile ou comparação Shorebird.",
+              "reason": "Release-base mobile real não configurada.",
+              "target_blocked": true
+            },
+            "ios": {
+              "base": null,
+              "classification": "Inconclusivo — alvo bloqueado",
+              "evidence": "Git diff acumulado; nenhuma compilação mobile ou comparação Shorebird.",
+              "reason": "Release-base mobile real não configurada.",
+              "target_blocked": true
+            }
+          },
+          "policy_digest": "cf976ff2b78fef243c81f99eb3c75cf3e4a191eadc6a2f1efe6f08179dc6c78d",
+          "preview": {
+            "snapshot_manifest_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "snapshot_url": "https://israelhudson.github.io/flutter_code_push_example/snapshots/2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d/",
+            "source_sha": "2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d",
+            "success": true,
+            "web_content_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          },
+          "publication_mode": "github_release_only",
+          "pubspec_version": "1.4.0+1",
+          "result_simulated": false,
+          "run_id": "9002",
+          "schema": 1,
+          "source_sha": "2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d",
+          "stable_tag": "v1.4.0",
+          "title": "Ensaio offline 1.4.0",
+          "version": "1.4.0"
+        },
+        "report_digest": "642458c2535131b9c7814205b3a69fad6b642e3201c12b237a4efb75d6dd509f",
+        "source_sha": "2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d",
+        "stable_tag": "v1.4.0",
+        "status": "completed",
+        "title": "Ensaio offline 1.4.0",
+        "tooling_sha": "2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d",
+        "version": "1.4.0"
+      }
+    },
+    "events": [
+      {
+        "action": "preparation_intent",
+        "at": "2026-10-08T21:46:30.629623+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "405291f3b6975ca1fba15e6b91ad7c6498c22d406d0f675e958e9a1660478194",
+        "run_id": "9001"
+      },
+      {
+        "action": "prepare",
+        "at": "2026-10-08T21:46:30.660726+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "81021b4ef7f70caa202d602cd62ec6a58977d2b590d1f1380d5ca23280d9dd3c",
+        "run_id": "9001"
+      },
+      {
+        "action": "evaluation_started",
+        "at": "2026-10-08T21:46:30.814092+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "5b4ab96e960f0c144b145dc424ec3130747072781c0332345fff4aad032caf6e",
+        "run_id": "9001"
+      },
+      {
+        "action": "report_frozen",
+        "at": "2026-10-08T21:46:30.849064+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "0d6333399b48d2c12f85c17af4b5e16ea4accf7f44266bf26fcef15e54a39725",
+        "run_id": "9001"
+      },
+      {
+        "action": "approval_first",
+        "at": "2026-10-08T21:46:30.852179+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "803deba069ba61ef781947c3ecac50de8b30bc2da34b9ea5fb171e2b27ca3e44",
+        "run_id": "9001"
+      },
+      {
+        "action": "preparation_intent",
+        "at": "2026-10-08T21:46:31.099138+00:00",
+        "candidate": "v1.4.0-rc.2",
+        "result": "f64024fcd71a4f21ccb01e86437b96f748138fffe033e3efc7edb1fb29a70877",
+        "run_id": "9002"
+      },
+      {
+        "action": "prepare",
+        "at": "2026-10-08T21:46:31.115247+00:00",
+        "candidate": "v1.4.0-rc.2",
+        "result": "2a04f18a44eabe29691f8155610fa2b2cf73f54bdf4165dbeb0ee97f8281dfba",
+        "run_id": "9002"
+      },
+      {
+        "action": "evaluation_started",
+        "at": "2026-10-08T21:46:31.254205+00:00",
+        "candidate": "v1.4.0-rc.2",
+        "result": "150b81a80f4dba8f625f54be380f3e6960a1e7eef821df4b5ace7936acf62bb5",
+        "run_id": "9002"
+      },
+      {
+        "action": "report_frozen",
+        "at": "2026-10-08T21:46:31.286369+00:00",
+        "candidate": "v1.4.0-rc.2",
+        "result": "642458c2535131b9c7814205b3a69fad6b642e3201c12b237a4efb75d6dd509f",
+        "run_id": "9002"
+      },
+      {
+        "action": "approval_first",
+        "at": "2026-10-08T21:46:31.292581+00:00",
+        "candidate": "v1.4.0-rc.2",
+        "result": "2d6cc850a58f01de6728b0604eef2c507d67691c83f141d8a09ef6f282b7c359",
+        "run_id": "9002"
+      },
+      {
+        "action": "approval_second",
+        "at": "2026-10-08T21:46:31.296744+00:00",
+        "candidate": "v1.4.0-rc.2",
+        "result": "40df54fa815a915140ba9977cfc2df6c9f3e27b6138490b2ccd22bcf1590e721",
+        "run_id": "9002"
+      },
+      {
+        "action": "publication_intent",
+        "at": "2026-10-08T21:46:31.299849+00:00",
+        "candidate": "v1.4.0-rc.2",
+        "result": "f3d882f85906bd3c993cc3d475ac308634e72dc78fb68a00d35961483be97216",
+        "run_id": "9002"
+      },
+      {
+        "action": "publication_tag_verified",
+        "at": "2026-10-08T21:46:31.317595+00:00",
+        "candidate": "v1.4.0-rc.2",
+        "result": "a948767488b6f199556f43059049a16a3c18774323192cdf6d7ada27704ed3e6",
+        "run_id": "9002"
+      },
+      {
+        "action": "publication_release_verified",
+        "at": "2026-10-08T21:46:31.320628+00:00",
+        "candidate": "v1.4.0-rc.2",
+        "result": "161d3d26d8ed255f16ae76daf3020aab576d8863a72d1f161883b729300ab4cf",
+        "run_id": "9002"
+      },
+      {
+        "action": "github_release_completed",
+        "at": "2026-10-08T21:46:31.321270+00:00",
+        "candidate": "v1.4.0-rc.2",
+        "result": "af26640bcfb1c38df1a525437238ef3434f085ef5f96c0ab29f222fd533bed53",
+        "run_id": "9002"
+      }
+    ],
+    "last_completed_source_sha": "2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d",
+    "last_stable_source_sha": "2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d",
+    "last_stable_tag": "v1.4.0",
+    "last_stable_version": "1.4.0",
+    "schema": 1
+  },
+  "refs": {
+    "heads/main": "faf7c84f6c37525c4863cd83380907fe1551c6ce",
+    "tags/entrega-0100-rc.1": "f5fc55f0745b70510cb29eca8a6f8d434a129ad7",
+    "heads/release/1.4.0": "2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d",
+    "tags/v1.4.0-rc.1": "faf7c84f6c37525c4863cd83380907fe1551c6ce",
+    "tags/v1.4.0-rc.2": "2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d",
+    "tags/v1.4.0": "2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d"
+  },
+  "releases": [
+    {
+      "body": "# 1.4.0 — Ensaio offline 1.4.0\n\nRegistro de versão do laboratório no GitHub. **Nenhum aplicativo ou patch foi distribuído.**\n\n- Candidata aprovada: `v1.4.0-rc.2` (preservada).\n- Tag estável: `v1.4.0`.\n- Código aprovado: `2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d`.\n- Aprovações verificadas nas contas: israelhudson e fahnassau30.\n- Comando final: israelhudson.\n- [Preview avaliado](https://israelhudson.github.io/flutter_code_push_example/snapshots/2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d/).\n- [Relatório e execução aprovados](https://github.com/israelhudson/flutter_code_push_example/actions/runs/9002).\n\n## Changelog aprovado\n\n- fix: corrigir candidata recusada offline\n- feat: offline candidata\n\nReviews de contas verificadas não demonstram independência das pessoas que operaram essas contas.\n\n<!-- release-lab-intent:1b687ed2223ba68e03ffd1751e42fa14887b676f711eec9960440e2dc67a9768 -->\n<!-- release-lab-report:642458c2535131b9c7814205b3a69fad6b642e3201c12b237a4efb75d6dd509f -->\n",
+      "draft": false,
+      "generate_release_notes": false,
+      "make_latest": "true",
+      "name": "1.4.0 — Ensaio offline 1.4.0",
+      "prerelease": false,
+      "tag_name": "v1.4.0",
+      "target_commitish": "2803c3f107e3a6c0188bebdc1cbe4e0c1ccb841d",
+      "id": 100,
+      "published_at": "2026-10-08T21:00:00Z",
+      "html_url": "https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.4.0"
+    }
+  ],
+  "runs": {
+    "9001": {
+      "id": 9001,
+      "run_attempt": 1,
+      "actor": {
+        "id": 18661493,
+        "login": "israelhudson"
+      },
+      "reviews": [
+        {
+          "state": "approved",
+          "user": {
+            "id": 18661493,
+            "login": "israelhudson",
+            "role": "first",
+            "environment": "aprovacao-israel",
+            "type": "User"
+          },
+          "comment": "OFFLINE fixture; no human decision submitted",
+          "environments": [
+            {
+              "id": 101,
+              "name": "aprovacao-israel"
+            }
+          ]
+        },
+        {
+          "state": "rejected",
+          "user": {
+            "id": 339824994,
+            "login": "fahnassau30",
+            "type": "User"
+          },
+          "comment": "OFFLINE fixture; no human decision submitted",
+          "environments": [
+            {
+              "id": 102,
+              "name": "aprovacao-fahnassau30"
+            }
+          ]
+        }
+      ],
+      "jobs": [
+        {
+          "name": "Avaliar a mesma candidata / Gate first",
+          "conclusion": "success"
+        }
+      ]
+    },
+    "9002": {
+      "id": 9002,
+      "run_attempt": 1,
+      "actor": {
+        "id": 18661493,
+        "login": "israelhudson"
+      },
+      "reviews": [
+        {
+          "state": "approved",
+          "user": {
+            "id": 18661493,
+            "login": "israelhudson",
+            "role": "first",
+            "environment": "aprovacao-israel",
+            "type": "User"
+          },
+          "comment": "OFFLINE fixture; no human decision submitted",
+          "environments": [
+            {
+              "id": 101,
+              "name": "aprovacao-israel"
+            }
+          ]
+        },
+        {
+          "state": "approved",
+          "user": {
+            "id": 339824994,
+            "login": "fahnassau30",
+            "role": "second",
+            "environment": "aprovacao-fahnassau30",
+            "type": "User"
+          },
+          "comment": "OFFLINE fixture; no human decision submitted",
+          "environments": [
+            {
+              "id": 102,
+              "name": "aprovacao-fahnassau30"
+            }
+          ]
+        },
+        {
+          "state": "approved",
+          "user": {
+            "id": 18661493,
+            "login": "israelhudson",
+            "type": "User"
+          },
+          "comment": "OFFLINE fixture; no human decision submitted",
+          "environments": [
+            {
+              "id": 103,
+              "name": "autorizar-publicacao"
+            }
+          ]
+        }
+      ],
+      "jobs": [
+        {
+          "name": "Avaliar a mesma candidata / Gate first",
+          "conclusion": "success"
+        },
+        {
+          "name": "Avaliar a mesma candidata / Gate second",
+          "conclusion": "success"
+        }
+      ]
+    }
+  }
+}

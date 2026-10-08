@@ -1,0 +1,57 @@
+{
+  "candidate_tag": "v1.4.0-rc.2",
+  "stable_tag": "v1.4.0",
+  "source_sha": "f39e6f7617ea5c8dd317bc8760dde2360d74ac4a",
+  "report_digest": "8b5880b1cbee4d3826e4e845d567784bcb3386031a688088b647f05b8a188d38",
+  "policy_digest": "cf976ff2b78fef243c81f99eb3c75cf3e4a191eadc6a2f1efe6f08179dc6c78d",
+  "authorized_run_id": "9002",
+  "publication_mode": "github_release_only",
+  "intent_id": "fa4ca44f86f00a925d59c981e31a433f0cd2813e08d537e80a0f3afe63db4177",
+  "decision": {
+    "approvers": [
+      {
+        "environment": "aprovacao-israel",
+        "environment_id": 101,
+        "reviewer": {
+          "id": 18661493,
+          "login": "israelhudson"
+        },
+        "state": "approved",
+        "comment": "OFFLINE fixture; no human decision submitted"
+      },
+      {
+        "environment": "aprovacao-fahnassau30",
+        "environment_id": 102,
+        "reviewer": {
+          "id": 339824994,
+          "login": "fahnassau30"
+        },
+        "state": "approved",
+        "comment": "OFFLINE fixture; no human decision submitted"
+      }
+    ],
+    "publisher": {
+      "environment": "autorizar-publicacao",
+      "environment_id": 103,
+      "reviewer": {
+        "id": 18661493,
+        "login": "israelhudson"
+      },
+      "state": "approved",
+      "comment": "OFFLINE fixture; no human decision submitted"
+    }
+  },
+  "created_at": "2026-10-08T21:44:21.061428+00:00",
+  "status": "intent_recorded",
+  "recovery_authorizations": [],
+  "release_payload": {
+    "tag_name": "v1.4.0",
+    "target_commitish": "f39e6f7617ea5c8dd317bc8760dde2360d74ac4a",
+    "name": "1.4.0 — Ensaio offline 1.4.0",
+    "body": "# 1.4.0 — Ensaio offline 1.4.0\n\nRegistro de versão do laboratório no GitHub. **Nenhum aplicativo ou patch foi distribuído.**\n\n- Candidata aprovada: `v1.4.0-rc.2` (preservada).\n- Tag estável: `v1.4.0`.\n- Código aprovado: `f39e6f7617ea5c8dd317bc8760dde2360d74ac4a`.\n- Aprovações verificadas nas contas: israelhudson e fahnassau30.\n- Comando final: israelhudson.\n- [Preview avaliado](https://israelhudson.github.io/flutter_code_push_example/snapshots/f39e6f7617ea5c8dd317bc8760dde2360d74ac4a/).\n- [Relatório e execução aprovados](https://github.com/israelhudson/flutter_code_push_example/actions/runs/9002).\n\n## Changelog aprovado\n\n- fix: corrigir candidata recusada offline\n- feat: offline candidata\n\nReviews de contas verificadas não demonstram independência das pessoas que operaram essas contas.\n\n<!-- release-lab-intent:fa4ca44f86f00a925d59c981e31a433f0cd2813e08d537e80a0f3afe63db4177 -->\n<!-- release-lab-report:8b5880b1cbee4d3826e4e845d567784bcb3386031a688088b647f05b8a188d38 -->\n",
+    "draft": false,
+    "prerelease": false,
+    "generate_release_notes": false,
+    "make_latest": "true"
+  }
+}

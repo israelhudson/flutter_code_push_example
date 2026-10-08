@@ -1,0 +1,234 @@
+{
+  "scope": "offline",
+  "state": {
+    "active": "v1.4.0-rc.1",
+    "candidates": {
+      "v1.4.0-rc.1": {
+        "approval_receipts": {
+          "first": {
+            "candidate_tag": "v1.4.0-rc.1",
+            "report_digest": "cd671487ee6244258badff717f3218732228f5dfe56f0a228f0ed7676e03276e",
+            "review": {
+              "comment": "OFFLINE fixture; no human decision submitted",
+              "environment": "aprovacao-israel",
+              "environment_id": 101,
+              "reviewer": {
+                "id": 18661493,
+                "login": "israelhudson"
+              },
+              "state": "approved"
+            },
+            "run_attempt": 1,
+            "run_id": "9001",
+            "source_sha": "d13bb568fd32a12aacef0795677b920db08f4e14"
+          },
+          "second": {
+            "candidate_tag": "v1.4.0-rc.1",
+            "report_digest": "cd671487ee6244258badff717f3218732228f5dfe56f0a228f0ed7676e03276e",
+            "review": {
+              "comment": "OFFLINE fixture; no human decision submitted",
+              "environment": "aprovacao-fahnassau30",
+              "environment_id": 102,
+              "reviewer": {
+                "id": 339824994,
+                "login": "fahnassau30"
+              },
+              "state": "approved"
+            },
+            "run_attempt": 1,
+            "run_id": "9001",
+            "source_sha": "d13bb568fd32a12aacef0795677b920db08f4e14"
+          }
+        },
+        "candidate_tag": "v1.4.0-rc.1",
+        "changelog_base_sha": "5ba997bf55dfa2f94a7f288e46515318f416fb16",
+        "created_at": "2026-10-08T21:46:31.754377+00:00",
+        "evaluation_run_id": "9001",
+        "policy_digest": "cf976ff2b78fef243c81f99eb3c75cf3e4a191eadc6a2f1efe6f08179dc6c78d",
+        "preparer": {
+          "id": 18661493,
+          "login": "israelhudson"
+        },
+        "publication_mode": "github_release_only",
+        "release_branch": "release/1.4.0",
+        "report": {
+          "build_inputs": {
+            "flutter": "offline fixture"
+          },
+          "candidate_tag": "v1.4.0-rc.1",
+          "changed_paths": [
+            "lib/main.dart"
+          ],
+          "changelog_base_sha": "5ba997bf55dfa2f94a7f288e46515318f416fb16",
+          "changes": [
+            "feat: offline candidata"
+          ],
+          "distribution_performed": false,
+          "platforms": {
+            "android": {
+              "base": null,
+              "classification": "Inconclusivo — alvo bloqueado",
+              "evidence": "Git diff acumulado; nenhuma compilação mobile ou comparação Shorebird.",
+              "reason": "Release-base mobile real não configurada.",
+              "target_blocked": true
+            },
+            "ios": {
+              "base": null,
+              "classification": "Inconclusivo — alvo bloqueado",
+              "evidence": "Git diff acumulado; nenhuma compilação mobile ou comparação Shorebird.",
+              "reason": "Release-base mobile real não configurada.",
+              "target_blocked": true
+            }
+          },
+          "policy_digest": "cf976ff2b78fef243c81f99eb3c75cf3e4a191eadc6a2f1efe6f08179dc6c78d",
+          "preview": {
+            "snapshot_manifest_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "snapshot_url": "https://israelhudson.github.io/flutter_code_push_example/snapshots/d13bb568fd32a12aacef0795677b920db08f4e14/",
+            "source_sha": "d13bb568fd32a12aacef0795677b920db08f4e14",
+            "success": true,
+            "web_content_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          },
+          "publication_mode": "github_release_only",
+          "pubspec_version": "1.4.0+1",
+          "result_simulated": false,
+          "run_id": "9001",
+          "schema": 1,
+          "source_sha": "d13bb568fd32a12aacef0795677b920db08f4e14",
+          "stable_tag": "v1.4.0",
+          "title": "Ensaio offline 1.4.0",
+          "version": "1.4.0"
+        },
+        "report_digest": "cd671487ee6244258badff717f3218732228f5dfe56f0a228f0ed7676e03276e",
+        "source_sha": "d13bb568fd32a12aacef0795677b920db08f4e14",
+        "stable_tag": "v1.4.0",
+        "status": "awaiting_approvals",
+        "title": "Ensaio offline 1.4.0",
+        "tooling_sha": "d13bb568fd32a12aacef0795677b920db08f4e14",
+        "version": "1.4.0"
+      }
+    },
+    "events": [
+      {
+        "action": "preparation_intent",
+        "at": "2026-10-08T21:46:31.755003+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "6ce5082d0deb7a3d5c78ce95f97506cfd4fbd729d3d2b9faf8e4f9021f0352a0",
+        "run_id": "9001"
+      },
+      {
+        "action": "prepare",
+        "at": "2026-10-08T21:46:31.788832+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "8f35b121177cdf484bbe3b5e1c81738a1db55a593abdf9e66f1ba3b7aab1d575",
+        "run_id": "9001"
+      },
+      {
+        "action": "evaluation_started",
+        "at": "2026-10-08T21:46:31.937217+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "8a0120beb3cb74b9ef1066ac392cbf923c628bb5d153e3086f68933fd77a07ac",
+        "run_id": "9001"
+      },
+      {
+        "action": "report_frozen",
+        "at": "2026-10-08T21:46:31.969526+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "cd671487ee6244258badff717f3218732228f5dfe56f0a228f0ed7676e03276e",
+        "run_id": "9001"
+      },
+      {
+        "action": "approval_first",
+        "at": "2026-10-08T21:46:31.972450+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "c5264a33759da070c2fbd9b9d63bf591084a7a7587f1053614f48d5f1a01ffb1",
+        "run_id": "9001"
+      },
+      {
+        "action": "approval_second",
+        "at": "2026-10-08T21:46:31.974936+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "f634cc6cd7b3c318c73f3735fdf13307bb196857a3ed9a0018af0dfa1bb395a0",
+        "run_id": "9001"
+      }
+    ],
+    "schema": 1
+  },
+  "refs": {
+    "heads/main": "d13bb568fd32a12aacef0795677b920db08f4e14",
+    "tags/entrega-0100-rc.1": "5ba997bf55dfa2f94a7f288e46515318f416fb16",
+    "heads/release/1.4.0": "5ba997bf55dfa2f94a7f288e46515318f416fb16",
+    "tags/v1.4.0-rc.1": "d13bb568fd32a12aacef0795677b920db08f4e14"
+  },
+  "releases": [],
+  "runs": {
+    "9001": {
+      "id": 9001,
+      "run_attempt": 1,
+      "actor": {
+        "id": 18661493,
+        "login": "israelhudson"
+      },
+      "reviews": [
+        {
+          "state": "approved",
+          "user": {
+            "id": 18661493,
+            "login": "israelhudson",
+            "role": "first",
+            "environment": "aprovacao-israel",
+            "type": "User"
+          },
+          "comment": "OFFLINE fixture; no human decision submitted",
+          "environments": [
+            {
+              "id": 101,
+              "name": "aprovacao-israel"
+            }
+          ]
+        },
+        {
+          "state": "approved",
+          "user": {
+            "id": 339824994,
+            "login": "fahnassau30",
+            "role": "second",
+            "environment": "aprovacao-fahnassau30",
+            "type": "User"
+          },
+          "comment": "OFFLINE fixture; no human decision submitted",
+          "environments": [
+            {
+              "id": 102,
+              "name": "aprovacao-fahnassau30"
+            }
+          ]
+        },
+        {
+          "state": "approved",
+          "user": {
+            "id": 339824994,
+            "login": "fahnassau30",
+            "type": "User"
+          },
+          "comment": "OFFLINE fixture; no human decision submitted",
+          "environments": [
+            {
+              "id": 103,
+              "name": "autorizar-publicacao"
+            }
+          ]
+        }
+      ],
+      "jobs": [
+        {
+          "name": "Avaliar a mesma candidata / Gate first",
+          "conclusion": "success"
+        },
+        {
+          "name": "Avaliar a mesma candidata / Gate second",
+          "conclusion": "success"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "scenario": "VAL-04",
+  "description": "Tag estável conflitante preservada sem sobrescrita",
+  "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+  "expected": "All assertions pass; no real external action",
+  "status": "PASS",
+  "obtained": "All explicit state/ref/receipt assertions passed"
+}

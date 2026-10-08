@@ -1,0 +1,174 @@
+{
+  "scope": "offline",
+  "state": {
+    "active": "v1.4.0-rc.1",
+    "candidates": {
+      "v1.4.0-rc.1": {
+        "approval_receipts": {
+          "first": {
+            "candidate_tag": "v1.4.0-rc.1",
+            "report_digest": "760f40b2f81738e5a8b76a3060b8cad1b93804592384598bff297957bfecbfaa",
+            "review": {
+              "comment": "OFFLINE fixture; no human decision submitted",
+              "environment": "aprovacao-israel",
+              "environment_id": 101,
+              "reviewer": {
+                "id": 18661493,
+                "login": "israelhudson"
+              },
+              "state": "approved"
+            },
+            "run_attempt": 1,
+            "run_id": "9001",
+            "source_sha": "3fd175c6cc09b990b2d9894728324f7014a281c9"
+          }
+        },
+        "candidate_tag": "v1.4.0-rc.1",
+        "changelog_base_sha": "c72bf0dc931899800a5f1c9fc9ff0f0f3c6f78a4",
+        "created_at": "2026-10-08T21:46:30.030323+00:00",
+        "evaluation_run_id": "9001",
+        "policy_digest": "cf976ff2b78fef243c81f99eb3c75cf3e4a191eadc6a2f1efe6f08179dc6c78d",
+        "preparer": {
+          "id": 18661493,
+          "login": "israelhudson"
+        },
+        "publication_mode": "github_release_only",
+        "release_branch": "release/1.4.0",
+        "report": {
+          "build_inputs": {
+            "flutter": "offline fixture"
+          },
+          "candidate_tag": "v1.4.0-rc.1",
+          "changed_paths": [
+            "lib/main.dart"
+          ],
+          "changelog_base_sha": "c72bf0dc931899800a5f1c9fc9ff0f0f3c6f78a4",
+          "changes": [
+            "feat: offline candidata"
+          ],
+          "distribution_performed": false,
+          "platforms": {
+            "android": {
+              "base": null,
+              "classification": "Inconclusivo — alvo bloqueado",
+              "evidence": "Git diff acumulado; nenhuma compilação mobile ou comparação Shorebird.",
+              "reason": "Release-base mobile real não configurada.",
+              "target_blocked": true
+            },
+            "ios": {
+              "base": null,
+              "classification": "Inconclusivo — alvo bloqueado",
+              "evidence": "Git diff acumulado; nenhuma compilação mobile ou comparação Shorebird.",
+              "reason": "Release-base mobile real não configurada.",
+              "target_blocked": true
+            }
+          },
+          "policy_digest": "cf976ff2b78fef243c81f99eb3c75cf3e4a191eadc6a2f1efe6f08179dc6c78d",
+          "preview": {
+            "snapshot_manifest_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "snapshot_url": "https://israelhudson.github.io/flutter_code_push_example/snapshots/3fd175c6cc09b990b2d9894728324f7014a281c9/",
+            "source_sha": "3fd175c6cc09b990b2d9894728324f7014a281c9",
+            "success": true,
+            "web_content_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          },
+          "publication_mode": "github_release_only",
+          "pubspec_version": "1.4.0+1",
+          "result_simulated": false,
+          "run_id": "9001",
+          "schema": 1,
+          "source_sha": "3fd175c6cc09b990b2d9894728324f7014a281c9",
+          "stable_tag": "v1.4.0",
+          "title": "Ensaio offline 1.4.0",
+          "version": "1.4.0"
+        },
+        "report_digest": "760f40b2f81738e5a8b76a3060b8cad1b93804592384598bff297957bfecbfaa",
+        "source_sha": "3fd175c6cc09b990b2d9894728324f7014a281c9",
+        "stable_tag": "v1.4.0",
+        "status": "awaiting_approvals",
+        "title": "Ensaio offline 1.4.0",
+        "tooling_sha": "3fd175c6cc09b990b2d9894728324f7014a281c9",
+        "version": "1.4.0"
+      }
+    },
+    "events": [
+      {
+        "action": "preparation_intent",
+        "at": "2026-10-08T21:46:30.030980+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "ecb6edca2e9409d5d0a56a7054a5c7dca2dba37294df58356ffc738d18e7247c",
+        "run_id": "9001"
+      },
+      {
+        "action": "prepare",
+        "at": "2026-10-08T21:46:30.063389+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "95f0b9501546e8ecccddb91dfeb8fa36a9d2305a8764f01655293672549f90b5",
+        "run_id": "9001"
+      },
+      {
+        "action": "evaluation_started",
+        "at": "2026-10-08T21:46:30.201670+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "b82d22c0bc0455286a9619ef68fd0c11cd87adae35dab55f2d90c01e0b1ad0bf",
+        "run_id": "9001"
+      },
+      {
+        "action": "report_frozen",
+        "at": "2026-10-08T21:46:30.236952+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "760f40b2f81738e5a8b76a3060b8cad1b93804592384598bff297957bfecbfaa",
+        "run_id": "9001"
+      },
+      {
+        "action": "approval_first",
+        "at": "2026-10-08T21:46:30.242546+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "2fa84f3eb97aaa3cabe03d29df56ed460c455ff731377524591b6dae423c25a9",
+        "run_id": "9001"
+      }
+    ],
+    "schema": 1
+  },
+  "refs": {
+    "heads/main": "3fd175c6cc09b990b2d9894728324f7014a281c9",
+    "tags/entrega-0100-rc.1": "c72bf0dc931899800a5f1c9fc9ff0f0f3c6f78a4",
+    "heads/release/1.4.0": "3fd175c6cc09b990b2d9894728324f7014a281c9",
+    "tags/v1.4.0-rc.1": "3fd175c6cc09b990b2d9894728324f7014a281c9"
+  },
+  "releases": [],
+  "runs": {
+    "9001": {
+      "id": 9001,
+      "run_attempt": 1,
+      "actor": {
+        "id": 18661493,
+        "login": "israelhudson"
+      },
+      "reviews": [
+        {
+          "state": "approved",
+          "user": {
+            "id": 18661493,
+            "login": "israelhudson",
+            "role": "first",
+            "environment": "aprovacao-israel",
+            "type": "User"
+          },
+          "comment": "OFFLINE fixture; no human decision submitted",
+          "environments": [
+            {
+              "id": 101,
+              "name": "aprovacao-israel"
+            }
+          ]
+        }
+      ],
+      "jobs": [
+        {
+          "name": "Avaliar a mesma candidata / Gate first",
+          "conclusion": "success"
+        }
+      ]
+    }
+  }
+}

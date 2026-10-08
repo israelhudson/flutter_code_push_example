@@ -1,0 +1,70 @@
+{
+  "scope": "offline",
+  "state": {
+    "active": "v1.4.0-rc.1",
+    "candidates": {
+      "v1.4.0-rc.1": {
+        "candidate_tag": "v1.4.0-rc.1",
+        "changelog_base_sha": "bc9d51c9d1fd8baeaaf3f9de2884a830d9cf4e27",
+        "created_at": "2026-10-08T21:44:20.293355+00:00",
+        "evaluation_run_id": "9001",
+        "policy_digest": "cf976ff2b78fef243c81f99eb3c75cf3e4a191eadc6a2f1efe6f08179dc6c78d",
+        "preparer": {
+          "id": 18661493,
+          "login": "israelhudson"
+        },
+        "publication_mode": "github_release_only",
+        "release_branch": "release/1.4.0",
+        "source_sha": "57c41797147e0cd3f8ab1a41a510d73586c8024d",
+        "stable_tag": "v1.4.0",
+        "status": "evaluating",
+        "title": "Ensaio offline 1.4.0",
+        "tooling_sha": "57c41797147e0cd3f8ab1a41a510d73586c8024d",
+        "version": "1.4.0"
+      }
+    },
+    "events": [
+      {
+        "action": "preparation_intent",
+        "at": "2026-10-08T21:44:20.294163+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "ea6e6299e87107ea83b164e3040ecd55c2d5aebcfaa844db25e1a4c9e505417f",
+        "run_id": "9001"
+      },
+      {
+        "action": "prepare",
+        "at": "2026-10-08T21:44:20.324053+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "e6b8b4f24a4086f585c14f247a0d2d49ffdd120c847f08f951aec1b83fc13972",
+        "run_id": "9001"
+      },
+      {
+        "action": "evaluation_started",
+        "at": "2026-10-08T21:44:20.448616+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "b7561df0f77de99ecedd14cb951143c83745b857e00fe02b38aaf0e90de271cf",
+        "run_id": "9001"
+      }
+    ],
+    "schema": 1
+  },
+  "refs": {
+    "heads/main": "57c41797147e0cd3f8ab1a41a510d73586c8024d",
+    "tags/entrega-0100-rc.1": "bc9d51c9d1fd8baeaaf3f9de2884a830d9cf4e27",
+    "heads/release/1.4.0": "57c41797147e0cd3f8ab1a41a510d73586c8024d",
+    "tags/v1.4.0-rc.1": "57c41797147e0cd3f8ab1a41a510d73586c8024d"
+  },
+  "releases": [],
+  "runs": {
+    "9001": {
+      "id": 9001,
+      "run_attempt": 1,
+      "actor": {
+        "id": 18661493,
+        "login": "israelhudson"
+      },
+      "reviews": [],
+      "jobs": []
+    }
+  }
+}

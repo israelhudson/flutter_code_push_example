@@ -1,0 +1,86 @@
+{
+  "scope": "offline",
+  "state": {
+    "active": "v1.4.0-rc.1",
+    "candidates": {
+      "v1.4.0-rc.1": {
+        "candidate_tag": "v1.4.0-rc.1",
+        "changelog_base_sha": "1b79cadce6679684b034264e60338b37662c9204",
+        "created_at": "2026-10-08T21:46:35.293942+00:00",
+        "evaluation_run_id": "9001",
+        "policy_digest": "cf976ff2b78fef243c81f99eb3c75cf3e4a191eadc6a2f1efe6f08179dc6c78d",
+        "preparer": {
+          "id": 18661493,
+          "login": "israelhudson"
+        },
+        "publication_mode": "github_release_only",
+        "release_branch": "release/1.4.0",
+        "source_sha": "3930867ea5e0d13a42bc5abae49cdcffe27cc625",
+        "stable_tag": "v1.4.0",
+        "status": "evaluating",
+        "title": "Ensaio offline 1.4.0",
+        "tooling_sha": "3930867ea5e0d13a42bc5abae49cdcffe27cc625",
+        "version": "1.4.0"
+      }
+    },
+    "events": [
+      {
+        "action": "preparation_intent",
+        "at": "2026-10-08T21:46:35.294787+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "4863862f97a5fa40c81a768b302f7ee19e7c1f44041a7142215a15464fc175ff",
+        "run_id": "9001"
+      },
+      {
+        "action": "prepare",
+        "at": "2026-10-08T21:46:35.327823+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "6abe4424d667e054a4de4f17ee92170b986ee7ab4c40462ef3fd1f61f3e4f48d",
+        "run_id": "9001"
+      },
+      {
+        "action": "evaluation_started",
+        "at": "2026-10-08T21:46:35.466687+00:00",
+        "candidate": "v1.4.0-rc.1",
+        "result": "6e2f770446bbdeabeacb206cab4d7528abbebe13942b861ff2ba2be67984f43e",
+        "run_id": "9001"
+      }
+    ],
+    "schema": 1
+  },
+  "refs": {
+    "heads/main": "3930867ea5e0d13a42bc5abae49cdcffe27cc625",
+    "tags/entrega-0100-rc.1": "1b79cadce6679684b034264e60338b37662c9204",
+    "heads/release/1.4.0": "3930867ea5e0d13a42bc5abae49cdcffe27cc625",
+    "tags/v1.4.0-rc.1": "3930867ea5e0d13a42bc5abae49cdcffe27cc625"
+  },
+  "releases": [],
+  "runs": {
+    "9001": {
+      "id": 9001,
+      "run_attempt": 1,
+      "actor": {
+        "id": 18661493,
+        "login": "israelhudson"
+      },
+      "reviews": [
+        {
+          "state": "approved",
+          "user": {
+            "id": 18661493,
+            "login": "israelhudson",
+            "type": "User"
+          },
+          "comment": "OFFLINE fixture; no human decision submitted",
+          "environments": [
+            {
+              "id": 101,
+              "name": "aprovacao-israel"
+            }
+          ]
+        }
+      ],
+      "jobs": []
+    }
+  }
+}

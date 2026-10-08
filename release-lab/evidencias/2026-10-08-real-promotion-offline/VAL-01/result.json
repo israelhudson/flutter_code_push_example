@@ -1,0 +1,8 @@
+{
+  "scenario": "VAL-01",
+  "description": "0/2, 1/2 e 2/2 sem PUBLICAR bloqueiam; terceiro comando promove",
+  "scope": "offline helper + synthetic GitHub API/reviews + real disposable Git",
+  "expected": "All assertions pass; no real external action",
+  "status": "PASS",
+  "obtained": "All explicit state/ref/receipt assertions passed"
+}

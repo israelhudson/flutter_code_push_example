@@ -1,0 +1,17 @@
+{
+  "candidate_tag": "v1.4.0-rc.1",
+  "source_sha": "16c8d91dcc4dbe1609aff2f6c3fac55cd4956f46",
+  "report_digest": "b487dcfd72a269eacadb5baf9d807fb0d02ab07f8c213cdea58249edb9caa9a0",
+  "run_id": "9001",
+  "run_attempt": 1,
+  "review": {
+    "environment": "aprovacao-israel",
+    "environment_id": 101,
+    "reviewer": {
+      "id": 18661493,
+      "login": "israelhudson"
+    },
+    "state": "approved",
+    "comment": "OFFLINE fixture; no human decision submitted"
+  }
+}

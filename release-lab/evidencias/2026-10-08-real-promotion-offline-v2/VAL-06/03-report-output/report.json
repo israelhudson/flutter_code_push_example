@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "candidate_tag": "v1.4.0-rc.1",
+  "version": "1.4.0",
+  "title": "Ensaio offline 1.4.0",
+  "source_sha": "c8d35256ce0cfdcf48fcfb2fe60de0eb053bf367",
+  "policy_digest": "cf976ff2b78fef243c81f99eb3c75cf3e4a191eadc6a2f1efe6f08179dc6c78d",
+  "run_id": "9001",
+  "preview": {
+    "success": true,
+    "source_sha": "c8d35256ce0cfdcf48fcfb2fe60de0eb053bf367",
+    "web_content_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "snapshot_manifest_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "snapshot_url": "https://israelhudson.github.io/flutter_code_push_example/snapshots/c8d35256ce0cfdcf48fcfb2fe60de0eb053bf367/"
+  },
+  "build_inputs": {
+    "flutter": "offline fixture"
+  },
+  "pubspec_version": "1.4.0+1",
+  "changelog_base_sha": "e8507e95ade6b16d3946855b7aa2a53a879c9fd1",
+  "changes": [
+    "feat: offline candidata"
+  ],
+  "changed_paths": [
+    "lib/main.dart"
+  ],
+  "platforms": {
+    "android": {
+      "classification": "Inconclusivo — alvo bloqueado",
+      "reason": "Release-base mobile real não configurada.",
+      "target_blocked": true,
+      "base": null,
+      "evidence": "Git diff acumulado; nenhuma compilação mobile ou comparação Shorebird."
+    },
+    "ios": {
+      "classification": "Inconclusivo — alvo bloqueado",
+      "reason": "Release-base mobile real não configurada.",
+      "target_blocked": true,
+      "base": null,
+      "evidence": "Git diff acumulado; nenhuma compilação mobile ou comparação Shorebird."
+    }
+  },
+  "publication_mode": "github_release_only",
+  "stable_tag": "v1.4.0",
+  "result_simulated": false,
+  "distribution_performed": false
+}

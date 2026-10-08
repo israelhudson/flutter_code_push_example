@@ -1,0 +1,68 @@
+{"event":"scope","human_reviews":"synthetic fixtures","mode":"offline","real_distribution":false,"real_git":true,"real_network":false,"sequence":1}
+{"endpoint":"environments/aprovacao-israel","event":"api","method":"GET","request_sha":null,"sequence":2}
+{"endpoint":"environments/aprovacao-israel/deployment-branch-policies","event":"api","method":"GET","request_sha":null,"sequence":3}
+{"endpoint":"environments/aprovacao-fahnassau30","event":"api","method":"GET","request_sha":null,"sequence":4}
+{"endpoint":"environments/aprovacao-fahnassau30/deployment-branch-policies","event":"api","method":"GET","request_sha":null,"sequence":5}
+{"endpoint":"environments/autorizar-publicacao","event":"api","method":"GET","request_sha":null,"sequence":6}
+{"endpoint":"environments/autorizar-publicacao/deployment-branch-policies","event":"api","method":"GET","request_sha":null,"sequence":7}
+{"endpoint":"rulesets","event":"api","method":"GET","request_sha":null,"sequence":8}
+{"endpoint":"rulesets/1","event":"api","method":"GET","request_sha":null,"sequence":9}
+{"endpoint":"rulesets/3","event":"api","method":"GET","request_sha":null,"sequence":10}
+{"endpoint":"rulesets/4","event":"api","method":"GET","request_sha":null,"sequence":11}
+{"endpoint":"rulesets/2","event":"api","method":"GET","request_sha":null,"sequence":12}
+{"endpoint":"contents/release-lab/state.json?ref=codex%2Frelease-lab-state","event":"api","method":"GET","request_sha":null,"sequence":13}
+{"endpoint":"git/matching-refs/tags/v","event":"api","method":"GET","request_sha":null,"sequence":14}
+{"endpoint":"releases?per_page=100&page=1","event":"api","method":"GET","request_sha":null,"sequence":15}
+{"endpoint":"git/ref/heads/release%2F1.4.0","event":"api","method":"GET","request_sha":null,"sequence":16}
+{"endpoint":"commits/main","event":"api","method":"GET","request_sha":null,"sequence":17}
+{"endpoint":"git/matching-refs/tags/v1.4.0-rc.","event":"api","method":"GET","request_sha":null,"sequence":18}
+{"endpoint":"git/ref/tags/entrega-0100-rc.1","event":"api","method":"GET","request_sha":null,"sequence":19}
+{"endpoint":"contents/release-lab/state.json?ref=codex%2Frelease-lab-state","event":"api","method":"GET","request_sha":null,"sequence":20}
+{"endpoint":"git/matching-refs/tags/v","event":"api","method":"GET","request_sha":null,"sequence":21}
+{"endpoint":"releases?per_page=100&page=1","event":"api","method":"GET","request_sha":null,"sequence":22}
+{"endpoint":"contents/release-lab/state.json","event":"api","method":"PUT","request_sha":"ce83eac37b5f8bbafc94d54cbd54197666a64e1a14bc6f453e38384ab1d61ec9","sequence":23}
+{"endpoint":"contents/release-lab/state.json?ref=codex%2Frelease-lab-state","event":"api","method":"GET","request_sha":null,"sequence":24}
+{"endpoint":"git/ref/heads/release/1.4.0","event":"api","method":"GET","request_sha":null,"sequence":25}
+{"endpoint":"git/refs","event":"api","method":"POST","request_sha":"4497a8759b056ef6f30d0c5fb6b2dbf097173b704300c47219eeb82275e152a2","sequence":26}
+{"endpoint":"git/ref/heads/release/1.4.0","event":"api","method":"GET","request_sha":null,"sequence":27}
+{"endpoint":"contents/release-lab/state.json?ref=codex%2Frelease-lab-state","event":"api","method":"GET","request_sha":null,"sequence":28}
+{"endpoint":"git/ref/tags/v1.4.0-rc.1","event":"api","method":"GET","request_sha":null,"sequence":29}
+{"endpoint":"git/refs","event":"api","method":"POST","request_sha":"f49ad275bb56e158331dba26201cfcdd5a5cc7c2a20d90b5d3df006bb3a4ff08","sequence":30}
+{"endpoint":"git/ref/tags/v1.4.0-rc.1","event":"api","method":"GET","request_sha":null,"sequence":31}
+{"endpoint":"contents/release-lab/state.json?ref=codex%2Frelease-lab-state","event":"api","method":"GET","request_sha":null,"sequence":32}
+{"endpoint":"contents/release-lab/state.json","event":"api","method":"PUT","request_sha":"2e93133214cdfbe62f77d228152c92c77732ae8a98555898fe8b306fc7001850","sequence":33}
+{"event":"operation_succeeded","operation":"prepare","sequence":34,"stdout":"{\"candidate_tag\": \"v1.4.0-rc.1\", \"source_sha\": \"3930867ea5e0d13a42bc5abae49cdcffe27cc625\", \"tooling_sha\": \"3930867ea5e0d13a42bc5abae49cdcffe27cc625\"}\n"}
+{"endpoint":"contents/release-lab/state.json?ref=codex%2Frelease-lab-state","event":"api","method":"GET","request_sha":null,"sequence":35}
+{"endpoint":"git/ref/tags/v1.4.0-rc.1","event":"api","method":"GET","request_sha":null,"sequence":36}
+{"endpoint":"git/ref/heads/release%2F1.4.0","event":"api","method":"GET","request_sha":null,"sequence":37}
+{"endpoint":"environments/aprovacao-israel","event":"api","method":"GET","request_sha":null,"sequence":38}
+{"endpoint":"environments/aprovacao-israel/deployment-branch-policies","event":"api","method":"GET","request_sha":null,"sequence":39}
+{"endpoint":"environments/aprovacao-fahnassau30","event":"api","method":"GET","request_sha":null,"sequence":40}
+{"endpoint":"environments/aprovacao-fahnassau30/deployment-branch-policies","event":"api","method":"GET","request_sha":null,"sequence":41}
+{"endpoint":"environments/autorizar-publicacao","event":"api","method":"GET","request_sha":null,"sequence":42}
+{"endpoint":"environments/autorizar-publicacao/deployment-branch-policies","event":"api","method":"GET","request_sha":null,"sequence":43}
+{"endpoint":"rulesets","event":"api","method":"GET","request_sha":null,"sequence":44}
+{"endpoint":"rulesets/1","event":"api","method":"GET","request_sha":null,"sequence":45}
+{"endpoint":"rulesets/3","event":"api","method":"GET","request_sha":null,"sequence":46}
+{"endpoint":"rulesets/4","event":"api","method":"GET","request_sha":null,"sequence":47}
+{"endpoint":"rulesets/2","event":"api","method":"GET","request_sha":null,"sequence":48}
+{"endpoint":"contents/release-lab/state.json","event":"api","method":"PUT","request_sha":"8e4a0e654efc7ce733a39adfff7114c044a53537aacc7678af60579d3f08c0d5","sequence":49}
+{"event":"operation_succeeded","operation":"preflight","sequence":50,"stdout":"{\"candidate_tag\": \"v1.4.0-rc.1\", \"source_sha\": \"3930867ea5e0d13a42bc5abae49cdcffe27cc625\", \"tooling_sha\": \"3930867ea5e0d13a42bc5abae49cdcffe27cc625\", \"first_environment\": \"aprovacao-israel\", \"first_login\": \"israelhudson\", \"second_environment\": \"aprovacao-fahnassau30\", \"second_login\": \"fahnassau30\", \"final_environment\": \"autorizar-publicacao\"}\n"}
+{"endpoint":"contents/release-lab/state.json?ref=codex%2Frelease-lab-state","event":"api","method":"GET","request_sha":null,"sequence":51}
+{"endpoint":"git/ref/tags/v1.4.0-rc.1","event":"api","method":"GET","request_sha":null,"sequence":52}
+{"endpoint":"git/ref/heads/release%2F1.4.0","event":"api","method":"GET","request_sha":null,"sequence":53}
+{"endpoint":"environments/aprovacao-israel","event":"api","method":"GET","request_sha":null,"sequence":54}
+{"endpoint":"environments/aprovacao-israel/deployment-branch-policies","event":"api","method":"GET","request_sha":null,"sequence":55}
+{"endpoint":"environments/aprovacao-fahnassau30","event":"api","method":"GET","request_sha":null,"sequence":56}
+{"endpoint":"environments/aprovacao-fahnassau30/deployment-branch-policies","event":"api","method":"GET","request_sha":null,"sequence":57}
+{"endpoint":"environments/autorizar-publicacao","event":"api","method":"GET","request_sha":null,"sequence":58}
+{"endpoint":"environments/autorizar-publicacao/deployment-branch-policies","event":"api","method":"GET","request_sha":null,"sequence":59}
+{"event":"operation_failed","exception":"LabError","operation":"report","reason":"Preview HTTP diverge da candidata; gate bloqueado.","sequence":60,"stdout":""}
+{"event":"expected_block_observed","reason":"Preview HTTP diverge da candidata; gate bloqueado.","sequence":61}
+{"endpoint":"contents/release-lab/state.json?ref=codex%2Frelease-lab-state","event":"api","method":"GET","request_sha":null,"sequence":62}
+{"event":"operation_failed","exception":"LabError","operation":"approval","reason":"Relatório aprovado não corresponde à RC.","sequence":63,"stdout":""}
+{"event":"expected_block_observed","reason":"Relatório aprovado não corresponde à RC.","sequence":64}
+{"endpoint":"contents/release-lab/state.json?ref=codex%2Frelease-lab-state","event":"api","method":"GET","request_sha":null,"sequence":65}
+{"event":"operation_failed","exception":"LabError","operation":"finish","reason":"Tag/destino real não estavam congelados antes dos avais. Uma decisão simulada não autoriza uma Release real.","sequence":66,"stdout":""}
+{"event":"expected_block_observed","reason":"Tag/destino real não estavam congelados antes dos avais. Uma decisão simulada não autoriza uma Release real.","sequence":67}
+{"cannot_publish_without_report":true,"cannot_register_approval_without_report":true,"event":"assertions_passed","failed_preview_prevents_frozen_report":true,"sequence":68}

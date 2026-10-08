@@ -1,0 +1,17 @@
+{
+  "candidate_tag": "v1.4.0-rc.2",
+  "source_sha": "f39e6f7617ea5c8dd317bc8760dde2360d74ac4a",
+  "report_digest": "8b5880b1cbee4d3826e4e845d567784bcb3386031a688088b647f05b8a188d38",
+  "run_id": "9002",
+  "run_attempt": 1,
+  "review": {
+    "environment": "aprovacao-fahnassau30",
+    "environment_id": 102,
+    "reviewer": {
+      "id": 339824994,
+      "login": "fahnassau30"
+    },
+    "state": "approved",
+    "comment": "OFFLINE fixture; no human decision submitted"
+  }
+}
