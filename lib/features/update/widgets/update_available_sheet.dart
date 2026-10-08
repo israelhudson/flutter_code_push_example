@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/theme/app_theme.dart';
-
 /// Sobe o aviso de atualização ocupando 40% da altura da tela.
 ///
 /// É dispensável de propósito: o patch entra sozinho no próximo cold start, e
@@ -14,7 +12,7 @@ Future<void> showUpdateAvailableSheet(
     context: context,
     // Sem isso o sheet fica preso na altura máxima padrão e não chega aos 40%.
     isScrollControlled: true,
-    backgroundColor: AppColors.porcelain,
+    backgroundColor: Theme.of(context).colorScheme.surface,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
     ),
@@ -33,6 +31,7 @@ class _UpdateAvailableSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
@@ -42,16 +41,12 @@ class _UpdateAvailableSheet extends StatelessWidget {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: AppColors.champagne,
+              color: colorScheme.secondary,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
           const SizedBox(height: 24),
-          const Icon(
-            Icons.system_update_alt,
-            size: 36,
-            color: AppColors.burgundy,
-          ),
+          Icon(Icons.system_update_alt, size: 36, color: colorScheme.primary),
           const SizedBox(height: 12),
           Text(
             'Nova versão disponível',

@@ -1,0 +1,75 @@
+{
+  "branch": "codex/manual-dark-theme",
+  "base_commit": "f9898028405e577ee8998b1c5f0274870089ffac",
+  "checks": [
+    {
+      "name": "format",
+      "command": [
+        "dart",
+        "format",
+        "lib/app/app.dart",
+        "lib/core/theme/app_theme.dart",
+        "lib/features/home/home_page.dart",
+        "lib/features/update/widgets/update_available_sheet.dart",
+        "test/widget_test.dart"
+      ],
+      "exit_code": 0,
+      "seconds": 0.23
+    },
+    {
+      "name": "pub-get",
+      "command": [
+        "flutter",
+        "pub",
+        "get",
+        "--enforce-lockfile"
+      ],
+      "exit_code": 0,
+      "seconds": 0.92
+    },
+    {
+      "name": "analyze",
+      "command": [
+        "flutter",
+        "analyze"
+      ],
+      "exit_code": 0,
+      "seconds": 3.01
+    },
+    {
+      "name": "flutter-test",
+      "command": [
+        "flutter",
+        "test"
+      ],
+      "exit_code": 0,
+      "seconds": 3.38
+    },
+    {
+      "name": "delivery-test",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/delivery",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 167.08
+    },
+    {
+      "name": "build-web",
+      "command": [
+        "flutter",
+        "build",
+        "web",
+        "--release",
+        "--base-href=/"
+      ],
+      "exit_code": 0,
+      "seconds": 21.11
+    }
+  ]
+}
