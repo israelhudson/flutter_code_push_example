@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "repository": "israelhudson/flutter_code_push_example",
+  "state_branch": "codex/release-lab-state",
+  "operators": [{"login": "israelhudson", "id": 18661493}],
+  "approvers": [
+    {"role": "first", "login": "israelhudson", "id": 18661493, "environment": "aprovacao-israel"},
+    {"role": "second", "login": "fahnassau30", "id": 339824994, "environment": "aprovacao-fahnassau30"}
+  ],
+  "publishers": [
+    {"login": "israelhudson", "id": 18661493},
+    {"login": "fahnassau30", "id": 339824994}
+  ],
+  "final_environment": "autorizar-publicacao",
+  "changelog_initial_tag": "entrega-0100-rc.1",
+  "mobile_bases": {"android": null, "ios": null},
+  "result_simulated": true,
+  "distribution_performed": false
+}

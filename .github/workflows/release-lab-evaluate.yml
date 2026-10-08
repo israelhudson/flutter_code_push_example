@@ -1,0 +1,301 @@
+name: LAB - Avaliar entrega
+run-name: Avaliar ${{ inputs.candidate_tag || github.ref_name }}
+on:
+  workflow_call:
+    inputs:
+      candidate_tag:
+        description: RC já preparada e registrada internamente
+        type: string
+        required: true
+  push:
+    tags:
+      - 'v*-rc.*'
+permissions:
+  contents: read
+concurrency:
+  group: release-lab-evaluate-${{ inputs.candidate_tag || github.ref_name }}
+  cancel-in-progress: false
+jobs:
+  preflight:
+    name: Conferir RC ativa, papéis e proteções
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+    outputs:
+      candidate_tag: ${{ steps.identity.outputs.candidate_tag }}
+      source_sha: ${{ steps.identity.outputs.source_sha }}
+      tooling_sha: ${{ steps.identity.outputs.tooling_sha }}
+      first_environment: ${{ steps.identity.outputs.first_environment }}
+      second_environment: ${{ steps.identity.outputs.second_environment }}
+      final_environment: ${{ steps.identity.outputs.final_environment }}
+      first_login: ${{ steps.identity.outputs.first_login }}
+      second_login: ${{ steps.identity.outputs.second_login }}
+    steps:
+      - name: Checkout das ferramentas confiáveis da main
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: refs/heads/main
+          path: trusted
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Vincular uma única avaliação à candidata
+        id: identity
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CANDIDATE_TAG: ${{ inputs.candidate_tag || github.ref_name }}
+        run: python3 trusted/tools/delivery/release_lab.py preflight --candidate-tag "$CANDIDATE_TAG" --output "$RUNNER_TEMP/release-lab"
+      - name: Preservar identidade verificada
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-lab-preflight
+          path: ${{ runner.temp }}/release-lab/
+          if-no-files-found: ignore
+          retention-days: 90
+          overwrite: false
+  build:
+    name: Verificar e compilar web sem permissões de publicação
+    needs: preflight
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout das ferramentas confiáveis congeladas
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.preflight.outputs.tooling_sha }}
+          path: trusted
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Checkout exato do aplicativo aprovado para avaliação
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.preflight.outputs.source_sha }}
+          path: app
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Instalar Flutter fixado no snapshot
+        uses: ./trusted/.github/actions/setup-flutter
+        with:
+          build-inputs: app/delivery/build-inputs.json
+      - name: Flutter analyze e Flutter test
+        working-directory: app
+        # No write token is exposed to application or dependency code.
+        run: |
+          flutter pub get --enforce-lockfile
+          flutter analyze
+          flutter test
+      - name: Compilar snapshot web sem histórico ou credenciais
+        env:
+          SOURCE_SHA: ${{ needs.preflight.outputs.source_sha }}
+        run: python3 trusted/deploy/pages_preview.py build --repo app --source-sha "$SOURCE_SHA" --site "$RUNNER_TEMP/new-pages-site" > "$RUNNER_TEMP/pages-build-metadata.json"
+      - name: Entregar somente bytes compilados para outro runner
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-lab-built-web
+          path: ${{ runner.temp }}/new-pages-site/
+          if-no-files-found: error
+          retention-days: 90
+          overwrite: false
+  web:
+    name: Publicar bytes verificados, confirmar preview e changelog
+    needs: [preflight, build]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    # A fresh runner never executes candidate/dependency code with write or
+    # OIDC privileges. Only validated static bytes cross the job boundary.
+    # This lock covers Pages work, not the wait for human approvals.
+    concurrency:
+      group: pages-preview
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      actions: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.report.outputs.preview_url }}
+    outputs:
+      report_digest: ${{ steps.report.outputs.report_digest }}
+      report_url: ${{ steps.report.outputs.report_url }}
+      preview_url: ${{ steps.report.outputs.preview_url }}
+    steps:
+      - name: Checkout exclusivo das ferramentas confiáveis congeladas
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.preflight.outputs.tooling_sha }}
+          path: trusted
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Receber artefato estático da mesma execução
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4, verified 2026-10-08
+        with:
+          name: release-lab-built-web
+          path: ${{ runner.temp }}/incoming-site
+      - name: Recuperar somente o histórico estático
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 trusted/deploy/pages_preview.py history --site "$RUNNER_TEMP/pages-site"
+      - name: Validar identidade e importar sem sobrescrever snapshots
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CANDIDATE_TAG: ${{ needs.preflight.outputs.candidate_tag }}
+        run: python3 trusted/tools/delivery/release_lab.py merge-preview --candidate-tag "$CANDIDATE_TAG" --incoming "$RUNNER_TEMP/incoming-site" --site "$RUNNER_TEMP/pages-site" --output "$RUNNER_TEMP/release-lab"
+      - name: Preservar snapshots sem sobrescrever
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 trusted/deploy/pages_preview.py persist --site "$RUNNER_TEMP/pages-site"
+      - name: Exportar somente o site estático
+        run: python3 trusted/deploy/pages_preview.py export --site "$RUNNER_TEMP/pages-site" --output "$RUNNER_TEMP/pages-public"
+      - name: Empacotar artefato Pages
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+        with:
+          path: ${{ runner.temp }}/pages-public
+          retention-days: 1
+      - name: Publicar preview no Pages
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+      - name: Ler identidade dos bytes preparados
+        id: web_identity
+        env:
+          SOURCE_SHA: ${{ needs.preflight.outputs.source_sha }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          metadata = json.loads(Path(os.environ['RUNNER_TEMP'], 'release-lab', 'preview-metadata.json').read_text())
+          keys = ('web_content_sha256', 'snapshot_manifest_sha256')
+          if metadata['source_sha'] != os.environ['SOURCE_SHA'] or any(not re.fullmatch(r'[0-9a-f]{64}', metadata[key]) for key in keys):
+              raise ValueError('Metadata não corresponde à fonte congelada.')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              for key in keys:
+                  output.write(key + '=' + metadata[key] + '\n')
+          PY
+      - name: Confirmar identidade e arquivos por HTTP
+        env:
+          SOURCE_SHA: ${{ needs.preflight.outputs.source_sha }}
+          WEB_CONTENT_SHA256: ${{ steps.web_identity.outputs.web_content_sha256 }}
+          SNAPSHOT_MANIFEST_SHA256: ${{ steps.web_identity.outputs.snapshot_manifest_sha256 }}
+        run: python3 trusted/deploy/pages_smoke.py --source-sha "$SOURCE_SHA" --expected-web-content-sha256 "$WEB_CONTENT_SHA256" --expected-snapshot-manifest-sha256 "$SNAPSHOT_MANIFEST_SHA256" --output "$RUNNER_TEMP/pages-smoke.json"
+      - name: Registrar changelog, previsão e preview antes dos avais
+        id: report
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CANDIDATE_TAG: ${{ needs.preflight.outputs.candidate_tag }}
+        run: python3 trusted/tools/delivery/release_lab.py report --candidate-tag "$CANDIDATE_TAG" --preview-report "$RUNNER_TEMP/pages-smoke.json" --preview-metadata "$RUNNER_TEMP/release-lab/preview-metadata.json" --output "$RUNNER_TEMP/release-lab"
+      - name: Preservar relatório e confirmação HTTP
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-lab-evaluation
+          path: |
+            ${{ runner.temp }}/release-lab/
+            ${{ runner.temp }}/pages-smoke.json
+          if-no-files-found: ignore
+          retention-days: 90
+          overwrite: false
+  approve_first:
+    name: Aprovação obrigatória — ${{ needs.preflight.outputs.first_login }} / Gate first
+    needs: [preflight, web]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+    environment:
+      name: ${{ needs.preflight.outputs.first_environment }}
+      url: ${{ needs.web.outputs.report_url }}
+    steps:
+      - name: Checkout das ferramentas congeladas
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.preflight.outputs.tooling_sha }}
+          path: trusted
+          persist-credentials: false
+      - name: Confirmar pessoa real, relatório e RC ainda ativa
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CANDIDATE_TAG: ${{ needs.preflight.outputs.candidate_tag }}
+          REPORT_DIGEST: ${{ needs.web.outputs.report_digest }}
+        run: python3 trusted/tools/delivery/release_lab.py approval --candidate-tag "$CANDIDATE_TAG" --report-digest "$REPORT_DIGEST" --role first --output "$RUNNER_TEMP/release-lab"
+      - name: Preservar evidência do primeiro aval
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-lab-approval-first
+          path: ${{ runner.temp }}/release-lab/
+          if-no-files-found: ignore
+          retention-days: 90
+          overwrite: false
+  approve_second:
+    name: Aprovação obrigatória — ${{ needs.preflight.outputs.second_login }} / Gate second
+    needs: [preflight, web]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+    environment:
+      name: ${{ needs.preflight.outputs.second_environment }}
+      url: ${{ needs.web.outputs.report_url }}
+    steps:
+      - name: Checkout das ferramentas congeladas
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.preflight.outputs.tooling_sha }}
+          path: trusted
+          persist-credentials: false
+      - name: Confirmar outra pessoa real, relatório e RC ainda ativa
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CANDIDATE_TAG: ${{ needs.preflight.outputs.candidate_tag }}
+          REPORT_DIGEST: ${{ needs.web.outputs.report_digest }}
+        run: python3 trusted/tools/delivery/release_lab.py approval --candidate-tag "$CANDIDATE_TAG" --report-digest "$REPORT_DIGEST" --role second --output "$RUNNER_TEMP/release-lab"
+      - name: Preservar evidência do segundo aval
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-lab-approval-second
+          path: ${{ runner.temp }}/release-lab/
+          if-no-files-found: ignore
+          retention-days: 90
+          overwrite: false
+  publish:
+    name: PUBLICAR — comando humano separado, resultado SIMULADO
+    needs: [preflight, web, approve_first, approve_second]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    concurrency:
+      group: release-lab-state-finalization
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      actions: read
+    environment:
+      name: ${{ needs.preflight.outputs.final_environment }}
+      url: ${{ needs.web.outputs.report_url }}
+    steps:
+      - name: Checkout das ferramentas congeladas
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.preflight.outputs.tooling_sha }}
+          path: trusted
+          persist-credentials: false
+      - name: Conferir 2 de 2, identificar publicador e registrar recibo SIMULADO
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CANDIDATE_TAG: ${{ needs.preflight.outputs.candidate_tag }}
+          REPORT_DIGEST: ${{ needs.web.outputs.report_digest }}
+        run: python3 trusted/tools/delivery/release_lab.py finish --candidate-tag "$CANDIDATE_TAG" --report-digest "$REPORT_DIGEST" --output "$RUNNER_TEMP/release-lab"
+      - name: Preservar recibo e logs do ensaio
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-lab-simulated-receipt
+          path: ${{ runner.temp }}/release-lab/
+          if-no-files-found: ignore
+          retention-days: 90
+          overwrite: false

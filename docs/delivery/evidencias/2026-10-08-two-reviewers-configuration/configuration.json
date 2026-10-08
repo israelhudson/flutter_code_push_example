@@ -1,0 +1,46 @@
+{
+  "at": "2026-10-08T21:10:00.293995+00:00",
+  "repository": "israelhudson/flutter_code_push_example",
+  "changes": [
+    {
+      "environment": "aprovacao-israel",
+      "reviewer_ids": [
+        18661493
+      ]
+    },
+    {
+      "environment": "aprovacao-fahnassau30",
+      "reviewer_ids": [
+        339824994
+      ]
+    },
+    {
+      "environment": "autorizar-publicacao",
+      "reviewer_ids": [
+        18661493,
+        339824994
+      ]
+    },
+    {
+      "environment": "github-pages",
+      "added_ref": "v*-rc.*"
+    },
+    {
+      "ruleset": "LAB - novas RCs imutaveis",
+      "id": 24751353
+    },
+    {
+      "ruleset": "LAB - journal append-only",
+      "id": 24751354
+    },
+    {
+      "state_branch_created": "codex/release-lab-state",
+      "seed": "05634b4b620cc30a053e5acab5fefb0667f2544e"
+    }
+  ],
+  "environment_ids": {
+    "aprovacao-israel": 23819079490,
+    "aprovacao-fahnassau30": 23819080337,
+    "autorizar-publicacao": 23819081174
+  }
+}
