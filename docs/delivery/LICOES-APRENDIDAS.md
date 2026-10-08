@@ -92,7 +92,7 @@ O processo separou `tag-spec.json`, bootstrap autenticado pelo owner e validaç�
 
 ## Promoção com revisão real do proprietário
 
-O próximo controle atribui a Israel a revisão da candidata congelada, usando
+O controle atribui a Israel a revisão da candidata congelada, usando
 a [issue #10](https://github.com/israelhudson/flutter_code_push_example/issues/10)
 do próprio repositório. A decisão precisa ser um comentário novo da
 conta real `israelhudson`, com `APROVAR PRODUCAO`, candidata e hash completos.
@@ -114,19 +114,41 @@ rebuild, criação de ref, novo upload, alteração de estado do core ou distrib
 mobile. O recibo original conserva **2 papéis simulados e 0 reviews reais de PR**;
 os eventos de promoção distinguem a revisão real de Israel desse histórico.
 
-O [log de preparação da promoção](evidencias/2026-10-07-promotion.jsonl) registra
-a configuração e a issue atribuída ao revisor, conservando os eventos da
-publicação anterior em arquivos separados.
+**Promoção confirmada:** Israel publicou o
+[comentário de aprovação 6049452293](https://github.com/israelhudson/flutter_code_push_example/issues/10#issuecomment-6049452293)
+às `2026-10-08T00:14:05Z` (21:14:05 de 07/10/2026 em Fortaleza). Depois autorizou
+o Codex a executar os controles manuais pelo navegador e capturar as telas.
+O agente executou o [plano 37707108627](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37707108627)
+e a [promoção 37707227938](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37707227938),
+ambos com `SUCCESS`. O plano confirmou o aceite e `promoted=false`; a promoção
+confirmou `promoted=true` após a única mutação `promote_release`.
+A confirmação da promoção foi às `2026-10-08T00:21:19.318614Z`, 21:21:19 de
+07/10/2026 em Fortaleza.
 
-**Evidência ainda pendente:** a issue #10 existe e está atribuída a Israel,
-mas ainda não há comentário de aprovação, execução manual ou `prerelease=false` remoto.
-A confirmação precisa vir do run do usuário e da conferência final da mesma
-identidade. Falhas e efeitos incertos devem permanecer nos logs.
+A implementação foi integrada no [PR11](https://github.com/israelhudson/flutter_code_push_example/pull/11),
+commit `989fe3443ad16df0c67ff0068d6efb3f458c8ace`, após
+[CI 37706794267](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37706794267)
+com 199 testes e verificações Flutter de análise, testes e build web passando.
+Essas verificações foram seguidas pela execução real e pela leitura da API.
+
+A conferência final às `2026-10-08T00:22:46Z` confirmou `draft=false`,
+`prerelease=false`, nome **[LAB · ESTÁVEL] 1.1.0+2 · entrega-0100-rc.1** e os
+mesmos IDs/digests dos quatro assets. Fonte, árvore, tag anotada e estado do
+core continuaram iguais. A tela mostra **Latest** e seis assets porque o
+GitHub acrescenta dois arquivos automáticos de código-fonte aos quatro
+uploads originais; não houve novos uploads durante a promoção.
+
+O [log curado](evidencias/2026-10-07-promotion.jsonl), os
+[eventos do plano](evidencias/2026-10-07-promotion-plan-37707108627.jsonl), os
+[eventos da promoção](evidencias/2026-10-07-promotion-promoted-37707227938.jsonl)
+e o [passo a passo com prints](PASSO-A-PASSO-PROMOCAO.md) conservam aprovação,
+execução delegada e resultado. Os registros da preparação sem aceite, da
+publicação anterior e de sua falha permanecem como histórico.
 
 O gate consulta a lista atual de comentários: a API não reconstrói comandos
 apagados. Uma edição posterior de Israel bloqueia a aprovação antiga, mas uma
 decisão excluída deixa de ser observável. No laboratório, o proprietário preserva
-o histórico e revoga por comentário novo; ele também executa o comando final.
+o histórico e revoga por comentário novo; ele decide a execução do comando final.
 Para uma política independente na Amulets, avaliar proteção nativa e registros
 de decisão que conservem alterações e exclusões, conforme o plano da empresa.
 
@@ -142,7 +164,7 @@ política da empresa. Nenhuma dessas regras foi aplicada na Amulets.
 |---|---|---|
 | Congelar fonte e toolchain por candidata | Mesma fonte/hash nos sete comandos. | Conferir versionamento, flavor, entrypoint, bases e artifacts assinados da empresa. |
 | Separar avais do comando final | 1/2 não publicou; 2/2 só autorizou. | Definir pessoas reais, owner, revogação, nova RC e critério de validação pelo usuário. |
-| Separar review de PR, aceite de promoção e execução | Controle preparado com decisão autenticada do proprietário vinculada a candidata/hash; execução remota ainda pendente. | Escolher revisores independentes e proteção compatível com a política e o plano GitHub da empresa. |
+| Separar review de PR, aceite de promoção e execução | Aceite real de Israel na issue #10; plano e promoção executados pelo Codex sob autorização expressa; mesma candidata/hash confirmados na API. | Escolher revisores independentes e proteção compatível com a política e o plano GitHub da empresa. |
 | Recuperar por destino e chave | iOS reconciliado pelo recibo original; mobile não repetiu. | Verificar APIs autoritativas Shorebird/lojas e efeito incerto sob autorização própria. |
 | Persistir intenção e confirmação | Estado/journal/outbox avançaram juntos. | Ensaiar conflito, resposta perdida, recuperação sem reset, retenção e armazenamento. |
 | Confirmar conteúdo e conservar previews | Hashes ao vivo e snapshot anterior preservados. | Decidir hospedagem/acesso e verificar conteúdo no ambiente aprovado. |

@@ -3,8 +3,10 @@
 Esta versão é um laboratório de um operador. O GitHub autentica Israel; Ian,
 Samuel e Vinícius são papéis **simulados por Israel**. Dois papéis aprovados não
 representam duas pessoas reais. O fluxo nativo de reviews reais continua separado.
-As execuções manuais são reservadas a Israel; o agente prepara mudanças,
-revisões e evidências, sem disparar esses controles em seu lugar.
+Israel decide as execuções manuais. Inicialmente reservou esses controles para
+si; depois autorizou expressamente o Codex a executar `plan` e `promote` pelo
+navegador e documentar as telas desta promoção. A autorização não delegou ao
+agente o aceite de revisão, que foi publicado pelo próprio Israel.
 A promoção de uma pre-release tem uma decisão real separada: Israel revisa a
 candidata e registra seu próprio aceite no GitHub, sem representar outros papéis.
 
@@ -108,8 +110,9 @@ momento confirmou draft com zero assets. Esse resultado permanece no histórico.
 Após a correção integrada no [PR8](https://github.com/israelhudson/flutter_code_push_example/pull/8)
 e o [CI 37703315084](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37703315084)
 com sucesso, Israel executou manualmente o [publish 37704202085](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37704202085).
-A mesma Release `406248758` está publicada como pre-release desde
+A mesma Release `406248758` foi publicada como pre-release em
 `2026-10-07T23:47:41Z`, com `draft=false` e quatro assets confirmados.
+Sua promoção posterior para estável está documentada na seção seguinte.
 
 | Campo | Valor |
 |---|---|
@@ -119,7 +122,7 @@ A mesma Release `406248758` está publicada como pre-release desde
 | Ferramentas da retomada | `0817b4fbf84204b24a20858925fa414a1dcac54a` |
 | manifest_hash | `28a15ae28f273bd13742dfbec2191d907769db53de6d5b3550a35070823acaeb` |
 
-Abra a [GitHub pre-release confirmada](https://github.com/israelhudson/flutter_code_push_example/releases/tag/entrega-0100-rc.1)
+Abra a [GitHub release confirmada](https://github.com/israelhudson/flutter_code_push_example/releases/tag/entrega-0100-rc.1)
 para consultar `candidate.json`, `receipt.json`, `preview.zip` e `checksums.sha256`.
 Os arquivos foram baixados e seus tamanhos, hashes e conteúdo conferidos contra
 o plano e os artifacts congelados. O recibo declara **2 papéis simulados,
@@ -127,8 +130,9 @@ o plano e os artifacts congelados. O recibo declara **2 papéis simulados,
 loja, TestFlight ou uma nova validação mobile.
 
 Não há novo publish pendente para esta RC. Os [logs e lições](LICOES-APRENDIDAS.md)
-preservam falha, correção e retomada manual com sucesso. As execuções manuais
-seguintes continuam sendo de Israel.
+preservam falha, correção e retomada manual com sucesso. A autorização posterior
+para o Codex executar a promoção também ficou registrada, sem alterar esse
+histórico.
 
 Para uma futura RC, quando houver outra mudança, siga os controles gerais acima:
 revise a fonte nova, prepare uma nova candidata e obtenha novos avais. Não
@@ -141,7 +145,7 @@ a entrega já concluída.
 O fluxo **Delivery - Promover candidata LAB após revisão** promove a pre-release
 existente para uma **release estável no GitHub**. Neste laboratório, “produção”
 significa esse registro estável; a aplicação não é enviada ao Shorebird ou às
-lojas. Israel é o revisor real e o operador final. Os dois papéis simulados da
+lojas. Israel é o revisor real e autoriza a execução final. Os dois papéis simulados da
 preparação continuam no histórico e não contam como reviews reais de PR.
 
 O GitHub [não permite que o autor aprove seu próprio PR](https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/approving-a-pull-request-with-required-reviews).
@@ -201,11 +205,22 @@ continua registrando a preparação com dois papéis simulados e zero reviews
 reais de PR; a decisão real de Israel fica nos eventos próprios da promoção.
 O estado persistente do publicador fictício também não muda.
 
-**Preparação registrada em 07/10/2026:** a pre-release estava publicada e a
-issue #10 foi atribuída a Israel, sem comentário de aprovação ou execução de
-promoção naquele momento. A aprovação atual deve ser conferida na issue, e a
-promoção precisa de um resultado remoto confirmado. As execuções manuais e o
-comentário de aprovação continuam sendo do usuário.
+**Promoção concluída em 07/10/2026, horário de Fortaleza:** Israel publicou o
+[aceite real na issue #10](https://github.com/israelhudson/flutter_code_push_example/issues/10#issuecomment-6049452293)
+e autorizou o Codex a executar os controles pelo navegador. O
+[plano 37707108627](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37707108627)
+e a [promoção 37707227938](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37707227938)
+terminaram com `SUCCESS`. A consulta final confirmou a mesma Release
+`406248758`, agora `draft=false` e `prerelease=false`, com tag, fonte e quatro
+assets preservados. A única mutação foi a atualização da release existente;
+o estado do core permaneceu em `b90cf65c3a47d507ee40649001176d663269b350`.
+A confirmação da promoção ocorreu às 21:21:19 de 07/10/2026 em Fortaleza
+(`2026-10-08T00:21:19.318614Z`).
+
+O [passo a passo com seis prints](PASSO-A-PASSO-PROMOCAO.md) documenta a execução.
+Os [logs](evidencias/README.md#evidência-de-promoção-após-revisão) conservam
+aprovação humana, execução delegada e confirmação separadamente. Não há outro
+`promote` pendente para essa RC.
 
 ## Falha e recuperação no publicador fictício
 
