@@ -1,0 +1,18 @@
+{
+  "result": "PASS",
+  "main_sha": "f9898028405e577ee8998b1c5f0274870089ffac",
+  "release_sha": "b8763ec5adc5e24ce34f474a66a079b48a9ffa0f",
+  "identical_paths": [
+    "lib",
+    "test",
+    ".github",
+    "delivery",
+    "tools/delivery",
+    "deploy"
+  ],
+  "all_difference_paths": [
+    "docs/delivery/VALIDACAO-E-PROMOCAO.md"
+  ],
+  "stable_tag_source_preserved": "b8763ec5adc5e24ce34f474a66a079b48a9ffa0f",
+  "review_operator": "Codex automated LAB test authorized by Israel"
+}

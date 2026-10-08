@@ -1,0 +1,15 @@
+{
+  "operator": "Codex automated LAB test authorized by Israel",
+  "at": "2026-10-08T22:15:00.209605+00:00",
+  "source_sha": "b8763ec5adc5e24ce34f474a66a079b48a9ffa0f",
+  "report_digest": "f322ac38d3d87747dc7a29642a19d9892476bcb642a34f9602ddc910a9624334",
+  "changelog_read": true,
+  "includes_correction": true,
+  "changelog_base_sha": "08ce07d615905e33f0572f9264808683cab53349",
+  "preview_render_observed": true,
+  "screenshot": "07-preview-rc2-corrigido.jpg",
+  "github_catalog_version": "1.5.0",
+  "pubspec_version": "1.1.0+2",
+  "mobile_delivery_performed": false,
+  "independent_human_review": false
+}

@@ -1,0 +1,5 @@
+{
+  "exit_code": 1,
+  "stdout": "{\"message\":\"Validation Failed\",\"errors\":\"No pending deployment requests to approve or reject\",\"documentation_url\":\"https://docs.github.com/rest/actions/workflow-runs#review-pending-deployments-for-a-workflow-run\",\"status\":\"422\"}",
+  "stderr": "gh: No pending deployment requests to approve or reject (Validation Failed)\n"
+}

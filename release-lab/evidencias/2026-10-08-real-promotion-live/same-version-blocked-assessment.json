@@ -1,0 +1,9 @@
+{
+  "result": "PASS negative",
+  "journal_identical_to_completed_baseline": true,
+  "stable_ref_unchanged": true,
+  "release_id_content_flags_unchanged": true,
+  "no_new_candidate": true,
+  "run_id": 37852613605,
+  "actual_run_conclusion": "failure"
+}

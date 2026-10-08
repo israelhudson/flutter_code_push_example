@@ -1,0 +1,17 @@
+{
+  "candidate_tag": "v1.5.0-rc.2",
+  "source_sha": "b8763ec5adc5e24ce34f474a66a079b48a9ffa0f",
+  "report_digest": "f322ac38d3d87747dc7a29642a19d9892476bcb642a34f9602ddc910a9624334",
+  "run_id": "37851607911",
+  "run_attempt": 1,
+  "review": {
+    "environment": "aprovacao-israel",
+    "environment_id": 23819079490,
+    "reviewer": {
+      "id": 18661493,
+      "login": "israelhudson"
+    },
+    "state": "approved",
+    "comment": "Ensaio automatizado por Codex autorizado por Israel: novo aval para RC2 corrigida, mesma fonte/preview/changelog congelados. 1/2 não autoriza promover. Não representa revisão humana independente."
+  }
+}

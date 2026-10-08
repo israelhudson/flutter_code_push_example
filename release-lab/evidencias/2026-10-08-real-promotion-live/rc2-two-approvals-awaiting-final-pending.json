@@ -1,0 +1,64 @@
+[
+  {
+    "environment": {
+      "id": 23819081174,
+      "node_id": "EN_kwDOTxnIY88AAAAFi7pV1g",
+      "name": "autorizar-publicacao",
+      "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/environments/autorizar-publicacao",
+      "html_url": "https://github.com/israelhudson/flutter_code_push_example/deployments/activity_log?environments_filter=autorizar-publicacao"
+    },
+    "wait_timer": 0,
+    "wait_timer_started_at": null,
+    "current_user_can_approve": true,
+    "reviewers": [
+      {
+        "type": "User",
+        "reviewer": {
+          "login": "israelhudson",
+          "id": 18661493,
+          "node_id": "MDQ6VXNlcjE4NjYxNDkz",
+          "avatar_url": "https://avatars.githubusercontent.com/u/18661493?u=9b3f29a61192ce0c42e37c0c7f8ff467fc30890d&v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/israelhudson",
+          "html_url": "https://github.com/israelhudson",
+          "followers_url": "https://api.github.com/users/israelhudson/followers",
+          "following_url": "https://api.github.com/users/israelhudson/following{/other_user}",
+          "gists_url": "https://api.github.com/users/israelhudson/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/israelhudson/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/israelhudson/subscriptions",
+          "organizations_url": "https://api.github.com/users/israelhudson/orgs",
+          "repos_url": "https://api.github.com/users/israelhudson/repos",
+          "events_url": "https://api.github.com/users/israelhudson/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/israelhudson/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        }
+      },
+      {
+        "type": "User",
+        "reviewer": {
+          "login": "fahnassau30",
+          "id": 339824994,
+          "node_id": "U_kgDOFEFRYg",
+          "avatar_url": "https://avatars.githubusercontent.com/u/339824994?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/fahnassau30",
+          "html_url": "https://github.com/fahnassau30",
+          "followers_url": "https://api.github.com/users/fahnassau30/followers",
+          "following_url": "https://api.github.com/users/fahnassau30/following{/other_user}",
+          "gists_url": "https://api.github.com/users/fahnassau30/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/fahnassau30/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/fahnassau30/subscriptions",
+          "organizations_url": "https://api.github.com/users/fahnassau30/orgs",
+          "repos_url": "https://api.github.com/users/fahnassau30/repos",
+          "events_url": "https://api.github.com/users/fahnassau30/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/fahnassau30/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "ref": "refs/tags/v1.5.0-rc.1",
+    "node_id": "REF_kwDOTxnIY7VyZWZzL3RhZ3MvdjEuNS4wLXJjLjE",
+    "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/git/refs/tags/v1.5.0-rc.1",
+    "object": {
+      "sha": "9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0",
+      "type": "commit",
+      "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/git/commits/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0"
+    }
+  },
+  {
+    "ref": "refs/tags/v1.5.0-rc.2",
+    "node_id": "REF_kwDOTxnIY7VyZWZzL3RhZ3MvdjEuNS4wLXJjLjI",
+    "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/git/refs/tags/v1.5.0-rc.2",
+    "object": {
+      "sha": "b8763ec5adc5e24ce34f474a66a079b48a9ffa0f",
+      "type": "commit",
+      "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/git/commits/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f"
+    }
+  }
+]

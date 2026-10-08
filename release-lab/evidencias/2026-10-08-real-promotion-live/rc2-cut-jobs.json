@@ -1,0 +1,193 @@
+{
+  "total_count": 3,
+  "jobs": [
+    {
+      "id": 113565600588,
+      "run_id": 37851607911,
+      "workflow_name": "Preparar 1.5.0 — Laboratório corrigido — rejeição da RC1 e promoção da RC2",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/runs/37851607911",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTxnIY88AAAAacQmLTA",
+      "head_sha": "9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0",
+      "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/jobs/113565600588",
+      "html_url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37851607911/job/113565600588",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-08T22:09:00Z",
+      "started_at": "2026-10-08T22:09:02Z",
+      "completed_at": "2026-10-08T22:09:30Z",
+      "name": "Congelar candidata revisada",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-08T22:09:03Z",
+          "completed_at": "2026-10-08T22:09:04Z"
+        },
+        {
+          "name": "Checkout das ferramentas confiáveis da main",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-08T22:09:04Z",
+          "completed_at": "2026-10-08T22:09:06Z"
+        },
+        {
+          "name": "Criar branch release e tag RC imutável com identidade interna",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-08T22:09:06Z",
+          "completed_at": "2026-10-08T22:09:21Z"
+        },
+        {
+          "name": "Preservar registro do corte",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-08T22:09:21Z",
+          "completed_at": "2026-10-08T22:09:22Z"
+        },
+        {
+          "name": "Post Checkout das ferramentas confiáveis da main",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-08T22:09:22Z",
+          "completed_at": "2026-10-08T22:09:22Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-08T22:09:22Z",
+          "completed_at": "2026-10-08T22:09:22Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/check-runs/113565600588",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000000198,
+      "runner_name": "GitHub Actions 1000000198",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 113565783381,
+      "run_id": 37851607911,
+      "workflow_name": "Preparar 1.5.0 — Laboratório corrigido — rejeição da RC1 e promoção da RC2",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/runs/37851607911",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTxnIY88AAAAacQxVVQ",
+      "head_sha": "9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0",
+      "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/jobs/113565783381",
+      "html_url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37851607911/job/113565783381",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-08T22:09:30Z",
+      "started_at": "2026-10-08T22:09:33Z",
+      "completed_at": "2026-10-08T22:09:48Z",
+      "name": "Avaliar a mesma candidata / Conferir RC ativa, papéis e proteções",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-08T22:09:33Z",
+          "completed_at": "2026-10-08T22:09:34Z"
+        },
+        {
+          "name": "Checkout das ferramentas confiáveis da main",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-08T22:09:34Z",
+          "completed_at": "2026-10-08T22:09:37Z"
+        },
+        {
+          "name": "Vincular uma única avaliação à candidata",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-08T22:09:37Z",
+          "completed_at": "2026-10-08T22:09:44Z"
+        },
+        {
+          "name": "Preservar identidade verificada",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-08T22:09:44Z",
+          "completed_at": "2026-10-08T22:09:45Z"
+        },
+        {
+          "name": "Post Checkout das ferramentas confiáveis da main",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-08T22:09:45Z",
+          "completed_at": "2026-10-08T22:09:45Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-08T22:09:45Z",
+          "completed_at": "2026-10-08T22:09:45Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/check-runs/113565783381",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000000199,
+      "runner_name": "GitHub Actions 1000000199",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 113565888430,
+      "run_id": 37851607911,
+      "workflow_name": "Preparar 1.5.0 — Laboratório corrigido — rejeição da RC1 e promoção da RC2",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/runs/37851607911",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTxnIY88AAAAacQ3vrg",
+      "head_sha": "9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0",
+      "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/jobs/113565888430",
+      "html_url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37851607911/job/113565888430",
+      "status": "in_progress",
+      "conclusion": null,
+      "created_at": "2026-10-08T22:09:49Z",
+      "started_at": "2026-10-08T22:09:50Z",
+      "completed_at": null,
+      "name": "Avaliar a mesma candidata / Verificar e compilar web sem permissões de publicação",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "in_progress",
+          "conclusion": null,
+          "number": 1,
+          "started_at": "2026-10-08T22:09:51Z",
+          "completed_at": null
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/check-runs/113565888430",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000000200,
+      "runner_name": "GitHub Actions 1000000200",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "result": "PASS",
+  "http_status": 422,
+  "account": "israelhudson",
+  "target_environment": "aprovacao-fahnassau30",
+  "collection_assertion_corrections": [
+    "Initial collector checked HTTP code only in stderr; official JSON body carries status.",
+    "JSON status is string 422, normalized with int before assertion."
+  ],
+  "response_preserved": true,
+  "request_repeated": false,
+  "next_check": "Confirm no reviews and both gates remain waiting.",
+  "after_check": "No reviews; both gates still waiting; stable and Release absent."
+}

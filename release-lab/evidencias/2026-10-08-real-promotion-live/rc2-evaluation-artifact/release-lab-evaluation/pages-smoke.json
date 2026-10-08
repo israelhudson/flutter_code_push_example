@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "source_sha": "b8763ec5adc5e24ce34f474a66a079b48a9ffa0f",
+  "web_content_sha256": "303290db96b8bec5f7a510e697e9486ca999e07a1954c601480ac3fbb8fa3c25",
+  "snapshot_manifest_sha256": "e7bb027a50d4ba04ffe2beaab9f375881b9e2f3a8e504e241b6b671628504da9",
+  "snapshot_url": "https://israelhudson.github.io/flutter_code_push_example/snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/",
+  "verified_files": [
+    "files.json",
+    "metadata.json",
+    "index.html",
+    "app/index.html",
+    "app/flutter_bootstrap.js",
+    "app/main.dart.js"
+  ],
+  "attempts": 2
+}

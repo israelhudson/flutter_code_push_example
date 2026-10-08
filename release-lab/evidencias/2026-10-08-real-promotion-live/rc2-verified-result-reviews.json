@@ -1,0 +1,113 @@
+[
+  {
+    "user": {
+      "login": "fahnassau30",
+      "id": 339824994,
+      "node_id": "U_kgDOFEFRYg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/339824994?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/fahnassau30",
+      "html_url": "https://github.com/fahnassau30",
+      "followers_url": "https://api.github.com/users/fahnassau30/followers",
+      "following_url": "https://api.github.com/users/fahnassau30/following{/other_user}",
+      "gists_url": "https://api.github.com/users/fahnassau30/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/fahnassau30/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/fahnassau30/subscriptions",
+      "organizations_url": "https://api.github.com/users/fahnassau30/orgs",
+      "repos_url": "https://api.github.com/users/fahnassau30/repos",
+      "events_url": "https://api.github.com/users/fahnassau30/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/fahnassau30/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "state": "approved",
+    "comment": "PUBLICAR no ensaio autorizado por Israel, executado por Codex na conta Fabrícia: criar tag estável v1.5.0 e Release real no GitHub a partir da RC2 corrigida já aprovada pelas duas contas. Preservar ambas RCs e o mesmo commit/preview/changelog. Sem distribuição Android/iOS, lojas ou patch Shorebird; não representa revisão humana independente.",
+    "environments": [
+      {
+        "id": 23819081174,
+        "node_id": "EN_kwDOTxnIY88AAAAFi7pV1g",
+        "name": "autorizar-publicacao",
+        "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/environments/autorizar-publicacao",
+        "html_url": "https://github.com/israelhudson/flutter_code_push_example/deployments/activity_log?environments_filter=autorizar-publicacao",
+        "created_at": "2026-10-08T20:30:57Z",
+        "updated_at": "2026-10-08T20:30:57Z",
+        "can_admins_bypass": false
+      }
+    ]
+  },
+  {
+    "user": {
+      "login": "fahnassau30",
+      "id": 339824994,
+      "node_id": "U_kgDOFEFRYg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/339824994?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/fahnassau30",
+      "html_url": "https://github.com/fahnassau30",
+      "followers_url": "https://api.github.com/users/fahnassau30/followers",
+      "following_url": "https://api.github.com/users/fahnassau30/following{/other_user}",
+      "gists_url": "https://api.github.com/users/fahnassau30/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/fahnassau30/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/fahnassau30/subscriptions",
+      "organizations_url": "https://api.github.com/users/fahnassau30/orgs",
+      "repos_url": "https://api.github.com/users/fahnassau30/repos",
+      "events_url": "https://api.github.com/users/fahnassau30/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/fahnassau30/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "state": "approved",
+    "comment": "Novo aval da RC2 no ensaio do LAB, executado por Codex com autorização de Israel na conta Fabrícia. Preview corrigido e changelog da mesma fonte conferidos. Este clique registra somente o segundo aval; publicação exige comando final separado. Não representa revisão humana independente da Fabrícia.",
+    "environments": [
+      {
+        "id": 23819080337,
+        "node_id": "EN_kwDOTxnIY88AAAAFi7pSkQ",
+        "name": "aprovacao-fahnassau30",
+        "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/environments/aprovacao-fahnassau30",
+        "html_url": "https://github.com/israelhudson/flutter_code_push_example/deployments/activity_log?environments_filter=aprovacao-fahnassau30",
+        "created_at": "2026-10-08T20:30:57Z",
+        "updated_at": "2026-10-08T20:30:57Z",
+        "can_admins_bypass": false
+      }
+    ]
+  },
+  {
+    "user": {
+      "login": "israelhudson",
+      "id": 18661493,
+      "node_id": "MDQ6VXNlcjE4NjYxNDkz",
+      "avatar_url": "https://avatars.githubusercontent.com/u/18661493?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/israelhudson",
+      "html_url": "https://github.com/israelhudson",
+      "followers_url": "https://api.github.com/users/israelhudson/followers",
+      "following_url": "https://api.github.com/users/israelhudson/following{/other_user}",
+      "gists_url": "https://api.github.com/users/israelhudson/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/israelhudson/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/israelhudson/subscriptions",
+      "organizations_url": "https://api.github.com/users/israelhudson/orgs",
+      "repos_url": "https://api.github.com/users/israelhudson/repos",
+      "events_url": "https://api.github.com/users/israelhudson/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/israelhudson/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "state": "approved",
+    "comment": "Ensaio automatizado por Codex autorizado por Israel: novo aval para RC2 corrigida, mesma fonte/preview/changelog congelados. 1/2 não autoriza promover. Não representa revisão humana independente.",
+    "environments": [
+      {
+        "id": 23819079490,
+        "node_id": "EN_kwDOTxnIY88AAAAFi7pPQg",
+        "name": "aprovacao-israel",
+        "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/environments/aprovacao-israel",
+        "html_url": "https://github.com/israelhudson/flutter_code_push_example/deployments/activity_log?environments_filter=aprovacao-israel",
+        "created_at": "2026-10-08T20:30:56Z",
+        "updated_at": "2026-10-08T20:30:56Z",
+        "can_admins_bypass": false
+      }
+    ]
+  }
+]

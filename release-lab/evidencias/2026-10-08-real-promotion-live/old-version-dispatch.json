@@ -1,0 +1,7 @@
+{
+  "ref": "main",
+  "inputs": {
+    "version": "1.4.0",
+    "title": "Teste negativo — versão antiga deve bloquear"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "total_count": 2,
+  "jobs": [
+    {
+      "id": 113569076095,
+      "run_id": 37852613605,
+      "workflow_name": "Preparar 1.5.0 — Teste negativo — versão já publicada deve bloquear",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/runs/37852613605",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTxnIY88AAAAacT6Tfw",
+      "head_sha": "9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0",
+      "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/jobs/113569076095",
+      "html_url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37852613605/job/113569076095",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-10-08T22:18:19Z",
+      "started_at": "2026-10-08T22:18:20Z",
+      "completed_at": "2026-10-08T22:18:32Z",
+      "name": "Congelar candidata revisada",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-08T22:18:21Z",
+          "completed_at": "2026-10-08T22:18:22Z"
+        },
+        {
+          "name": "Checkout das ferramentas confiáveis da main",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-08T22:18:22Z",
+          "completed_at": "2026-10-08T22:18:24Z"
+        },
+        {
+          "name": "Criar branch release e tag RC imutável com identidade interna",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 3,
+          "started_at": "2026-10-08T22:18:24Z",
+          "completed_at": "2026-10-08T22:18:29Z"
+        },
+        {
+          "name": "Preservar registro do corte",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-08T22:18:29Z",
+          "completed_at": "2026-10-08T22:18:29Z"
+        },
+        {
+          "name": "Post Checkout das ferramentas confiáveis da main",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-08T22:18:29Z",
+          "completed_at": "2026-10-08T22:18:30Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-08T22:18:30Z",
+          "completed_at": "2026-10-08T22:18:30Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/check-runs/113569076095",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000000207,
+      "runner_name": "GitHub Actions 1000000207",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 113569160730,
+      "run_id": 37852613605,
+      "workflow_name": "Preparar 1.5.0 — Teste negativo — versão já publicada deve bloquear",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/runs/37852613605",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTxnIY88AAAAacT_eGg",
+      "head_sha": "9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0",
+      "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/actions/jobs/113569160730",
+      "html_url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37852613605/job/113569160730",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-10-08T22:18:32Z",
+      "started_at": "2026-10-08T22:18:32Z",
+      "completed_at": "2026-10-08T22:18:32Z",
+      "name": "Avaliar a mesma candidata",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/check-runs/113569160730",
+      "labels": [],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    }
+  ]
+}

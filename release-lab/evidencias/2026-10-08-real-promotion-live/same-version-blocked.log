@@ -1,0 +1,183 @@
+Congelar candidata revisada	Set up job	﻿2026-10-08T22:18:21.6144243Z Current runner version: '2.337.0'
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6162219Z ##[group]Runner Image Provisioner
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6162872Z Hosted Compute Agent
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6163318Z Version: 20261002.596
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6163704Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6164195Z Build Date: 2026-10-02T22:28:27Z
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6164630Z Worker ID: {11c51465-fd10-4c1b-a20c-c40ab30fcd30}
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6165047Z Region: westus3
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6165415Z Cloud: Azure
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6165744Z ##[endgroup]
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6166612Z ##[group]Operating System
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6167023Z Ubuntu
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6167337Z 24.04.5
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6167709Z LTS
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6168057Z ##[endgroup]
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6168370Z ##[group]Runner Image
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6168775Z Image: ubuntu-24.04
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6169121Z Version: 20261004.327.1
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6169753Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6170782Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6171390Z ##[endgroup]
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6172219Z ##[group]GITHUB_TOKEN Permissions
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6173611Z Actions: read
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6174213Z Contents: write
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6174597Z Metadata: read
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6174930Z ##[endgroup]
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6176241Z Secret source: Actions
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6176853Z Cache mode: write
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6177324Z Prepare workflow directory
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6376549Z Prepare all required actions
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.6407246Z Getting action download info
+Congelar candidata revisada	Set up job	2026-10-08T22:18:21.9137478Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+Congelar candidata revisada	Set up job	2026-10-08T22:18:22.0063345Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+Congelar candidata revisada	Set up job	2026-10-08T22:18:22.2008332Z Complete job name: Congelar candidata revisada
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	﻿2026-10-08T22:18:22.2466703Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.2467243Z with:
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.2467482Z   ref: refs/heads/main
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.2467784Z   path: trusted
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.2468030Z   fetch-depth: 0
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.2468286Z   persist-credentials: false
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.2468606Z   repository: israelhudson/flutter_code_push_example
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.2470631Z   token: ***
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.2470870Z   ssh-strict: true
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.2471115Z   ssh-user: git
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.2471348Z   clean: true
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.2471596Z   sparse-checkout-cone-mode: true
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.2471890Z   fetch-tags: false
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.2472306Z   show-progress: true
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.2472556Z   lfs: false
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.2472790Z   submodules: false
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.2473046Z   set-safe-directory: true
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.2473330Z   allow-unsafe-pr-checkout: false
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.2473706Z ##[endgroup]
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3108925Z Syncing repository: israelhudson/flutter_code_push_example
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3110503Z ##[group]Getting Git version info
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3111294Z Working directory is '/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted'
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3112499Z [command]/usr/bin/git version
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3187904Z git version 2.55.0
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3200533Z ##[endgroup]
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3210208Z Temporarily overriding HOME='/home/runner/work/_temp/8a844fc2-93c1-4f56-93eb-e5cb27fe92f6' before making global git config changes
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3211498Z Adding repository directory to the temporary git global config as a safe directory
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3213537Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3261964Z ##[group]Initializing the repository
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3269142Z [command]/usr/bin/git init /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3360450Z hint: Using 'master' as the name for the initial branch. This default branch name
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3361244Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3361996Z hint: to use in all of your new repositories, which will suppress this warning,
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3362550Z hint: call:
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3362772Z hint:
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3363211Z hint: 	git config --global init.defaultBranch <name>
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3363721Z hint:
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3364135Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3364628Z hint: 'development'. The just-created branch can be renamed via this command:
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3365190Z hint:
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3365540Z hint: 	git branch -m <name>
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3365937Z hint:
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3366474Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3367756Z Initialized empty Git repository in /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3374075Z [command]/usr/bin/git remote add origin https://github.com/israelhudson/flutter_code_push_example
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3417916Z ##[endgroup]
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3418652Z ##[group]Disabling automatic garbage collection
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3427192Z [command]/usr/bin/git config --local gc.auto 0
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3450089Z ##[endgroup]
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3450600Z ##[group]Setting up auth
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3455123Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3484898Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3778887Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3806979Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.3981890Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.4010611Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.4181231Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.4214209Z ##[endgroup]
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.4214710Z ##[group]Fetching the repository
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:22.4220909Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1752901Z From https://github.com/israelhudson/flutter_code_push_example
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1755907Z  * [new branch]      codex/candidate-lab-delivery-2026-10-06-rc.1 -> origin/codex/candidate-lab-delivery-2026-10-06-rc.1
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1757744Z  * [new branch]      codex/delivery-state    -> origin/codex/delivery-state
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1759195Z  * [new branch]      codex/fix-lab-release-upload -> origin/codex/fix-lab-release-upload
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1760672Z  * [new branch]      codex/flutter-sdk-bootstrap -> origin/codex/flutter-sdk-bootstrap
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1762442Z  * [new branch]      codex/github-release-approval-poc -> origin/codex/github-release-approval-poc
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1764212Z  * [new branch]      codex/lab-promotion-evidence -> origin/codex/lab-promotion-evidence
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1765628Z  * [new branch]      codex/lab-release-result -> origin/codex/lab-release-result
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1766968Z  * [new branch]      codex/lab-reviewed-promotion -> origin/codex/lab-reviewed-promotion
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1768440Z  * [new branch]      codex/lab-versions      -> origin/codex/lab-versions
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1769839Z  * [new branch]      codex/laboratory-release-records -> origin/codex/laboratory-release-records
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1771676Z  * [new branch]      codex/operational-delivery-preview -> origin/codex/operational-delivery-preview
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1773338Z  * [new branch]      codex/pages-previews    -> origin/codex/pages-previews
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1774960Z  * [new branch]      codex/pages-publication-verification -> origin/codex/pages-publication-verification
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1776948Z  * [new branch]      codex/release-lab-rc2-correction -> origin/codex/release-lab-rc2-correction
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1778860Z  * [new branch]      codex/release-lab-real-promotion -> origin/codex/release-lab-real-promotion
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1780461Z  * [new branch]      codex/release-lab-state -> origin/codex/release-lab-state
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1782165Z  * [new branch]      codex/release-lab-two-approvers -> origin/codex/release-lab-two-approvers
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1783861Z  * [new branch]      docs/estudo-shorebird-amulets -> origin/docs/estudo-shorebird-amulets
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1785639Z  * [new branch]      feature/shorebird-code-push-setup -> origin/feature/shorebird-code-push-setup
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1787048Z  * [new branch]      main                    -> origin/main
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1788136Z  * [new branch]      release/1.4.0           -> origin/release/1.4.0
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1789466Z  * [new branch]      release/1.5.0           -> origin/release/1.5.0
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1790731Z  * [new tag]         entrega-0100-rc.1       -> entrega-0100-rc.1
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1792158Z  * [new tag]         lab/delivery/2026-10-06-rc.1 -> lab/delivery/2026-10-06-rc.1
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1793486Z  * [new tag]         v1.4.0-rc.1             -> v1.4.0-rc.1
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1794574Z  * [new tag]         v1.5.0                  -> v1.5.0
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1795711Z  * [new tag]         v1.5.0-rc.1             -> v1.5.0-rc.1
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1796813Z  * [new tag]         v1.5.0-rc.2             -> v1.5.0-rc.2
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1799983Z ##[endgroup]
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1801269Z ##[group]Determining the checkout info
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1802789Z ##[endgroup]
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1803750Z [command]/usr/bin/git sparse-checkout disable
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1807373Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1834623Z ##[group]Checking out the ref
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.1836461Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.2019481Z Switched to a new branch 'main'
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.2025725Z branch 'main' set up to track 'origin/main'.
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.2029518Z ##[endgroup]
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.2062250Z [command]/usr/bin/git log -1 --format=%H
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.2083791Z 9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.2090675Z ##[group]Removing auth
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.2093253Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.2118964Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.2289676Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.2312705Z http.https://github.com/.extraheader
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.2317199Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.2346013Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.2516561Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.2541536Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Congelar candidata revisada	Checkout das ferramentas confiáveis da main	2026-10-08T22:18:24.2711284Z ##[endgroup]
+Congelar candidata revisada	Criar branch release e tag RC imutável com identidade interna	﻿2026-10-08T22:18:24.2905802Z ##[group]Run python3 trusted/tools/delivery/release_lab.py prepare --version "$RELEASE_VERSION" --title "$RELEASE_TITLE" --output "$RUNNER_TEMP/release-lab"
+Congelar candidata revisada	Criar branch release e tag RC imutável com identidade interna	2026-10-08T22:18:24.2908637Z ^[[36;1mpython3 trusted/tools/delivery/release_lab.py prepare --version "$RELEASE_VERSION" --title "$RELEASE_TITLE" --output "$RUNNER_TEMP/release-lab"^[[0m
+Congelar candidata revisada	Criar branch release e tag RC imutável com identidade interna	2026-10-08T22:18:24.3133252Z shell: /usr/bin/bash -e {0}
+Congelar candidata revisada	Criar branch release e tag RC imutável com identidade interna	2026-10-08T22:18:24.3133962Z env:
+Congelar candidata revisada	Criar branch release e tag RC imutável com identidade interna	2026-10-08T22:18:24.3139800Z   GH_TOKEN: ***
+Congelar candidata revisada	Criar branch release e tag RC imutável com identidade interna	2026-10-08T22:18:24.3140390Z   RELEASE_VERSION: 1.5.0
+Congelar candidata revisada	Criar branch release e tag RC imutável com identidade interna	2026-10-08T22:18:24.3141260Z   RELEASE_TITLE: Teste negativo — versão já publicada deve bloquear
+Congelar candidata revisada	Criar branch release e tag RC imutável com identidade interna	2026-10-08T22:18:24.3142333Z ##[endgroup]
+Congelar candidata revisada	Criar branch release e tag RC imutável com identidade interna	2026-10-08T22:18:29.8426534Z LAB bloqueado: Versão já usada/reservada ou anterior à estável; informe uma versão maior.
+Congelar candidata revisada	Criar branch release e tag RC imutável com identidade interna	2026-10-08T22:18:29.8490907Z ##[error]Process completed with exit code 1.
+Congelar candidata revisada	Preservar registro do corte	﻿2026-10-08T22:18:29.8563809Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+Congelar candidata revisada	Preservar registro do corte	2026-10-08T22:18:29.8564073Z with:
+Congelar candidata revisada	Preservar registro do corte	2026-10-08T22:18:29.8564226Z   name: release-lab-preparation
+Congelar candidata revisada	Preservar registro do corte	2026-10-08T22:18:29.8564416Z   path: /home/runner/work/_temp/release-lab/
+Congelar candidata revisada	Preservar registro do corte	2026-10-08T22:18:29.8564606Z   if-no-files-found: ignore
+Congelar candidata revisada	Preservar registro do corte	2026-10-08T22:18:29.8564765Z   retention-days: 90
+Congelar candidata revisada	Preservar registro do corte	2026-10-08T22:18:29.8564912Z   overwrite: false
+Congelar candidata revisada	Preservar registro do corte	2026-10-08T22:18:29.8565057Z   compression-level: 6
+Congelar candidata revisada	Preservar registro do corte	2026-10-08T22:18:29.8565218Z   include-hidden-files: false
+Congelar candidata revisada	Preservar registro do corte	2026-10-08T22:18:29.8565382Z ##[endgroup]
+Congelar candidata revisada	Preservar registro do corte	2026-10-08T22:18:29.9678845Z (node:2267) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Congelar candidata revisada	Preservar registro do corte	2026-10-08T22:18:29.9679676Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Congelar candidata revisada	Preservar registro do corte	2026-10-08T22:18:29.9689745Z No files were found with the provided path: /home/runner/work/_temp/release-lab/. No artifacts will be uploaded.
+Congelar candidata revisada	Post Checkout das ferramentas confiáveis da main	﻿2026-10-08T22:18:29.9875057Z Post job cleanup.
+Congelar candidata revisada	Post Checkout das ferramentas confiáveis da main	2026-10-08T22:18:30.0464255Z [command]/usr/bin/git version
+Congelar candidata revisada	Post Checkout das ferramentas confiáveis da main	2026-10-08T22:18:30.0495276Z git version 2.55.0
+Congelar candidata revisada	Post Checkout das ferramentas confiáveis da main	2026-10-08T22:18:30.0516474Z Temporarily overriding HOME='/home/runner/work/_temp/b5831433-f90c-4d31-af11-f64565f54147' before making global git config changes
+Congelar candidata revisada	Post Checkout das ferramentas confiáveis da main	2026-10-08T22:18:30.0517350Z Adding repository directory to the temporary git global config as a safe directory
+Congelar candidata revisada	Post Checkout das ferramentas confiáveis da main	2026-10-08T22:18:30.0519954Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+Congelar candidata revisada	Post Checkout das ferramentas confiáveis da main	2026-10-08T22:18:30.0550391Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Congelar candidata revisada	Post Checkout das ferramentas confiáveis da main	2026-10-08T22:18:30.0576676Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Congelar candidata revisada	Post Checkout das ferramentas confiáveis da main	2026-10-08T22:18:30.0766227Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Congelar candidata revisada	Post Checkout das ferramentas confiáveis da main	2026-10-08T22:18:30.0796660Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Congelar candidata revisada	Post Checkout das ferramentas confiáveis da main	2026-10-08T22:18:30.0994411Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Congelar candidata revisada	Post Checkout das ferramentas confiáveis da main	2026-10-08T22:18:30.1028435Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Congelar candidata revisada	Complete job	﻿2026-10-08T22:18:30.1317855Z Evaluate and set job outputs
+Congelar candidata revisada	Complete job	2026-10-08T22:18:30.1324488Z Cleaning up orphan processes
+Congelar candidata revisada	Complete job	2026-10-08T22:18:30.1514072Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
