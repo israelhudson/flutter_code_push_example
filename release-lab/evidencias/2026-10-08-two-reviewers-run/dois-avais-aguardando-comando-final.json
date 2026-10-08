@@ -1,0 +1,47 @@
+{
+  "observed_at": "2026-10-08T21:32:08.801861+00:00",
+  "run_id": 37845381675,
+  "jobs": [
+    {
+      "name": "Avaliar a mesma candidata / Aprovação obrigatória — fahnassau30 / Gate second",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Avaliar a mesma candidata / Aprovação obrigatória — israelhudson / Gate first",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Avaliar a mesma candidata / PUBLICAR — comando humano separado, resultado SIMULADO",
+      "status": "waiting",
+      "conclusion": null
+    }
+  ],
+  "pending_environments": [
+    {
+      "name": "autorizar-publicacao",
+      "reviewers": [
+        "israelhudson",
+        "fahnassau30"
+      ]
+    }
+  ],
+  "reviews": [
+    {
+      "login": "israelhudson",
+      "state": "approved",
+      "environments": [
+        "aprovacao-israel"
+      ]
+    },
+    {
+      "login": "fahnassau30",
+      "state": "approved",
+      "environments": [
+        "aprovacao-fahnassau30"
+      ]
+    }
+  ],
+  "final_approval_submitted_by_agent": false
+}
