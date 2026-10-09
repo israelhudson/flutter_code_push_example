@@ -9,14 +9,23 @@ Para o fluxo atual com dois gates e comando final separado, seguir
 [FLUXO-DOIS-APROVADORES.md](FLUXO-DOIS-APROVADORES.md); para a comunicação,
 seguir [SLACK-AUTOMATICO.md](SLACK-AUTOMATICO.md).
 
+Estado atual: a entrega [1.7.0](https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.7.0)
+concluiu a jornada B com dois avais, comando final separado e cinco mensagens
+Slack reais. A jornada A, 1.8.0, teve RC1 rejeitada; outro gate continuou
+esperando e exigiu cancelamento operacional. A conciliação preservou `rejected`
+em 0/2 e seu aviso. Correção/RC2 permanecem pendentes; o novo encerramento
+automático e a leitura breve de `sent` concorrente estão em preparação.
+[Fontes e limites atuais](SLACK-AUTOMATICO.md).
+
 ## Laboratório: nenhuma distribuição real
 
 Esta POC adiciona um fluxo de aprovação ao projeto pessoal. Não contém comandos
 Shorebird, credenciais de lojas, TestFlight, Play, tracks ou deploy do aplicativo.
-O resultado final permitido é uma **GitHub pre-release de laboratório**, identificada
-como dry-run, com um recibo que diz `distribution_performed: false`.
+O fluxo atual cria tags e Releases estáveis do laboratório no GitHub, como
+1.7.0; isso não distribui app ou patch. O protótipo de 06/10 abaixo permitia
+somente uma pre-release dry-run com `distribution_performed: false`.
 
-## O caminho GitHub nativo
+## Caminho GitHub nativo do protótipo de 06/10
 
 1. **PR de código:** revisão técnica (Ian no plano do Amulets). Actions gera o
    preview Flutter web, que pode ser baixado e executado localmente.

@@ -193,12 +193,12 @@ jobs:
       - name: Exportar somente o site estático
         run: python3 trusted/deploy/pages_preview.py export --site "$RUNNER_TEMP/pages-site" --output "$RUNNER_TEMP/pages-public"
       - name: Empacotar artefato Pages
-        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0, Node 24
         with:
           path: ${{ runner.temp }}/pages-public
           retention-days: 1
       - name: Publicar preview no Pages
-        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1, Node 24
       - name: Ler identidade dos bytes preparados
         id: web_identity
         env:
@@ -301,6 +301,74 @@ jobs:
         with:
           name: release-lab-approval-second
           path: ${{ runner.temp }}/release-lab/
+          if-no-files-found: ignore
+          retention-days: 90
+          overwrite: false
+  close_rejected_first:
+    name: Encerrar rejeição de Israel — sem aprovar ou publicar
+    needs: [preflight, approve_first]
+    # A rejection must close the run even when the other gate is still waiting.
+    # Technical job failure alone never authorizes cancellation in the helper.
+    if: ${{ !cancelled() && needs.preflight.result == 'success' && needs.approve_first.result == 'failure' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    concurrency:
+      group: release-lab-mutation
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - name: Checkout das ferramentas confiáveis atuais da main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, Node 24
+        with:
+          ref: refs/heads/main
+          path: trusted
+          persist-credentials: false
+      - name: Registrar rejeição oficial e fechar somente este run original
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 trusted/tools/delivery/release_lab.py reconcile-run --evaluation-run-id "$GITHUB_RUN_ID" --close-rejected-run --output "$RUNNER_TEMP/release-lab-rejection-first"
+      - name: Preservar diagnóstico do fechamento
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2, Node 24
+        with:
+          name: release-lab-rejection-first
+          path: ${{ runner.temp }}/release-lab-rejection-first/
+          if-no-files-found: ignore
+          retention-days: 90
+          overwrite: false
+  close_rejected_second:
+    name: Encerrar rejeição de Fabrícia — sem aprovar ou publicar
+    needs: [preflight, approve_second]
+    # A rejection must close the run even when the other gate is still waiting.
+    # Technical job failure alone never authorizes cancellation in the helper.
+    if: ${{ !cancelled() && needs.preflight.result == 'success' && needs.approve_second.result == 'failure' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    concurrency:
+      group: release-lab-mutation
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - name: Checkout das ferramentas confiáveis atuais da main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, Node 24
+        with:
+          ref: refs/heads/main
+          path: trusted
+          persist-credentials: false
+      - name: Registrar rejeição oficial e fechar somente este run original
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 trusted/tools/delivery/release_lab.py reconcile-run --evaluation-run-id "$GITHUB_RUN_ID" --close-rejected-run --output "$RUNNER_TEMP/release-lab-rejection-second"
+      - name: Preservar diagnóstico do fechamento
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2, Node 24
+        with:
+          name: release-lab-rejection-second
+          path: ${{ runner.temp }}/release-lab-rejection-second/
           if-no-files-found: ignore
           retention-days: 90
           overwrite: false

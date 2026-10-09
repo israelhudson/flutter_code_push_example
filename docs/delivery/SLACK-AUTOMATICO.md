@@ -1,11 +1,87 @@
 # Avisos automáticos da candidata no Slack
 
-**Estado: implementação preparada na branch `codex/slack-candidate-notices`,
-aguardando integração e ensaio do fluxo da candidata.** A
+**Estado: fluxo real comprovado na jornada B, entrega 1.7.0.
+A jornada A, entrega 1.8.0, teve RC1 rejeitada e está em correção; RC2 pendente.**
+A implementação foi integrada pela [PR #19](https://github.com/israelhudson/flutter_code_push_example/pull/19). A
 [conexão real já foi validada](CONFIGURAR-SLACK-LAB.md); essa prova isolada
 não confirma os avisos automáticos descritos aqui. Copilot e Plane continuam
 inativos. O material usado vem da comunicação congelada, com contexto explícito
 de PR quando disponível e histórico de commits como fallback.
+
+A integração entrou na main no commit `22b29663d85724ba619600766c78ff38cd3456ec`,
+desde 09/10/2026 01:39:53 UTC (08/10, 22:39:53 em Fortaleza). O
+[CI 37870620819](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37870620819)
+aprovou analyze, testes Flutter e 384 testes da esteira. Isso prova a validação
+do código. A jornada 1.7.0 tem os recibos próprios e as mensagens reais abaixo.
+
+## Provas reais e estado atual
+
+A ordem mudou durante o ensaio: o usuário acionou manualmente os dois gates e
+PUBLICAR na 1.7.0. Essa entrega passou a ser a jornada B, de aprovação direta;
+a jornada A, com rejeição e correção, passou para 1.8.0. As contas do LAB são
+Israel e Fabrícia; as operações nesta sessão não comprovam dois aceites humanos
+independentes da equipe Amulets.
+
+**B — 1.7.0 concluída.** A
+[execução 37870868223](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37870868223)
+terminou `completed/success`. Dois recibos e a autorização final de Israel foram
+conferidos nas fontes oficiais. A [Release v1.7.0](https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.7.0)
+foi confirmada por GET com `draft=false` e `prerelease=false`, publicada em
+08/10/2026 às 22:46:39 de Fortaleza. Tag estável e RC1 apontam ao mesmo código
+`22b29663d85724ba619600766c78ff38cd3456ec`.
+
+Cinco mensagens reais foram observadas no canal `C0C8DUJB52L`, com o bot
+esperado; os links permitem conferir conteúdo, autor e timestamp:
+
+| Aviso | `ts` confirmado | Prova no Slack |
+| --- | --- | --- |
+| RC1 pronta, 0/2 | `1791510213.021329` | [Candidata](https://app.slack.com/archives/C0C8DUJB52L/p1791510213021329) |
+| Aval Israel | `1791510292.512419` | [Primeiro aval](https://app.slack.com/archives/C0C8DUJB52L/p1791510292512419) |
+| Aval Fabrícia | `1791510318.577539` | [Segundo aval](https://app.slack.com/archives/C0C8DUJB52L/p1791510318577539) |
+| 2/2, aguardando PUBLICAR | `1791510321.511589` | [Comando final separado](https://app.slack.com/archives/C0C8DUJB52L/p1791510321511589) |
+| Publicação concluída | `1791510418.960699` | [Publicação](https://app.slack.com/archives/C0C8DUJB52L/p1791510418960699) |
+
+**A — 1.8.0 RC1 rejeitada, RC2 pendente.** A
+[execução 37871436136](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37871436136)
+preparou RC1 em 0/2, reutilizando o snapshot do mesmo código, com novo relatório
+da candidata. Base e fonte eram iguais; o fallback informou “Sem commits
+adicionais desde a base registrada”, sem reaproveitar uma descrição de PR antiga.
+O [aviso de candidata](https://app.slack.com/archives/C0C8DUJB52L/p1791510649910329)
+foi confirmado em `1791510649.910329`.
+
+A review oficial `fahnassau30` rejeitou o gate Fabrícia. O outro gate continuou
+`waiting`, exigindo **cancelamento operacional** do run; nenhum aval Israel
+foi gravado. O [observer 37871944797](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37871944797)
+terminou com sucesso e consolidou `rejected`, preservando sua prioridade sobre
+`cancelled` e mantendo 0/2. Autorização e promoção foram canceladas; não havia
+estável 1.8.0 na captura. O
+[aviso de rejeição](https://app.slack.com/archives/C0C8DUJB52L/p1791510851085829)
+foi confirmado em `1791510851.085829`. O clique da Fabrícia sozinho **não**
+encerrou as esperas nesse run.
+
+Correção por PR, RC2 com novos avais, promoção 1.8.0 e retorno da correção à main
+continuam pendentes. São três RCs e duas estáveis no plano total; este registro
+não acrescenta uma RC negativa extra.
+
+## Correções em preparação após a rejeição
+
+O encerramento automático das esperas está em preparação: reconhecer somente
+rejeição nas reviews oficiais, cancelar as esperas sem registrar avais e
+conciliar o resultado. Treze testes locais do encerramento, 70 testes Slack e actionlint passaram.
+O CI da correção ainda está pendente; o novo encerramento **ainda não tem prova
+negativa real**. A recuperação operacional
+observada acima permanece registrada.
+
+Há também refinamento da disputa entre workers na outbox: até três leituras,
+dentro de três segundos, para reaproveitar um checkpoint `sent` que outro writer
+acabou de confirmar. Essa espera consulta somente a outbox do GitHub, sem novo
+POST Slack. Se continuar `unknown`, a reconciliação ainda exige prova positiva
+no histórico; ausência/timeout não autoriza reenviar. Esse refinamento está em
+preparação e não muda os gates, relatórios ou autorização da entrega.
+
+Uma descrição histórica de PR pode falar de uma limitação já corrigida. Não
+editar a comunicação congelada para escondê-la: separar o texto histórico do
+estado atual observado, com run, review e recibo próprios.
 
 ## Como funciona
 
@@ -99,7 +175,7 @@ A inspeção pode consultar dados do GitHub; `--render-only` não envia ao Slack
 O gerador ilustrativo `slack_preview.py` continua separado e sem credenciais.
 
 Para recuperação operacional, usar o mesmo worker e a mesma RC para drenar a
-fila; ele recupera os recibos confirmados e reconcilia `unknown`. Após integrar,
+fila; ele recupera os recibos confirmados e reconcilia `unknown`. Na main integrada,
 abrir **Actions → LAB - Avisos automáticos no Slack → Run workflow**, selecionar
 `main` e informar a tag da candidata. A opção `render_only` permite inspecionar
 antes do envio. O workflow bloqueia dispatch manual fora da `main`.
@@ -130,21 +206,20 @@ Preservar a outbox e o aviso congelado; obter acesso de leitura/evidência
 e repetir a reconciliação pelo worker. Não trocar chave, apagar `unknown`
 ou executar `chat.postMessage` como contorno.
 
-## Próximo ensaio e aceite
+## Aceite registrado e verificações restantes
 
-As duas próximas jornadas completas autorizadas serão realizadas no GitHub,
-com decisões pelas contas do LAB e avisos reais no Slack:
+As jornadas autorizadas usam decisões nas contas do LAB e avisos reais no Slack:
 
 | Jornada | Percurso a comprovar |
 | --- | --- |
-| A — rejeição e correção | Preparar RC1 → rejeitar → corrigir por PR para a release → preparar RC2 com novos avais → dar comando final → promover estável → retornar a correção à main por PR |
-| B — aprovação direta | Preparar uma nova RC1 → registrar dois avais → dar comando final → promover estável |
+| A — 1.8.0, rejeição e correção | RC1 rejeitada e conciliada após cancelamento operacional → correção por PR para release, RC2 com novos avais, comando final, estável e retorno à main ainda pendentes |
+| B — 1.7.0, aprovação direta | Concluída: RC1 → dois avais → comando final separado → estável; cinco mensagens reais confirmadas |
 
-São **três novas tags RC e duas novas versões estáveis**. As etapas ficam
-pendentes neste manual até a coleta dos runs, decisões, mensagens e recibos;
-o plano não comprova sua execução.
+O plano total preserva **três novas tags RC e duas novas versões estáveis**.
+Duas RC1 e a estável 1.7.0 já têm prova. RC2/estável 1.8.0 e backmerge ficam
+pendentes até a coleta de seus próprios runs, decisões, mensagens e recibos.
 
-1. Após integrar, preparar uma nova RC e guardar run, relatório congelado,
+1. Preparar uma nova RC e guardar run, relatório congelado,
    eventos, outbox, recibos e a mensagem visível no canal privado correto.
 2. Conferir 0/2, 1/2, 2/2 e comando final separado; confirmar que Slack lê
    as transições reais e não muda autorização nem publicação.
@@ -157,8 +232,8 @@ o plano não comprova sua execução.
 6. Criar RC2 e conferir que suas fontes, links, chaves e decisões não reutilizam
    os da RC1; registros antigos permanecem sem backfill.
 
-Guardar a primeira prova desse fluxo antes de declarar os avisos automáticos
-ativos. Os cinco subcasos remotos adversariais da entrega e a validação mobile
+A prova do caminho feliz 1.7.0 confirma o fluxo Slack nesse escopo.
+Os cinco subcasos remotos adversariais da entrega e a validação mobile
 continuam pendentes; o ensaio Slack não os substitui.
 
 ## O que este LAB ensina para a Amulets
@@ -195,14 +270,22 @@ da implementação do laboratório, não garantias atribuídas ao Slack.
 A prova isolada de conexão registrou o aviso de Actions antigas em Node 20.
 O GitHub encerrou esse runtime em 23/09/2026 e passou a usar Node 24;
 [anúncio oficial](https://github.blog/changelog/2026-09-23-node-20-is-no-longer-available-in-github-actions/).
-As versões estáveis abaixo foram conferidas pela API oficial, incluindo
-`runs.using=node24` no `action.yml` do SHA indicado:
+As versões abaixo foram conferidas pela API oficial. As Actions JavaScript usam
+`runs.using=node24`; `upload-pages-artifact` é composite e usa
+`upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f` (v7.0.0), cujo
+`action.yml` usa Node 24:
 
 | Action | Release consultada | SHA para pin |
 | --- | --- | --- |
 | checkout | [v7.0.1](https://github.com/actions/checkout/releases/tag/v7.0.1) | [`3d3c42e5aac5ba805825da76410c181273ba90b1`](https://github.com/actions/checkout/blob/3d3c42e5aac5ba805825da76410c181273ba90b1/action.yml) |
 | upload-artifact | [v7.0.2](https://github.com/actions/upload-artifact/releases/tag/v7.0.2) | [`cf430e030ddbb5b0abf93d22962f4752f3646cd9`](https://github.com/actions/upload-artifact/blob/cf430e030ddbb5b0abf93d22962f4752f3646cd9/action.yml) |
 | download-artifact | [v8.0.2](https://github.com/actions/download-artifact/releases/tag/v8.0.2) | [`9000827ccba6bdab643e8b6fd33ac0654aef8333`](https://github.com/actions/download-artifact/blob/9000827ccba6bdab643e8b6fd33ac0654aef8333/action.yml) |
+| upload-pages-artifact | [v5.0.0](https://github.com/actions/upload-pages-artifact/releases/tag/v5.0.0) | [`fc324d3547104276b827a68afc52ff2a11cc49c9`](https://github.com/actions/upload-pages-artifact/blob/fc324d3547104276b827a68afc52ff2a11cc49c9/action.yml) |
+| deploy-pages | [v5.0.1](https://github.com/actions/deploy-pages/releases/tag/v5.0.1) | [`368f82528645a54fb793d4d04e342629a3f51346`](https://github.com/actions/deploy-pages/blob/368f82528645a54fb793d4d04e342629a3f51346/action.yml) |
+
+Checkout/upload/download foram integrados no PR #19. Os pins Pages estão no
+refinamento em preparação; seu novo preview precisa de validação no fluxo real
+da RC2. Não declarar o aviso Node 20 resolvido antes dessa prova.
 
 Manter os pins completos e validar os inputs utilizados na migração. Checkout
 v7 restringe código de forks em `pull_request_target`/`workflow_run`; não usar
