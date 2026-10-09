@@ -2,7 +2,7 @@
 
 Execução iniciada pelo usuário em 08/10/2026 às 21:12:50 (Fortaleza):
 [37863610149](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37863610149).
-Este relatório registra o ponto de espera pelas duas aprovações; não é um recibo de promoção.
+Este relatório preserva os pontos de espera pelas aprovações e pelo comando final, e registra abaixo a confirmação posterior da promoção.
 
 ## Resultado observado
 
@@ -64,3 +64,9 @@ O verificador de whitespace do Git sinalizou espaços finais presentes nos logs,
 ## Conferência da autorização de Fabrícia
 
 Após a pergunta do usuário, o snapshot `05-*` confirmou que o gate final permanece aguardando e o ambiente `autorizar-publicacao` lista `israelhudson` e `fahnassau30` como revisores autorizados. Fabrícia pode dar o comando final pela própria conta; os dois jobs de aprovação anteriores já passaram. Nenhuma decisão foi enviada pelo agente.
+
+## Confirmação posterior: promoção concluída
+
+A consulta `06-*`, feita durante a análise do histórico de tags, confirmou a execução concluída com sucesso nos oito jobs. As tags `v1.6.0-rc.1` e `v1.6.0` apontam ao mesmo SHA da candidata. A Release `v1.6.0` foi publicada em 08/10/2026 às 21:25:49, Fortaleza. O recibo confirma as aprovações das contas Israel e Fabrícia e o comando final pela conta Israel. `result_simulated=false`, `github_release_published=true` e `distribution_performed=false`: houve promoção real no GitHub, sem distribuição mobile.
+
+Os dois últimos logs e o artefato `release-lab-publication` foram preservados. Os snapshots de espera anteriores continuam válidos para seus respectivos momentos. A proposta de resumo semitécnico, processamento IA independente, fallback e avisos com links foi registrada em [CHANGELOG-E-AVISOS-SLACK.md](../../CHANGELOG-E-AVISOS-SLACK.md); ainda não está ativa nos Actions.

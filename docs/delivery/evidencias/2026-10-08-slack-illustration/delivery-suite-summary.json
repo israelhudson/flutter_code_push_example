@@ -1,0 +1,19 @@
+{
+  "observed_at": "2026-10-09T00:45:47.332182+00:00",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests/delivery",
+    "-v"
+  ],
+  "exit_code": 0,
+  "status": "PASS",
+  "tests_run": 273,
+  "duration_seconds": 190.003,
+  "full_stdout_saved_to_file": false,
+  "source": "exec session 53467 completed with Ran 273 tests in 190.003s; OK",
+  "scope": "Offline delivery suite; no GitHub workflow dispatched or Slack message sent"
+}

@@ -1,0 +1,12 @@
+{
+  "notification_simulated": true,
+  "message_sent": false,
+  "candidate_tag": "v1.6.0-rc.1",
+  "source_sha": "1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935",
+  "run_id": "37863610149",
+  "source_report_sha256": "1ac71795e140ada599233af0132c8631d62a5f6c0a8a1975d52b5172d46c3469",
+  "summary_source": "commits_fallback",
+  "fallback_reason": "ai_not_configured",
+  "approval_url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37863610149",
+  "preview_url": "https://israelhudson.github.io/flutter_code_push_example/snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/"
+}

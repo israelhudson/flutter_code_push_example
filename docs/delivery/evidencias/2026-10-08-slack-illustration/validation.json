@@ -1,0 +1,90 @@
+{
+  "observed_at": "2026-10-09T00:44:06.449143+00:00",
+  "status": "PASS",
+  "source_sha": "1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935",
+  "message_sent": false,
+  "cases": [
+    {
+      "case": "valid_report_even_with_environment_credentials",
+      "command": [
+        "python3",
+        "tools/delivery/slack_preview.py",
+        "--report",
+        "docs/delivery/evidencias/2026-10-08-theme-rc160-live/evaluation-artifact/release-lab/report.json",
+        "--policy",
+        "delivery/release-lab-policy.json",
+        "--output",
+        "docs/delivery/evidencias/2026-10-08-slack-illustration/preview"
+      ],
+      "exit_code": 0
+    },
+    {
+      "case": "wrong_preview_identity",
+      "command": [
+        "python3",
+        "tools/delivery/slack_preview.py",
+        "--report",
+        "docs/delivery/evidencias/2026-10-08-slack-illustration/wrong_preview_identity.json",
+        "--policy",
+        "delivery/release-lab-policy.json",
+        "--output",
+        "build/slack-invalid/wrong_preview_identity"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "output_created": false
+    },
+    {
+      "case": "wrong_preview_host",
+      "command": [
+        "python3",
+        "tools/delivery/slack_preview.py",
+        "--report",
+        "docs/delivery/evidencias/2026-10-08-slack-illustration/wrong_preview_host.json",
+        "--policy",
+        "delivery/release-lab-policy.json",
+        "--output",
+        "build/slack-invalid/wrong_preview_host"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "output_created": false
+    },
+    {
+      "case": "preview_not_confirmed",
+      "command": [
+        "python3",
+        "tools/delivery/slack_preview.py",
+        "--report",
+        "docs/delivery/evidencias/2026-10-08-slack-illustration/preview_not_confirmed.json",
+        "--policy",
+        "delivery/release-lab-policy.json",
+        "--output",
+        "build/slack-invalid/preview_not_confirmed"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "output_created": false
+    },
+    {
+      "case": "unsupported_send",
+      "command": [
+        "python3",
+        "tools/delivery/slack_preview.py",
+        "--report",
+        "docs/delivery/evidencias/2026-10-08-theme-rc160-live/evaluation-artifact/release-lab/report.json",
+        "--policy",
+        "delivery/release-lab-policy.json",
+        "--output",
+        "docs/delivery/evidencias/2026-10-08-slack-illustration/preview",
+        "--send"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2
+    }
+  ],
+  "files": {
+    "tools/delivery/slack_preview.py": "d972922958e1295cbd521c6c7cb4f346c5fef8bd447abf07b0300a7bfce7ec16",
+    ".github/workflows/release-lab-evaluate.yml": "0fdf4b97e82a8b633fc92d4d33d459c572e7261c8f67ac5853a23d317a7be138"
+  }
+}

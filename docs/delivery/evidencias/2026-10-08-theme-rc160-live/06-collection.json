@@ -1,0 +1,59 @@
+{
+  "captured_at": "2026-10-09T00:36:22.573932+00:00",
+  "commands": [
+    {
+      "name": "run",
+      "command": [
+        "gh",
+        "api",
+        "repos/israelhudson/flutter_code_push_example/actions/runs/37863610149"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "jobs",
+      "command": [
+        "gh",
+        "api",
+        "repos/israelhudson/flutter_code_push_example/actions/runs/37863610149/jobs"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "stable-and-rc-refs",
+      "command": [
+        "gh",
+        "api",
+        "repos/israelhudson/flutter_code_push_example/git/matching-refs/tags/v1.6.0"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "release",
+      "command": [
+        "gh",
+        "api",
+        "repos/israelhudson/flutter_code_push_example/releases/tags/v1.6.0"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "state-response",
+      "command": [
+        "gh",
+        "api",
+        "repos/israelhudson/flutter_code_push_example/contents/release-lab/state.json?ref=codex/release-lab-state"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "artifacts",
+      "command": [
+        "gh",
+        "api",
+        "repos/israelhudson/flutter_code_push_example/actions/runs/37863610149/artifacts"
+      ],
+      "exit_code": 0
+    }
+  ]
+}

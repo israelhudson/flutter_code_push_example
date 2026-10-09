@@ -1,0 +1,30 @@
+{
+  "observed_at": "2026-10-09T00:45:02.222189+00:00",
+  "download_command": [
+    "gh",
+    "release",
+    "download",
+    "v1.7.12",
+    "--repo",
+    "rhysd/actionlint",
+    "--pattern",
+    "actionlint_1.7.12_darwin_arm64.tar.gz",
+    "--pattern",
+    "actionlint_1.7.12_checksums.txt",
+    "--dir",
+    "build/slack-preview/actionlint"
+  ],
+  "archive_sha256": "aba9ced2dee8d27fecca3dc7feb1a7f9a52caefa1eb46f3271ea66b6e0e6953f",
+  "official_checksum_verified": true,
+  "tool_version": "1.7.12",
+  "command": [
+    "build/slack-preview/actionlint/actionlint",
+    "-shellcheck=",
+    "-pyflakes=",
+    ".github/workflows/release-lab-evaluate.yml"
+  ],
+  "exit_code": 0,
+  "status": "PASS",
+  "shellcheck_enabled": false,
+  "pyflakes_enabled": false
+}

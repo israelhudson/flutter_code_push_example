@@ -165,6 +165,13 @@ lido e conferido. A branch release não é apagada automaticamente.
 O rótulo “estável” representa promoção no catálogo GitHub deste LAB. Não prova
 que a versão chegou aos clientes do aplicativo ou à produção da Amulets.
 
+**Refinamento planejado em 08/10/2026:** manter as RCs como evidência e apresentar
+um resumo semitécnico no aviso do Slack. A IA roda em workflow independente;
+se o resumo não estiver pronto ao abrir a revisão, usar os commits. Os dois
+revisores leem o mesmo material congelado; saída tardia não o substitui.
+Ver [contrato, exemplo e cenários](CHANGELOG-E-AVISOS-SLACK.md). Esse processamento
+ainda não foi ativado no workflow.
+
 ## Rejeitar ou corrigir uma candidata: RC1 → RC2
 
 1. Registre a rejeição com comentário no Environment, explicando o problema.
