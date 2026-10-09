@@ -1,0 +1,204 @@
+name: Issue · Preparar candidata
+run-name: Issue ${{ inputs.version }} / ${{ inputs.title }}
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Versão experimental, sem prefixo nem RC
+        type: string
+        required: true
+      title:
+        description: Mudança que os revisores vão conferir
+        type: string
+        required: true
+permissions:
+  contents: read
+env:
+  ISSUE_RELEASE_ENABLED: ${{ vars.ISSUE_RELEASE_ENABLED }}
+jobs:
+  prepare:
+    if: vars.ISSUE_RELEASE_ENABLED == 'true' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    concurrency:
+      group: issue-release-mutation
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    outputs:
+      tag: ${{ steps.prepare.outputs.candidate_tag }}
+      source: ${{ steps.prepare.outputs.source_sha }}
+      tooling: ${{ steps.prepare.outputs.tooling_sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: refs/heads/main
+          fetch-depth: 0
+          persist-credentials: false
+      - id: prepare
+        name: Congelar candidata no namespace de teste
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+          TITLE: ${{ inputs.title }}
+        run: python3 tools/delivery/issue_release.py prepare --version "$VERSION" --title "$TITLE" --output "$RUNNER_TEMP/issue-prepare"
+      - if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: issue-preparation
+          path: ${{ runner.temp }}/issue-prepare/
+          retention-days: 90
+          if-no-files-found: ignore
+  build:
+    needs: prepare
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ needs.prepare.outputs.tooling }}
+          path: trusted
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ needs.prepare.outputs.source }}
+          path: app
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./trusted/.github/actions/setup-flutter
+        with:
+          build-inputs: app/delivery/build-inputs.json
+      - name: Testar aplicativo sem token de escrita
+        working-directory: app
+        run: |
+          flutter pub get --enforce-lockfile
+          flutter analyze
+          flutter test
+      - name: Compilar preview do código congelado
+        env:
+          SOURCE_SHA: ${{ needs.prepare.outputs.source }}
+        run: python3 trusted/deploy/pages_preview.py build --repo app --source-sha "$SOURCE_SHA" --site "$RUNNER_TEMP/issue-new-site" > "$RUNNER_TEMP/issue-build.json"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: issue-built-preview
+          path: ${{ runner.temp }}/issue-new-site/
+          retention-days: 90
+  web:
+    needs: [prepare, build]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    # Same Pages lock as the original flow. No shared delivery-state lock.
+    concurrency:
+      group: pages-preview
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      actions: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ needs.prepare.outputs.tooling }}
+          path: trusted
+          persist-credentials: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: issue-built-preview
+          path: ${{ runner.temp }}/issue-incoming
+      - name: Recuperar e importar histórico estático sem sobrescrever
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ needs.prepare.outputs.source }}
+        run: |
+          python3 trusted/deploy/pages_preview.py history --site "$RUNNER_TEMP/issue-site"
+          python3 trusted/tools/delivery/issue_preview.py --incoming "$RUNNER_TEMP/issue-incoming" --site "$RUNNER_TEMP/issue-site" --source-sha "$SOURCE_SHA" > "$RUNNER_TEMP/issue-metadata.json"
+          python3 trusted/deploy/pages_preview.py persist --site "$RUNNER_TEMP/issue-site"
+          python3 trusted/deploy/pages_preview.py export --site "$RUNNER_TEMP/issue-site" --output "$RUNNER_TEMP/issue-public"
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9
+        with:
+          path: ${{ runner.temp }}/issue-public
+      - uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346
+      - name: Confirmar arquivos e identidade pelo link publicado
+        env:
+          SOURCE_SHA: ${{ needs.prepare.outputs.source }}
+        run: |
+          python3 - <<'PY'
+          import json, os, sys
+          from pathlib import Path
+          sys.path.insert(0, 'trusted/deploy')
+          import pages_smoke
+          metadata = json.loads(Path(os.environ['RUNNER_TEMP'], 'issue-metadata.json').read_text())
+          report = pages_smoke.verify(os.environ['SOURCE_SHA'], metadata['web_content_sha256'], metadata['snapshot_manifest_sha256'])
+          Path(os.environ['RUNNER_TEMP'], 'issue-smoke.json').write_text(json.dumps(report))
+          PY
+      - if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: issue-web-proof
+          path: |
+            ${{ runner.temp }}/issue-metadata.json
+            ${{ runner.temp }}/issue-smoke.json
+          retention-days: 90
+          if-no-files-found: ignore
+  open:
+    needs: [prepare, web]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    concurrency:
+      group: issue-release-mutation
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      issues: write
+      actions: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ needs.prepare.outputs.tooling }}
+          persist-credentials: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: issue-web-proof
+          path: ${{ runner.temp }}/issue-web-proof
+      - name: Criar ficha com preview e changelog verificados
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.prepare.outputs.tag }}
+        run: python3 tools/delivery/issue_release.py open --tag "$TAG" --metadata "$RUNNER_TEMP/issue-web-proof/issue-metadata.json" --smoke "$RUNNER_TEMP/issue-web-proof/issue-smoke.json" --output "$RUNNER_TEMP/issue-open"
+      - if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: issue-candidate-report
+          path: ${{ runner.temp }}/issue-open/
+          retention-days: 90
+          if-no-files-found: ignore
+  notify:
+    needs: [prepare, open]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    continue-on-error: true
+    concurrency:
+      group: issue-release-mutation
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: refs/heads/main
+          persist-credentials: false
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          TAG: ${{ needs.prepare.outputs.tag }}
+        run: python3 tools/delivery/issue_release.py notify --tag "$TAG" --output "$RUNNER_TEMP/issue-slack"
+      - if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: issue-slack-preparation
+          path: ${{ runner.temp }}/issue-slack/
+          retention-days: 90
+          if-no-files-found: ignore

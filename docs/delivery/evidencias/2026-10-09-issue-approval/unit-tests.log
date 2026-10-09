@@ -1,0 +1,49 @@
+test_different_bytes_same_sha_are_blocked (test_issue_preview.PreviewTests.test_different_bytes_same_sha_are_blocked) ... ok
+test_new_snapshot_preserves_old_snapshot_and_root (test_issue_preview.PreviewTests.test_new_snapshot_preserves_old_snapshot_and_root) ... ok
+test_same_inputs_and_bytes_reuse_existing_snapshot_without_changing_wrapper (test_issue_preview.PreviewTests.test_same_inputs_and_bytes_reuse_existing_snapshot_without_changing_wrapper) ... ok
+test_wrong_source_artifact_is_blocked (test_issue_preview.PreviewTests.test_wrong_source_artifact_is_blocked) ... ok
+test_all_comment_pages_are_consulted (test_issue_release.IssueTests.test_all_comment_pages_are_consulted) ... ok
+test_approval_requires_recorded_creation_and_same_live_content (test_issue_release.IssueTests.test_approval_requires_recorded_creation_and_same_live_content) ... ok
+test_bot_and_unauthorized_users_do_not_approve (test_issue_release.IssueTests.test_bot_and_unauthorized_users_do_not_approve) ... ok
+test_branch_advance_blocks_old_candidate (test_issue_release.IssueTests.test_branch_advance_blocks_old_candidate) ... ok
+test_cas_conflict_stops_cut_before_tags (test_issue_release.IssueTests.test_cas_conflict_stops_cut_before_tags) ... ok
+test_commands_are_exact_data_not_shell_or_quotes (test_issue_release.IssueTests.test_commands_are_exact_data_not_shell_or_quotes) ... ok
+test_deleted_approval_between_tag_and_release_blocks_release (test_issue_release.IssueTests.test_deleted_approval_between_tag_and_release_blocks_release) ... ok
+test_deleted_approval_is_not_counted (test_issue_release.IssueTests.test_deleted_approval_is_not_counted) ... ok
+test_deleted_command_after_intent_cannot_resume (test_issue_release.IssueTests.test_deleted_command_after_intent_cannot_resume) ... ok
+test_disabled_or_other_ref_is_blocked (test_issue_release.IssueTests.test_disabled_or_other_ref_is_blocked) ... ok
+test_edited_approval_event_can_never_publish (test_issue_release.IssueTests.test_edited_approval_event_can_never_publish) ... ok
+test_edited_publicar_never_starts_publication (test_issue_release.IssueTests.test_edited_publicar_never_starts_publication) ... ok
+test_failed_build_reuses_prepared_cut_without_rc_increment (test_issue_release.IssueTests.test_failed_build_reuses_prepared_cut_without_rc_increment) ... ok
+test_foreign_or_unverified_preview_does_not_open_issue (test_issue_release.IssueTests.test_foreign_or_unverified_preview_does_not_open_issue) ... ok
+test_http_failure_prevents_publication_intent (test_issue_release.IssueTests.test_http_failure_prevents_publication_intent) ... ok
+test_issue_body_tampering_does_not_authorize_and_revokes_old_vote (test_issue_release.IssueTests.test_issue_body_tampering_does_not_authorize_and_revokes_old_vote) ... ok
+test_issue_creation_lost_response_reconciles_single_issue (test_issue_release.IssueTests.test_issue_creation_lost_response_reconciles_single_issue) ... ok
+test_live_comment_changed_after_intent_cannot_resume (test_issue_release.IssueTests.test_live_comment_changed_after_intent_cannot_resume) ... ok
+test_lost_release_response_reconciles_same_effect (test_issue_release.IssueTests.test_lost_release_response_reconciles_same_effect) ... ok
+test_lost_view_patch_repairs_known_body_before_resume (test_issue_release.IssueTests.test_lost_view_patch_repairs_known_body_before_resume) ... ok
+test_missing_rulesets_block_prepare_before_any_effect (test_issue_release.IssueTests.test_missing_rulesets_block_prepare_before_any_effect) ... ok
+test_moved_rc_tag_is_blocked (test_issue_release.IssueTests.test_moved_rc_tag_is_blocked) ... ok
+test_one_active_candidate_does_not_touch_native_state (test_issue_release.IssueTests.test_one_active_candidate_does_not_touch_native_state) ... ok
+test_one_approval_only_enables_separate_command (test_issue_release.IssueTests.test_one_approval_only_enables_separate_command) ... ok
+test_partial_publication_resumes_same_command_once (test_issue_release.IssueTests.test_partial_publication_resumes_same_command_once) ... ok
+test_preview_and_changelog_hash_changes_are_blocked (test_issue_release.IssueTests.test_preview_and_changelog_hash_changes_are_blocked) ... ok
+test_publish_before_approval_requires_another_command (test_issue_release.IssueTests.test_publish_before_approval_requires_another_command) ... ok
+test_publish_without_approval_is_blocked (test_issue_release.IssueTests.test_publish_without_approval_is_blocked) ... ok
+test_pull_request_comments_and_unregistered_issues_ignored (test_issue_release.IssueTests.test_pull_request_comments_and_unregistered_issues_ignored) ... ok
+test_rejection_correction_rc2_does_not_inherit_approval (test_issue_release.IssueTests.test_rejection_correction_rc2_does_not_inherit_approval) ... ok
+test_release_conflict_is_not_overwritten (test_issue_release.IssueTests.test_release_conflict_is_not_overwritten) ... ok
+test_removed_collaborator_permission_invalidates_approval (test_issue_release.IssueTests.test_removed_collaborator_permission_invalidates_approval) ... ok
+test_repeat_version_after_publication_is_blocked (test_issue_release.IssueTests.test_repeat_version_after_publication_is_blocked) ... ok
+test_repeated_publication_has_one_tag_one_release (test_issue_release.IssueTests.test_repeated_publication_has_one_tag_one_release) ... ok
+test_same_account_duplicate_approvals_still_count_once (test_issue_release.IssueTests.test_same_account_duplicate_approvals_still_count_once) ... ok
+test_tag_conflict_is_not_overwritten (test_issue_release.IssueTests.test_tag_conflict_is_not_overwritten) ... ok
+test_truncated_changelog_does_not_open_issue (test_issue_release.IssueTests.test_truncated_changelog_does_not_open_issue) ... ok
+test_unknown_slack_result_is_not_retried (test_issue_release.IssueTests.test_unknown_slack_result_is_not_retried) ... ok
+test_unobserved_or_edited_into_approval_cannot_authorize (test_issue_release.IssueTests.test_unobserved_or_edited_into_approval_cannot_authorize) ... ok
+test_wrong_rc_command_does_not_count (test_issue_release.IssueTests.test_wrong_rc_command_does_not_count) ... ok
+
+----------------------------------------------------------------------
+Ran 44 tests in 0.175s
+
+OK

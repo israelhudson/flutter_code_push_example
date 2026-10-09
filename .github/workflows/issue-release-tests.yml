@@ -1,0 +1,35 @@
+name: Issue · Verificar PR
+on:
+  pull_request:
+    branches: [main, 'test-issue-release/**']
+permissions:
+  contents: read
+jobs:
+  contracts:
+    name: Issue / Verificar contratos
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Testar alternativa por Issue
+        run: python3 -m unittest discover -s tests/delivery -p 'test_issue*.py' -v
+      - name: Checkout das ferramentas revisadas para correções da RC
+        if: startsWith(github.base_ref, 'test-issue-release/')
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: trusted
+          persist-credentials: false
+      - name: Instalar Flutter para conferir correções da RC
+        if: startsWith(github.base_ref, 'test-issue-release/')
+        uses: ./trusted/.github/actions/setup-flutter
+        with:
+          build-inputs: delivery/build-inputs.json
+      - name: Verificar aplicativo corrigido
+        if: startsWith(github.base_ref, 'test-issue-release/')
+        run: |
+          flutter pub get --enforce-lockfile
+          flutter analyze
+          flutter test

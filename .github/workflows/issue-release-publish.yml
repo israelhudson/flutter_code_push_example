@@ -1,0 +1,86 @@
+name: Issue · Publicar candidata
+on:
+  workflow_call:
+    inputs:
+      issue_number:
+        type: string
+        required: true
+      comment_id:
+        type: string
+        required: true
+    secrets:
+      SLACK_BOT_TOKEN:
+        required: false
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: Issue registrada (recuperação, sem criar autorização)
+        type: string
+        required: true
+      comment_id:
+        description: ID do /publicar original, ainda íntegro e autorizado
+        type: string
+        required: true
+permissions:
+  contents: read
+env:
+  ISSUE_RELEASE_ENABLED: ${{ vars.ISSUE_RELEASE_ENABLED }}
+jobs:
+  publish:
+    if: vars.ISSUE_RELEASE_ENABLED == 'true' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    concurrency:
+      group: issue-release-mutation
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      issues: write
+    outputs:
+      tag: ${{ steps.publish.outputs.candidate_tag }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: refs/heads/main
+          persist-credentials: false
+      - name: Reconferir aval e /publicar antes dos efeitos
+        id: publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE: ${{ inputs.issue_number }}
+          COMMENT: ${{ inputs.comment_id }}
+        run: python3 tools/delivery/issue_release.py publish --issue "$ISSUE" --comment "$COMMENT" --output "$RUNNER_TEMP/issue-publication"
+      - if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: issue-publication-receipt
+          path: ${{ runner.temp }}/issue-publication/
+          retention-days: 90
+          if-no-files-found: ignore
+  notify:
+    needs: publish
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    continue-on-error: true
+    concurrency:
+      group: issue-release-mutation
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: refs/heads/main
+          persist-credentials: false
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          TAG: ${{ needs.publish.outputs.tag }}
+        run: python3 tools/delivery/issue_release.py notify --tag "$TAG" --output "$RUNNER_TEMP/issue-slack"
+      - if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: issue-slack-publication
+          path: ${{ runner.temp }}/issue-slack/
+          retention-days: 90
+          if-no-files-found: ignore

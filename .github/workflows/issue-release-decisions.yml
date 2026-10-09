@@ -1,0 +1,84 @@
+name: Issue · Conferir decisões
+on:
+  issue_comment:
+    types: [created, edited, deleted]
+  issues:
+    types: [edited, closed, reopened]
+permissions:
+  contents: read
+env:
+  ISSUE_RELEASE_ENABLED: ${{ vars.ISSUE_RELEASE_ENABLED }}
+jobs:
+  decide:
+    if: vars.ISSUE_RELEASE_ENABLED == 'true' && !github.event.issue.pull_request
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    concurrency:
+      group: issue-release-mutation
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      issues: write
+    outputs:
+      publish: ${{ steps.decide.outputs.publish }}
+      issue: ${{ steps.decide.outputs.issue_number }}
+      comment: ${{ steps.decide.outputs.comment_id }}
+      tag: ${{ steps.decide.outputs.candidate_tag }}
+    steps:
+      # Never checkout a PR, issue-provided ref or comment-provided path.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: refs/heads/main
+          persist-credentials: false
+      - name: Ler o evento como JSON e conferir comentários atuais
+        id: decide
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/delivery/issue_release.py decide --event "$GITHUB_EVENT_PATH" --output "$RUNNER_TEMP/issue-decision"
+      - if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: issue-decision
+          path: ${{ runner.temp }}/issue-decision/
+          retention-days: 90
+          if-no-files-found: ignore
+  publish:
+    needs: decide
+    if: needs.decide.outputs.publish == 'true' && github.event.action == 'created'
+    permissions:
+      contents: write
+      issues: write
+    uses: ./.github/workflows/issue-release-publish.yml
+    with:
+      issue_number: ${{ needs.decide.outputs.issue }}
+      comment_id: ${{ needs.decide.outputs.comment }}
+    secrets:
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  notify:
+    needs: decide
+    if: needs.decide.outputs.tag != '' && needs.decide.outputs.publish != 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    continue-on-error: true
+    concurrency:
+      group: issue-release-mutation
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: refs/heads/main
+          persist-credentials: false
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          TAG: ${{ needs.decide.outputs.tag }}
+        run: python3 tools/delivery/issue_release.py notify --tag "$TAG" --output "$RUNNER_TEMP/issue-slack"
+      - if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: issue-slack-decision
+          path: ${{ runner.temp }}/issue-slack/
+          retention-days: 90
+          if-no-files-found: ignore
