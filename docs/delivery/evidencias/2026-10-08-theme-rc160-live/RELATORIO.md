@@ -60,3 +60,7 @@ Os JSON `01-*` e `02-*` registram snapshots em momentos diferentes. `02-state-re
 Abrir o preview, conferir claro/escuro e recarregar. Ler `evaluation-artifact/release-lab/report.md` antes de aprovar. Cada revisor decide no próprio gate da execução; somente depois das duas decisões aprovadas fica disponível o comando final separado. Não excluir nem mover a tag RC1 para corrigir código.
 
 O verificador de whitespace do Git sinalizou espaços finais presentes nos logs, no diff capturado e nas árvores de acessibilidade. São dados brutos preservados, sem correção de conteúdo; o documento autoral foi verificado separadamente.
+
+## Conferência da autorização de Fabrícia
+
+Após a pergunta do usuário, o snapshot `05-*` confirmou que o gate final permanece aguardando e o ambiente `autorizar-publicacao` lista `israelhudson` e `fahnassau30` como revisores autorizados. Fabrícia pode dar o comando final pela própria conta; os dois jobs de aprovação anteriores já passaram. Nenhuma decisão foi enviada pelo agente.
