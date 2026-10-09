@@ -145,6 +145,11 @@ def check_once(source_sha, expected_web_hash, expected_manifest_hash, get):
     wrapper = EntryHTML(downloaded['index.html'])
     if wrapper.frames != ['app/'] or source_sha.encode() not in downloaded['index.html']:
         raise SmokeError('Página de entrada não identifica/abre o snapshot esperado.')
+    if metadata.get('delivery_tag') is not None:
+        tag = metadata['delivery_tag']
+        if (not isinstance(tag, str) or not re.fullmatch(r'v\d+\.\d+\.\d+-rc\.[1-9]\d*', tag)
+                or tag.encode() not in downloaded['index.html']):
+            raise SmokeError('Identidade da entrega não confere com a página do snapshot.')
     return ['files.json', 'metadata.json', *CRITICAL_FILES]
 
 

@@ -1,0 +1,172 @@
+{
+  "schema": 1,
+  "collected_at": "2026-10-09T01:00:57.837299+00:00",
+  "repository": "israelhudson/flutter_code_push_example",
+  "run_id": "37863610149",
+  "run_status": "completed",
+  "run_conclusion": "success",
+  "run_attempt": 1,
+  "collection_status": "complete",
+  "requests": [
+    {
+      "name": "run",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/runs/37863610149",
+      "exit_code": 0,
+      "stdout_bytes": 14268,
+      "stderr_bytes": 0,
+      "stdout_sha256": "2cd9427dbf6a08db7a2a828fedc03e3b0af288021bf7cc8a0cae9f93b0f77320",
+      "status": "collected"
+    },
+    {
+      "name": "reviews",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/runs/37863610149/approvals",
+      "exit_code": 0,
+      "stdout_bytes": 4390,
+      "stderr_bytes": 0,
+      "stdout_sha256": "3462e0a09c1d8569c1d5c03644411ae09f5a8eac5bd8cfeb701a43975164525c",
+      "status": "collected"
+    },
+    {
+      "name": "jobs-page-1",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/runs/37863610149/jobs?filter=all&per_page=100&page=1",
+      "exit_code": 0,
+      "stdout_bytes": 18700,
+      "stderr_bytes": 0,
+      "stdout_sha256": "e29fd1e0cd94958b973716d901a0b1a9e294d6e795448b9ea192650a721e4b98",
+      "status": "collected"
+    },
+    {
+      "name": "job-113604967206",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/jobs/113604967206/logs",
+      "exit_code": 0,
+      "stdout_bytes": 17878,
+      "stderr_bytes": 0,
+      "stdout_sha256": "a857d0d27c5ed4ce34adf636a15276dce428860d7e09299ee9f6b9056372c93c",
+      "status": "collected"
+    },
+    {
+      "name": "job-113605089015",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/jobs/113605089015/logs",
+      "exit_code": 0,
+      "stdout_bytes": 18911,
+      "stderr_bytes": 0,
+      "stdout_sha256": "db50f4b4d3ee15cadc64664b68c3f318f110dc16bde3da8e7e7bf89653ba5498",
+      "status": "collected"
+    },
+    {
+      "name": "job-113605145062",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/jobs/113605145062/logs",
+      "exit_code": 0,
+      "stdout_bytes": 61412,
+      "stderr_bytes": 0,
+      "stdout_sha256": "c438c9e96e86f1b799b78099849f61824a607c759ae43b7151feb4c93ff46cfb",
+      "status": "collected"
+    },
+    {
+      "name": "job-113605623215",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/jobs/113605623215/logs",
+      "exit_code": 0,
+      "stdout_bytes": 103830,
+      "stderr_bytes": 0,
+      "stdout_sha256": "552a972375a877ef071d2aea647c8495c7ab22663785cd675bccb9649ca7a156",
+      "status": "collected"
+    },
+    {
+      "name": "job-113605983459",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/jobs/113605983459/logs",
+      "exit_code": 0,
+      "stdout_bytes": 16246,
+      "stderr_bytes": 0,
+      "stdout_sha256": "ff73d907071351ce04714a24f208b19efaa12cf22ecaf85f1884adc041f9f69a",
+      "status": "collected"
+    },
+    {
+      "name": "job-113605983575",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/jobs/113605983575/logs",
+      "exit_code": 0,
+      "stdout_bytes": 16253,
+      "stderr_bytes": 0,
+      "stdout_sha256": "0d3955e393d00449f33df79d49bc2f2a53980f58cdf18959aac4d4791c99a553",
+      "status": "collected"
+    },
+    {
+      "name": "job-113607501573",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/jobs/113607501573/logs",
+      "exit_code": 0,
+      "stdout_bytes": 3386,
+      "stderr_bytes": 0,
+      "stdout_sha256": "c6ee25fcd0a3393888c6521aff8b9be375533cfbb2d7fed65c85ed1021279924",
+      "status": "collected"
+    },
+    {
+      "name": "job-113608428316",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/jobs/113608428316/logs",
+      "exit_code": 0,
+      "stdout_bytes": 16125,
+      "stderr_bytes": 0,
+      "stdout_sha256": "e1a72758575dc1a707f951a0d00b6fd25b34f7315ed725267788401bc8b46118",
+      "status": "collected"
+    }
+  ],
+  "jobs": [
+    {
+      "job_id": "113604967206",
+      "name": "Congelar candidata revisada",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "log_status": "collected"
+    },
+    {
+      "job_id": "113605089015",
+      "name": "Avaliar a mesma candidata / Conferir RC ativa, papéis e proteções",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "log_status": "collected"
+    },
+    {
+      "job_id": "113605145062",
+      "name": "Avaliar a mesma candidata / Verificar e compilar web sem permissões de publicação",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "log_status": "collected"
+    },
+    {
+      "job_id": "113605623215",
+      "name": "Avaliar a mesma candidata / Publicar bytes verificados, confirmar preview e changelog",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "log_status": "collected"
+    },
+    {
+      "job_id": "113605983459",
+      "name": "Avaliar a mesma candidata / Registrar aprovação — israelhudson / Gate first",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "log_status": "collected"
+    },
+    {
+      "job_id": "113605983575",
+      "name": "Avaliar a mesma candidata / Registrar aprovação — fahnassau30 / Gate second",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "log_status": "collected"
+    },
+    {
+      "job_id": "113607501573",
+      "name": "Avaliar a mesma candidata / AUTORIZAR PUBLICAR — Israel OU Fabrícia, após os dois avais",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "log_status": "collected"
+    },
+    {
+      "job_id": "113608428316",
+      "name": "Avaliar a mesma candidata / PROMOVER — tag estável e Release no GitHub, sem distribuição mobile",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "log_status": "collected"
+    }
+  ],
+  "read_only": true,
+  "scenario_result": "not_evaluated",
+  "note": "Coleta não transforma falha do workflow em teste aprovado; comparar efeitos e objetivo separadamente."
+}

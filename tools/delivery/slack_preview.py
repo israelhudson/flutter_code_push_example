@@ -12,6 +12,8 @@ import re
 import sys
 from urllib.parse import urlsplit
 
+from changelog_summary import normalized_changes, verify_communication
+
 
 def required_text(value, field, maximum=200):
     if (not isinstance(value, str) or not value.strip() or len(value) > maximum
@@ -58,17 +60,39 @@ def render_preview(report, policy):
     changes = report.get('changes')
     if not isinstance(changes, list):
         raise ValueError('Histórico de commits ausente.')
-    changes = [required_text(change, 'Commit', 500) for change in changes]
+    original_count = len(changes)
+    changes, history_truncated = normalized_changes(changes)
     run_url = 'https://github.com/' + repo + '/actions/runs/' + run_id
     final = ('a tag estável e a Release no GitHub' if mode == 'github_release_only'
              else 'o resultado simulado da entrega')
+    selection = None
+    if 'communication' in report:
+        selection = verify_communication(report)
+    summary_source = selection['source'] if selection else 'commits_fallback'
+    fallback_reason = selection['fallback_reason'] if selection else 'ai_not_configured'
+    labels = {'commits_fallback': 'histórico de commits (fallback)',
+              'pr_sections': 'descrição das PRs (texto copiado; sem IA)',
+              'ai': 'resumo semitécnico por IA, congelado antes da revisão'}
     lines = ['SIMULAÇÃO DE AVISO SLACK — nenhum envio', '', tag + ' — ' + title,
              'Exemplo do aviso emitido quando a candidata fica pronta para revisão.',
              'Consulte o estado atual das decisões na execução do GitHub.', '',
-             'Mudanças — histórico de commits (fallback; resumo IA não configurado):']
-    lines += ['• ' + change for change in changes[:8]] or ['• Sem commits adicionais.']
-    if len(changes) > 8:
-        lines.append('• Histórico completo no relatório da execução.')
+             'Mudanças — ' + labels[summary_source] + ':']
+    if selection:
+        lines.append(selection['text'])
+    else:
+        # Older frozen reports do not include communication. Keep a bounded
+        # literal fallback; never attach later source descriptions to them.
+        size, included = 0, 0
+        for change in changes[:8]:
+            if size + len(change) + 3 > 1300:
+                break
+            lines.append('• ' + change)
+            size += len(change) + 3
+            included += 1
+        if not changes:
+            lines.append('• Sem commits adicionais.')
+        elif included < original_count or history_truncated:
+            lines.append('• Histórico completo no relatório da execução.')
     lines += ['', 'Aprovação da candidata: ' + ' E '.join(people) + '.',
               'Depois dos dois avais, ' + ' OU '.join(publishers)
               + ' pode autorizar ' + final + ' no gate final separado.',
@@ -91,8 +115,12 @@ def render_preview(report, policy):
     metadata = {'notification_simulated': True, 'message_sent': False,
                 'candidate_tag': tag, 'source_sha': source, 'run_id': run_id,
                 'source_report_sha256': hashlib.sha256(canonical.encode()).hexdigest(),
-                'summary_source': 'commits_fallback', 'fallback_reason': 'ai_not_configured',
+                'summary_source': summary_source, 'fallback_reason': fallback_reason,
                 'approval_url': run_url, 'preview_url': preview_url}
+    if selection:
+        metadata.update(context_sha256=selection['context_sha256'],
+                        selected_summary_sha256=selection['selected_sha256'],
+                        optional_result_status=selection['optional_result_status'])
     markdown = '# SIMULAÇÃO — aviso Slack, sem envio\n\n' + body + '\n\n'
     markdown += '[Abrir preview](' + preview_url + ') · [Ler changelog e revisar no GitHub](' + run_url + ')\n'
     return payload, markdown, metadata

@@ -2,6 +2,16 @@
 
 Registro de 08/10/2026, Fortaleza. A `v1.6.0` foi publicada no GitHub com os oito jobs da rodada concluídos, dois avais e comando final separado. A RC1 foi preservada no mesmo commit. Manter as tags RC é uma decisão de rastreabilidade; não é um defeito a corrigir.
 
+## Ajustes implementados na branch nesta rodada
+
+A implementação separa 0/2 e 1/2 de 2/2 aguardando PUBLICAR; concilia rejeição/cancelamento/falha com run/reviews oficiais; preserva histórico e intenções parciais. O manifesto de versões e o material de comunicação entram no relatório congelado, na Release e no recibo. Campos novos não são acrescentados retrospectivamente aos relatórios aprovados.
+
+O contexto de PRs é coletado em job paralelo ao build. Sem resultado válido disponível, o relatório usa commits e preserva o motivo. Seções explícitas do novo template produzem texto semitécnico sem IA. **Copilot, Plane e envio real Slack permanecem inativos.** A ilustração Slack lê o material escolhido, sem alterá-lo nem enviar mensagem.
+
+O [coletor de evidências](COLETAR-EVIDENCIAS.md) está implementado e coletou os oito logs reais da entrega 1.6.0. O orquestrador que julga os cenários negativos ainda é pendente. [Comunicação congelada](COMUNICACAO-CONGELADA.md) e [versionamento por plataforma](VERSIONAMENTO-ENTREGA-E-PLATAFORMAS.md) explicam os contratos e limites.
+
+Integração e ensaios remotos desses ajustes têm prova própria no relatório desta rodada. Testes locais de estados/contexto/versões não comprovam cancelamento real no GitHub ou distribuição mobile. A ordem abaixo permanece como roteiro antes do Amulets, com essas partes de código já preparadas.
+
 ## Ordem de trabalho proposta
 
 | Ordem | Prioridade e momento | Ajuste | Como comprovar |
@@ -20,7 +30,7 @@ P1 não significa que a entrega GitHub 1.6.0 falhou. Indica a ordem de refinamen
 - Gerador `tools/delivery/slack_preview.py`: cria `slack-message.json`, `slack-preview.md` e `slack-preview-metadata.json`, sem operação de envio nem leitura de credenciais.
 - Job opcional **ILUSTRAR AVISO SLACK — simulação, sem envio** no workflow de avaliação. Usa o relatório congelado, mostra o texto no resumo e preserva o artefato `release-lab-slack-preview`.
 - Os jobs de aprovação, autorização e promoção não dependem desse job. Ele tem apenas leitura, timeout curto e falha opcional; não tem Environment de aprovação.
-- O envio real, o resumo IA e a atualização das mensagens continuam pendentes. Configurar o secret não transforma a simulação em remetente. A alteração precisa ser integrada à main antes de aparecer em novas execuções; não foi adicionada retroativamente à rodada 1.6.0.
+- O envio real, o provedor IA e a atualização das mensagens continuam pendentes. A captura paralela e o resumo literal das seções de PR já estão implementados na branch. Configurar o secret não transforma a simulação em remetente. A alteração precisa ser integrada à main antes de aparecer em novas execuções; não foi adicionada retroativamente à rodada 1.6.0.
 
 ## Contrato de comunicação registrado
 

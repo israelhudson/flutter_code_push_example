@@ -31,12 +31,14 @@ class PagesSmokeTests(unittest.TestCase):
         self.elapsed = 0
         self.sleeps = []
 
-    def refresh_manifest(self):
+    def refresh_manifest(self, delivery_tag=None):
         app = {name[4:]: hashlib.sha256(data).hexdigest()
                for name, data in self.files.items() if name.startswith('app/')}
         self.expected = smoke.digest(app)
         metadata = {'schema': 'pages-preview-v1', 'source_sha': self.sha,
                     'snapshot_path': 'snapshots/' + self.sha + '/', 'web_content_sha256': self.expected}
+        if delivery_tag is not None:
+            metadata['delivery_tag'] = delivery_tag
         self.files['metadata.json'] = json.dumps(metadata).encode()
         manifest = {name: hashlib.sha256(data).hexdigest() for name, data in self.files.items()
                     if name != 'files.json'}
@@ -121,6 +123,17 @@ class PagesSmokeTests(unittest.TestCase):
         self.files['app/index.html'] = ('<base href="' + self.href + '"><script src="wrong.js"></script>').encode()
         self.refresh_manifest()
         with self.assertRaisesRegex(smoke.SmokeError, 'Base href/bootstrap'):
+            self.verify()
+
+    def test_delivery_label_must_match_declared_metadata(self):
+        self.refresh_manifest(delivery_tag='v1.7.0-rc.1')
+        with self.assertRaisesRegex(smoke.SmokeError, 'Identidade da entrega'):
+            self.verify()
+        self.files['index.html'] = ('<header>v1.7.0-rc.1 ' + self.sha + '</header><iframe src="app/"></iframe>').encode()
+        self.refresh_manifest(delivery_tag='v1.7.0-rc.1')
+        self.assertTrue(self.verify()['success'])
+        self.refresh_manifest(delivery_tag='latest')
+        with self.assertRaisesRegex(smoke.SmokeError, 'Identidade da entrega'):
             self.verify()
 
     def test_unsafe_manifest_paths_fail_before_asset_requests(self):
