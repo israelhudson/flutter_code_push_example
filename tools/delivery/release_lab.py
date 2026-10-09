@@ -829,6 +829,135 @@ def reconcile_run(policy, evaluation_run_id, folder):
     return value
 
 
+def rejected_gate_proof(policy, record, run_id):
+    """Read an exact original run and a rejection by that gate's own reviewer."""
+    tag = record.get('candidate_tag', '')
+    report = record.get('report', {})
+    if (not TAG.fullmatch(tag) or not SHA.fullmatch(str(record.get('source_sha', '')))
+            or str(record.get('evaluation_run_id')) != run_id
+            or record.get('policy_digest') != digest(policy)
+            or not report or digest(report) != record.get('report_digest')
+            or report.get('candidate_tag') != tag
+            or report.get('source_sha') != record['source_sha']
+            or str(report.get('run_id')) != run_id
+            or report.get('policy_digest') != record['policy_digest']
+            or resolve_tag(tag) != record['source_sha']):
+        raise LabError('Fechamento exige a RC, tag e relatório originais intactos.')
+    frozen_material(record)
+    run = api(endpoint('actions/runs/' + run_id))
+    workflow = str(run.get('path', '')).split('@', 1)[0]
+    if (str(run.get('id')) != run_id or run.get('run_attempt') != 1
+            or identity(run.get('actor', {})) != identity(record['preparer'])
+            or identity(run.get('actor', {})) not in {identity(p) for p in policy['operators']}
+            or workflow not in ('.github/workflows/release-lab-prepare.yml',
+                                '.github/workflows/release-lab-evaluate.yml')
+            or run.get('head_repository', {}).get('full_name') != REPOSITORY):
+        raise LabError('Fechamento não corresponde ao workflow/run/operador original.')
+    reviews = api(endpoint('actions/runs/' + run_id + '/approvals'))
+    ids = {p['environment']: api(endpoint('environments/' + quote(p['environment'], safe='')))['id']
+           for p in policy['approvers']}
+    rejected = []
+    for person in policy['approvers']:
+        decisions = [r for r in reviews if any(e.get('name') == person['environment']
+                     and e.get('id') == ids[person['environment']] for e in r.get('environments', []))]
+        if len(decisions) > 1:
+            raise LabError('Gate tem decisões ambíguas; não cancelar automaticamente.')
+        if decisions and decisions[0].get('state') == 'rejected':
+            user = decisions[0].get('user', {})
+            if user.get('type') != 'User' or identity(user) != identity(person):
+                raise LabError('Rejeição não veio da conta autorizada para esse gate.')
+            rejected.append(decisions[0])
+    return run, reviews, ids, rejected
+
+
+def close_rejected_run(policy, evaluation_run_id, folder):
+    """Persist a proven rejection, then cancel only this still-waiting original run.
+
+    This operator-only listener has no approval/publication capability. The short
+    release-lab-mutation workflow lock excludes preparation/publication while it
+    checks and cancels. Cancellation never executes inside the journal CAS retry.
+    """
+    run_id = str(evaluation_run_id)
+    validate_context(policy, 'close-rejected-run', os.environ)
+    if not re.fullmatch(r'[1-9]\d*', run_id) or os.environ.get('GITHUB_RUN_ID') != run_id:
+        raise LabError('Listener pode fechar somente seu próprio run original.')
+    state, _ = state_read(policy)
+    matches = [r for r in state.get('candidates', {}).values()
+               if str(r.get('evaluation_run_id')) == run_id]
+    if len(matches) != 1:
+        raise LabError('Run original precisa identificar uma única candidata.')
+    original = matches[0]; tag = original['candidate_tag']
+
+    def preserved(current, record):
+        return (current.get('active') != tag or bool(current.get('preparation')) or record.get('status') in
+                ('completed', 'superseded', 'cancelled', 'evaluation_failed')
+                or bool(record.get('publication')) or bool(record.get('receipt')))
+
+    def result(reason, *, status=None, cancelled=False, attempted=False):
+        value = {'schema': 1, 'candidate_tag': tag, 'run_id': run_id,
+                 'status': status or original.get('status'), 'cancel_requested': cancelled,
+                 'cancel_attempted': attempted or cancelled,
+                 'cancel_response': 'accepted' if cancelled else 'unknown' if attempted else 'not_requested',
+                 'approval_or_publication_performed': False, 'reason': reason}
+        output(folder, 'rejection-close.json', value)
+        return value
+
+    if preserved(state, original):
+        return result('preserved_terminal_or_publication')
+    run, _, _, rejected = rejected_gate_proof(policy, original, run_id)
+    if run.get('status') == 'completed':
+        return result('original_run_already_completed')
+    if not rejected:
+        # A job failure alone is not a human rejection. Leave the remaining gate
+        # and journal untouched; the ordinary completion observer owns failures.
+        return result('no_authorized_gate_rejection')
+
+    def register(current):
+        record = current.get('candidates', {}).get(tag)
+        if (not record or record.get('source_sha') != original['source_sha']
+                or record.get('report_digest') != original['report_digest']
+                or str(record.get('evaluation_run_id')) != run_id):
+            raise LabError('Identidade mudou durante o fechamento; não cancelar.')
+        if preserved(current, record):
+            return {'updated': False, 'status': record.get('status')}
+        latest_run, reviews, ids, rejection = rejected_gate_proof(policy, record, run_id)
+        if latest_run.get('status') == 'completed' or not rejection:
+            return {'updated': False, 'status': record.get('status')}
+        invalid = None
+        try:
+            count = approval_count(policy, record, reviews, ids)
+        except LabError as error:
+            count, invalid = 0, str(error)
+        record['status'] = 'rejected'
+        record['status_observation'] = {
+            'run_id': run_id, 'run_attempt': 1, 'run_status': latest_run.get('status'),
+            'run_conclusion': latest_run.get('conclusion'), 'observed_at': now(),
+            'recorded_approvals': count, 'required_approvals': 2, 'final_command_required': True,
+            'projected_status': 'rejected', 'rejected_reviews': rejection,
+            'invalid_receipts': invalid, 'required_jobs': []}
+        record['approval_progress'] = {'recorded': count, 'required': 2, 'final_command_required': True}
+        queue_slack_event(record, 'candidate_rejected')
+        return {'updated': True, 'status': 'rejected'}
+
+    registered = journal_change(policy, register, 'evaluation_rejection_closed', tag)
+    current, _ = state_read(policy); record = current.get('candidates', {}).get(tag)
+    if (not registered.get('updated') or not record or preserved(current, record)
+            or record.get('status') != 'rejected'):
+        return result('preserved_after_recheck', status=(record or {}).get('status'))
+    latest_run, _, _, rejection = rejected_gate_proof(policy, record, run_id)
+    if latest_run.get('status') == 'completed' or not rejection:
+        return result('no_pending_rejected_run', status=record['status'])
+    # GitHub's cancel endpoint succeeds with HTTP 202 and an empty body. Persist
+    # the rejection before this single POST; a lost reply must not repeat it here.
+    result('rejection_persisted_before_cancel', status='rejected')
+    try:
+        api(endpoint('actions/runs/' + run_id + '/cancel'), method='POST')
+    except LabError:
+        result('cancel_response_unknown_rejection_preserved', status='rejected', attempted=True)
+        raise
+    return result('authorized_rejection_closed_original_run', status='rejected', cancelled=True)
+
+
 def frozen_publication(policy, record):
     mode = publication_mode(policy)
     value = record.get('report', {})
@@ -1231,6 +1360,8 @@ def main():
     p = sub.add_parser('prepare'); p.add_argument('--version', required=True); p.add_argument('--title', required=True)
     for name in ('reconcile', 'reconcile-run'):
         p = sub.add_parser(name); p.add_argument('--evaluation-run-id', required=True)
+        if name == 'reconcile-run':
+            p.add_argument('--close-rejected-run', action='store_true')
     for name in ('preflight', 'report', 'approval', 'finish', 'merge-preview', 'recovery-inspect', 'recover'):
         p = sub.add_parser(name); p.add_argument('--candidate-tag', required=True)
         if name == 'report':
@@ -1247,7 +1378,10 @@ def main():
     for p in sub.choices.values():
         p.add_argument('--output', required=True)
     args = parser.parse_args()
-    policy = load_policy(); validate_context(policy, args.command, os.environ)
+    policy = load_policy()
+    operation = ('close-rejected-run' if args.command == 'reconcile-run'
+                 and args.close_rejected_run else args.command)
+    validate_context(policy, operation, os.environ)
     if args.command == 'prepare':
         prepare(policy, args.version, args.title, args.output)
     elif args.command == 'preflight':
@@ -1263,7 +1397,8 @@ def main():
     elif args.command == 'recover':
         recover(policy, args.candidate_tag, args.output, args.report_digest)
     elif args.command in ('reconcile', 'reconcile-run'):
-        reconcile_run(policy, args.evaluation_run_id, args.output)
+        function = close_rejected_run if operation == 'close-rejected-run' else reconcile_run
+        function(policy, args.evaluation_run_id, args.output)
     else:
         finish(policy, args.candidate_tag, args.report_digest, args.output)
 
