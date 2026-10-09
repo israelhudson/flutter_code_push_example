@@ -20,6 +20,12 @@ O comando final depende das duas aprovações. Depois, Israel ou Fabrícia autor
 
 O snapshot `03-*` confirmou que Fabrícia (`fahnassau30`) aprovou e seu job de registro terminou com sucesso. Israel continuava aguardando: uma das duas aprovações, com publicação ainda bloqueada. O histórico inicial vazio foi preservado em `02-reviews.json`; o registro posterior está em `03-reviews.json`.
 
+## Último ponto observado: dois avais, comando final pendente
+
+O snapshot `04-*` confirmou os dois jobs de aprovação concluídos com sucesso. Os recibos de Israel e Fabrícia têm a mesma RC, SHA e digest de relatório. O job **AUTORIZAR PUBLICAR — Israel OU Fabrícia, após os dois avais** está aguardando. Nenhum recibo de publicação foi criado; a consulta da Release `v1.6.0` retornou 404 e somente a tag RC está presente. O journal ainda informa `awaiting_approvals`, apesar dos dois recibos, enquanto o comando final não é dado.
+
+Também vale refinar esse nome de estado para distinguir “aguardando revisores” de “aguardando comando final” na interface e nos relatórios. Nenhuma mudança de estado ou permissão foi aplicada pelo agente.
+
 ## Preview conferido no navegador
 
 [Preview da candidata](https://israelhudson.github.io/flutter_code_push_example/snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/).
