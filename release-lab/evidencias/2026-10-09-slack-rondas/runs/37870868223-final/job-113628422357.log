@@ -1,0 +1,232 @@
+﻿2026-10-09T01:40:02.7700229Z Current runner version: '2.337.0'
+2026-10-09T01:40:02.7717556Z ##[group]Runner Image Provisioner
+2026-10-09T01:40:02.7718146Z Hosted Compute Agent
+2026-10-09T01:40:02.7718567Z Version: 20261002.596
+2026-10-09T01:40:02.7719117Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-09T01:40:02.7719539Z Build Date: 2026-10-02T22:28:27Z
+2026-10-09T01:40:02.7720004Z Worker ID: {c480d33e-3f1d-4293-8d86-799996393071}
+2026-10-09T01:40:02.7720459Z Region: centralus
+2026-10-09T01:40:02.7720824Z Cloud: Azure
+2026-10-09T01:40:02.7721164Z ##[endgroup]
+2026-10-09T01:40:02.7721987Z ##[group]Operating System
+2026-10-09T01:40:02.7722393Z Ubuntu
+2026-10-09T01:40:02.7722770Z 24.04.5
+2026-10-09T01:40:02.7723112Z LTS
+2026-10-09T01:40:02.7723438Z ##[endgroup]
+2026-10-09T01:40:02.7723766Z ##[group]Runner Image
+2026-10-09T01:40:02.7724203Z Image: ubuntu-24.04
+2026-10-09T01:40:02.7724550Z Version: 20261004.327.1
+2026-10-09T01:40:02.7725336Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-09T01:40:02.7726276Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-09T01:40:02.7726904Z ##[endgroup]
+2026-10-09T01:40:02.7727626Z ##[group]GITHUB_TOKEN Permissions
+2026-10-09T01:40:02.7729108Z Actions: read
+2026-10-09T01:40:02.7729458Z Contents: write
+2026-10-09T01:40:02.7730078Z Metadata: read
+2026-10-09T01:40:02.7730462Z ##[endgroup]
+2026-10-09T01:40:02.7731738Z Secret source: Actions
+2026-10-09T01:40:02.7732338Z Cache mode: write
+2026-10-09T01:40:02.7732777Z Prepare workflow directory
+2026-10-09T01:40:02.7932988Z Prepare all required actions
+2026-10-09T01:40:02.7967091Z Getting action download info
+2026-10-09T01:40:03.0059914Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-09T01:40:03.0863996Z Download action repository 'actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9' (SHA:cf430e030ddbb5b0abf93d22962f4752f3646cd9)
+2026-10-09T01:40:03.6819393Z Complete job name: Congelar candidata revisada
+2026-10-09T01:40:03.7521269Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-10-09T01:40:03.7522137Z with:
+2026-10-09T01:40:03.7522474Z   ref: refs/heads/main
+2026-10-09T01:40:03.7522866Z   path: trusted
+2026-10-09T01:40:03.7523267Z   fetch-depth: 0
+2026-10-09T01:40:03.7523655Z   persist-credentials: false
+2026-10-09T01:40:03.7524138Z   repository: israelhudson/flutter_code_push_example
+2026-10-09T01:40:03.7526274Z   token: ***
+2026-10-09T01:40:03.7526518Z   ssh-strict: true
+2026-10-09T01:40:03.7526768Z   ssh-user: git
+2026-10-09T01:40:03.7527004Z   clean: true
+2026-10-09T01:40:03.7527260Z   sparse-checkout-cone-mode: true
+2026-10-09T01:40:03.7527553Z   fetch-tags: false
+2026-10-09T01:40:03.7527804Z   show-progress: true
+2026-10-09T01:40:03.7528058Z   lfs: false
+2026-10-09T01:40:03.7528294Z   submodules: false
+2026-10-09T01:40:03.7528555Z   set-safe-directory: true
+2026-10-09T01:40:03.7529004Z   allow-unsafe-pr-checkout: false
+2026-10-09T01:40:03.7529509Z ##[endgroup]
+2026-10-09T01:40:03.8236102Z Syncing repository: israelhudson/flutter_code_push_example
+2026-10-09T01:40:03.8237877Z ##[group]Getting Git version info
+2026-10-09T01:40:03.8238945Z Working directory is '/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted'
+2026-10-09T01:40:03.8240049Z [command]/usr/bin/git version
+2026-10-09T01:40:03.8334154Z git version 2.55.0
+2026-10-09T01:40:03.8351640Z ##[endgroup]
+2026-10-09T01:40:03.8362252Z Temporarily overriding HOME='/home/runner/work/_temp/dda1ecb6-2783-433c-8fc4-61df96c6736a' before making global git config changes
+2026-10-09T01:40:03.8363593Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T01:40:03.8366112Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+2026-10-09T01:40:03.8445423Z ##[group]Determining repository object format
+2026-10-09T01:40:04.0643559Z ##[endgroup]
+2026-10-09T01:40:04.0644704Z ##[group]Initializing the repository
+2026-10-09T01:40:04.0649296Z [command]/usr/bin/git init /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+2026-10-09T01:40:04.2186676Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-09T01:40:04.2187729Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-09T01:40:04.2188808Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-09T01:40:04.2189500Z hint: call:
+2026-10-09T01:40:04.2189905Z hint:
+2026-10-09T01:40:04.2190405Z hint: 	git config --global init.defaultBranch <name>
+2026-10-09T01:40:04.2190990Z hint:
+2026-10-09T01:40:04.2191551Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-09T01:40:04.2192529Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-09T01:40:04.2193336Z hint:
+2026-10-09T01:40:04.2193799Z hint: 	git branch -m <name>
+2026-10-09T01:40:04.2194279Z hint:
+2026-10-09T01:40:04.2194924Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-09T01:40:04.2198602Z Initialized empty Git repository in /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/
+2026-10-09T01:40:04.2204276Z [command]/usr/bin/git remote add origin https://github.com/israelhudson/flutter_code_push_example
+2026-10-09T01:40:04.2860478Z ##[endgroup]
+2026-10-09T01:40:04.2861729Z ##[group]Disabling automatic garbage collection
+2026-10-09T01:40:04.2862859Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-09T01:40:04.3359543Z ##[endgroup]
+2026-10-09T01:40:04.3360704Z ##[group]Setting up auth
+2026-10-09T01:40:04.3361381Z Removing SSH command configuration
+2026-10-09T01:40:04.3362439Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T01:40:04.3395415Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T01:40:04.3976449Z Removing HTTP extra header
+2026-10-09T01:40:04.3980232Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T01:40:04.4012115Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T01:40:04.4180971Z Removing includeIf entries pointing to credentials config files
+2026-10-09T01:40:04.4183877Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T01:40:04.4214629Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T01:40:04.4391715Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-31906118-a1a9-41d6-af53-deb693d907d3.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-09T01:40:04.4760813Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git.path /home/runner/work/_temp/git-credentials-31906118-a1a9-41d6-af53-deb693d907d3.config
+2026-10-09T01:40:04.5061487Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-31906118-a1a9-41d6-af53-deb693d907d3.config
+2026-10-09T01:40:04.5552105Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/trusted/.git.path /github/runner_temp/git-credentials-31906118-a1a9-41d6-af53-deb693d907d3.config
+2026-10-09T01:40:04.5650353Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/trusted/.git/worktrees/*.path /github/runner_temp/git-credentials-31906118-a1a9-41d6-af53-deb693d907d3.config
+2026-10-09T01:40:04.5749723Z ##[endgroup]
+2026-10-09T01:40:04.5750961Z ##[group]Fetching the repository
+2026-10-09T01:40:04.5754997Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-10-09T01:40:06.8114334Z From https://github.com/israelhudson/flutter_code_push_example
+2026-10-09T01:40:06.8115527Z  * [new branch]      codex/candidate-lab-delivery-2026-10-06-rc.1 -> origin/codex/candidate-lab-delivery-2026-10-06-rc.1
+2026-10-09T01:40:06.8116069Z  * [new branch]      codex/delivery-state    -> origin/codex/delivery-state
+2026-10-09T01:40:06.8116511Z  * [new branch]      codex/fix-lab-release-upload -> origin/codex/fix-lab-release-upload
+2026-10-09T01:40:06.8117018Z  * [new branch]      codex/flutter-sdk-bootstrap -> origin/codex/flutter-sdk-bootstrap
+2026-10-09T01:40:06.8117526Z  * [new branch]      codex/github-release-approval-poc -> origin/codex/github-release-approval-poc
+2026-10-09T01:40:06.8118140Z  * [new branch]      codex/lab-promotion-evidence -> origin/codex/lab-promotion-evidence
+2026-10-09T01:40:06.8118588Z  * [new branch]      codex/lab-release-result -> origin/codex/lab-release-result
+2026-10-09T01:40:06.8119151Z  * [new branch]      codex/lab-reviewed-promotion -> origin/codex/lab-reviewed-promotion
+2026-10-09T01:40:06.8119440Z  * [new branch]      codex/lab-versions      -> origin/codex/lab-versions
+2026-10-09T01:40:06.8119735Z  * [new branch]      codex/laboratory-release-records -> origin/codex/laboratory-release-records
+2026-10-09T01:40:06.8120070Z  * [new branch]      codex/manual-dark-theme -> origin/codex/manual-dark-theme
+2026-10-09T01:40:06.8120387Z  * [new branch]      codex/operational-delivery-preview -> origin/codex/operational-delivery-preview
+2026-10-09T01:40:06.8120694Z  * [new branch]      codex/pages-previews    -> origin/codex/pages-previews
+2026-10-09T01:40:06.8121018Z  * [new branch]      codex/pages-publication-verification -> origin/codex/pages-publication-verification
+2026-10-09T01:40:06.8121673Z  * [new branch]      codex/rc-operator-planning -> origin/codex/rc-operator-planning
+2026-10-09T01:40:06.8121973Z  * [new branch]      codex/release-lab-backport -> origin/codex/release-lab-backport
+2026-10-09T01:40:06.8122317Z  * [new branch]      codex/release-lab-rc2-correction -> origin/codex/release-lab-rc2-correction
+2026-10-09T01:40:06.8122666Z  * [new branch]      codex/release-lab-real-promotion -> origin/codex/release-lab-real-promotion
+2026-10-09T01:40:06.8123001Z  * [new branch]      codex/release-lab-state -> origin/codex/release-lab-state
+2026-10-09T01:40:06.8123315Z  * [new branch]      codex/release-lab-two-approvers -> origin/codex/release-lab-two-approvers
+2026-10-09T01:40:06.8123646Z  * [new branch]      codex/slack-candidate-notices -> origin/codex/slack-candidate-notices
+2026-10-09T01:40:06.8123963Z  * [new branch]      codex/slack-connection-test -> origin/codex/slack-connection-test
+2026-10-09T01:40:06.8124282Z  * [new branch]      docs/estudo-shorebird-amulets -> origin/docs/estudo-shorebird-amulets
+2026-10-09T01:40:06.8124748Z  * [new branch]      feature/shorebird-code-push-setup -> origin/feature/shorebird-code-push-setup
+2026-10-09T01:40:06.8125204Z  * [new branch]      main                    -> origin/main
+2026-10-09T01:40:06.8125519Z  * [new branch]      release/1.4.0           -> origin/release/1.4.0
+2026-10-09T01:40:06.8125869Z  * [new branch]      release/1.5.0           -> origin/release/1.5.0
+2026-10-09T01:40:06.8126143Z  * [new branch]      release/1.6.0           -> origin/release/1.6.0
+2026-10-09T01:40:06.8126546Z  * [new tag]         entrega-0100-rc.1       -> entrega-0100-rc.1
+2026-10-09T01:40:06.8127051Z  * [new tag]         lab/delivery/2026-10-06-rc.1 -> lab/delivery/2026-10-06-rc.1
+2026-10-09T01:40:06.8127284Z  * [new tag]         v1.4.0-rc.1             -> v1.4.0-rc.1
+2026-10-09T01:40:06.8127468Z  * [new tag]         v1.5.0                  -> v1.5.0
+2026-10-09T01:40:06.8127723Z  * [new tag]         v1.5.0-rc.1             -> v1.5.0-rc.1
+2026-10-09T01:40:06.8128075Z  * [new tag]         v1.5.0-rc.2             -> v1.5.0-rc.2
+2026-10-09T01:40:06.8128258Z  * [new tag]         v1.6.0                  -> v1.6.0
+2026-10-09T01:40:06.8128436Z  * [new tag]         v1.6.0-rc.1             -> v1.6.0-rc.1
+2026-10-09T01:40:06.8129611Z ##[endgroup]
+2026-10-09T01:40:06.8129830Z ##[group]Determining the checkout info
+2026-10-09T01:40:06.8130054Z ##[endgroup]
+2026-10-09T01:40:06.8130190Z [command]/usr/bin/git sparse-checkout disable
+2026-10-09T01:40:06.9245081Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-09T01:40:06.9545661Z ##[group]Checking out the ref
+2026-10-09T01:40:06.9550745Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-10-09T01:40:07.0656514Z Switched to a new branch 'main'
+2026-10-09T01:40:07.0658535Z branch 'main' set up to track 'origin/main'.
+2026-10-09T01:40:07.0706864Z ##[endgroup]
+2026-10-09T01:40:07.0709288Z [command]/usr/bin/git log -1 --format=%H
+2026-10-09T01:40:07.0736277Z 22b29663d85724ba619600766c78ff38cd3456ec
+2026-10-09T01:40:07.0745919Z ##[group]Removing auth
+2026-10-09T01:40:07.0746133Z Removing SSH command configuration
+2026-10-09T01:40:07.0747196Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T01:40:07.0778148Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T01:40:07.0967151Z Removing HTTP extra header
+2026-10-09T01:40:07.0969801Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T01:40:07.1002067Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T01:40:07.1187148Z Removing includeIf entries pointing to credentials config files
+2026-10-09T01:40:07.1189921Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T01:40:07.1218182Z includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git.path
+2026-10-09T01:40:07.1218950Z includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/worktrees/*.path
+2026-10-09T01:40:07.1219283Z includeif.gitdir:/github/workspace/trusted/.git.path
+2026-10-09T01:40:07.1219522Z includeif.gitdir:/github/workspace/trusted/.git/worktrees/*.path
+2026-10-09T01:40:07.1225314Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git.path
+2026-10-09T01:40:07.1250833Z /home/runner/work/_temp/git-credentials-31906118-a1a9-41d6-af53-deb693d907d3.config
+2026-10-09T01:40:07.1257842Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-31906118\-a1a9\-41d6\-af53\-deb693d907d3\.config
+2026-10-09T01:40:07.1325710Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/worktrees/*.path
+2026-10-09T01:40:07.1351798Z /home/runner/work/_temp/git-credentials-31906118-a1a9-41d6-af53-deb693d907d3.config
+2026-10-09T01:40:07.1358826Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-31906118\-a1a9\-41d6\-af53\-deb693d907d3\.config
+2026-10-09T01:40:07.1425970Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/trusted/.git.path
+2026-10-09T01:40:07.1450463Z /github/runner_temp/git-credentials-31906118-a1a9-41d6-af53-deb693d907d3.config
+2026-10-09T01:40:07.1457873Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/trusted/.git.path \/github\/runner_temp\/git\-credentials\-31906118\-a1a9\-41d6\-af53\-deb693d907d3\.config
+2026-10-09T01:40:07.1570335Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/trusted/.git/worktrees/*.path
+2026-10-09T01:40:07.1595280Z /github/runner_temp/git-credentials-31906118-a1a9-41d6-af53-deb693d907d3.config
+2026-10-09T01:40:07.1600646Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/trusted/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-31906118\-a1a9\-41d6\-af53\-deb693d907d3\.config
+2026-10-09T01:40:07.1645536Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T01:40:07.1827699Z Removing credentials config '/home/runner/work/_temp/git-credentials-31906118-a1a9-41d6-af53-deb693d907d3.config'
+2026-10-09T01:40:07.1828499Z ##[endgroup]
+2026-10-09T01:40:07.2145153Z ##[group]Run python3 trusted/tools/delivery/release_lab.py prepare --version "$RELEASE_VERSION" --title "$RELEASE_TITLE" --output "$RUNNER_TEMP/release-lab"
+2026-10-09T01:40:07.2145839Z [36;1mpython3 trusted/tools/delivery/release_lab.py prepare --version "$RELEASE_VERSION" --title "$RELEASE_TITLE" --output "$RUNNER_TEMP/release-lab"[0m
+2026-10-09T01:40:07.2481029Z shell: /usr/bin/bash -e {0}
+2026-10-09T01:40:07.2481229Z env:
+2026-10-09T01:40:07.2482862Z   GH_TOKEN: ***
+2026-10-09T01:40:07.2482997Z   RELEASE_VERSION: 1.7.0
+2026-10-09T01:40:07.2483207Z   RELEASE_TITLE: Avisos Slack — ensaio de rejeição e correção
+2026-10-09T01:40:07.2483414Z ##[endgroup]
+2026-10-09T01:40:22.9848473Z {"candidate_tag": "v1.7.0-rc.1", "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec", "tooling_sha": "22b29663d85724ba619600766c78ff38cd3456ec"}
+2026-10-09T01:40:23.0051704Z ##[group]Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+2026-10-09T01:40:23.0051938Z with:
+2026-10-09T01:40:23.0052068Z   name: release-lab-preparation
+2026-10-09T01:40:23.0052249Z   path: /home/runner/work/_temp/release-lab/
+2026-10-09T01:40:23.0052413Z   if-no-files-found: ignore
+2026-10-09T01:40:23.0052549Z   retention-days: 90
+2026-10-09T01:40:23.0052670Z   overwrite: false
+2026-10-09T01:40:23.0052793Z   compression-level: 6
+2026-10-09T01:40:23.0052927Z   include-hidden-files: false
+2026-10-09T01:40:23.0053062Z   archive: true
+2026-10-09T01:40:23.0053180Z ##[endgroup]
+2026-10-09T01:40:23.0944165Z With the provided path, there will be 1 file uploaded
+2026-10-09T01:40:23.0969163Z Artifact name is valid!
+2026-10-09T01:40:23.0969546Z Root directory input is valid!
+2026-10-09T01:40:23.3319049Z Uploading artifact: release-lab-preparation.zip
+2026-10-09T01:40:23.3349729Z Beginning upload of artifact content to blob storage
+2026-10-09T01:40:23.4854332Z Uploaded bytes 575
+2026-10-09T01:40:23.5224995Z Finished uploading artifact content to blob storage!
+2026-10-09T01:40:23.5225534Z SHA256 digest of uploaded artifact is 8e0851399cca3eed4a0d318db040ef01458aec89c715b503ad7c1a26e5396931
+2026-10-09T01:40:23.5226008Z Finalizing artifact upload
+2026-10-09T01:40:23.8542621Z Artifact release-lab-preparation successfully finalized. Artifact ID 11589932276
+2026-10-09T01:40:23.8543282Z Artifact release-lab-preparation has been successfully uploaded! Final size is 575 bytes. Artifact ID is 11589932276
+2026-10-09T01:40:23.8546579Z Artifact download URL: https://github.com/israelhudson/flutter_code_push_example/actions/runs/37870868223/artifacts/11589932276
+2026-10-09T01:40:23.8703165Z Post job cleanup.
+2026-10-09T01:40:23.9289234Z [command]/usr/bin/git version
+2026-10-09T01:40:23.9325653Z git version 2.55.0
+2026-10-09T01:40:23.9358285Z Temporarily overriding HOME='/home/runner/work/_temp/d23855f1-c0ae-439f-9839-a8ef5901eea4' before making global git config changes
+2026-10-09T01:40:23.9359098Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T01:40:23.9362379Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+2026-10-09T01:40:23.9392986Z Removing SSH command configuration
+2026-10-09T01:40:23.9398253Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T01:40:23.9430982Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T01:40:23.9638151Z Removing HTTP extra header
+2026-10-09T01:40:23.9648373Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T01:40:23.9683882Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T01:40:23.9880851Z Removing includeIf entries pointing to credentials config files
+2026-10-09T01:40:23.9885842Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T01:40:23.9917282Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T01:40:24.0221587Z Evaluate and set job outputs
+2026-10-09T01:40:24.0227239Z Set output 'candidate_tag'
+2026-10-09T01:40:24.0228298Z Set output 'source_sha'
+2026-10-09T01:40:24.0229058Z Set output 'tooling_sha'
+2026-10-09T01:40:24.0229433Z Cleaning up orphan processes

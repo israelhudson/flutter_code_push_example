@@ -1,0 +1,535 @@
+{
+  "schema": 1,
+  "timezone": "UTC",
+  "scenario_mapping": {
+    "B": "1.7.0 happy RC1",
+    "A": "1.8.0 rejection RC1, correction PR20/21, RC2 happy, backmerge PR22"
+  },
+  "mapping_change_source": "scenario-mapping-change.json",
+  "events": [
+    {
+      "at": "2026-10-09T01:38:12Z",
+      "kind": "run_completed",
+      "run_id": "37870620819",
+      "conclusion": "success",
+      "collection_status": "complete",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37870620819",
+      "source": "00-pr19-integration-baseline/ci-pr19/run.json",
+      "note": "updated_at is GitHub run metadata; source retains original timestamps."
+    },
+    {
+      "at": "2026-10-09T01:39:32Z",
+      "kind": "pull_request_review",
+      "pr": 19,
+      "review_id": 5464785865,
+      "state": "APPROVED",
+      "actor": "fahnassau30",
+      "exact_head": "b7464e160c38b678eeda29a5c812ee8645307a94",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/pull/19#pullrequestreview-5464785865",
+      "source": "00-pr19-integration-baseline/pr19-reviews.json",
+      "review_independence_verified": false
+    },
+    {
+      "at": "2026-10-09T01:39:53Z",
+      "kind": "pull_request_merged",
+      "pr": 19,
+      "merge_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/pull/19",
+      "source": "00-pr19-integration-baseline/pr19.json"
+    },
+    {
+      "at": "2026-10-09T01:40:15.447743+00:00",
+      "kind": "candidate_created",
+      "candidate_tag": "v1.7.0-rc.1",
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "tooling_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "source": "21-pr22-backmerge-final/state.snapshot.json"
+    },
+    {
+      "at": "2026-10-09T01:43:33.021329+00:00",
+      "kind": "slack_message_observed",
+      "event": "candidate_available",
+      "candidate_tag": "v1.7.0-rc.1",
+      "run_id": "37870868223",
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791510213.021329",
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791510213021329",
+      "outbox_recorded_at": "2026-10-09T01:43:33.244440+00:00",
+      "independent_connector_confirmed": true,
+      "sources": [
+        "03-a-rc1-candidate-notice/slack-channel-read.json",
+        "04-b17-rc1-final-command/slack-channel-read.json",
+        "05-a18-rc1-initial/slack-channel-b17-published.json",
+        "07-a18-rc1-rejection-observed/slack-channel-read.json",
+        "08-a18-rc1-cancel-after-rejection/slack-channel-read.json",
+        "17-a18-rc2-first-approval/slack-channel-read.json",
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ]
+    },
+    {
+      "at": "2026-10-09T01:44:52.512419+00:00",
+      "kind": "slack_message_observed",
+      "event": "approval_first",
+      "candidate_tag": "v1.7.0-rc.1",
+      "run_id": "37870868223",
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791510292.512419",
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791510292512419",
+      "outbox_recorded_at": "2026-10-09T01:44:52.842493+00:00",
+      "independent_connector_confirmed": true,
+      "sources": [
+        "04-b17-rc1-final-command/slack-channel-read.json",
+        "05-a18-rc1-initial/slack-channel-b17-published.json",
+        "07-a18-rc1-rejection-observed/slack-channel-read.json",
+        "08-a18-rc1-cancel-after-rejection/slack-channel-read.json",
+        "17-a18-rc2-first-approval/slack-channel-read.json",
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ]
+    },
+    {
+      "at": "2026-10-09T01:45:18.577539+00:00",
+      "kind": "slack_message_observed",
+      "event": "approval_second",
+      "candidate_tag": "v1.7.0-rc.1",
+      "run_id": "37870868223",
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791510318.577539",
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791510318577539",
+      "outbox_recorded_at": "2026-10-09T01:45:18.875103+00:00",
+      "independent_connector_confirmed": true,
+      "sources": [
+        "04-b17-rc1-final-command/slack-channel-read.json",
+        "05-a18-rc1-initial/slack-channel-b17-published.json",
+        "07-a18-rc1-rejection-observed/slack-channel-read.json",
+        "08-a18-rc1-cancel-after-rejection/slack-channel-read.json",
+        "17-a18-rc2-first-approval/slack-channel-read.json",
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ]
+    },
+    {
+      "at": "2026-10-09T01:45:21.511589+00:00",
+      "kind": "slack_message_observed",
+      "event": "approvals_complete",
+      "candidate_tag": "v1.7.0-rc.1",
+      "run_id": "37870868223",
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791510321.511589",
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791510321511589",
+      "outbox_recorded_at": "2026-10-09T01:45:21.889342+00:00",
+      "independent_connector_confirmed": true,
+      "sources": [
+        "04-b17-rc1-final-command/slack-channel-read.json",
+        "05-a18-rc1-initial/slack-channel-b17-published.json",
+        "07-a18-rc1-rejection-observed/slack-channel-read.json",
+        "08-a18-rc1-cancel-after-rejection/slack-channel-read.json",
+        "17-a18-rc2-first-approval/slack-channel-read.json",
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ]
+    },
+    {
+      "at": "2026-10-09T01:46:39Z",
+      "kind": "stable_release_published",
+      "tag": "v1.7.0",
+      "release_id": 407416169,
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "draft": false,
+      "prerelease": false,
+      "url": "https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.7.0",
+      "source": "21-pr22-backmerge-final/release-v1.7.0.json"
+    },
+    {
+      "at": "2026-10-09T01:46:58.960699+00:00",
+      "kind": "slack_message_observed",
+      "event": "publication_completed",
+      "candidate_tag": "v1.7.0-rc.1",
+      "run_id": "37870868223",
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791510418.960699",
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791510418960699",
+      "outbox_recorded_at": "2026-10-09T01:46:59.275056+00:00",
+      "independent_connector_confirmed": true,
+      "sources": [
+        "05-a18-rc1-initial/slack-channel-b17-published.json",
+        "07-a18-rc1-rejection-observed/slack-channel-read.json",
+        "08-a18-rc1-cancel-after-rejection/slack-channel-read.json",
+        "17-a18-rc2-first-approval/slack-channel-read.json",
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ]
+    },
+    {
+      "at": "2026-10-09T01:47:06Z",
+      "kind": "run_completed",
+      "run_id": "37870868223",
+      "conclusion": "success",
+      "collection_status": "complete",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37870868223",
+      "source": "runs/37870868223-final/run.json",
+      "note": "updated_at is GitHub run metadata; source retains original timestamps."
+    },
+    {
+      "at": "2026-10-09T01:47:15.983107+00:00",
+      "kind": "candidate_created",
+      "candidate_tag": "v1.8.0-rc.1",
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "tooling_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "source": "21-pr22-backmerge-final/state.snapshot.json"
+    },
+    {
+      "at": "2026-10-09T01:47:53Z",
+      "kind": "run_completed",
+      "run_id": "37871443874",
+      "conclusion": "success",
+      "collection_status": "complete",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37871443874",
+      "source": "runs/37871443874-observer-b17-final/run.json",
+      "note": "updated_at is GitHub run metadata; source retains original timestamps."
+    },
+    {
+      "at": "2026-10-09T01:50:49.910329+00:00",
+      "kind": "slack_message_observed",
+      "event": "candidate_available",
+      "candidate_tag": "v1.8.0-rc.1",
+      "run_id": "37871436136",
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791510649.910329",
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791510649910329",
+      "outbox_recorded_at": "2026-10-09T01:50:50.355718+00:00",
+      "independent_connector_confirmed": true,
+      "sources": [
+        "07-a18-rc1-rejection-observed/slack-channel-read.json",
+        "08-a18-rc1-cancel-after-rejection/slack-channel-read.json",
+        "17-a18-rc2-first-approval/slack-channel-read.json",
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ]
+    },
+    {
+      "at": "2026-10-09T01:53:34Z",
+      "kind": "run_completed",
+      "run_id": "37871436136",
+      "conclusion": "cancelled",
+      "collection_status": "partial",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37871436136",
+      "source": "runs/37871436136-rejected-final/run.json",
+      "note": "updated_at is GitHub run metadata; source retains original timestamps."
+    },
+    {
+      "at": "2026-10-09T01:54:11.085829+00:00",
+      "kind": "slack_message_observed",
+      "event": "candidate_rejected",
+      "candidate_tag": "v1.8.0-rc.1",
+      "run_id": "37871436136",
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791510851.085829",
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791510851085829",
+      "outbox_recorded_at": "2026-10-09T01:54:11.399799+00:00",
+      "independent_connector_confirmed": true,
+      "sources": [
+        "08-a18-rc1-cancel-after-rejection/slack-channel-read.json",
+        "17-a18-rc2-first-approval/slack-channel-read.json",
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ]
+    },
+    {
+      "at": "2026-10-09T01:54:17Z",
+      "kind": "run_completed",
+      "run_id": "37871944797",
+      "conclusion": "success",
+      "collection_status": "complete",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37871944797",
+      "source": "runs/37871944797-observer-a18-rejection-final/run.json",
+      "note": "updated_at is GitHub run metadata; source retains original timestamps."
+    },
+    {
+      "at": "2026-10-09T02:03:18Z",
+      "kind": "run_completed",
+      "run_id": "37872583739",
+      "conclusion": "success",
+      "collection_status": "complete",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37872583739",
+      "source": "runs/37872583739-ci-pr21-final/run.json",
+      "note": "updated_at is GitHub run metadata; source retains original timestamps."
+    },
+    {
+      "at": "2026-10-09T02:04:57Z",
+      "kind": "pull_request_review",
+      "pr": 21,
+      "review_id": 5464909930,
+      "state": "APPROVED",
+      "actor": "fahnassau30",
+      "exact_head": "c3101cd22e19f667bb664aad8fccb45cf4bbe1fc",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/pull/21#pullrequestreview-5464909930",
+      "source": "12-pr21-merged-pr20-updated/pr-21-reviews.json",
+      "review_independence_verified": false
+    },
+    {
+      "at": "2026-10-09T02:05:16Z",
+      "kind": "pull_request_merged",
+      "pr": 21,
+      "merge_sha": "fbcf01271e9a03834f7f54bfd92b0ae21745cf0f",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/pull/21",
+      "source": "12-pr21-merged-pr20-updated/pr-21.json"
+    },
+    {
+      "at": "2026-10-09T02:07:13Z",
+      "kind": "run_completed",
+      "run_id": "37872899430",
+      "conclusion": "success",
+      "collection_status": "complete",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37872899430",
+      "source": "runs/37872899430-ci-pr20-final/run.json",
+      "note": "updated_at is GitHub run metadata; source retains original timestamps."
+    },
+    {
+      "at": "2026-10-09T02:07:45Z",
+      "kind": "pull_request_review",
+      "pr": 20,
+      "review_id": 5464923652,
+      "state": "APPROVED",
+      "actor": "fahnassau30",
+      "exact_head": "532ae653afe32f3eb515ab5881e34bdfc22385ac",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/pull/20#pullrequestreview-5464923652",
+      "source": "13-pr20-release-correction-merged/pr-20-reviews.json",
+      "review_independence_verified": false
+    },
+    {
+      "at": "2026-10-09T02:08:04Z",
+      "kind": "pull_request_merged",
+      "pr": 20,
+      "merge_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/pull/20",
+      "source": "13-pr20-release-correction-merged/pr-20.json"
+    },
+    {
+      "at": "2026-10-09T02:09:06.010762+00:00",
+      "kind": "candidate_created",
+      "candidate_tag": "v1.8.0-rc.2",
+      "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+      "tooling_sha": "fbcf01271e9a03834f7f54bfd92b0ae21745cf0f",
+      "source": "21-pr22-backmerge-final/state.snapshot.json"
+    },
+    {
+      "at": "2026-10-09T02:12:39.743739+00:00",
+      "kind": "slack_message_observed",
+      "event": "candidate_superseded",
+      "candidate_tag": "v1.8.0-rc.1",
+      "run_id": "37871436136",
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791511959.743739",
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791511959743739",
+      "outbox_recorded_at": "2026-10-09T02:12:40.131761+00:00",
+      "independent_connector_confirmed": true,
+      "sources": [
+        "17-a18-rc2-first-approval/slack-channel-read.json",
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ]
+    },
+    {
+      "at": "2026-10-09T02:12:45.619999+00:00",
+      "kind": "slack_message_observed",
+      "event": "candidate_available",
+      "candidate_tag": "v1.8.0-rc.2",
+      "run_id": "37873174277",
+      "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791511965.619999",
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791511965619999",
+      "outbox_recorded_at": "2026-10-09T02:12:45.948692+00:00",
+      "independent_connector_confirmed": true,
+      "sources": [
+        "17-a18-rc2-first-approval/slack-channel-read.json",
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ]
+    },
+    {
+      "at": "2026-10-09T02:12:56Z",
+      "kind": "run_completed",
+      "run_id": "37873380596",
+      "conclusion": "success",
+      "collection_status": "complete",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37873380596",
+      "source": "runs/37873380596-ci-pr22-final/run.json",
+      "note": "updated_at is GitHub run metadata; source retains original timestamps."
+    },
+    {
+      "at": "2026-10-09T02:13:26.022189+00:00",
+      "kind": "state_snapshot",
+      "state_commit": "8bf2c4d7e5537345c26aba217087ae8b9291adf2",
+      "state": "v1.8.0-rc.2",
+      "status": "awaiting_approvals",
+      "approval_progress": {
+        "final_command_required": true,
+        "recorded": 0,
+        "required": 2
+      },
+      "final_receipt_present": false,
+      "source": "16-a18-rc2-zero-of-two/state.snapshot.json",
+      "note": "Captured_at is end of collection, not atomic timestamp of every GET."
+    },
+    {
+      "at": "2026-10-09T02:14:10.620989+00:00",
+      "kind": "slack_message_observed",
+      "event": "approval_first",
+      "candidate_tag": "v1.8.0-rc.2",
+      "run_id": "37873174277",
+      "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791512050.620989",
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791512050620989",
+      "outbox_recorded_at": "2026-10-09T02:14:10.968210+00:00",
+      "independent_connector_confirmed": true,
+      "sources": [
+        "17-a18-rc2-first-approval/slack-channel-read.json",
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ]
+    },
+    {
+      "at": "2026-10-09T02:14:33.440326+00:00",
+      "kind": "state_snapshot",
+      "state_commit": "a034949681d3ed8a6a0ef004d1feae15a8a75ff8",
+      "state": "v1.8.0-rc.2",
+      "status": "awaiting_approvals",
+      "approval_progress": {
+        "final_command_required": true,
+        "recorded": 1,
+        "required": 2
+      },
+      "final_receipt_present": false,
+      "source": "17-a18-rc2-first-approval/state.snapshot.json",
+      "note": "Captured_at is end of collection, not atomic timestamp of every GET."
+    },
+    {
+      "at": "2026-10-09T02:15:35.408919+00:00",
+      "kind": "slack_message_observed",
+      "event": "approval_second",
+      "candidate_tag": "v1.8.0-rc.2",
+      "run_id": "37873174277",
+      "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791512135.408919",
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791512135408919",
+      "outbox_recorded_at": "2026-10-09T02:15:35.774746+00:00",
+      "independent_connector_confirmed": true,
+      "sources": [
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ]
+    },
+    {
+      "at": "2026-10-09T02:15:39.599129+00:00",
+      "kind": "slack_message_observed",
+      "event": "approvals_complete",
+      "candidate_tag": "v1.8.0-rc.2",
+      "run_id": "37873174277",
+      "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791512139.599129",
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791512139599129",
+      "outbox_recorded_at": "2026-10-09T02:15:39.948898+00:00",
+      "independent_connector_confirmed": true,
+      "sources": [
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ]
+    },
+    {
+      "at": "2026-10-09T02:16:56.968926+00:00",
+      "kind": "state_snapshot",
+      "state_commit": "a532ff55c2277ef0eee9a5fb4d5bf2aaf5027ad9",
+      "state": "v1.8.0-rc.2",
+      "status": "awaiting_publish_authorization",
+      "approval_progress": {
+        "final_command_required": true,
+        "recorded": 2,
+        "required": 2
+      },
+      "final_receipt_present": false,
+      "source": "18-a18-rc2-two-of-two-before-final/state.snapshot.json",
+      "note": "Captured_at is end of collection, not atomic timestamp of every GET."
+    },
+    {
+      "at": "2026-10-09T02:17:15Z",
+      "kind": "stable_release_published",
+      "tag": "v1.8.0",
+      "release_id": 407429740,
+      "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+      "draft": false,
+      "prerelease": false,
+      "url": "https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.8.0",
+      "source": "21-pr22-backmerge-final/release-v1.8.0.json"
+    },
+    {
+      "at": "2026-10-09T02:17:33.460609+00:00",
+      "kind": "slack_message_observed",
+      "event": "publication_completed",
+      "candidate_tag": "v1.8.0-rc.2",
+      "run_id": "37873174277",
+      "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791512253.460609",
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791512253460609",
+      "outbox_recorded_at": "2026-10-09T02:17:33.684229+00:00",
+      "independent_connector_confirmed": true,
+      "sources": [
+        "20-a18-rc2-published/slack-channel-read.json"
+      ]
+    },
+    {
+      "at": "2026-10-09T02:17:48Z",
+      "kind": "run_completed",
+      "run_id": "37873174277",
+      "conclusion": "success",
+      "collection_status": "complete",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37873174277",
+      "source": "runs/37873174277-rc2-final/run.json",
+      "note": "updated_at is GitHub run metadata; source retains original timestamps."
+    },
+    {
+      "at": "2026-10-09T02:18:19Z",
+      "kind": "run_completed",
+      "run_id": "37873895168",
+      "conclusion": "success",
+      "collection_status": "complete",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37873895168",
+      "source": "runs/37873895168-observer-rc2-final/run.json",
+      "note": "updated_at is GitHub run metadata; source retains original timestamps."
+    },
+    {
+      "at": "2026-10-09T02:18:57Z",
+      "kind": "pull_request_review",
+      "pr": 22,
+      "review_id": 5464978904,
+      "state": "APPROVED",
+      "actor": "fahnassau30",
+      "exact_head": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/pull/22#pullrequestreview-5464978904",
+      "source": "21-pr22-backmerge-final/pr-22-reviews.json",
+      "review_independence_verified": false
+    },
+    {
+      "at": "2026-10-09T02:19:08Z",
+      "kind": "pull_request_merged",
+      "pr": 22,
+      "merge_sha": "cf6d6fa90e228ec10cc6d0d7a204da756d784514",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/pull/22",
+      "source": "21-pr22-backmerge-final/pr-22.json"
+    }
+  ]
+}

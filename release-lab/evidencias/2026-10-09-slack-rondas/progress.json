@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "created_at": "2026-10-09T01:41:33.731739+00:00",
+  "evidence_stage_dirs": [
+    "00-pr19-integration-baseline",
+    "01-a-rc1-prepared",
+    "02-a-rc1-preview-http",
+    "03-a-rc1-candidate-notice",
+    "04-b17-rc1-final-command",
+    "05-a18-rc1-initial",
+    "06-a18-rc1-ready",
+    "07-a18-rc1-rejection-observed",
+    "08-a18-rc1-cancel-after-rejection",
+    "09-a18-rc1-rejected-consolidated",
+    "10-correction-prs-in-progress",
+    "11-pr21-ci-passed",
+    "12-pr21-merged-pr20-updated",
+    "13-pr20-release-correction-merged",
+    "14-a18-rc2-initial",
+    "15-pr22-backmerge-open",
+    "16-a18-rc2-zero-of-two",
+    "17-a18-rc2-first-approval",
+    "18-a18-rc2-two-of-two-before-final",
+    "19-a18-rc2-final-authorized",
+    "20-a18-rc2-published",
+    "21-pr22-backmerge-final"
+  ],
+  "runs": [
+    {
+      "run_id": "37870620819",
+      "conclusion": "success",
+      "collection_status": "complete"
+    },
+    {
+      "run_id": "37870868223",
+      "conclusion": "success",
+      "collection_status": "complete"
+    },
+    {
+      "run_id": "37871436136",
+      "conclusion": "cancelled",
+      "collection_status": "partial"
+    },
+    {
+      "run_id": "37871443874",
+      "conclusion": "success",
+      "collection_status": "complete"
+    },
+    {
+      "run_id": "37871944797",
+      "conclusion": "success",
+      "collection_status": "complete"
+    },
+    {
+      "run_id": "37872583739",
+      "conclusion": "success",
+      "collection_status": "complete"
+    },
+    {
+      "run_id": "37872899430",
+      "conclusion": "success",
+      "collection_status": "complete"
+    },
+    {
+      "run_id": "37873174277",
+      "conclusion": "success",
+      "collection_status": "complete"
+    },
+    {
+      "run_id": "37873380596",
+      "conclusion": "success",
+      "collection_status": "complete"
+    },
+    {
+      "run_id": "37873895168",
+      "conclusion": "success",
+      "collection_status": "complete"
+    }
+  ],
+  "publication_authorized_to_this_agent": true,
+  "scenario_mapping": {
+    "A_rejection_correction": "1.8.0",
+    "B_happy": "1.7.0"
+  },
+  "final_milestones_verified": true,
+  "final_main_sha": "cf6d6fa90e228ec10cc6d0d7a204da756d784514",
+  "totals": {
+    "runs_collected": 10,
+    "real_job_logs": 49,
+    "real_job_log_bytes": 1966637,
+    "real_job_log_lines": 19725,
+    "sent_events_in_outbox": 13,
+    "independent_notifications_confirmed": 13
+  }
+}

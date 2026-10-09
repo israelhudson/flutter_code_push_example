@@ -1,0 +1,22 @@
+{
+  ".github": {
+    "main": "c65cc24d78e9fbe053c6461ade794da53d83c3ca",
+    "release": "c65cc24d78e9fbe053c6461ade794da53d83c3ca",
+    "equal": true
+  },
+  "deploy": {
+    "main": "fb8c7fbdbb183201e5c12e6c3308ec05dd9c536c",
+    "release": "fb8c7fbdbb183201e5c12e6c3308ec05dd9c536c",
+    "equal": true
+  },
+  "tools/delivery": {
+    "main": "3aa8bba3dd9dbef728f10b4a009950b6ca26f5b2",
+    "release": "3aa8bba3dd9dbef728f10b4a009950b6ca26f5b2",
+    "equal": true
+  },
+  "delivery/release-lab-policy.json": {
+    "main": "4836cb9687cd25e605149f11ea75b08f32d1690d",
+    "release": "4836cb9687cd25e605149f11ea75b08f32d1690d",
+    "equal": true
+  }
+}

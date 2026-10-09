@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "stage": "a_rc1_additional_local_http_check",
+  "collected_at": "2026-10-09T01:45:30.497968+00:00",
+  "read_only": true,
+  "candidate_tag": "v1.7.0-rc.1",
+  "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+  "preview_url": "https://israelhudson.github.io/flutter_code_push_example/snapshots/22b29663d85724ba619600766c78ff38cd3456ec/",
+  "status": "collection_timeout",
+  "error_class": "subprocess.TimeoutExpired",
+  "timeout_seconds": 60,
+  "command": [
+    "python3",
+    "deploy/pages_smoke.py",
+    "--source-sha",
+    "22b29663d85724ba619600766c78ff38cd3456ec",
+    "--expected-web-content-sha256",
+    "07b9a36f088e12130db289114ada0de5917db42c0e46834797f62de856157d99",
+    "--expected-snapshot-manifest-sha256",
+    "bbe6e670a858cc060bcc7356e096b0a36ad4d25461f194002e7808215825add9",
+    "--output",
+    "build/slack-integration/live-evidence/02-a-rc1-preview-http/preview-smoke.json"
+  ],
+  "stdout_stderr_captured": false,
+  "http_result_verified_in_this_local_check": false,
+  "workflow_preview_success_preserved_in": "../01-a-rc1-prepared/state.snapshot.json",
+  "note": "Local extra HTTP check did not finish within its 60 second collection budget. Do not reinterpret this as preview deployment failure or negate the separately captured workflow verification."
+}

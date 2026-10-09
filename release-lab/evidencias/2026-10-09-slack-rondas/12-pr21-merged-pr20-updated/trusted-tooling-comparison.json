@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "read_only": true,
+  "trusted_main_commit": "fbcf01271e9a03834f7f54bfd92b0ae21745cf0f",
+  "proposed_release_correction_head": "532ae653afe32f3eb515ab5881e34bdfc22385ac",
+  "compared_prefixes": [
+    "tools/delivery/",
+    "deploy/",
+    ".github/workflows/"
+  ],
+  "compared_files": 33,
+  "differences": [],
+  "exact_blob_match": true,
+  "head_parent_commits": [
+    "2e9e929580e888bbf2075b0460606a97f27d8771",
+    "fbcf01271e9a03834f7f54bfd92b0ae21745cf0f"
+  ],
+  "note": "Readonly blob comparison confirms the proposed release correction includes main tooling; PR still requires its own final head CI and review before merge."
+}

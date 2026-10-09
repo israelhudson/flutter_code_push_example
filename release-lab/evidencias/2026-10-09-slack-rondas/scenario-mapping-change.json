@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "recorded_at": "2026-10-09T01:48:53.163182+00:00",
+  "provenance": "root_executor_message_in_current_session",
+  "original_mapping": {
+    "A_rejection_correction": "1.7.0",
+    "B_happy": "1.8.0"
+  },
+  "actual_mapping": {
+    "A_rejection_correction": "1.8.0",
+    "B_happy": "1.7.0"
+  },
+  "reason": "Root reported that the user manually clicked both approval gates and the separate final publication command for 1.7.0 RC1. The already promoted candidate is preserved, and rejection/correction moves to 1.8.0.",
+  "remote_confirmation": {
+    "run_id": "37870868223",
+    "run_status": "completed",
+    "run_conclusion": "success",
+    "stable_release_id": 407416169,
+    "stable_release_tag": "v1.7.0",
+    "stable_published_at": "2026-10-09T01:46:39Z"
+  },
+  "prior_capture_directories_retained": true,
+  "scenario_titles_not_rewritten": true,
+  "expected_totals": {
+    "rc_tags": 3,
+    "stable_releases": 2,
+    "mobile_distribution": false
+  }
+}

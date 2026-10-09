@@ -1,0 +1,204 @@
+{
+  "build_inputs": {
+    "command": [
+      "flutter",
+      "build",
+      "web",
+      "--release",
+      "--base-href=/"
+    ],
+    "dart_defines": {},
+    "flutter_revision": "924134a44c189315be2148659913dda1671cbe99",
+    "flutter_version": "3.44.1",
+    "network_assets": "Flutter web may fetch engine resources; preview is not an offline or mobile validation",
+    "retention_days": 30,
+    "runner": "ubuntu-24.04",
+    "schema": 1
+  },
+  "candidate_tag": "v1.8.0-rc.2",
+  "changed_paths": [
+    ".github/workflows/release-lab-evaluate.yml",
+    ".github/workflows/release-lab-prepare.yml",
+    "docs/delivery/AJUSTES-E-PRIORIDADES.md",
+    "docs/delivery/CHANGELOG-E-AVISOS-SLACK.md",
+    "docs/delivery/COMUNICACAO-CONGELADA.md",
+    "docs/delivery/CONFIGURAR-SLACK-LAB.md",
+    "docs/delivery/README.md",
+    "docs/delivery/SLACK-AUTOMATICO.md",
+    "lib/features/home/home_page.dart",
+    "test/widget_test.dart",
+    "tests/delivery/test_release_lab_rejection_close.py",
+    "tests/delivery/test_slack_outbox.py",
+    "tools/delivery/release_lab.py",
+    "tools/delivery/slack_outbox.py"
+  ],
+  "changelog_base_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+  "changes": [
+    "Merge pull request #20 from israelhudson/codex/slack-rc2-correction",
+    "Merge remote-tracking branch 'origin/main' into codex/slack-rc2-correction",
+    "Merge pull request #21 from israelhudson/codex/slack-rejection-close",
+    "fix: encerrar esperas após rejeição oficial e confirmar avisos concorrentes",
+    "docs: registrar integração Slack e próximos ensaios autorizados",
+    "fix: esclarecer título da tela no ensaio da RC2"
+  ],
+  "communication": {
+    "context": {
+      "candidate_tag": "v1.8.0-rc.2",
+      "changelog_base_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "changes": [
+        "Merge pull request #20 from israelhudson/codex/slack-rc2-correction",
+        "Merge remote-tracking branch 'origin/main' into codex/slack-rc2-correction",
+        "Merge pull request #21 from israelhudson/codex/slack-rejection-close",
+        "fix: encerrar esperas após rejeição oficial e confirmar avisos concorrentes",
+        "docs: registrar integração Slack e próximos ensaios autorizados",
+        "fix: esclarecer título da tela no ensaio da RC2"
+      ],
+      "collected_at": "2026-10-09T02:09:44.578274+00:00",
+      "commit_count": 6,
+      "context_sha256": "18698ddf967608a426ffc18b5a25c11528b3c754b34e720d51167366d1389806",
+      "history_truncated": false,
+      "schema": 1,
+      "source_history_sha256": "23ef4dce9850293f4015cc412f61aa9afdea9b3568945de3d02d051921b6b6ad",
+      "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+      "sources": [
+        {
+          "body": "## O que muda para quem usa\n\nO título da tela passa de “Laboratório de atualizações” para “Laboratório de entregas”, deixando claro que este laboratório acompanha uma entrega completa. O botão de tema claro/escuro continua funcionando e a escolha continua sendo reiniciada ao abrir novamente o app.\n\nUma recusa oficial agora encerra a espera da candidata. Os avisos do Slack também aguardam brevemente a confirmação de outro envio em andamento, reduzindo alertas transitórios sem reenviar mensagens incertas.\n\n## Como validar\n\nAbrir o preview da nova candidata, conferir o novo título e alternar o tema pelo botão no topo. Esta correção entra primeiro em `release/1.8.0`; a RC1 permanece imutável e a RC2 será criada somente depois do merge, com novos avais.\n\n## Validação\n\nFlutter analyze e Flutter test passaram localmente. O check obrigatório também executa os testes da esteira no GitHub antes do merge.\n\nO PR #21, já integrado à main, passou com 404 testes da esteira, analyze e testes Flutter. Esta branch incorpora essa main revisada para usar as mesmas ferramentas confiáveis na RC2. O check desta nova combinação e a revisão devem passar antes do merge. O fechamento automático por recusa foi validado em testes; seu novo caminho negativo ainda não foi percorrido no GitHub. A recusa da RC1 anterior exigiu um encerramento manual, registrado nas evidências.\n\nEste PR faz parte do ensaio autorizado de recusar a RC1 e corrigir a entrega. A promoção cria uma tag estável e uma Release no GitHub; distribuição mobile permanece fora deste ensaio.",
+          "id": "20",
+          "kind": "pr",
+          "title": "Corrigir a RC recusada e atualizar a esteira para a RC2",
+          "url": "https://github.com/israelhudson/flutter_code_push_example/pull/20"
+        },
+        {
+          "body": "## O que muda para quem usa\n\nSe um dos revisores recusar a candidata, a esteira encerra as esperas restantes e registra a recusa, sem pedir a aprovação da outra pessoa. O aviso do Slack leva ao preview e à decisão dessa mesma candidata. Avisos simultâneos passam a conferir brevemente se a mensagem já foi confirmada por outro job, evitando alertas temporários quando o envio terminou corretamente.\n\n## Como validar\n\nUma recusa oficial deve encerrar somente sua própria execução. Uma falha técnica sem recusa não pode cancelar outra execução nem se transformar em autorização. Um resultado incerto no Slack continua impedindo reenvio automático. Os testes cobrem essas condições; a RC2 deve continuar exigindo dois novos avais e o comando final separado.\n\n## Contexto e limites\n\nO ensaio v1.8.0-rc.1 encontrou a espera indevida pelo segundo gate depois da recusa da Fabrícia. Israel encerrou essa execução operacionalmente; a review de recusa, a tag RC1 e os logs foram preservados, e nenhuma versão estável 1.8.0 foi publicada nesse passo. O novo fechamento automático terá prova local e de CI; a recusa remota desta rodada utilizou o código anterior e não comprova esse novo fechamento.\n\nAs Actions de Pages foram atualizadas para as versões oficiais que usam Node 24. A promoção continua limitada à tag estável e à Release no GitHub. Nenhum app ou patch mobile será distribuído.",
+          "id": "21",
+          "kind": "pr",
+          "title": "Fechar a espera após recusa e reduzir alertas transitórios do Slack",
+          "url": "https://github.com/israelhudson/flutter_code_push_example/pull/21"
+        }
+      ]
+    },
+    "schema": 1,
+    "selection": {
+      "candidate_tag": "v1.8.0-rc.2",
+      "context_sha256": "18698ddf967608a426ffc18b5a25c11528b3c754b34e720d51167366d1389806",
+      "fallback_reason": "ai_not_configured",
+      "optional_result_sha256": null,
+      "optional_result_status": "not_configured",
+      "schema": 1,
+      "selected_at": "2026-10-09T02:12:22.906410+00:00",
+      "selected_sha256": "31a9ab47ca6925c9c778e9415ef3f4db610d6dfb4d5baf73d8a575bb72fae50f",
+      "source": "commits_fallback",
+      "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+      "text": "• Merge pull request #20 from israelhudson/codex/slack-rc2-correction\n• Merge remote-tracking branch 'origin/main' into codex/slack-rc2-correction\n• Merge pull request #21 from israelhudson/codex/slack-rejection-close\n• fix: encerrar esperas após rejeição oficial e confirmar avisos concorrentes\n• docs: registrar integração Slack e próximos ensaios autorizados\n• fix: esclarecer título da tela no ensaio da RC2"
+    }
+  },
+  "communication_context_observation": {
+    "archive_sha256": "b409a52fd340276618d680c60d34bc141f4723d3ef6e3b95869f6fa441d3770b",
+    "artifact_id": 11590064884,
+    "artifact_name": "release-lab-context",
+    "provider_active": false,
+    "run_id": "37873174277",
+    "schema": 1,
+    "status": "available"
+  },
+  "distribution_performed": false,
+  "platforms": {
+    "android": {
+      "base": null,
+      "classification": "Inconclusivo — alvo bloqueado",
+      "evidence": "Git diff acumulado; nenhuma compilação mobile ou comparação Shorebird.",
+      "reason": "Release-base mobile real não configurada.",
+      "target_blocked": true
+    },
+    "ios": {
+      "base": null,
+      "classification": "Inconclusivo — alvo bloqueado",
+      "evidence": "Git diff acumulado; nenhuma compilação mobile ou comparação Shorebird.",
+      "reason": "Release-base mobile real não configurada.",
+      "target_blocked": true
+    }
+  },
+  "policy_digest": "cf976ff2b78fef243c81f99eb3c75cf3e4a191eadc6a2f1efe6f08179dc6c78d",
+  "preview": {
+    "attempts": 1,
+    "snapshot_manifest_sha256": "55bbe8d17dab9d2a6e798160dba682e1662d8e935c327d78f6dc93b536412853",
+    "snapshot_url": "https://israelhudson.github.io/flutter_code_push_example/snapshots/c8d8f337ee390755bcff795d558f8c6f6f19c35b/",
+    "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+    "success": true,
+    "verified_files": [
+      "files.json",
+      "metadata.json",
+      "index.html",
+      "app/index.html",
+      "app/flutter_bootstrap.js",
+      "app/main.dart.js"
+    ],
+    "web_content_sha256": "00063b7f8fa10405f43fce2f458a42d4ff0d762898e11ef5a8725a4569675069"
+  },
+  "preview_original_delivery_tag": "v1.8.0-rc.2",
+  "publication_mode": "github_release_only",
+  "pubspec_version": "1.1.0+2",
+  "result_simulated": false,
+  "run_id": "37873174277",
+  "schema": 1,
+  "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+  "stable_tag": "v1.8.0",
+  "title": "Laboratório de entregas — correção da candidata recusada",
+  "version": "1.8.0",
+  "version_manifest": {
+    "delivery": {
+      "candidate_tag": "v1.8.0-rc.2",
+      "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+      "stable_tag": "v1.8.0"
+    },
+    "distribution_performed": false,
+    "note": "A tag identifica a entrega. Versões e resultados de cada plataforma têm identidade própria.",
+    "platforms": {
+      "android": {
+        "distribution_status": "not_performed",
+        "evidence": "Base configurada é intenção; nenhum build mobile, patch ou distribuição foi executado.",
+        "observed_app_version": null,
+        "patch_number": null,
+        "patch_status": "not_generated",
+        "planned_app_version": null,
+        "platform": "android",
+        "provider_receipt": null,
+        "shorebird_base": null
+      },
+      "ios": {
+        "distribution_status": "not_performed",
+        "evidence": "Base configurada é intenção; nenhum build mobile, patch ou distribuição foi executado.",
+        "observed_app_version": null,
+        "patch_number": null,
+        "patch_status": "not_generated",
+        "planned_app_version": null,
+        "platform": "ios",
+        "provider_receipt": null,
+        "shorebird_base": null
+      },
+      "web": {
+        "app_version": {
+          "build_number": "2",
+          "release_version": "1.1.0+2",
+          "version": "1.1.0"
+        },
+        "build_id": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+        "distribution_status": "preview_only",
+        "patch_number": null,
+        "platform": "web",
+        "preview_url": "https://israelhudson.github.io/flutter_code_push_example/snapshots/c8d8f337ee390755bcff795d558f8c6f6f19c35b/",
+        "preview_verified": true,
+        "shorebird_status": "not_applicable",
+        "snapshot_manifest_sha256": "55bbe8d17dab9d2a6e798160dba682e1662d8e935c327d78f6dc93b536412853",
+        "web_content_sha256": "00063b7f8fa10405f43fce2f458a42d4ff0d762898e11ef5a8725a4569675069"
+      }
+    },
+    "pubspec_metadata": {
+      "build_number": "2",
+      "release_version": "1.1.0+2",
+      "version": "1.1.0"
+    },
+    "schema": "delivery-platform-versions-v1"
+  },
+  "version_manifest_digest": "a4f860746918d33a44e8dd26a896849960dacb0b3c046021616e9e27ca0060a3"
+}

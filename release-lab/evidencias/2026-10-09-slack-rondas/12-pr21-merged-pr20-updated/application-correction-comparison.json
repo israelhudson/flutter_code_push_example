@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "read_only": true,
+  "main_commit": "fbcf01271e9a03834f7f54bfd92b0ae21745cf0f",
+  "proposed_release_head": "532ae653afe32f3eb515ab5881e34bdfc22385ac",
+  "differences_from_updated_main": [
+    {
+      "path": "lib/features/home/home_page.dart",
+      "main_blob": "a4eb15e658552a7976e077dccb40da9d82e668a2",
+      "proposed_release_blob": "7734cf57b0651d805a6fa1649eacf960d2f2a496"
+    },
+    {
+      "path": "test/widget_test.dart",
+      "main_blob": "a5a61bf4a3636740624f542de2d45732ee6d6541",
+      "proposed_release_blob": "f42fe5c7a5d6838721ff363025ccbea5bfab216e"
+    }
+  ]
+}

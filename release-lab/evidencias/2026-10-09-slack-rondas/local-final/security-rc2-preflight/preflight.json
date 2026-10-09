@@ -1,0 +1,269 @@
+{
+  "schema": 1,
+  "observed_at": "2026-10-09T02:07:48.731560+00:00",
+  "scope": "read-only local and GitHub audit; no dispatch, approval, merge, tags or publication",
+  "head": "532ae653afe32f3eb515ab5881e34bdfc22385ac",
+  "trusted_main": "fbcf01271e9a03834f7f54bfd92b0ae21745cf0f",
+  "remote_main": "fbcf01271e9a03834f7f54bfd92b0ae21745cf0f",
+  "remote_release_before_merge": "22b29663d85724ba619600766c78ff38cd3456ec",
+  "critical_trees": {
+    ".github": {
+      "candidate": "c65cc24d78e9fbe053c6461ade794da53d83c3ca",
+      "trusted_main": "c65cc24d78e9fbe053c6461ade794da53d83c3ca",
+      "identical": true
+    },
+    "deploy": {
+      "candidate": "fb8c7fbdbb183201e5c12e6c3308ec05dd9c536c",
+      "trusted_main": "fb8c7fbdbb183201e5c12e6c3308ec05dd9c536c",
+      "identical": true
+    },
+    "tools/delivery": {
+      "candidate": "3aa8bba3dd9dbef728f10b4a009950b6ca26f5b2",
+      "trusted_main": "3aa8bba3dd9dbef728f10b4a009950b6ca26f5b2",
+      "identical": true
+    },
+    "delivery/release-lab-policy.json": {
+      "candidate": "4836cb9687cd25e605149f11ea75b08f32d1690d",
+      "trusted_main": "4836cb9687cd25e605149f11ea75b08f32d1690d",
+      "identical": true
+    },
+    "delivery/build-inputs.json": {
+      "candidate": "463fd9d5aa444db1ba1b8fc5fa7041b27f93218e",
+      "trusted_main": "463fd9d5aa444db1ba1b8fc5fa7041b27f93218e",
+      "identical": true
+    },
+    "pubspec.lock": {
+      "candidate": "e710f2dba35a5ba70bf5e4d8bcb1a81efe54fa23",
+      "trusted_main": "e710f2dba35a5ba70bf5e4d8bcb1a81efe54fa23",
+      "identical": true
+    },
+    "shorebird.yaml": {
+      "candidate": "fa0126aedb23a2826e77cdc8b4b2c3103a82a289",
+      "trusted_main": "fa0126aedb23a2826e77cdc8b4b2c3103a82a289",
+      "identical": true
+    }
+  },
+  "policy_digest": "cf976ff2b78fef243c81f99eb3c75cf3e4a191eadc6a2f1efe6f08179dc6c78d",
+  "environment_ids": {
+    "aprovacao-israel": 23819079490,
+    "aprovacao-fahnassau30": 23819080337,
+    "autorizar-publicacao": 23819081174
+  },
+  "identities": {
+    "operators": [
+      {
+        "login": "israelhudson",
+        "id": 18661493
+      }
+    ],
+    "approvers": [
+      {
+        "role": "first",
+        "login": "israelhudson",
+        "id": 18661493,
+        "environment": "aprovacao-israel"
+      },
+      {
+        "role": "second",
+        "login": "fahnassau30",
+        "id": 339824994,
+        "environment": "aprovacao-fahnassau30"
+      }
+    ],
+    "publishers": [
+      {
+        "login": "israelhudson",
+        "id": 18661493
+      },
+      {
+        "login": "fahnassau30",
+        "id": 339824994
+      }
+    ]
+  },
+  "protections_check": "PASS",
+  "version_availability_readonly": "PASS",
+  "target_version": "1.8.0",
+  "candidate_state": {
+    "active": "v1.8.0-rc.1",
+    "status": "rejected",
+    "evaluation_run_id": "37871436136",
+    "report_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+    "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+    "preparation_present": false,
+    "publication_intents_incomplete": 0,
+    "original_run_status": "completed",
+    "original_run_conclusion": "cancelled"
+  },
+  "tags": {
+    "v1.8.0-rc.1": {
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "journal_source_matches": true
+    },
+    "v1.8.0-rc.2": {
+      "exists_before_cut": false
+    }
+  },
+  "existing_frozen_material": {
+    "manifest_digest": "e25b3c2a8f9a10ce401f807e646c4e980682d7d2c4d1dd753cd5b353511cb928",
+    "distribution_performed": false,
+    "mobile_bases": {
+      "android": null,
+      "ios": null
+    },
+    "manifest_mobile_distribution": [
+      "not_performed",
+      "not_performed"
+    ],
+    "verification": "PASS through frozen_material: manifest and any optional communication validate against the immutable report"
+  },
+  "historical_record_fingerprints": {
+    "v1.6.0-rc.1": {
+      "status": "completed",
+      "source_sha": "1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935",
+      "report_digest": "1ac71795e140ada599233af0132c8631d62a5f6c0a8a1975d52b5172d46c3469",
+      "receipt_digest": "bd90c8d2936e34809c2ec5cd2bc480e7ccb3595a7850a1ad60a17d96dba62132",
+      "queued_events": []
+    },
+    "v1.8.0-rc.1": {
+      "status": "rejected",
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "report_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+      "receipt_digest": null,
+      "queued_events": [
+        "candidate_available",
+        "candidate_rejected"
+      ]
+    }
+  },
+  "read_api_calls": [
+    {
+      "path": "repos/israelhudson/flutter_code_push_example/environments/aprovacao-israel",
+      "method": "GET"
+    },
+    {
+      "path": "repos/israelhudson/flutter_code_push_example/environments/aprovacao-israel/deployment-branch-policies",
+      "method": "GET"
+    },
+    {
+      "path": "repos/israelhudson/flutter_code_push_example/environments/aprovacao-fahnassau30",
+      "method": "GET"
+    },
+    {
+      "path": "repos/israelhudson/flutter_code_push_example/environments/aprovacao-fahnassau30/deployment-branch-policies",
+      "method": "GET"
+    },
+    {
+      "path": "repos/israelhudson/flutter_code_push_example/environments/autorizar-publicacao",
+      "method": "GET"
+    },
+    {
+      "path": "repos/israelhudson/flutter_code_push_example/environments/autorizar-publicacao/deployment-branch-policies",
+      "method": "GET"
+    },
+    {
+      "path": "repos/israelhudson/flutter_code_push_example/rulesets",
+      "method": "GET"
+    },
+    {
+      "path": "repos/israelhudson/flutter_code_push_example/rulesets/24751353",
+      "method": "GET"
+    },
+    {
+      "path": "repos/israelhudson/flutter_code_push_example/rulesets/24751354",
+      "method": "GET"
+    },
+    {
+      "path": "repos/israelhudson/flutter_code_push_example/rulesets/24751515",
+      "method": "GET"
+    },
+    {
+      "path": "repos/israelhudson/flutter_code_push_example/rulesets/24752630",
+      "method": "GET"
+    },
+    {
+      "path": "repos/israelhudson/flutter_code_push_example/contents/release-lab/state.json?ref=codex%2Frelease-lab-state",
+      "method": "GET"
+    },
+    {
+      "path": "repos/israelhudson/flutter_code_push_example/git/matching-refs/tags/v",
+      "method": "GET"
+    },
+    {
+      "path": "repos/israelhudson/flutter_code_push_example/releases?per_page=100&page=1",
+      "method": "GET"
+    },
+    {
+      "path": "repos/israelhudson/flutter_code_push_example/git/ref/tags/v1.8.0-rc.1",
+      "method": "GET"
+    },
+    {
+      "path": "repos/israelhudson/flutter_code_push_example/git/ref/tags/v1.8.0-rc.2",
+      "method": "GET"
+    },
+    {
+      "path": "repos/israelhudson/flutter_code_push_example/git/ref/heads/main",
+      "method": "GET"
+    },
+    {
+      "path": "repos/israelhudson/flutter_code_push_example/git/ref/heads/release/1.8.0",
+      "method": "GET"
+    },
+    {
+      "path": "repos/israelhudson/flutter_code_push_example/actions/runs/37871436136",
+      "method": "GET"
+    }
+  ],
+  "post_merge": {
+    "release_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+    "observed_at": "2026-10-09T02:09:32.080678+00:00",
+    "critical_trees": {
+      ".github": {
+        "release": "c65cc24d78e9fbe053c6461ade794da53d83c3ca",
+        "trusted_main": "c65cc24d78e9fbe053c6461ade794da53d83c3ca",
+        "identical": true
+      },
+      "deploy": {
+        "release": "fb8c7fbdbb183201e5c12e6c3308ec05dd9c536c",
+        "trusted_main": "fb8c7fbdbb183201e5c12e6c3308ec05dd9c536c",
+        "identical": true
+      },
+      "tools/delivery": {
+        "release": "3aa8bba3dd9dbef728f10b4a009950b6ca26f5b2",
+        "trusted_main": "3aa8bba3dd9dbef728f10b4a009950b6ca26f5b2",
+        "identical": true
+      },
+      "delivery/release-lab-policy.json": {
+        "release": "4836cb9687cd25e605149f11ea75b08f32d1690d",
+        "trusted_main": "4836cb9687cd25e605149f11ea75b08f32d1690d",
+        "identical": true
+      },
+      "delivery/build-inputs.json": {
+        "release": "463fd9d5aa444db1ba1b8fc5fa7041b27f93218e",
+        "trusted_main": "463fd9d5aa444db1ba1b8fc5fa7041b27f93218e",
+        "identical": true
+      },
+      "pubspec.lock": {
+        "release": "e710f2dba35a5ba70bf5e4d8bcb1a81efe54fa23",
+        "trusted_main": "e710f2dba35a5ba70bf5e4d8bcb1a81efe54fa23",
+        "identical": true
+      },
+      "shorebird.yaml": {
+        "release": "fa0126aedb23a2826e77cdc8b4b2c3103a82a289",
+        "trusted_main": "fa0126aedb23a2826e77cdc8b4b2c3103a82a289",
+        "identical": true
+      }
+    },
+    "pr20_state": "MERGED",
+    "pr20_review_decision": "APPROVED",
+    "ci_run": "37872899430",
+    "ci_status": "completed",
+    "ci_conclusion": "success",
+    "ci_head": "532ae653afe32f3eb515ab5881e34bdfc22385ac"
+  },
+  "findings": [],
+  "live_validation_pending": [
+    "New unilateral rejection listener was added after RC1 began; RC1 closing used manual cancellation. Do not call automatic closing live-proven yet.",
+    "New RC2 must prove a new frozen report, two fresh account reviews, separate final command and exact source/tag/Release receipt."
+  ]
+}

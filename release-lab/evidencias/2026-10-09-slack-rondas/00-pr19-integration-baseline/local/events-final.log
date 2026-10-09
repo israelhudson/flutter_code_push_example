@@ -1,0 +1,14 @@
+test_all_queued_events_are_drained_not_only_the_last_trigger (test_slack_events.SlackEventsTests.test_all_queued_events_are_drained_not_only_the_last_trigger) ... ok
+test_altered_tag_report_run_or_queued_pointer_is_blocked_before_sender (test_slack_events.SlackEventsTests.test_altered_tag_report_run_or_queued_pointer_is_blocked_before_sender) ... ok
+test_cancelled_run_is_queued_and_worker_does_not_reopen_the_candidate (test_slack_events.SlackEventsTests.test_cancelled_run_is_queued_and_worker_does_not_reopen_the_candidate) ... ok
+test_candidate_is_queued_only_after_report_and_keeps_commit_fallback (test_slack_events.SlackEventsTests.test_candidate_is_queued_only_after_report_and_keeps_commit_fallback) ... ok
+test_legacy_delivery_and_failed_unfrozen_preview_are_not_backfilled (test_slack_events.SlackEventsTests.test_legacy_delivery_and_failed_unfrozen_preview_are_not_backfilled) ... ok
+test_one_approval_then_two_approvals_queue_distinct_milestones_without_publish (test_slack_events.SlackEventsTests.test_one_approval_then_two_approvals_queue_distinct_milestones_without_publish) ... ok
+test_promotion_notice_requires_real_release_and_same_final_receipt (test_slack_events.SlackEventsTests.test_promotion_notice_requires_real_release_and_same_final_receipt) ... ok
+test_rejection_is_historical_and_new_rc_has_own_frozen_identity (test_slack_events.SlackEventsTests.test_rejection_is_historical_and_new_rc_has_own_frozen_identity) ... ok
+test_two_approvals_do_not_queue_publication_before_final_command (test_slack_events.SlackEventsTests.test_two_approvals_do_not_queue_publication_before_final_command) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 7.357s
+
+OK

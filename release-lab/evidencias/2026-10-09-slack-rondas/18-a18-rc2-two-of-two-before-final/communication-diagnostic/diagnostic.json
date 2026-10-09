@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "operation": "read-only diagnostic of frozen report, no candidate/report modification",
+  "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+  "tooling_sha": "fbcf01271e9a03834f7f54bfd92b0ae21745cf0f",
+  "report_digest": "1ed870ac2e509ac9c10b3b6dc4b09d201cf4fd7cdb7e4099805180a56f9bd71e",
+  "report_digest_recomputed": "1ed870ac2e509ac9c10b3b6dc4b09d201cf4fd7cdb7e4099805180a56f9bd71e",
+  "tooling_source_sha256": "5523889b094256b8e0a2e52591252a5922aa310e826ba4dfe47ad7681681b661",
+  "summary_limit": 1400,
+  "single_pr_sections": [
+    {
+      "id": "20",
+      "kind": "pr",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/pull/20",
+      "selected_section_characters": 744,
+      "selected_sections": "PR 20 — O que muda: O título da tela passa de “Laboratório de atualizações” para “Laboratório de entregas”, deixando claro que este laboratório acompanha uma entrega completa. O botão de tema claro/escuro continua funcionando e a escolha continua sendo reiniciada ao abrir novamente o app. Uma recusa oficial agora encerra a espera da candidata. Os avisos do Slack também aguardam brevemente a confirmação de outro envio em andamento, reduzindo alertas transitórios sem reenviar mensagens incertas.\nComo validar: Abrir o preview da nova candidata, conferir o novo título e alternar o tema pelo botão no topo. Esta correção entra primeiro em `release/1.8.0`; a RC1 permanece imutável e a RC2 será criada somente depois do merge, com novos avais."
+    },
+    {
+      "id": "21",
+      "kind": "pr",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/pull/21",
+      "selected_section_characters": 741,
+      "selected_sections": "PR 21 — O que muda: Se um dos revisores recusar a candidata, a esteira encerra as esperas restantes e registra a recusa, sem pedir a aprovação da outra pessoa. O aviso do Slack leva ao preview e à decisão dessa mesma candidata. Avisos simultâneos passam a conferir brevemente se a mensagem já foi confirmada por outro job, evitando alertas temporários quando o envio terminou corretamente.\nComo validar: Uma recusa oficial deve encerrar somente sua própria execução. Uma falha técnica sem recusa não pode cancelar outra execução nem se transformar em autorização. Um resultado incerto no Slack continua impedindo reenvio automático. Os testes cobrem essas condições; a RC2 deve continuar exigindo dois novos avais e o comando final separado."
+    }
+  ],
+  "combined_sections_characters": 1486,
+  "combined_within_limit": false,
+  "actual_combined_result": "",
+  "frozen_selection": {
+    "candidate_tag": "v1.8.0-rc.2",
+    "context_sha256": "18698ddf967608a426ffc18b5a25c11528b3c754b34e720d51167366d1389806",
+    "fallback_reason": "ai_not_configured",
+    "optional_result_sha256": null,
+    "optional_result_status": "not_configured",
+    "schema": 1,
+    "selected_at": "2026-10-09T02:12:22.906410+00:00",
+    "selected_sha256": "31a9ab47ca6925c9c778e9415ef3f4db610d6dfb4d5baf73d8a575bb72fae50f",
+    "source": "commits_fallback",
+    "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+    "text": "• Merge pull request #20 from israelhudson/codex/slack-rc2-correction\n• Merge remote-tracking branch 'origin/main' into codex/slack-rc2-correction\n• Merge pull request #21 from israelhudson/codex/slack-rejection-close\n• fix: encerrar esperas após rejeição oficial e confirmar avisos concorrentes\n• docs: registrar integração Slack e próximos ensaios autorizados\n• fix: esclarecer título da tela no ensaio da RC2"
+  },
+  "ai_summary_selected": false
+}

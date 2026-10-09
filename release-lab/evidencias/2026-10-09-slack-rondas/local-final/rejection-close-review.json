@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "scope": "offline patch only; no tracked implementation edits or live actions",
+  "reviewed_head": "080c0d428f1f222feb2120ea39141151627d1acd",
+  "created_at": "2026-10-09T01:59:48.674613+00:00",
+  "files": {
+    "tools/delivery/release_lab.py": "f56ecf1efb4dba72495e12205a3d26703678356046d802f1b6296b432581e2e0",
+    ".github/workflows/release-lab-evaluate.yml": "892935fd5b880128be615140d1ce32682fa881fbf72113340ffdc3f1a1987e32",
+    ".github/workflows/release-lab-prepare.yml": "02b47511f345fee2fb04cc8614166d007ea928ad49ba9c976dec81696c66fdd2",
+    "tests/delivery/test_release_lab_rejection_close.py": "e55b0cdbc14d2110b5961918063953ed4af30ee5efb932731bd57e435b94da07"
+  },
+  "tests": {
+    "new_rejection_close": 13,
+    "existing_state_regression": 22,
+    "actionlint": "PASS"
+  },
+  "decisions": [
+    "Operator-only listener cancels only its own attempt-1 original run after exact RC/report/tag/policy/official exclusive reviewer rejection validation.",
+    "Record rejected and queue candidate_rejected before POST cancel; cancellation outside journal CAS retries.",
+    "Preserve completed/superseded/cancelled/evaluation_failed states, publication intent, receipt, active preparation; technical failures without rejected review leave state/run unchanged.",
+    "No approval or publication changes and no Slack secret on listeners; actions write only listener jobs plus reusable caller capability.",
+    "Default workflow_run observer remains read-only for run effects."
+  ],
+  "outbox_polish_review": {
+    "blocking_findings": [],
+    "observed_changes": [
+      "At most 3 short GETs / 3-second budget observing owner sent; immutable identity mismatch fails closed.",
+      "Unknown or racing reservation never causes another chat.postMessage; transient unconfirmed result remains optional blocked.",
+      "Sanitized confirmation timeout errors; durable unknown and sent checkpoint semantics unchanged."
+    ]
+  },
+  "limitations": [
+    "GitHub runtime scheduling and self-cancel endpoint must still be proved live in a fresh candidate whose source workflows match trusted main.",
+    "The final intent/race exclusion relies on the same short release-lab-mutation job lock as prepare/publish/recovery.",
+    "A listener cancelled by its own POST may not upload its artifact; rejected journal/event are durable before cancellation."
+  ]
+}

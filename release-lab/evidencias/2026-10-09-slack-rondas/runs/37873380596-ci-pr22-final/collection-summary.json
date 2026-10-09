@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "collected_at": "2026-10-09T02:17:00.068881+00:00",
+  "repository": "israelhudson/flutter_code_push_example",
+  "run_id": "37873380596",
+  "run_status": "completed",
+  "run_conclusion": "success",
+  "run_attempt": 1,
+  "collection_status": "complete",
+  "requests": [
+    {
+      "name": "run",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/runs/37873380596",
+      "exit_code": 0,
+      "stdout_bytes": 14622,
+      "stderr_bytes": 0,
+      "stdout_sha256": "7993680ac47cb9b140c5263323ae55453a98260a0b7942bb122757aef7838d6e",
+      "status": "collected"
+    },
+    {
+      "name": "reviews",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/runs/37873380596/approvals",
+      "exit_code": 0,
+      "stdout_bytes": 2,
+      "stderr_bytes": 0,
+      "stdout_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "status": "collected"
+    },
+    {
+      "name": "jobs-page-1",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/runs/37873380596/jobs?filter=all&per_page=100&page=1",
+      "exit_code": 0,
+      "stdout_bytes": 2760,
+      "stderr_bytes": 0,
+      "stdout_sha256": "8b93015253f58b5a5223f536951462baac4097f346d32107380073e35df2dc36",
+      "status": "collected"
+    },
+    {
+      "name": "job-113636259899",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/jobs/113636259899/logs",
+      "exit_code": 0,
+      "stdout_bytes": 140610,
+      "stderr_bytes": 0,
+      "stdout_sha256": "10bb704f17f58d525cf1806d051cf7fa1035d73cbbe233a78e6cb3d9cf5a47d6",
+      "status": "collected"
+    }
+  ],
+  "jobs": [
+    {
+      "job_id": "113636259899",
+      "name": "Flutter analyze e test",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "log_status": "collected"
+    }
+  ],
+  "read_only": true,
+  "scenario_result": "not_evaluated",
+  "note": "Coleta não transforma falha do workflow em teste aprovado; comparar efeitos e objetivo separadamente."
+}

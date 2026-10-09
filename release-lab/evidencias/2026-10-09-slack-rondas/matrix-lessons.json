@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "matrix": [
+    {
+      "claim": "1.7 publicada após dois avais e comando final separado",
+      "result": "confirmado",
+      "sources": [
+        "04-b17-rc1-final-command/state.snapshot.json",
+        "21-pr22-backmerge-final/release-v1.7.0.json",
+        "runs/37870868223-final/collection-summary.json"
+      ]
+    },
+    {
+      "claim": "RC1 1.8 recusada sem promoção",
+      "result": "confirmado antes de superseded",
+      "sources": [
+        "07-a18-rc1-rejection-observed/run-37871436136-approvals.json",
+        "08-a18-rc1-cancel-after-rejection/state.snapshot.json",
+        "09-a18-rc1-rejected-consolidated/release-v1.8.0.json"
+      ]
+    },
+    {
+      "claim": "Recusa inicial fechou automaticamente o outro gate",
+      "result": "não demonstrado; cancelamento operacional necessário",
+      "sources": [
+        "08-a18-rc1-cancel-after-rejection/operational-context.json",
+        "runs/37871436136-rejected-final/collection-summary.json"
+      ]
+    },
+    {
+      "claim": "RC2 usa novo código, relatório e novos avais",
+      "result": "confirmado",
+      "sources": [
+        "14-a18-rc2-initial/state.snapshot.json",
+        "16-a18-rc2-zero-of-two/state.snapshot.json",
+        "17-a18-rc2-first-approval/state.snapshot.json",
+        "18-a18-rc2-two-of-two-before-final/state.snapshot.json"
+      ]
+    },
+    {
+      "claim": "Quatro raízes de tooling idênticas antes da RC2",
+      "result": "36 blobs idênticos confirmados",
+      "sources": [
+        "13-pr20-release-correction-merged/trusted-tooling-comparison-actual-merge.json"
+      ]
+    },
+    {
+      "claim": "PR22 retorna correção publicada à main",
+      "result": "árvore inteira igual; source pai direto; promoção anterior ao merge",
+      "sources": [
+        "21-pr22-backmerge-final/backmerge-proof.json",
+        "21-pr22-backmerge-final/pr-22-reviews.json"
+      ]
+    },
+    {
+      "claim": "Treze mensagens reais do bot Slack",
+      "result": "13 recibos sent e 13 leituras independentes confirmadas",
+      "sources": [
+        "audit-current.json"
+      ]
+    },
+    {
+      "claim": "Fechamento automático após PR21 exercitado remotamente",
+      "result": "somente testes locais e CI; nova recusa remota não exercitada",
+      "sources": [
+        "local-final/rejection-close-root-tests.log",
+        "local-final/rejection-close-state-tests.log",
+        "local-final/security-rc2-preflight/preflight.json"
+      ]
+    },
+    {
+      "claim": "Resumo IA usado na RC2",
+      "result": "não; commits_fallback, ai_not_configured e seções 1486 > 1400",
+      "sources": [
+        "18-a18-rc2-two-of-two-before-final/communication-diagnostic/diagnostic.json"
+      ]
+    },
+    {
+      "claim": "Distribuição mobile ou aceite humano independente",
+      "result": "fora do escopo verificado; distribution=false e review_independence=false",
+      "sources": [
+        "21-pr22-backmerge-final/state.snapshot.json"
+      ]
+    }
+  ],
+  "lessons": [
+    "Distinguir recusa esperada de falha técnica e cancelamento operacional.",
+    "Uma nova candidata começa em 0/2 e não herda decisões.",
+    "Fontes históricas congeladas não descrevem necessariamente a integração atual.",
+    "Seções dos PRs precisam caber juntas no limite 1400; 1486 provocou fallback sem IA.",
+    "Tag de entrega, pubspec, web e mobile têm identidades próprias.",
+    "Aviso Slack exige recibo e leitura da mensagem real.",
+    "Guardar as respostas 404 sem inventar logs ausentes.",
+    "Verificar todas as quatro raízes confiáveis antes da RC2."
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "reviewed_at": "2026-10-09T01:36:17.858262+00:00",
+  "branch": "codex/slack-candidate-notices",
+  "head": "31b0b8334d336ea68890c6db1edb6b034cbb43cd",
+  "working_tree_uncommitted": true,
+  "reviewed_file_sha256": {
+    ".github/workflows/release-lab-pr.yml": "09912e8a4675129b9fe5dbc4718d440bbf44367fb1a06c00988f41ef41df187b",
+    ".github/workflows/release-lab-prepare.yml": "875443da37321724446c6e7af5952ba91dc4c9c22339e5ec260ed2ae5fe2ba68",
+    ".github/workflows/release-lab-evaluate.yml": "89d14fd9f2250479f65e99c37c3ea66793e472d71df1c508960330336833b85d",
+    ".github/workflows/release-lab-reconcile.yml": "34b73db50014773b52cddef4da048a5cac562af36aa15f116a06cee9d15d0c40",
+    ".github/workflows/release-lab-recover.yml": "c238dc943204f28d18553b9bb1265fac81c4fca918e39977d0cd62bd9b5a1fcd",
+    ".github/workflows/release-lab-slack.yml": "1eb73958e9b6b692d2726531df2e919f537d3e05c82a513d1470c0a1851ac58a",
+    "tools/delivery/release_lab.py": "c21a623400cd6d8eca783fc346fb2425788b0c0789506d54552b3c50cf3b707f",
+    "tools/delivery/slack_events.py": "1624d5dde58c683700294edca8f94f52baa604186ad542e8747dc02450eaa144",
+    "tools/delivery/slack_outbox.py": "70e4223247ad16ae597d39560133b441b1c774484398e764622f6728985082e8",
+    "tools/delivery/slack_notify.py": "5287a8f2c5ffdb91d028b6abb63dc7ee9ed256e5908bd443069c8d785f7032a0",
+    "tests/delivery/test_slack_events.py": "09972676ff3ed8bb47adab5b53efde4d11837ca48c3e66386b75e40a7d65cf64",
+    "tests/delivery/test_slack_outbox.py": "dafa30563c53ee464bfb0b81a6858ba61b1542042edc34b73914747ca1e30674"
+  },
+  "reviewed_content_sha256": "04251d4726bcbf90bbeaf32f3ae2481d0775c44106a8e6acd8dd378dee8847a7",
+  "findings_remaining": [],
+  "resolved_refinements": [
+    "Frozen evaluation run and run_url compared as immutable identity",
+    "Preview link constrained to exact frozen source; GitHub link constrained to original run",
+    "Validate credentials/unsafe content before writing notice artifact",
+    "Verify registered tooling SHA or protected main before checkout and Slack secret exposure",
+    "Positive history scan limited and no exactly-once/unread-page guarantee claimed"
+  ],
+  "independent_checks": {
+    "workflow_graph": {
+      "workflows": 6,
+      "mandatory_jobs_no_slack_dependencies": true,
+      "bot_secret_absent_from_app_build": true,
+      "secret_passage": "nominal",
+      "sender_no_delivery_lock": true
+    },
+    "durable_outbox_tests": {
+      "passed": 22,
+      "scope": "local synthetic GitHub/Slack fixtures"
+    },
+    "candidate_event_tests": {
+      "passed": 9,
+      "scope": "local synthetic GitHub/review fixtures"
+    },
+    "http429_fresh_runner": {
+      "fixture_only": true,
+      "first_state": "blocked",
+      "second_state": "blocked",
+      "remote_checkpoint_states": [
+        "unknown"
+      ],
+      "post_attempts": 1,
+      "result": "PASS"
+    },
+    "test_harness_note": "First ad-hoc HTTP429 probe used a nonexistent fixture root attribute; corrected to the fixture send() method. No product code or external call was involved."
+  },
+  "verified_assurances": [
+    "Two account approvals still require the separate final command before publication",
+    "Queue writes only small immutable event pointers; no Slack IO in core transition",
+    "Legacy RC/release records are not automatically enrolled",
+    "Historical RC notifications validate their own immutable tag/report/run and receipts without granting publication authority",
+    "Optional workers do not own delivery lock and do not block approval/publication graph",
+    "Bot token is only passed nominally into trusted sender code; no application checkout",
+    "Unknown claim is persisted remotely before POST; CAS retries repeat journal writes only",
+    "Uncertain sends are not retried; positive exact bot/app/channel/client id/content proof may reconcile",
+    "Outbox path is separate from candidate authorization state; reports and approval receipts are not changed by notification worker"
+  ],
+  "limits": [
+    "No live Slack send, workflow dispatch, account review or publication performed by this reviewer",
+    "Local tests do not prove real message receipt, private channel permissions, API availability or rate limits",
+    "No independent human review claim is established by operating two accounts",
+    "The two live scenarios remain pending evidence until root completes runs/reviews/messages/releases"
+  ]
+}

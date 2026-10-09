@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "stage": "a18_rc2_zero_of_two_before_root_approvals",
+  "captured_at": "2026-10-09T02:13:26.022189+00:00",
+  "read_only": true,
+  "state_observed_at_commit": "8bf2c4d7e5537345c26aba217087ae8b9291adf2",
+  "state_git_blob_sha": "a40b20e7779ed0057c4df76708c2ae3802582f99",
+  "state_sha256": "653bdfa660f50fa29387c921c869e86ca2c1610370f091ca6f5a295a73912673",
+  "candidate_tag": "v1.8.0-rc.2",
+  "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+  "tooling_sha": "fbcf01271e9a03834f7f54bfd92b0ae21745cf0f",
+  "run_id": "37873174277",
+  "report_digest": "1ed870ac2e509ac9c10b3b6dc4b09d201cf4fd7cdb7e4099805180a56f9bd71e",
+  "recorded_approvals": 0,
+  "required_approvals": 2,
+  "approval_receipts_present": false,
+  "preview": {
+    "attempts": 1,
+    "snapshot_manifest_sha256": "55bbe8d17dab9d2a6e798160dba682e1662d8e935c327d78f6dc93b536412853",
+    "snapshot_url": "https://israelhudson.github.io/flutter_code_push_example/snapshots/c8d8f337ee390755bcff795d558f8c6f6f19c35b/",
+    "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+    "success": true,
+    "verified_files": [
+      "files.json",
+      "metadata.json",
+      "index.html",
+      "app/index.html",
+      "app/flutter_bootstrap.js",
+      "app/main.dart.js"
+    ],
+    "web_content_sha256": "00063b7f8fa10405f43fce2f458a42d4ff0d762898e11ef5a8725a4569675069"
+  },
+  "version_manifest_digest": "a4f860746918d33a44e8dd26a896849960dacb0b3c046021616e9e27ca0060a3",
+  "requests": [
+    {
+      "name": "state-branch-ref",
+      "method": "GET",
+      "endpoint": "git/ref/heads/codex/release-lab-state",
+      "stdout_bytes": 440,
+      "stdout_sha256": "a8545387f693dae8b27de49747ce0634c1e10e6e5278b2ad56a2c508c6bbe7d9",
+      "stderr_bytes": 0,
+      "exit_code": 0
+    },
+    {
+      "name": "state-at-fixed-commit",
+      "method": "GET",
+      "endpoint": "contents/release-lab/state.json?ref=8bf2c4d7e5537345c26aba217087ae8b9291adf2",
+      "stdout_bytes": 201339,
+      "stdout_sha256": "bfedef49e64fee4df993c85be63fd7de38ba46a9c7cb5d9a6676dd6140ee33e2",
+      "stderr_bytes": 0,
+      "exit_code": 0
+    }
+  ]
+}

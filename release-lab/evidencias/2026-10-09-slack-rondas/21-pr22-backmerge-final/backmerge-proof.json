@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+  "main_sha": "cf6d6fa90e228ec10cc6d0d7a204da756d784514",
+  "source_tree": "337e9cd9a1d6298b20ba60d939a9078eb81f7ca1",
+  "main_tree": "337e9cd9a1d6298b20ba60d939a9078eb81f7ca1",
+  "whole_tree_equal": true,
+  "main_parents": [
+    "fbcf01271e9a03834f7f54bfd92b0ae21745cf0f",
+    "c8d8f337ee390755bcff795d558f8c6f6f19c35b"
+  ],
+  "source_is_direct_merge_parent": true,
+  "compare_status": "ahead",
+  "ahead_by": 1,
+  "behind_by": 0,
+  "changed_files": 0,
+  "release_published_at": "2026-10-09T02:17:15Z",
+  "pr22_merged_at": "2026-10-09T02:19:08Z",
+  "promotion_precedes_backmerge": true,
+  "read_only": true,
+  "requests": [
+    {
+      "name": "release-source-commit",
+      "method": "GET",
+      "endpoint": "git/commits/c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+      "exit_code": 0,
+      "stdout_sha256": "c61a88ebe01cdf3a71edf1c3c3ff06e1b32b03539f41b1f656f909d1a7a12ed6",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "backmerge-main-commit",
+      "method": "GET",
+      "endpoint": "git/commits/cf6d6fa90e228ec10cc6d0d7a204da756d784514",
+      "exit_code": 0,
+      "stdout_sha256": "adea70ca49632b845da1bf57dfd6fdb68bec2c8a64edc96c7b16c16747ba26ce",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "release-source-main-compare",
+      "method": "GET",
+      "endpoint": "compare/c8d8f337ee390755bcff795d558f8c6f6f19c35b...cf6d6fa90e228ec10cc6d0d7a204da756d784514",
+      "exit_code": 0,
+      "stdout_sha256": "b7dcf3aa6beb74661edf0a5f1a67bcdb28c8731dd2290de96167c2de98bc37fa",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

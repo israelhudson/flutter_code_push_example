@@ -1,0 +1,1304 @@
+{
+  "schema": 1,
+  "generated_at": "2026-10-09T02:20:03.654433+00:00",
+  "scope": "current_capture_audit_only",
+  "read_only_sources": true,
+  "line_count_method": "len(raw_bytes.splitlines())",
+  "runs": [
+    {
+      "run_id": "37870620819",
+      "status": "completed",
+      "conclusion": "success",
+      "collection_status": "complete",
+      "jobs": 1,
+      "logs_collected": 1,
+      "log_bytes": 136166,
+      "log_lines": 1088,
+      "skipped_jobs": 0,
+      "failed_log_responses": [],
+      "logs": [
+        {
+          "job_id": "113627618757",
+          "bytes": 136166,
+          "lines": 1088,
+          "sha256": "276dd20c61e4286b92e98b3f66efb949f604dab30e598cb295679d8708b67ea1"
+        }
+      ],
+      "summary_source": "00-pr19-integration-baseline/ci-pr19/collection-summary.json"
+    },
+    {
+      "run_id": "37870868223",
+      "status": "completed",
+      "conclusion": "success",
+      "collection_status": "complete",
+      "jobs": 16,
+      "logs_collected": 16,
+      "log_bytes": 487633,
+      "log_lines": 5323,
+      "skipped_jobs": 0,
+      "failed_log_responses": [],
+      "logs": [
+        {
+          "job_id": "113628422357",
+          "bytes": 22043,
+          "lines": 232,
+          "sha256": "2b308037804ef92a88c85a137b2371ac68f668934993b1761ec57014c748ecf1"
+        },
+        {
+          "job_id": "113628537763",
+          "bytes": 23079,
+          "lines": 244,
+          "sha256": "c30f6e65a92f9bf78d0b2547a3af8b52e1261e7bce9e68940a82c5ce38d0ed54"
+        },
+        {
+          "job_id": "113628623503",
+          "bytes": 25850,
+          "lines": 275,
+          "sha256": "d8687cb1079a4a4b8dffdb2f6926b957a5b9ce7b3ce78a1a4c2e62c00d1708de"
+        },
+        {
+          "job_id": "113628623592",
+          "bytes": 70442,
+          "lines": 802,
+          "sha256": "c7da9cae72df37d40f0dbb12f5ed69485adecb901af588c08e9a65dae054e7a9"
+        },
+        {
+          "job_id": "113629041319",
+          "bytes": 114548,
+          "lines": 1145,
+          "sha256": "82da33c6f7c1bc64f97173198be455fe917827deaa2f83920d48bdec8d8c6e81"
+        },
+        {
+          "job_id": "113629304971",
+          "bytes": 19992,
+          "lines": 219,
+          "sha256": "40bd4fd6dbbda7a48dee83c591a8d6cab8c73c049f6cc77c2ea22b3cbd30893e"
+        },
+        {
+          "job_id": "113629305086",
+          "bytes": 19987,
+          "lines": 219,
+          "sha256": "138c73766b634034cc72d2852990923de8cf819417e74aefcfd67c17fd011f6b"
+        },
+        {
+          "job_id": "113629305246",
+          "bytes": 24772,
+          "lines": 284,
+          "sha256": "a1dea3d7d84c3c4be96fa8511620f53bb161ebc26f02423e067e1746d60a8d09"
+        },
+        {
+          "job_id": "113629620746",
+          "bytes": 24761,
+          "lines": 284,
+          "sha256": "ebafb25310bc31fc432cb9d0bb4c84cb7e76a919763484e3a91f9070852ccc11"
+        },
+        {
+          "job_id": "113629735952",
+          "bytes": 3420,
+          "lines": 50,
+          "sha256": "d3e66666f187fcd12f08776243c54f9cef032f9c09faf59af4f5567109ceda43"
+        },
+        {
+          "job_id": "113629736171",
+          "bytes": 24910,
+          "lines": 285,
+          "sha256": "220a28e715c765acbe10c3d7bb55c27a496c1f337c0f635988ada538a0e348da"
+        },
+        {
+          "job_id": "113629736182",
+          "bytes": 24910,
+          "lines": 285,
+          "sha256": "d8e58f4a39f38073a39ff6315c8e162776d4fcae20327a8e3f030d4919d93493"
+        },
+        {
+          "job_id": "113629991489",
+          "bytes": 19862,
+          "lines": 217,
+          "sha256": "722c9bf3a4613d1bd9cfa8512ed6f9fb8b7edb7a3472062c911b7ebca62f911a"
+        },
+        {
+          "job_id": "113630139378",
+          "bytes": 19412,
+          "lines": 214,
+          "sha256": "7a82e1c2e519d480b994c63b0aea8d15b5c86efd43577087bb59a103587cfc49"
+        },
+        {
+          "job_id": "113630139400",
+          "bytes": 24827,
+          "lines": 284,
+          "sha256": "c94ef30d0ecac7267bbe03e468214f0e76cc6ee53d40f0228890976c82982261"
+        },
+        {
+          "job_id": "113630168788",
+          "bytes": 24818,
+          "lines": 284,
+          "sha256": "0d0ba3d3b8ca79c5c0910fa447f15a489e106a87549ce4ee5717d542b0ee402a"
+        }
+      ],
+      "summary_source": "runs/37870868223-final/collection-summary.json"
+    },
+    {
+      "run_id": "37871436136",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "collection_status": "partial",
+      "jobs": 16,
+      "logs_collected": 7,
+      "log_bytes": 301731,
+      "log_lines": 3213,
+      "skipped_jobs": 5,
+      "failed_log_responses": [
+        {
+          "name": "job-113630935243",
+          "exit_code": 1,
+          "stdout_bytes": 215,
+          "stderr_bytes": 13,
+          "source": "runs/37871436136-rejected-final/job-113630935243.log"
+        },
+        {
+          "name": "job-113630935257",
+          "exit_code": 1,
+          "stdout_bytes": 215,
+          "stderr_bytes": 13,
+          "source": "runs/37871436136-rejected-final/job-113630935257.log"
+        },
+        {
+          "name": "job-113631748299",
+          "exit_code": 1,
+          "stdout_bytes": 215,
+          "stderr_bytes": 13,
+          "source": "runs/37871436136-rejected-final/job-113631748299.log"
+        },
+        {
+          "name": "job-113631748455",
+          "exit_code": 1,
+          "stdout_bytes": 215,
+          "stderr_bytes": 13,
+          "source": "runs/37871436136-rejected-final/job-113631748455.log"
+        }
+      ],
+      "logs": [
+        {
+          "job_id": "113630212184",
+          "bytes": 22301,
+          "lines": 235,
+          "sha256": "6538bc8fa0fbc5fac545652ea378dc21601a2a35dbf23598da78dce9031a8226"
+        },
+        {
+          "job_id": "113630306490",
+          "bytes": 23333,
+          "lines": 247,
+          "sha256": "97c6fe1e77bfc3c4146f62e55e76d58aef08c6ee0843ef52487b9135b01ce7dd"
+        },
+        {
+          "job_id": "113630363714",
+          "bytes": 26107,
+          "lines": 278,
+          "sha256": "de054e819437365f5e8a0ee857e57bd1c184784e6e99fc866bdef46dce04aec5"
+        },
+        {
+          "job_id": "113630363748",
+          "bytes": 71190,
+          "lines": 810,
+          "sha256": "1dac0b785f32206194f76bac34f0c14b652f3e994cf5714ed91eaca4aa122347"
+        },
+        {
+          "job_id": "113630695771",
+          "bytes": 114546,
+          "lines": 1144,
+          "sha256": "759175acc7c16e67d3a91357c84c24f5dff7fd470ce5be79e237ce85b401f64d"
+        },
+        {
+          "job_id": "113630935375",
+          "bytes": 24760,
+          "lines": 284,
+          "sha256": "21e048086a3bbdd686c541180b5504c7bdd77e6c36fd9c92a555bb62f782a315"
+        },
+        {
+          "job_id": "113631748113",
+          "bytes": 19494,
+          "lines": 215,
+          "sha256": "21c9aa9b2430e0e00fd772d8d8bf4a15fb18b6c97e6b76133fee2635aac44ef7"
+        }
+      ],
+      "summary_source": "runs/37871436136-rejected-final/collection-summary.json"
+    },
+    {
+      "run_id": "37871443874",
+      "status": "completed",
+      "conclusion": "success",
+      "collection_status": "complete",
+      "jobs": 2,
+      "logs_collected": 2,
+      "log_bytes": 40937,
+      "log_lines": 455,
+      "skipped_jobs": 0,
+      "failed_log_responses": [],
+      "logs": [
+        {
+          "job_id": "113630230668",
+          "bytes": 17711,
+          "lines": 191,
+          "sha256": "fe121d721a8b39afa177d80ffd1953ce5ee8d8809887d6431a6feec2450a66b3"
+        },
+        {
+          "job_id": "113630345332",
+          "bytes": 23226,
+          "lines": 264,
+          "sha256": "c45d978b78981e9dbc88795aacd007250320071108493ac8a25f90931dd9554b"
+        }
+      ],
+      "summary_source": "runs/37871443874-observer-b17-final/collection-summary.json"
+    },
+    {
+      "run_id": "37871944797",
+      "status": "completed",
+      "conclusion": "success",
+      "collection_status": "complete",
+      "jobs": 2,
+      "logs_collected": 2,
+      "log_bytes": 40989,
+      "log_lines": 456,
+      "skipped_jobs": 0,
+      "failed_log_responses": [],
+      "logs": [
+        {
+          "job_id": "113631818227",
+          "bytes": 17790,
+          "lines": 192,
+          "sha256": "579107efc6730249f2bb2e7db089216034ff358b377b3fbcf4634b87e4485224"
+        },
+        {
+          "job_id": "113631894625",
+          "bytes": 23199,
+          "lines": 264,
+          "sha256": "d784a9177eef317966728c297d58233efa9aede21128cc1c0471fe970d41a504"
+        }
+      ],
+      "summary_source": "runs/37871944797-observer-a18-rejection-final/collection-summary.json"
+    },
+    {
+      "run_id": "37872583739",
+      "status": "completed",
+      "conclusion": "success",
+      "collection_status": "complete",
+      "jobs": 1,
+      "logs_collected": 1,
+      "log_bytes": 140396,
+      "log_lines": 1106,
+      "skipped_jobs": 0,
+      "failed_log_responses": [],
+      "logs": [
+        {
+          "job_id": "113633783321",
+          "bytes": 140396,
+          "lines": 1106,
+          "sha256": "7bd0f0d3eee58f91e4936cdf10ed42c27d235314809af032ee50affb6721e883"
+        }
+      ],
+      "summary_source": "runs/37872583739-ci-pr21-final/collection-summary.json"
+    },
+    {
+      "run_id": "37872899430",
+      "status": "completed",
+      "conclusion": "success",
+      "collection_status": "complete",
+      "jobs": 1,
+      "logs_collected": 1,
+      "log_bytes": 140503,
+      "log_lines": 1107,
+      "skipped_jobs": 0,
+      "failed_log_responses": [],
+      "logs": [
+        {
+          "job_id": "113634756108",
+          "bytes": 140503,
+          "lines": 1107,
+          "sha256": "a214854a388e1eed39b5a16153bcb2f887e67d2b5446c0374d66b4f6531c6aea"
+        }
+      ],
+      "summary_source": "runs/37872899430-ci-pr20-final/collection-summary.json"
+    },
+    {
+      "run_id": "37873174277",
+      "status": "completed",
+      "conclusion": "success",
+      "collection_status": "complete",
+      "jobs": 18,
+      "logs_collected": 16,
+      "log_bytes": 496717,
+      "log_lines": 5414,
+      "skipped_jobs": 2,
+      "failed_log_responses": [],
+      "logs": [
+        {
+          "job_id": "113635625849",
+          "bytes": 22740,
+          "lines": 239,
+          "sha256": "159db3ec205460f74eec07ae396c740abc89e068eede9e584af5aa4a88232a10"
+        },
+        {
+          "job_id": "113635724059",
+          "bytes": 23673,
+          "lines": 250,
+          "sha256": "e2550291508d72bc13e95f1a1d2a8911ccd053d5f58b1202562f8cd793b22b97"
+        },
+        {
+          "job_id": "113635798358",
+          "bytes": 26450,
+          "lines": 281,
+          "sha256": "0afe8b9bd410d91b821984940fad6546001ee4f12dd2cde8292abb5f30549428"
+        },
+        {
+          "job_id": "113635798364",
+          "bytes": 71628,
+          "lines": 814,
+          "sha256": "9bebfca460f34661d5190fe1c55600d09bcc3d68ebc7f58fe9d6fad07e490ebf"
+        },
+        {
+          "job_id": "113636138971",
+          "bytes": 120538,
+          "lines": 1207,
+          "sha256": "48086677aeb92c91892cfb2251dfacdcc2b581da0c2468b9cb0fdbe379d926d1"
+        },
+        {
+          "job_id": "113636510901",
+          "bytes": 20001,
+          "lines": 219,
+          "sha256": "3cc310037978263466ef623b770134c9715252c95ca1ddefefdd17241354d1bd"
+        },
+        {
+          "job_id": "113636510946",
+          "bytes": 24811,
+          "lines": 284,
+          "sha256": "52cb45237415765e63e6e0bd9894c5075cdf7c98f712b60d048845c2792679d8"
+        },
+        {
+          "job_id": "113636511031",
+          "bytes": 19994,
+          "lines": 219,
+          "sha256": "5806144ba9db2165e6c327b5aa569858cbdd2960e9f2a51b6dd4b35c691afe76"
+        },
+        {
+          "job_id": "113636873193",
+          "bytes": 24802,
+          "lines": 284,
+          "sha256": "e455805dbf8901d93ee26baf1f022677893559ccfdfbf0fc91307d2cfef91722"
+        },
+        {
+          "job_id": "113637248696",
+          "bytes": 3429,
+          "lines": 50,
+          "sha256": "916646a47103b88e3e4a81e7bd167133cd52c2291a54f8d22ae5fbed7f4b3757"
+        },
+        {
+          "job_id": "113637248729",
+          "bytes": 24826,
+          "lines": 284,
+          "sha256": "2d16150471b68806d292fba7cd562a3e4bc23199f6e161a0985365d2e2fa51a8"
+        },
+        {
+          "job_id": "113637248767",
+          "bytes": 24826,
+          "lines": 284,
+          "sha256": "1c7e65b5049ab58528dc399d269425de7e00c8b59a207117a3f82a558fda0fa6"
+        },
+        {
+          "job_id": "113637621688",
+          "bytes": 19870,
+          "lines": 217,
+          "sha256": "c8866bf99ee6934c332796e9f92cbff5ad0dfdfed42a1b1810f6b39d3380c4a0"
+        },
+        {
+          "job_id": "113637775832",
+          "bytes": 24857,
+          "lines": 284,
+          "sha256": "005d796f79a6db5f5f00c5449c552b97b90f0ca38b87b0ca0093b6d97be81ed5"
+        },
+        {
+          "job_id": "113637775913",
+          "bytes": 19421,
+          "lines": 214,
+          "sha256": "e42116f647b5aed1db52227a2ed55c7e16307bcd18378c032fd5be2808bf26d5"
+        },
+        {
+          "job_id": "113637806189",
+          "bytes": 24851,
+          "lines": 284,
+          "sha256": "9196b6df91947f7583735068726b4a0aec8d34053fbc7268333414e1606428e4"
+        }
+      ],
+      "summary_source": "runs/37873174277-rc2-final/collection-summary.json"
+    },
+    {
+      "run_id": "37873380596",
+      "status": "completed",
+      "conclusion": "success",
+      "collection_status": "complete",
+      "jobs": 1,
+      "logs_collected": 1,
+      "log_bytes": 140610,
+      "log_lines": 1108,
+      "skipped_jobs": 0,
+      "failed_log_responses": [],
+      "logs": [
+        {
+          "job_id": "113636259899",
+          "bytes": 140610,
+          "lines": 1108,
+          "sha256": "10bb704f17f58d525cf1806d051cf7fa1035d73cbbe233a78e6cb3d9cf5a47d6"
+        }
+      ],
+      "summary_source": "runs/37873380596-ci-pr22-final/collection-summary.json"
+    },
+    {
+      "run_id": "37873895168",
+      "status": "completed",
+      "conclusion": "success",
+      "collection_status": "complete",
+      "jobs": 2,
+      "logs_collected": 2,
+      "log_bytes": 40955,
+      "log_lines": 455,
+      "skipped_jobs": 0,
+      "failed_log_responses": [],
+      "logs": [
+        {
+          "job_id": "113637902431",
+          "bytes": 17703,
+          "lines": 191,
+          "sha256": "6f6bc46c2e4eadfbae524ee92bedfcd2224e82ea0d863189f7015171c4f5bacb"
+        },
+        {
+          "job_id": "113637952112",
+          "bytes": 23252,
+          "lines": 264,
+          "sha256": "241914e2bff00ee65f950db2993a513035cde5be789b3742650d62f564ca703f"
+        }
+      ],
+      "summary_source": "runs/37873895168-observer-rc2-final/collection-summary.json"
+    }
+  ],
+  "candidate_observations": {
+    "v1.7.0-rc.1": [
+      {
+        "status": "evaluating",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": null,
+        "approval_progress": null,
+        "source": "00-pr19-integration-baseline/state.snapshot.json"
+      },
+      {
+        "status": "awaiting_approvals",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 0,
+          "required": 2
+        },
+        "source": "01-a-rc1-prepared/state.snapshot.json"
+      },
+      {
+        "status": "awaiting_approvals",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 1,
+          "required": 2
+        },
+        "source": "03-a-rc1-candidate-notice/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "04-b17-rc1-final-command/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "05-a18-rc1-initial/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "06-a18-rc1-ready/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "07-a18-rc1-rejection-observed/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "08-a18-rc1-cancel-after-rejection/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "09-a18-rc1-rejected-consolidated/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "10-correction-prs-in-progress/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "11-pr21-ci-passed/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "12-pr21-merged-pr20-updated/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "13-pr20-release-correction-merged/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "14-a18-rc2-initial/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "15-pr22-backmerge-open/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "16-a18-rc2-zero-of-two/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "17-a18-rc2-first-approval/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "18-a18-rc2-two-of-two-before-final/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "19-a18-rc2-final-authorized/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "20-a18-rc2-published/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37870868223",
+        "report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "21-pr22-backmerge-final/state.snapshot.json"
+      }
+    ],
+    "v1.8.0-rc.1": [
+      {
+        "status": "evaluating",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37871436136",
+        "report_digest": null,
+        "approval_progress": null,
+        "source": "05-a18-rc1-initial/state.snapshot.json"
+      },
+      {
+        "status": "awaiting_approvals",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37871436136",
+        "report_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 0,
+          "required": 2
+        },
+        "source": "06-a18-rc1-ready/state.snapshot.json"
+      },
+      {
+        "status": "awaiting_approvals",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37871436136",
+        "report_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 0,
+          "required": 2
+        },
+        "source": "07-a18-rc1-rejection-observed/state.snapshot.json"
+      },
+      {
+        "status": "rejected",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37871436136",
+        "report_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 0,
+          "required": 2
+        },
+        "source": "08-a18-rc1-cancel-after-rejection/state.snapshot.json"
+      },
+      {
+        "status": "rejected",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37871436136",
+        "report_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 0,
+          "required": 2
+        },
+        "source": "09-a18-rc1-rejected-consolidated/state.snapshot.json"
+      },
+      {
+        "status": "rejected",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37871436136",
+        "report_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 0,
+          "required": 2
+        },
+        "source": "10-correction-prs-in-progress/state.snapshot.json"
+      },
+      {
+        "status": "rejected",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37871436136",
+        "report_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 0,
+          "required": 2
+        },
+        "source": "11-pr21-ci-passed/state.snapshot.json"
+      },
+      {
+        "status": "rejected",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37871436136",
+        "report_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 0,
+          "required": 2
+        },
+        "source": "12-pr21-merged-pr20-updated/state.snapshot.json"
+      },
+      {
+        "status": "rejected",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37871436136",
+        "report_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 0,
+          "required": 2
+        },
+        "source": "13-pr20-release-correction-merged/state.snapshot.json"
+      },
+      {
+        "status": "superseded",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37871436136",
+        "report_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 0,
+          "required": 2
+        },
+        "source": "14-a18-rc2-initial/state.snapshot.json"
+      },
+      {
+        "status": "superseded",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37871436136",
+        "report_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 0,
+          "required": 2
+        },
+        "source": "15-pr22-backmerge-open/state.snapshot.json"
+      },
+      {
+        "status": "superseded",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37871436136",
+        "report_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 0,
+          "required": 2
+        },
+        "source": "16-a18-rc2-zero-of-two/state.snapshot.json"
+      },
+      {
+        "status": "superseded",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37871436136",
+        "report_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 0,
+          "required": 2
+        },
+        "source": "17-a18-rc2-first-approval/state.snapshot.json"
+      },
+      {
+        "status": "superseded",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37871436136",
+        "report_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 0,
+          "required": 2
+        },
+        "source": "18-a18-rc2-two-of-two-before-final/state.snapshot.json"
+      },
+      {
+        "status": "superseded",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37871436136",
+        "report_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 0,
+          "required": 2
+        },
+        "source": "19-a18-rc2-final-authorized/state.snapshot.json"
+      },
+      {
+        "status": "superseded",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37871436136",
+        "report_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 0,
+          "required": 2
+        },
+        "source": "20-a18-rc2-published/state.snapshot.json"
+      },
+      {
+        "status": "superseded",
+        "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+        "run_id": "37871436136",
+        "report_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 0,
+          "required": 2
+        },
+        "source": "21-pr22-backmerge-final/state.snapshot.json"
+      }
+    ],
+    "v1.8.0-rc.2": [
+      {
+        "status": "prepared",
+        "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+        "run_id": null,
+        "report_digest": null,
+        "approval_progress": null,
+        "source": "14-a18-rc2-initial/state.snapshot.json"
+      },
+      {
+        "status": "evaluating",
+        "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+        "run_id": "37873174277",
+        "report_digest": null,
+        "approval_progress": null,
+        "source": "15-pr22-backmerge-open/state.snapshot.json"
+      },
+      {
+        "status": "awaiting_approvals",
+        "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+        "run_id": "37873174277",
+        "report_digest": "1ed870ac2e509ac9c10b3b6dc4b09d201cf4fd7cdb7e4099805180a56f9bd71e",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 0,
+          "required": 2
+        },
+        "source": "16-a18-rc2-zero-of-two/state.snapshot.json"
+      },
+      {
+        "status": "awaiting_approvals",
+        "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+        "run_id": "37873174277",
+        "report_digest": "1ed870ac2e509ac9c10b3b6dc4b09d201cf4fd7cdb7e4099805180a56f9bd71e",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 1,
+          "required": 2
+        },
+        "source": "17-a18-rc2-first-approval/state.snapshot.json"
+      },
+      {
+        "status": "awaiting_publish_authorization",
+        "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+        "run_id": "37873174277",
+        "report_digest": "1ed870ac2e509ac9c10b3b6dc4b09d201cf4fd7cdb7e4099805180a56f9bd71e",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "18-a18-rc2-two-of-two-before-final/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+        "run_id": "37873174277",
+        "report_digest": "1ed870ac2e509ac9c10b3b6dc4b09d201cf4fd7cdb7e4099805180a56f9bd71e",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "19-a18-rc2-final-authorized/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+        "run_id": "37873174277",
+        "report_digest": "1ed870ac2e509ac9c10b3b6dc4b09d201cf4fd7cdb7e4099805180a56f9bd71e",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "20-a18-rc2-published/state.snapshot.json"
+      },
+      {
+        "status": "completed",
+        "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+        "run_id": "37873174277",
+        "report_digest": "1ed870ac2e509ac9c10b3b6dc4b09d201cf4fd7cdb7e4099805180a56f9bd71e",
+        "approval_progress": {
+          "final_command_required": true,
+          "recorded": 2,
+          "required": 2
+        },
+        "source": "21-pr22-backmerge-final/state.snapshot.json"
+      }
+    ]
+  },
+  "slack_notifications": [
+    {
+      "event": "candidate_available",
+      "candidate_tag": "v1.7.0-rc.1",
+      "run_id": "37870868223",
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "snapshot_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791510213.021329",
+      "at": "2026-10-09T01:43:33.244440+00:00",
+      "receipt_state": "sent",
+      "independent_channel_read_confirmed": true,
+      "channel_read_sources": [
+        "03-a-rc1-candidate-notice/slack-channel-read.json",
+        "04-b17-rc1-final-command/slack-channel-read.json",
+        "05-a18-rc1-initial/slack-channel-b17-published.json",
+        "07-a18-rc1-rejection-observed/slack-channel-read.json",
+        "08-a18-rc1-cancel-after-rejection/slack-channel-read.json",
+        "17-a18-rc2-first-approval/slack-channel-read.json",
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ],
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791510213021329"
+    },
+    {
+      "event": "approval_first",
+      "candidate_tag": "v1.7.0-rc.1",
+      "run_id": "37870868223",
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "snapshot_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791510292.512419",
+      "at": "2026-10-09T01:44:52.842493+00:00",
+      "receipt_state": "sent",
+      "independent_channel_read_confirmed": true,
+      "channel_read_sources": [
+        "04-b17-rc1-final-command/slack-channel-read.json",
+        "05-a18-rc1-initial/slack-channel-b17-published.json",
+        "07-a18-rc1-rejection-observed/slack-channel-read.json",
+        "08-a18-rc1-cancel-after-rejection/slack-channel-read.json",
+        "17-a18-rc2-first-approval/slack-channel-read.json",
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ],
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791510292512419"
+    },
+    {
+      "event": "approval_second",
+      "candidate_tag": "v1.7.0-rc.1",
+      "run_id": "37870868223",
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "snapshot_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791510318.577539",
+      "at": "2026-10-09T01:45:18.875103+00:00",
+      "receipt_state": "sent",
+      "independent_channel_read_confirmed": true,
+      "channel_read_sources": [
+        "04-b17-rc1-final-command/slack-channel-read.json",
+        "05-a18-rc1-initial/slack-channel-b17-published.json",
+        "07-a18-rc1-rejection-observed/slack-channel-read.json",
+        "08-a18-rc1-cancel-after-rejection/slack-channel-read.json",
+        "17-a18-rc2-first-approval/slack-channel-read.json",
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ],
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791510318577539"
+    },
+    {
+      "event": "approvals_complete",
+      "candidate_tag": "v1.7.0-rc.1",
+      "run_id": "37870868223",
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "snapshot_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791510321.511589",
+      "at": "2026-10-09T01:45:21.889342+00:00",
+      "receipt_state": "sent",
+      "independent_channel_read_confirmed": true,
+      "channel_read_sources": [
+        "04-b17-rc1-final-command/slack-channel-read.json",
+        "05-a18-rc1-initial/slack-channel-b17-published.json",
+        "07-a18-rc1-rejection-observed/slack-channel-read.json",
+        "08-a18-rc1-cancel-after-rejection/slack-channel-read.json",
+        "17-a18-rc2-first-approval/slack-channel-read.json",
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ],
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791510321511589"
+    },
+    {
+      "event": "publication_completed",
+      "candidate_tag": "v1.7.0-rc.1",
+      "run_id": "37870868223",
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "snapshot_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791510418.960699",
+      "at": "2026-10-09T01:46:59.275056+00:00",
+      "receipt_state": "sent",
+      "independent_channel_read_confirmed": true,
+      "channel_read_sources": [
+        "05-a18-rc1-initial/slack-channel-b17-published.json",
+        "07-a18-rc1-rejection-observed/slack-channel-read.json",
+        "08-a18-rc1-cancel-after-rejection/slack-channel-read.json",
+        "17-a18-rc2-first-approval/slack-channel-read.json",
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ],
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791510418960699"
+    },
+    {
+      "event": "candidate_available",
+      "candidate_tag": "v1.8.0-rc.1",
+      "run_id": "37871436136",
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "snapshot_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791510649.910329",
+      "at": "2026-10-09T01:50:50.355718+00:00",
+      "receipt_state": "sent",
+      "independent_channel_read_confirmed": true,
+      "channel_read_sources": [
+        "07-a18-rc1-rejection-observed/slack-channel-read.json",
+        "08-a18-rc1-cancel-after-rejection/slack-channel-read.json",
+        "17-a18-rc2-first-approval/slack-channel-read.json",
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ],
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791510649910329"
+    },
+    {
+      "event": "candidate_rejected",
+      "candidate_tag": "v1.8.0-rc.1",
+      "run_id": "37871436136",
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "snapshot_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791510851.085829",
+      "at": "2026-10-09T01:54:11.399799+00:00",
+      "receipt_state": "sent",
+      "independent_channel_read_confirmed": true,
+      "channel_read_sources": [
+        "08-a18-rc1-cancel-after-rejection/slack-channel-read.json",
+        "17-a18-rc2-first-approval/slack-channel-read.json",
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ],
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791510851085829"
+    },
+    {
+      "event": "candidate_superseded",
+      "candidate_tag": "v1.8.0-rc.1",
+      "run_id": "37871436136",
+      "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+      "snapshot_digest": "5c522c486e6de318c6de4d44ccaf0ccce39914c9d2a61ac3689a6b56d9571c72",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791511959.743739",
+      "at": "2026-10-09T02:12:40.131761+00:00",
+      "receipt_state": "sent",
+      "independent_channel_read_confirmed": true,
+      "channel_read_sources": [
+        "17-a18-rc2-first-approval/slack-channel-read.json",
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ],
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791511959743739"
+    },
+    {
+      "event": "candidate_available",
+      "candidate_tag": "v1.8.0-rc.2",
+      "run_id": "37873174277",
+      "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+      "snapshot_digest": "1ed870ac2e509ac9c10b3b6dc4b09d201cf4fd7cdb7e4099805180a56f9bd71e",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791511965.619999",
+      "at": "2026-10-09T02:12:45.948692+00:00",
+      "receipt_state": "sent",
+      "independent_channel_read_confirmed": true,
+      "channel_read_sources": [
+        "17-a18-rc2-first-approval/slack-channel-read.json",
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ],
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791511965619999"
+    },
+    {
+      "event": "approval_first",
+      "candidate_tag": "v1.8.0-rc.2",
+      "run_id": "37873174277",
+      "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+      "snapshot_digest": "1ed870ac2e509ac9c10b3b6dc4b09d201cf4fd7cdb7e4099805180a56f9bd71e",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791512050.620989",
+      "at": "2026-10-09T02:14:10.968210+00:00",
+      "receipt_state": "sent",
+      "independent_channel_read_confirmed": true,
+      "channel_read_sources": [
+        "17-a18-rc2-first-approval/slack-channel-read.json",
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ],
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791512050620989"
+    },
+    {
+      "event": "approval_second",
+      "candidate_tag": "v1.8.0-rc.2",
+      "run_id": "37873174277",
+      "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+      "snapshot_digest": "1ed870ac2e509ac9c10b3b6dc4b09d201cf4fd7cdb7e4099805180a56f9bd71e",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791512135.408919",
+      "at": "2026-10-09T02:15:35.774746+00:00",
+      "receipt_state": "sent",
+      "independent_channel_read_confirmed": true,
+      "channel_read_sources": [
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ],
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791512135408919"
+    },
+    {
+      "event": "approvals_complete",
+      "candidate_tag": "v1.8.0-rc.2",
+      "run_id": "37873174277",
+      "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+      "snapshot_digest": "1ed870ac2e509ac9c10b3b6dc4b09d201cf4fd7cdb7e4099805180a56f9bd71e",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791512139.599129",
+      "at": "2026-10-09T02:15:39.948898+00:00",
+      "receipt_state": "sent",
+      "independent_channel_read_confirmed": true,
+      "channel_read_sources": [
+        "18-a18-rc2-two-of-two-before-final/slack-channel-read.json",
+        "20-a18-rc2-published/slack-channel-read.json"
+      ],
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791512139599129"
+    },
+    {
+      "event": "publication_completed",
+      "candidate_tag": "v1.8.0-rc.2",
+      "run_id": "37873174277",
+      "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+      "snapshot_digest": "1ed870ac2e509ac9c10b3b6dc4b09d201cf4fd7cdb7e4099805180a56f9bd71e",
+      "channel": "C0C8DUJB52L",
+      "ts": "1791512253.460609",
+      "at": "2026-10-09T02:17:33.684229+00:00",
+      "receipt_state": "sent",
+      "independent_channel_read_confirmed": true,
+      "channel_read_sources": [
+        "20-a18-rc2-published/slack-channel-read.json"
+      ],
+      "url": "https://app.slack.com/archives/C0C8DUJB52L/p1791512253460609"
+    }
+  ],
+  "gaps": [
+    {
+      "kind": "raw_log_collection_partial",
+      "run_id": "37871436136",
+      "failed_requests": 4,
+      "source": "runs/37871436136-rejected-final/collection-summary.json",
+      "scenario_result_not_reclassified": true
+    },
+    {
+      "kind": "additional_local_http_collection_timeout",
+      "source": "02-a-rc1-preview-http/capture-summary.json",
+      "timeout_seconds": 60,
+      "workflow_preview_result_preserved_separately": true
+    }
+  ],
+  "totals": {
+    "runs_collected": 10,
+    "real_job_logs": 49,
+    "real_job_log_bytes": 1966637,
+    "real_job_log_lines": 19725,
+    "sent_events_in_outbox": 13,
+    "independent_notifications_confirmed": 13
+  }
+}

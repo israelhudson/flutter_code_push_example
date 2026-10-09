@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "read_only": true,
+  "trusted_main_commit": "fbcf01271e9a03834f7f54bfd92b0ae21745cf0f",
+  "proposed_release_correction_head": "532ae653afe32f3eb515ab5881e34bdfc22385ac",
+  "trusted_roots": [
+    ".github/",
+    "delivery/release-lab-policy.json",
+    "deploy/",
+    "tools/delivery/"
+  ],
+  "compared_files": 36,
+  "differences": [],
+  "exact_blob_match": true,
+  "policy_blob_main": "4836cb9687cd25e605149f11ea75b08f32d1690d",
+  "policy_blob_proposed_release": "4836cb9687cd25e605149f11ea75b08f32d1690d",
+  "note": "Expanded comparison of proposed head before PR20 merge. Recheck actual merge commit before dispatching RC2."
+}

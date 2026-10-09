@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "collected_at": "2026-10-09T01:41:00Z",
+  "channel_id": "C0C8DUJB52L",
+  "oldest": "1791509900",
+  "read_only": true,
+  "purpose": "Initial observation before candidate notices; no messages returned in requested interval.",
+  "tool_result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"messages\":\"Channel: #app-deploy-test-isr (C0C8DUJB52L)\\n\\n\",\"pagination_info\":\"There are no more messages available.\\n\"}"
+      }
+    ],
+    "isError": false
+  }
+}

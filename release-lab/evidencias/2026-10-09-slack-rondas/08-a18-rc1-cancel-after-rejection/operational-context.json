@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "recorded_at": "2026-10-09T01:53:50.584769+00:00",
+  "provenance": "root_executor_message_in_current_session_and_GitHub_GET",
+  "root_report": "Root cancelled run37871436136 with gh CLI after the official Fabrícia rejection because the Israel approval gate remained waiting. No Israel approval was added. Observer prioritizes review rejected over cancelled run conclusion.",
+  "single_rejection_auto_closed_run": false,
+  "operational_cancel_required_in_this_execution": true,
+  "future_correction_in_progress": "codex/slack-rejection-close main PR; release PR20 will incorporate corrected tooling before RC2",
+  "observer_runs_get": {
+    "method": "GET",
+    "endpoint": "repos/israelhudson/flutter_code_push_example/actions/runs?event=workflow_run&per_page=10",
+    "exit_code": 0,
+    "stdout_bytes": 28628,
+    "stdout_sha256": "23c0a16fce0cf424d17e02c60faaf89042124059c70d16195baecfbfaf1fe6b5",
+    "stderr_bytes": 0
+  },
+  "read_only": true
+}

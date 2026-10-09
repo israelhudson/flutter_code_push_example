@@ -1,0 +1,1088 @@
+﻿2026-10-09T01:36:53.2087429Z Current runner version: '2.337.0'
+2026-10-09T01:36:53.2106241Z ##[group]Runner Image Provisioner
+2026-10-09T01:36:53.2106780Z Hosted Compute Agent
+2026-10-09T01:36:53.2107126Z Version: 20261002.596
+2026-10-09T01:36:53.2107605Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-09T01:36:53.2108037Z Build Date: 2026-10-02T22:28:27Z
+2026-10-09T01:36:53.2108511Z Worker ID: {d00b00e5-96e3-4990-aaa3-ad33cbb24149}
+2026-10-09T01:36:53.2109110Z Region: centralus
+2026-10-09T01:36:53.2109440Z Cloud: Azure
+2026-10-09T01:36:53.2109844Z ##[endgroup]
+2026-10-09T01:36:53.2110647Z ##[group]Operating System
+2026-10-09T01:36:53.2111048Z Ubuntu
+2026-10-09T01:36:53.2111380Z 24.04.5
+2026-10-09T01:36:53.2111695Z LTS
+2026-10-09T01:36:53.2112077Z ##[endgroup]
+2026-10-09T01:36:53.2112410Z ##[group]Runner Image
+2026-10-09T01:36:53.2112835Z Image: ubuntu-24.04
+2026-10-09T01:36:53.2113193Z Version: 20261004.327.1
+2026-10-09T01:36:53.2114009Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-09T01:36:53.2114893Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-09T01:36:53.2115492Z ##[endgroup]
+2026-10-09T01:36:53.2116148Z ##[group]GITHUB_TOKEN Permissions
+2026-10-09T01:36:53.2117416Z Contents: read
+2026-10-09T01:36:53.2117770Z Metadata: read
+2026-10-09T01:36:53.2118108Z ##[endgroup]
+2026-10-09T01:36:53.2119706Z Secret source: Actions
+2026-10-09T01:36:53.2120297Z Cache mode: write
+2026-10-09T01:36:53.2120751Z Prepare workflow directory
+2026-10-09T01:36:53.2333033Z Prepare all required actions
+2026-10-09T01:36:53.2366730Z Getting action download info
+2026-10-09T01:36:53.4581913Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-09T01:36:53.6111243Z Complete job name: Flutter analyze e test
+2026-10-09T01:36:53.6576387Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-10-09T01:36:53.6576891Z with:
+2026-10-09T01:36:53.6577165Z   ref: 31b0b8334d336ea68890c6db1edb6b034cbb43cd
+2026-10-09T01:36:53.6577488Z   path: trusted
+2026-10-09T01:36:53.6577748Z   persist-credentials: false
+2026-10-09T01:36:53.6578072Z   repository: israelhudson/flutter_code_push_example
+2026-10-09T01:36:53.6580592Z   token: ***
+2026-10-09T01:36:53.6580832Z   ssh-strict: true
+2026-10-09T01:36:53.6581078Z   ssh-user: git
+2026-10-09T01:36:53.6581333Z   clean: true
+2026-10-09T01:36:53.6581587Z   sparse-checkout-cone-mode: true
+2026-10-09T01:36:53.6581877Z   fetch-depth: 1
+2026-10-09T01:36:53.6582117Z   fetch-tags: false
+2026-10-09T01:36:53.6582365Z   show-progress: true
+2026-10-09T01:36:53.6582616Z   lfs: false
+2026-10-09T01:36:53.6582845Z   submodules: false
+2026-10-09T01:36:53.6583097Z   set-safe-directory: true
+2026-10-09T01:36:53.6583376Z   allow-unsafe-pr-checkout: false
+2026-10-09T01:36:53.6584049Z ##[endgroup]
+2026-10-09T01:36:53.7282536Z Syncing repository: israelhudson/flutter_code_push_example
+2026-10-09T01:36:53.7284123Z ##[group]Getting Git version info
+2026-10-09T01:36:53.7285012Z Working directory is '/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted'
+2026-10-09T01:36:53.7286162Z [command]/usr/bin/git version
+2026-10-09T01:36:53.7349123Z git version 2.55.0
+2026-10-09T01:36:53.7361733Z ##[endgroup]
+2026-10-09T01:36:53.7369157Z Temporarily overriding HOME='/home/runner/work/_temp/42210eab-d525-4083-b04c-cb5974920217' before making global git config changes
+2026-10-09T01:36:53.7370686Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T01:36:53.7373707Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+2026-10-09T01:36:53.7415835Z ##[group]Determining repository object format
+2026-10-09T01:36:53.7417003Z ##[endgroup]
+2026-10-09T01:36:53.7417689Z ##[group]Initializing the repository
+2026-10-09T01:36:53.7420137Z [command]/usr/bin/git init /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+2026-10-09T01:36:53.7539191Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-09T01:36:53.7541020Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-09T01:36:53.7542396Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-09T01:36:53.7543546Z hint: call:
+2026-10-09T01:36:53.7544427Z hint:
+2026-10-09T01:36:53.7544982Z hint: 	git config --global init.defaultBranch <name>
+2026-10-09T01:36:53.7545569Z hint:
+2026-10-09T01:36:53.7546090Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-09T01:36:53.7546984Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-09T01:36:53.7547743Z hint:
+2026-10-09T01:36:53.7548111Z hint: 	git branch -m <name>
+2026-10-09T01:36:53.7548589Z hint:
+2026-10-09T01:36:53.7549331Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-09T01:36:53.7550662Z Initialized empty Git repository in /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/
+2026-10-09T01:36:53.7552904Z [command]/usr/bin/git remote add origin https://github.com/israelhudson/flutter_code_push_example
+2026-10-09T01:36:53.7598556Z ##[endgroup]
+2026-10-09T01:36:53.7599486Z ##[group]Disabling automatic garbage collection
+2026-10-09T01:36:53.7602123Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-09T01:36:53.7636630Z ##[endgroup]
+2026-10-09T01:36:53.7637299Z ##[group]Setting up auth
+2026-10-09T01:36:53.7638304Z Removing SSH command configuration
+2026-10-09T01:36:53.7642716Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T01:36:53.7679988Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T01:36:53.7983271Z Removing HTTP extra header
+2026-10-09T01:36:53.7988476Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T01:36:53.8019465Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T01:36:53.8195638Z Removing includeIf entries pointing to credentials config files
+2026-10-09T01:36:53.8200358Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T01:36:53.8231637Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T01:36:53.8406440Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-a9066912-9c51-4e07-83ef-b9af560f46ee.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-09T01:36:53.8441340Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git.path /home/runner/work/_temp/git-credentials-a9066912-9c51-4e07-83ef-b9af560f46ee.config
+2026-10-09T01:36:53.8469486Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-a9066912-9c51-4e07-83ef-b9af560f46ee.config
+2026-10-09T01:36:53.8498669Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/trusted/.git.path /github/runner_temp/git-credentials-a9066912-9c51-4e07-83ef-b9af560f46ee.config
+2026-10-09T01:36:53.8526849Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/trusted/.git/worktrees/*.path /github/runner_temp/git-credentials-a9066912-9c51-4e07-83ef-b9af560f46ee.config
+2026-10-09T01:36:53.8552167Z ##[endgroup]
+2026-10-09T01:36:53.8552604Z ##[group]Fetching the repository
+2026-10-09T01:36:53.8556412Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 31b0b8334d336ea68890c6db1edb6b034cbb43cd
+2026-10-09T01:36:54.5310099Z From https://github.com/israelhudson/flutter_code_push_example
+2026-10-09T01:36:54.5311160Z  * branch            31b0b8334d336ea68890c6db1edb6b034cbb43cd -> FETCH_HEAD
+2026-10-09T01:36:54.5317270Z [command]/usr/bin/git rev-parse --verify --quiet 31b0b8334d336ea68890c6db1edb6b034cbb43cd^{object}
+2026-10-09T01:36:54.5344265Z 31b0b8334d336ea68890c6db1edb6b034cbb43cd
+2026-10-09T01:36:54.5348120Z ##[endgroup]
+2026-10-09T01:36:54.5349065Z ##[group]Determining the checkout info
+2026-10-09T01:36:54.5350048Z ##[endgroup]
+2026-10-09T01:36:54.5352558Z [command]/usr/bin/git sparse-checkout disable
+2026-10-09T01:36:54.5458563Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-09T01:36:54.5490595Z ##[group]Checking out the ref
+2026-10-09T01:36:54.5493361Z [command]/usr/bin/git checkout --progress --force 31b0b8334d336ea68890c6db1edb6b034cbb43cd
+2026-10-09T01:36:54.5764832Z Note: switching to '31b0b8334d336ea68890c6db1edb6b034cbb43cd'.
+2026-10-09T01:36:54.5765538Z 
+2026-10-09T01:36:54.5765887Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-09T01:36:54.5766826Z changes and commit them, and you can discard any commits you make in this
+2026-10-09T01:36:54.5767790Z state without impacting any branches by switching back to a branch.
+2026-10-09T01:36:54.5768391Z 
+2026-10-09T01:36:54.5768741Z If you want to create a new branch to retain commits you create, you may
+2026-10-09T01:36:54.5769802Z do so (now or later) by using -c with the switch command. Example:
+2026-10-09T01:36:54.5770330Z 
+2026-10-09T01:36:54.5770481Z   git switch -c <new-branch-name>
+2026-10-09T01:36:54.5770843Z 
+2026-10-09T01:36:54.5771040Z Or undo this operation with:
+2026-10-09T01:36:54.5771330Z 
+2026-10-09T01:36:54.5771445Z   git switch -
+2026-10-09T01:36:54.5771876Z 
+2026-10-09T01:36:54.5772409Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-09T01:36:54.5773313Z 
+2026-10-09T01:36:54.5773912Z HEAD is now at 31b0b83 Merge pull request #18 from israelhudson/codex/rc-operator-planning
+2026-10-09T01:36:54.5776099Z ##[endgroup]
+2026-10-09T01:36:54.5815489Z [command]/usr/bin/git log -1 --format=%H
+2026-10-09T01:36:54.5841247Z 31b0b8334d336ea68890c6db1edb6b034cbb43cd
+2026-10-09T01:36:54.5849803Z ##[group]Removing auth
+2026-10-09T01:36:54.5850430Z Removing SSH command configuration
+2026-10-09T01:36:54.5853278Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T01:36:54.5883337Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T01:36:54.6078429Z Removing HTTP extra header
+2026-10-09T01:36:54.6080135Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T01:36:54.6108259Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T01:36:54.6288480Z Removing includeIf entries pointing to credentials config files
+2026-10-09T01:36:54.6290627Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T01:36:54.6316908Z includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git.path
+2026-10-09T01:36:54.6319759Z includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/worktrees/*.path
+2026-10-09T01:36:54.6321779Z includeif.gitdir:/github/workspace/trusted/.git.path
+2026-10-09T01:36:54.6323130Z includeif.gitdir:/github/workspace/trusted/.git/worktrees/*.path
+2026-10-09T01:36:54.6327019Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git.path
+2026-10-09T01:36:54.6347701Z /home/runner/work/_temp/git-credentials-a9066912-9c51-4e07-83ef-b9af560f46ee.config
+2026-10-09T01:36:54.6356561Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-a9066912\-9c51\-4e07\-83ef\-b9af560f46ee\.config
+2026-10-09T01:36:54.6387803Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/worktrees/*.path
+2026-10-09T01:36:54.6408607Z /home/runner/work/_temp/git-credentials-a9066912-9c51-4e07-83ef-b9af560f46ee.config
+2026-10-09T01:36:54.6415521Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-a9066912\-9c51\-4e07\-83ef\-b9af560f46ee\.config
+2026-10-09T01:36:54.6469705Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/trusted/.git.path
+2026-10-09T01:36:54.6492272Z /github/runner_temp/git-credentials-a9066912-9c51-4e07-83ef-b9af560f46ee.config
+2026-10-09T01:36:54.6498270Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/trusted/.git.path \/github\/runner_temp\/git\-credentials\-a9066912\-9c51\-4e07\-83ef\-b9af560f46ee\.config
+2026-10-09T01:36:54.6572785Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/trusted/.git/worktrees/*.path
+2026-10-09T01:36:54.6598467Z /github/runner_temp/git-credentials-a9066912-9c51-4e07-83ef-b9af560f46ee.config
+2026-10-09T01:36:54.6604412Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/trusted/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-a9066912\-9c51\-4e07\-83ef\-b9af560f46ee\.config
+2026-10-09T01:36:54.6637455Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T01:36:54.6821188Z Removing credentials config '/home/runner/work/_temp/git-credentials-a9066912-9c51-4e07-83ef-b9af560f46ee.config'
+2026-10-09T01:36:54.6827806Z ##[endgroup]
+2026-10-09T01:36:54.7150327Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-10-09T01:36:54.7151205Z with:
+2026-10-09T01:36:54.7151639Z   path: app
+2026-10-09T01:36:54.7152110Z   persist-credentials: false
+2026-10-09T01:36:54.7152775Z   repository: israelhudson/flutter_code_push_example
+2026-10-09T01:36:54.7158698Z   token: ***
+2026-10-09T01:36:54.7159282Z   ssh-strict: true
+2026-10-09T01:36:54.7159753Z   ssh-user: git
+2026-10-09T01:36:54.7160205Z   clean: true
+2026-10-09T01:36:54.7160696Z   sparse-checkout-cone-mode: true
+2026-10-09T01:36:54.7161285Z   fetch-depth: 1
+2026-10-09T01:36:54.7161750Z   fetch-tags: false
+2026-10-09T01:36:54.7162235Z   show-progress: true
+2026-10-09T01:36:54.7162725Z   lfs: false
+2026-10-09T01:36:54.7163166Z   submodules: false
+2026-10-09T01:36:54.7163683Z   set-safe-directory: true
+2026-10-09T01:36:54.7164254Z   allow-unsafe-pr-checkout: false
+2026-10-09T01:36:54.7164848Z ##[endgroup]
+2026-10-09T01:36:54.7798993Z Syncing repository: israelhudson/flutter_code_push_example
+2026-10-09T01:36:54.7800905Z ##[group]Getting Git version info
+2026-10-09T01:36:54.7802499Z Working directory is '/home/runner/work/flutter_code_push_example/flutter_code_push_example/app'
+2026-10-09T01:36:54.7831177Z [command]/usr/bin/git version
+2026-10-09T01:36:54.7863095Z git version 2.55.0
+2026-10-09T01:36:54.7876635Z ##[endgroup]
+2026-10-09T01:36:54.7885471Z Temporarily overriding HOME='/home/runner/work/_temp/f1fb2599-f655-47f3-9ce5-3177465f22c9' before making global git config changes
+2026-10-09T01:36:54.7887879Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T01:36:54.7891431Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/flutter_code_push_example/flutter_code_push_example/app
+2026-10-09T01:36:54.7922743Z ##[group]Determining repository object format
+2026-10-09T01:36:54.7924584Z ##[endgroup]
+2026-10-09T01:36:54.7925777Z ##[group]Initializing the repository
+2026-10-09T01:36:54.7928737Z [command]/usr/bin/git init /home/runner/work/flutter_code_push_example/flutter_code_push_example/app
+2026-10-09T01:36:54.7969860Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-09T01:36:54.7971879Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-09T01:36:54.7973790Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-09T01:36:54.7975398Z hint: call:
+2026-10-09T01:36:54.7976354Z hint:
+2026-10-09T01:36:54.7977526Z hint: 	git config --global init.defaultBranch <name>
+2026-10-09T01:36:54.7978741Z hint:
+2026-10-09T01:36:54.7979881Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-09T01:36:54.7981515Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-09T01:36:54.7982840Z hint:
+2026-10-09T01:36:54.7983479Z hint: 	git branch -m <name>
+2026-10-09T01:36:54.7984267Z hint:
+2026-10-09T01:36:54.7985374Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-09T01:36:54.7987791Z Initialized empty Git repository in /home/runner/work/flutter_code_push_example/flutter_code_push_example/app/.git/
+2026-10-09T01:36:54.7993252Z [command]/usr/bin/git remote add origin https://github.com/israelhudson/flutter_code_push_example
+2026-10-09T01:36:54.8024457Z ##[endgroup]
+2026-10-09T01:36:54.8025943Z ##[group]Disabling automatic garbage collection
+2026-10-09T01:36:54.8040913Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-09T01:36:54.8072825Z ##[endgroup]
+2026-10-09T01:36:54.8073980Z ##[group]Setting up auth
+2026-10-09T01:36:54.8074875Z Removing SSH command configuration
+2026-10-09T01:36:54.8078225Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T01:36:54.8130415Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T01:36:54.8327204Z Removing HTTP extra header
+2026-10-09T01:36:54.8332669Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T01:36:54.8366887Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T01:36:54.8548784Z Removing includeIf entries pointing to credentials config files
+2026-10-09T01:36:54.8553682Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T01:36:54.8591044Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T01:36:54.8774623Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-dadb0d3f-014b-4a91-99b5-fadb17d734c3.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-09T01:36:54.8810592Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/app/.git.path /home/runner/work/_temp/git-credentials-dadb0d3f-014b-4a91-99b5-fadb17d734c3.config
+2026-10-09T01:36:54.8840105Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/app/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-dadb0d3f-014b-4a91-99b5-fadb17d734c3.config
+2026-10-09T01:36:54.8867850Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/app/.git.path /github/runner_temp/git-credentials-dadb0d3f-014b-4a91-99b5-fadb17d734c3.config
+2026-10-09T01:36:54.8895787Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/app/.git/worktrees/*.path /github/runner_temp/git-credentials-dadb0d3f-014b-4a91-99b5-fadb17d734c3.config
+2026-10-09T01:36:54.8921616Z ##[endgroup]
+2026-10-09T01:36:54.8922440Z ##[group]Fetching the repository
+2026-10-09T01:36:54.8925765Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +98af25f84aebdb23a536048950a90545f14d2238:refs/remotes/pull/19/merge
+2026-10-09T01:36:55.5267598Z From https://github.com/israelhudson/flutter_code_push_example
+2026-10-09T01:36:55.5268064Z  * [new ref]         98af25f84aebdb23a536048950a90545f14d2238 -> pull/19/merge
+2026-10-09T01:36:55.5270965Z ##[endgroup]
+2026-10-09T01:36:55.5271492Z ##[group]Determining the checkout info
+2026-10-09T01:36:55.5271960Z ##[endgroup]
+2026-10-09T01:36:55.5275603Z [command]/usr/bin/git sparse-checkout disable
+2026-10-09T01:36:55.5313839Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-09T01:36:55.5341265Z ##[group]Checking out the ref
+2026-10-09T01:36:55.5344099Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/19/merge
+2026-10-09T01:36:55.5609686Z Note: switching to 'refs/remotes/pull/19/merge'.
+2026-10-09T01:36:55.5610393Z 
+2026-10-09T01:36:55.5611060Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-09T01:36:55.5611597Z changes and commit them, and you can discard any commits you make in this
+2026-10-09T01:36:55.5612023Z state without impacting any branches by switching back to a branch.
+2026-10-09T01:36:55.5612245Z 
+2026-10-09T01:36:55.5612510Z If you want to create a new branch to retain commits you create, you may
+2026-10-09T01:36:55.5612954Z do so (now or later) by using -c with the switch command. Example:
+2026-10-09T01:36:55.5613233Z 
+2026-10-09T01:36:55.5613355Z   git switch -c <new-branch-name>
+2026-10-09T01:36:55.5613537Z 
+2026-10-09T01:36:55.5613653Z Or undo this operation with:
+2026-10-09T01:36:55.5613829Z 
+2026-10-09T01:36:55.5613976Z   git switch -
+2026-10-09T01:36:55.5614159Z 
+2026-10-09T01:36:55.5614390Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-09T01:36:55.5614731Z 
+2026-10-09T01:36:55.5615096Z HEAD is now at 98af25f Merge b7464e160c38b678eeda29a5c812ee8645307a94 into 31b0b8334d336ea68890c6db1edb6b034cbb43cd
+2026-10-09T01:36:55.5617048Z ##[endgroup]
+2026-10-09T01:36:55.5655475Z [command]/usr/bin/git log -1 --format=%H
+2026-10-09T01:36:55.5680021Z 98af25f84aebdb23a536048950a90545f14d2238
+2026-10-09T01:36:55.5687176Z ##[group]Removing auth
+2026-10-09T01:36:55.5687496Z Removing SSH command configuration
+2026-10-09T01:36:55.5689638Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T01:36:55.5717896Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T01:36:55.5893209Z Removing HTTP extra header
+2026-10-09T01:36:55.5896061Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T01:36:55.5926448Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T01:36:55.6105711Z Removing includeIf entries pointing to credentials config files
+2026-10-09T01:36:55.6108314Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T01:36:55.6132971Z includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/app/.git.path
+2026-10-09T01:36:55.6133491Z includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/app/.git/worktrees/*.path
+2026-10-09T01:36:55.6133843Z includeif.gitdir:/github/workspace/app/.git.path
+2026-10-09T01:36:55.6134108Z includeif.gitdir:/github/workspace/app/.git/worktrees/*.path
+2026-10-09T01:36:55.6139656Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/app/.git.path
+2026-10-09T01:36:55.6161466Z /home/runner/work/_temp/git-credentials-dadb0d3f-014b-4a91-99b5-fadb17d734c3.config
+2026-10-09T01:36:55.6168439Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/app/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-dadb0d3f\-014b\-4a91\-99b5\-fadb17d734c3\.config
+2026-10-09T01:36:55.6198644Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/app/.git/worktrees/*.path
+2026-10-09T01:36:55.6219994Z /home/runner/work/_temp/git-credentials-dadb0d3f-014b-4a91-99b5-fadb17d734c3.config
+2026-10-09T01:36:55.6226825Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/app/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-dadb0d3f\-014b\-4a91\-99b5\-fadb17d734c3\.config
+2026-10-09T01:36:55.6261808Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/app/.git.path
+2026-10-09T01:36:55.6282998Z /github/runner_temp/git-credentials-dadb0d3f-014b-4a91-99b5-fadb17d734c3.config
+2026-10-09T01:36:55.6287784Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/app/.git.path \/github\/runner_temp\/git\-credentials\-dadb0d3f\-014b\-4a91\-99b5\-fadb17d734c3\.config
+2026-10-09T01:36:55.6319900Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/app/.git/worktrees/*.path
+2026-10-09T01:36:55.6340897Z /github/runner_temp/git-credentials-dadb0d3f-014b-4a91-99b5-fadb17d734c3.config
+2026-10-09T01:36:55.6350927Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/app/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-dadb0d3f\-014b\-4a91\-99b5\-fadb17d734c3\.config
+2026-10-09T01:36:55.6380735Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T01:36:55.6553387Z Removing credentials config '/home/runner/work/_temp/git-credentials-dadb0d3f-014b-4a91-99b5-fadb17d734c3.config'
+2026-10-09T01:36:55.6561891Z ##[endgroup]
+2026-10-09T01:36:55.6740732Z Prepare all required actions
+2026-10-09T01:36:55.6797619Z ##[group]Run ./trusted/.github/actions/setup-flutter
+2026-10-09T01:36:55.6797851Z with:
+2026-10-09T01:36:55.6798031Z   build-inputs: app/delivery/build-inputs.json
+2026-10-09T01:36:55.6798242Z ##[endgroup]
+2026-10-09T01:36:55.6842627Z ##[start-action display=Run python3 - <<'PY';id=__self.inputs]
+2026-10-09T01:36:55.6878405Z ##[group]Run python3 - <<'PY'
+2026-10-09T01:36:55.6878683Z [36;1mpython3 - <<'PY'[0m
+2026-10-09T01:36:55.6879052Z [36;1mimport json, os, re[0m
+2026-10-09T01:36:55.6879238Z [36;1mfrom pathlib import Path[0m
+2026-10-09T01:36:55.6879480Z [36;1mworkspace = Path(os.environ['GITHUB_WORKSPACE']).resolve()[0m
+2026-10-09T01:36:55.6879755Z [36;1mpath = Path(os.environ['BUILD_INPUTS']).resolve()[0m
+2026-10-09T01:36:55.6880051Z [36;1mif not path.is_relative_to(workspace):[0m
+2026-10-09T01:36:55.6880333Z [36;1m    raise ValueError('Build inputs precisa pertencer ao checkout deste job.')[0m
+2026-10-09T01:36:55.6880664Z [36;1minputs = json.loads(path.read_text())[0m
+2026-10-09T01:36:55.6880938Z [36;1mversion, revision = inputs['flutter_version'], inputs['flutter_revision'][0m
+2026-10-09T01:36:55.6881301Z [36;1mif not re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+', version) or not re.fullmatch(r'[0-9a-f]{40}', revision):[0m
+2026-10-09T01:36:55.6881687Z [36;1m    raise ValueError('Versão e revisão Flutter precisam estar fixadas.')[0m
+2026-10-09T01:36:55.6881985Z [36;1mwith open(os.environ['GITHUB_OUTPUT'], 'a') as f:[0m
+2026-10-09T01:36:55.6882259Z [36;1m    f.write('version=' + version + '\nrevision=' + revision + '\n')[0m
+2026-10-09T01:36:55.6882488Z [36;1mPY[0m
+2026-10-09T01:36:55.7114883Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-09T01:36:55.7115141Z env:
+2026-10-09T01:36:55.7115528Z   BUILD_INPUTS: app/delivery/build-inputs.json
+2026-10-09T01:36:55.7115731Z ##[endgroup]
+2026-10-09T01:36:55.7434229Z ##[end-action id=__self.inputs;outcome=success;conclusion=success;duration_ms=59]
+2026-10-09T01:36:55.7439576Z ##[start-action display=Instalar e conferir o SDK;id=__self.__run]
+2026-10-09T01:36:55.7461510Z ##[group]Run set -euo pipefail
+2026-10-09T01:36:55.7461724Z [36;1mset -euo pipefail[0m
+2026-10-09T01:36:55.7461912Z [36;1mSDK_PATH="$RUNNER_TEMP/flutter-delivery"[0m
+2026-10-09T01:36:55.7462279Z [36;1mgit clone --no-checkout --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$SDK_PATH"[0m
+2026-10-09T01:36:55.7462687Z [36;1mtest "$(git -C "$SDK_PATH" rev-parse HEAD)" = "$FLUTTER_REVISION"[0m
+2026-10-09T01:36:55.7462958Z [36;1mgit -C "$SDK_PATH" checkout --detach "$FLUTTER_REVISION"[0m
+2026-10-09T01:36:55.7463272Z [36;1m# The first invocation bootstraps the tool and prints a welcome banner.[0m
+2026-10-09T01:36:55.7463569Z [36;1m# Run it before helpers parse --version --machine as strict JSON.[0m
+2026-10-09T01:36:55.7463831Z [36;1m"$SDK_PATH/bin/flutter" --version[0m
+2026-10-09T01:36:55.7464044Z [36;1mecho "$SDK_PATH/bin" >> "$GITHUB_PATH"[0m
+2026-10-09T01:36:55.7518255Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-09T01:36:55.7518477Z env:
+2026-10-09T01:36:55.7518627Z   FLUTTER_VERSION: 3.44.1
+2026-10-09T01:36:55.7518923Z   FLUTTER_REVISION: 924134a44c189315be2148659913dda1671cbe99
+2026-10-09T01:36:55.7519142Z ##[endgroup]
+2026-10-09T01:36:55.7600151Z Cloning into '/home/runner/work/_temp/flutter-delivery'...
+2026-10-09T01:37:02.8364597Z HEAD is now at 924134a4 Update CHANGELOG with Flutter 3.44 changes (#187258)
+2026-10-09T01:37:02.8693831Z Downloading Linux x64 Dart SDK from Flutter engine c416acfeb8126e097f758c664aaa3da929e27da0...
+2026-10-09T01:37:02.8775586Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+2026-10-09T01:37:02.8776068Z                                  Dload  Upload   Total   Spent    Left  Speed
+2026-10-09T01:37:02.8776307Z 
+2026-10-09T01:37:02.9290293Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-10-09T01:37:03.9250524Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-10-09T01:37:04.9539102Z  22  222M   22 50.1M    0     0  47.8M      0  0:00:04  0:00:01  0:00:03 47.8M
+2026-10-09T01:37:05.8398126Z  64  222M   64  143M    0     0  69.1M      0  0:00:03  0:00:02  0:00:01 69.1M
+2026-10-09T01:37:05.8398557Z 100  222M  100  222M    0     0  75.0M      0  0:00:02  0:00:02 --:--:-- 75.0M
+2026-10-09T01:37:09.4319216Z Building flutter tool...
+2026-10-09T01:37:09.4434581Z Resolving dependencies...
+2026-10-09T01:37:09.8593322Z Downloading packages...
+2026-10-09T01:37:12.6760325Z + _fe_analyzer_shared 95.0.0 (109.0.0 available)
+2026-10-09T01:37:12.6760655Z + analyzer 10.1.0 (14.5.0 available)
+2026-10-09T01:37:12.6760865Z + archive 3.6.1 (4.3.0 available)
+2026-10-09T01:37:12.6761063Z + args 2.7.0
+2026-10-09T01:37:12.6761259Z + async 2.13.1
+2026-10-09T01:37:12.6761429Z + boolean_selector 2.1.2
+2026-10-09T01:37:12.6761622Z + browser_launcher 1.1.3 (1.2.0 available)
+2026-10-09T01:37:12.6761864Z + built_collection 5.1.1 (5.1.2 available)
+2026-10-09T01:37:12.6762087Z + built_value 8.12.5 (8.13.0 available)
+2026-10-09T01:37:12.6762295Z + checked_yaml 2.0.4
+2026-10-09T01:37:12.6762469Z + cli_config 0.2.0
+2026-10-09T01:37:12.6762643Z + clock 1.1.2 (1.1.3 available)
+2026-10-09T01:37:12.6762846Z + code_assets 1.0.0 (2.1.0 available)
+2026-10-09T01:37:12.6763066Z + code_builder 4.11.1 (4.12.0 available)
+2026-10-09T01:37:12.6763334Z + collection 1.19.1
+2026-10-09T01:37:12.6763507Z + completion 1.0.2
+2026-10-09T01:37:12.6763672Z + convert 3.1.2
+2026-10-09T01:37:12.6763843Z + coverage 1.15.0 (1.15.1 available)
+2026-10-09T01:37:12.6764048Z + crypto 3.0.7
+2026-10-09T01:37:12.6764231Z + csslib 1.0.2
+2026-10-09T01:37:12.6764387Z + dap 1.4.0
+2026-10-09T01:37:12.6764554Z + dart_service_protocol_shared 0.0.3
+2026-10-09T01:37:12.6765030Z + dart_style 3.1.7 (3.1.13 available)
+2026-10-09T01:37:12.6765244Z + data_assets 0.19.6 (0.20.0 available)
+2026-10-09T01:37:12.6765457Z + dds 5.3.0 (5.4.0 available)
+2026-10-09T01:37:12.6765664Z + dds_service_extensions 2.1.0
+2026-10-09T01:37:12.6765879Z + devtools_shared 12.1.0 (14.0.0 available)
+2026-10-09T01:37:12.6766093Z + dtd 4.0.0
+2026-10-09T01:37:12.6766251Z + dwds 26.2.5 (27.1.4 available)
+2026-10-09T01:37:12.6766454Z + extension_discovery 2.1.0
+2026-10-09T01:37:12.6766643Z + fake_async 1.3.3
+2026-10-09T01:37:12.6766804Z + ffi 2.2.0
+2026-10-09T01:37:12.6766954Z + file 7.0.1
+2026-10-09T01:37:12.6767120Z + file_testing 3.0.2 (3.1.0 available)
+2026-10-09T01:37:12.6767325Z + fixnum 1.1.1
+2026-10-09T01:37:12.6767516Z + flutter_template_images 5.0.0 (5.0.1 available)
+2026-10-09T01:37:12.6767779Z + frontend_server_client 4.0.0 (4.1.0 available)
+2026-10-09T01:37:12.6768014Z + glob 2.1.3 (2.2.0 available)
+2026-10-09T01:37:12.6768201Z + graphs 2.3.2
+2026-10-09T01:37:12.6768365Z + hooks 1.0.2 (2.2.0 available)
+2026-10-09T01:37:12.6768506Z + hooks_runner 1.1.1 (1.6.4 available)
+2026-10-09T01:37:12.6768641Z + html 0.15.6 (0.15.7 available)
+2026-10-09T01:37:12.6768762Z + http 1.6.0
+2026-10-09T01:37:12.6769083Z + http_multi_server 3.2.2
+2026-10-09T01:37:12.6769243Z + http_parser 4.1.2
+2026-10-09T01:37:12.6769358Z + intl 0.20.2 (0.20.3 available)
+2026-10-09T01:37:12.6769485Z + io 1.0.5 (1.1.0 available)
+2026-10-09T01:37:12.6769607Z + js 0.7.2 (discontinued)
+2026-10-09T01:37:12.6769736Z + json_annotation 4.11.0 (4.12.0 available)
+2026-10-09T01:37:12.6769874Z + json_rpc_2 4.1.0
+2026-10-09T01:37:12.6769979Z + logging 1.3.0
+2026-10-09T01:37:12.6770092Z + matcher 0.12.19 (0.12.20 available)
+2026-10-09T01:37:12.6770226Z + meta 1.18.0 (1.19.0 available)
+2026-10-09T01:37:12.6770351Z + mime 2.0.0 (2.1.0 available)
+2026-10-09T01:37:12.6770481Z + multicast_dns 0.3.3 (0.3.3+1 available)
+2026-10-09T01:37:12.6770627Z + mustache_template 2.0.4 (2.0.6 available)
+2026-10-09T01:37:12.6770780Z + native_stack_traces 0.6.1 (0.7.0 available)
+2026-10-09T01:37:12.6770930Z + node_preamble 2.0.2
+2026-10-09T01:37:12.6771052Z + package_config 2.2.0 (3.0.0 available)
+2026-10-09T01:37:12.6771187Z + path 1.9.1
+2026-10-09T01:37:12.6771422Z + petitparser 7.0.2 (7.1.0 available)
+2026-10-09T01:37:12.6771562Z + platform 3.1.6 (3.2.0 available)
+2026-10-09T01:37:12.6771694Z + pool 1.5.2 (1.5.3 available)
+2026-10-09T01:37:12.6771820Z + process 5.0.5 (5.0.6 available)
+2026-10-09T01:37:12.6771954Z + pub_semver 2.2.0 (2.2.1 available)
+2026-10-09T01:37:12.6772091Z + pubspec_parse 1.5.0 (1.6.0 available)
+2026-10-09T01:37:12.6772231Z + record_use 0.6.0 (1.1.1 available)
+2026-10-09T01:37:12.6772358Z + shelf 1.4.2
+2026-10-09T01:37:12.6790404Z + shelf_packages_handler 3.0.2
+2026-10-09T01:37:12.6790566Z + shelf_proxy 1.0.4 (1.0.5 available)
+2026-10-09T01:37:12.6790711Z + shelf_static 1.1.3
+2026-10-09T01:37:12.6790835Z + shelf_web_socket 3.0.0
+2026-10-09T01:37:12.6790966Z + source_map_stack_trace 2.1.2
+2026-10-09T01:37:12.6791166Z + source_maps 0.10.13 (0.10.14 available)
+2026-10-09T01:37:12.6791383Z + source_span 1.10.2
+2026-10-09T01:37:12.6791553Z + sprintf 7.0.0
+2026-10-09T01:37:12.6791743Z + sse 4.1.8 (4.2.0 available)
+2026-10-09T01:37:12.6791938Z + stack_trace 1.12.1 (1.12.2 available)
+2026-10-09T01:37:12.6792171Z + standard_message_codec 0.0.1+4 (0.0.1+5 available)
+2026-10-09T01:37:12.6792404Z + stream_channel 2.1.4
+2026-10-09T01:37:12.6792574Z + string_scanner 1.4.1
+2026-10-09T01:37:12.6792741Z + sync_http 0.3.1
+2026-10-09T01:37:12.6792896Z + term_glyph 1.2.2
+2026-10-09T01:37:12.6793058Z + test 1.31.0 (1.33.0 available)
+2026-10-09T01:37:12.6793256Z + test_api 0.7.11 (0.7.15 available)
+2026-10-09T01:37:12.6793462Z + test_core 0.6.17 (0.6.21 available)
+2026-10-09T01:37:12.6793667Z + typed_data 1.4.0
+2026-10-09T01:37:12.6793846Z + unified_analytics 8.0.14 (8.0.18 available)
+2026-10-09T01:37:12.6794070Z + usage 4.1.1 (discontinued)
+2026-10-09T01:37:12.6794257Z + uuid 4.5.3 (4.6.0 available)
+2026-10-09T01:37:12.6794446Z + vm_service 15.0.2 (15.3.0 available)
+2026-10-09T01:37:12.6794837Z + vm_service_interface 2.0.1
+2026-10-09T01:37:12.6794967Z + vm_snapshot_analysis 0.7.6
+2026-10-09T01:37:12.6795151Z + watcher 1.2.1
+2026-10-09T01:37:12.6795260Z + web 1.1.1
+2026-10-09T01:37:12.6795369Z + web_socket 1.0.1
+2026-10-09T01:37:12.6795484Z + web_socket_channel 3.0.3
+2026-10-09T01:37:12.6795618Z + webdriver 3.1.0 (3.2.0 available)
+2026-10-09T01:37:12.6795762Z + webkit_inspection_protocol 1.2.1
+2026-10-09T01:37:12.6795900Z + xml 6.6.1 (7.1.0 available)
+2026-10-09T01:37:12.6796026Z + yaml 3.1.3 (3.1.4 available)
+2026-10-09T01:37:12.6796150Z + yaml_edit 2.2.4
+2026-10-09T01:37:12.6796312Z Changed 102 dependencies!
+2026-10-09T01:37:12.6796453Z 2 packages are discontinued.
+2026-10-09T01:37:12.6796640Z 53 packages have newer versions incompatible with dependency constraints.
+2026-10-09T01:37:12.6796866Z Try `dart pub outdated` for more information.
+2026-10-09T01:37:22.9665470Z Flutter 3.44.1 • channel [user-branch] • unknown source
+2026-10-09T01:37:22.9666068Z Framework • revision 924134a44c (4 months ago) • 2026-05-29 12:13:22 -0400
+2026-10-09T01:37:22.9666809Z Engine • hash 39b1f7043775b9578bbb26a1676e79c4e31c8b5e (revision c416acfeb8) (4 months ago) • 2026-05-27 20:19:31.000Z
+2026-10-09T01:37:22.9667371Z Tools • Dart 3.12.1 • DevTools 2.57.0
+2026-10-09T01:37:22.9737978Z ##[end-action id=__self.__run;outcome=success;conclusion=success;duration_ms=27229]
+2026-10-09T01:37:22.9793919Z ##[group]Run flutter pub get --enforce-lockfile
+2026-10-09T01:37:22.9794264Z [36;1mflutter pub get --enforce-lockfile[0m
+2026-10-09T01:37:22.9794530Z [36;1mflutter analyze[0m
+2026-10-09T01:37:22.9794739Z [36;1mflutter test[0m
+2026-10-09T01:37:22.9858093Z shell: /usr/bin/bash -e {0}
+2026-10-09T01:37:22.9858248Z ##[endgroup]
+2026-10-09T01:37:23.3445227Z [1/10] Material Fonts                                              255ms
+2026-10-09T01:37:23.4056210Z [2/10] Gradle Wrapper                                               22ms
+2026-10-09T01:37:23.4139832Z [3/10] Flutter SDK
+2026-10-09T01:37:23.5455016Z   ├─ [1/5] sky_engine                                              127ms
+2026-10-09T01:37:23.6511064Z   ├─ [2/5] flutter_gpu                                              53ms
+2026-10-09T01:37:23.8290907Z   ├─ [3/5] flutter_patched_sdk                                     167ms
+2026-10-09T01:37:24.0627332Z   ├─ [4/5] flutter_patched_sdk_product                             159ms
+2026-10-09T01:37:24.5779988Z   └─ [5/5] linux-x64                                               442ms
+2026-10-09T01:37:25.1492274Z [10/10] linux-x64/font-subset                                       99ms
+2026-10-09T01:37:25.2376475Z Resolving dependencies...
+2026-10-09T01:37:25.5906755Z Downloading packages...
+2026-10-09T01:37:26.1366976Z   clock 1.1.2 (1.1.3 available)
+2026-10-09T01:37:26.1367209Z   cupertino_icons 1.0.9 (2.0.0 available)
+2026-10-09T01:37:26.1367375Z   matcher 0.12.19 (0.12.20 available)
+2026-10-09T01:37:26.1367545Z   material_color_utilities 0.13.0 (0.13.1 available)
+2026-10-09T01:37:26.1367715Z   meta 1.18.0 (1.19.0 available)
+2026-10-09T01:37:26.1367896Z   stack_trace 1.12.1 (1.12.2 available)
+2026-10-09T01:37:26.1368044Z   test_api 0.7.11 (0.7.15 available)
+2026-10-09T01:37:26.1368187Z   vector_math 2.2.0 (2.4.3 available)
+2026-10-09T01:37:26.1368329Z   vm_service 15.2.0 (15.3.0 available)
+2026-10-09T01:37:26.1368474Z Got dependencies!
+2026-10-09T01:37:26.1368674Z 9 packages have newer versions incompatible with dependency constraints.
+2026-10-09T01:37:26.1369146Z Try `flutter pub outdated` for more information.
+2026-10-09T01:37:26.3964455Z Resolving dependencies...
+2026-10-09T01:37:26.4115231Z Downloading packages...
+2026-10-09T01:37:26.4123323Z   clock 1.1.2 (1.1.3 available)
+2026-10-09T01:37:26.4123980Z   cupertino_icons 1.0.9 (2.0.0 available)
+2026-10-09T01:37:26.4124298Z   matcher 0.12.19 (0.12.20 available)
+2026-10-09T01:37:26.4124568Z   material_color_utilities 0.13.0 (0.13.1 available)
+2026-10-09T01:37:26.4124844Z   meta 1.18.0 (1.19.0 available)
+2026-10-09T01:37:26.4125071Z   stack_trace 1.12.1 (1.12.2 available)
+2026-10-09T01:37:26.4125801Z   test_api 0.7.11 (0.7.15 available)
+2026-10-09T01:37:26.4126047Z   vector_math 2.2.0 (2.4.3 available)
+2026-10-09T01:37:26.4126294Z   vm_service 15.2.0 (15.3.0 available)
+2026-10-09T01:37:26.4126541Z Got dependencies!
+2026-10-09T01:37:26.4126850Z 9 packages have newer versions incompatible with dependency constraints.
+2026-10-09T01:37:26.4127252Z Try `flutter pub outdated` for more information.
+2026-10-09T01:37:31.9358028Z Analyzing app...                                                
+2026-10-09T01:37:31.9375925Z No issues found! (ran in 5.3s)
+2026-10-09T01:37:32.0699270Z Resolving dependencies...
+2026-10-09T01:37:32.0847407Z Downloading packages...
+2026-10-09T01:37:32.0855410Z   clock 1.1.2 (1.1.3 available)
+2026-10-09T01:37:32.0855690Z   cupertino_icons 1.0.9 (2.0.0 available)
+2026-10-09T01:37:32.0855959Z   matcher 0.12.19 (0.12.20 available)
+2026-10-09T01:37:32.0856228Z   material_color_utilities 0.13.0 (0.13.1 available)
+2026-10-09T01:37:32.0856501Z   meta 1.18.0 (1.19.0 available)
+2026-10-09T01:37:32.0856765Z   stack_trace 1.12.1 (1.12.2 available)
+2026-10-09T01:37:32.0857001Z   test_api 0.7.11 (0.7.15 available)
+2026-10-09T01:37:32.0857242Z   vector_math 2.2.0 (2.4.3 available)
+2026-10-09T01:37:32.0857485Z   vm_service 15.2.0 (15.3.0 available)
+2026-10-09T01:37:32.0857719Z Got dependencies!
+2026-10-09T01:37:32.0858539Z 9 packages have newer versions incompatible with dependency constraints.
+2026-10-09T01:37:32.0859086Z Try `flutter pub outdated` for more information.
+2026-10-09T01:37:32.4884624Z 
+2026-10-09T01:37:39.2538584Z ##[group]✅ exibe a mensagem inicial
+2026-10-09T01:37:39.2539255Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.2539787Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:37:39.2540159Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.2540570Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:37:39.2541013Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:37:39.2541578Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:37:39.2542083Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:37:39.2542320Z 
+2026-10-09T01:37:39.2542486Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.2542865Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:37:39.2543111Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.2543351Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:37:39.2543601Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:37:39.2544046Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:37:39.2544450Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:37:39.2544598Z 
+2026-10-09T01:37:39.2544791Z ##[endgroup]
+2026-10-09T01:37:39.4022448Z ##[group]✅ inicia claro e ignora mudanças do tema do sistema
+2026-10-09T01:37:39.4022891Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.4023336Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:37:39.4023716Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.4024110Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:37:39.4024518Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:37:39.4024991Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:37:39.4025435Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:37:39.4025673Z 
+2026-10-09T01:37:39.4025822Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.4026568Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:37:39.4026939Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.4027181Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:37:39.4027438Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:37:39.4027717Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:37:39.4027991Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:37:39.4028137Z 
+2026-10-09T01:37:39.4028468Z ##[endgroup]
+2026-10-09T01:37:39.5327271Z ##[group]✅ alterna pelo botão e reinicia claro sem persistir a escolha
+2026-10-09T01:37:39.5327671Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.5327952Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:37:39.5328234Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.5328482Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:37:39.5328733Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:37:39.5329746Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:37:39.5330184Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:37:39.5330417Z 
+2026-10-09T01:37:39.5330572Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.5330952Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:37:39.5331345Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.5331757Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:37:39.5332147Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:37:39.5332716Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:37:39.5333145Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:37:39.5333380Z 
+2026-10-09T01:37:39.5333527Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.5333929Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:37:39.5334297Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.5334690Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:37:39.5335101Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:37:39.5335556Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:37:39.5336003Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:37:39.5336247Z 
+2026-10-09T01:37:39.5336394Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.5336787Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:37:39.5337165Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.5337573Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:37:39.5337996Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:37:39.5338458Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:37:39.5339043Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:37:39.5339281Z 
+2026-10-09T01:37:39.5339529Z ##[endgroup]
+2026-10-09T01:37:39.6770771Z ##[group]✅ aviso de atualização acompanha as cores do tema escuro
+2026-10-09T01:37:39.6771440Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.6772463Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:37:39.6772926Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.6773322Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:37:39.6773763Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:37:39.6774224Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:37:39.6774678Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:37:39.6774925Z 
+2026-10-09T01:37:39.6775074Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.6775457Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:37:39.6775826Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.6776187Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:37:39.6776454Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:37:39.6776738Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:37:39.6777143Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:37:39.6777295Z 
+2026-10-09T01:37:39.6777463Z ##[endgroup]
+2026-10-09T01:37:39.7223684Z ##[group]✅ botão de tema funciona em tela estreita
+2026-10-09T01:37:39.7224077Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.7224464Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:37:39.7224815Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.7225198Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:37:39.7225578Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:37:39.7226039Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:37:39.7226458Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:37:39.7226698Z 
+2026-10-09T01:37:39.7226855Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.7227241Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:37:39.7227654Z -------------------------------------------------------------------------------
+2026-10-09T01:37:39.7228038Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:37:39.7228438Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:37:39.7228996Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:37:39.7229423Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:37:39.7229662Z 
+2026-10-09T01:37:39.7229885Z ##[endgroup]
+2026-10-09T01:37:39.7422547Z 
+2026-10-09T01:37:39.7426097Z 🎉 5 tests passed.
+2026-10-09T01:37:39.7978293Z ##[group]Run python3 -m unittest discover -s tests/delivery -v
+2026-10-09T01:37:39.7978561Z [36;1mpython3 -m unittest discover -s tests/delivery -v[0m
+2026-10-09T01:37:39.8032688Z shell: /usr/bin/bash -e {0}
+2026-10-09T01:37:39.8032839Z ##[endgroup]
+2026-10-09T01:37:40.2482670Z test_ai_failure_timeout_or_no_credit_use_commits_instead_of_pr_sections (test_changelog_summary.FrozenCommunicationTests.test_ai_failure_timeout_or_no_credit_use_commits_instead_of_pr_sections) ... ok
+2026-10-09T01:37:40.2493887Z test_cli_writes_copies_and_does_not_modify_source_report (test_changelog_summary.FrozenCommunicationTests.test_cli_writes_copies_and_does_not_modify_source_report) ... ok
+2026-10-09T01:37:40.2496333Z test_context_from_other_rc_or_changed_commit_interval_is_refused (test_changelog_summary.FrozenCommunicationTests.test_context_from_other_rc_or_changed_commit_interval_is_refused) ... ok
+2026-10-09T01:37:40.2497786Z test_duplicate_sources_or_invalid_url_fail (test_changelog_summary.FrozenCommunicationTests.test_duplicate_sources_or_invalid_url_fail) ... ok
+2026-10-09T01:37:40.2550092Z test_explicit_pr_sections_are_copied_without_technical_section (test_changelog_summary.FrozenCommunicationTests.test_explicit_pr_sections_are_copied_without_technical_section) ... ok
+2026-10-09T01:37:40.2551407Z test_fractional_seconds_do_not_make_late_ai_result_look_early (test_changelog_summary.FrozenCommunicationTests.test_fractional_seconds_do_not_make_late_ai_result_look_early) ... ok
+2026-10-09T01:37:40.2553107Z test_frozen_selection_cannot_be_replaced_without_hash_change (test_changelog_summary.FrozenCommunicationTests.test_frozen_selection_cannot_be_replaced_without_hash_change) ... ok
+2026-10-09T01:37:40.2554298Z test_late_result_is_evidence_only_even_if_it_arrives_during_revision (test_changelog_summary.FrozenCommunicationTests.test_late_result_is_evidence_only_even_if_it_arrives_during_revision) ... ok
+2026-10-09T01:37:40.2580943Z test_legitimate_long_or_control_character_commit_history_never_blocks_freeze (test_changelog_summary.FrozenCommunicationTests.test_legitimate_long_or_control_character_commit_history_never_blocks_freeze) ... ok
+2026-10-09T01:37:40.2586352Z test_long_commit_history_is_bounded_and_links_back_to_full_report (test_changelog_summary.FrozenCommunicationTests.test_long_commit_history_is_bounded_and_links_back_to_full_report) ... ok
+2026-10-09T01:37:40.2588261Z test_missing_timestamp_invalid_sources_or_metadata_are_fallback (test_changelog_summary.FrozenCommunicationTests.test_missing_timestamp_invalid_sources_or_metadata_are_fallback) ... ok
+2026-10-09T01:37:40.2589397Z test_no_context_is_immediate_commit_fallback (test_changelog_summary.FrozenCommunicationTests.test_no_context_is_immediate_commit_fallback) ... ok
+2026-10-09T01:37:40.2590167Z test_old_rc_result_never_attaches_to_new_rc (test_changelog_summary.FrozenCommunicationTests.test_old_rc_result_never_attaches_to_new_rc) ... ok
+2026-10-09T01:37:40.2594283Z test_oversized_pr_sections_fall_back_without_dropping_limitations (test_changelog_summary.FrozenCommunicationTests.test_oversized_pr_sections_fall_back_without_dropping_limitations) ... ok
+2026-10-09T01:37:40.2595351Z test_source_edit_after_collect_does_not_mutate_snapshot (test_changelog_summary.FrozenCommunicationTests.test_source_edit_after_collect_does_not_mutate_snapshot) ... ok
+2026-10-09T01:37:40.2596364Z test_tampered_source_description_fails_hash_verification (test_changelog_summary.FrozenCommunicationTests.test_tampered_source_description_fails_hash_verification) ... ok
+2026-10-09T01:37:40.2597321Z test_technical_title_is_not_rewritten_as_a_product_claim (test_changelog_summary.FrozenCommunicationTests.test_technical_title_is_not_rewritten_as_a_product_claim) ... ok
+2026-10-09T01:37:40.2598122Z test_valid_result_requires_exact_identity_sources_and_provider_metadata (test_changelog_summary.FrozenCommunicationTests.test_valid_result_requires_exact_identity_sources_and_provider_metadata) ... ok
+2026-10-09T01:37:40.2609920Z test_available_context_read_is_bounded_and_linked_to_same_run (test_changelog_summary.OpportunisticArtifactTests.test_available_context_read_is_bounded_and_linked_to_same_run) ... ok
+2026-10-09T01:37:40.2613206Z test_different_run_or_expired_or_oversized_metadata_prevent_download (test_changelog_summary.OpportunisticArtifactTests.test_different_run_or_expired_or_oversized_metadata_prevent_download) ... ok
+2026-10-09T01:37:40.2614236Z test_missing_artifact_never_polls_or_downloads (test_changelog_summary.OpportunisticArtifactTests.test_missing_artifact_never_polls_or_downloads) ... ok
+2026-10-09T01:37:40.2616001Z test_request_cannot_select_another_artifact_or_unbounded_timeout (test_changelog_summary.OpportunisticArtifactTests.test_request_cannot_select_another_artifact_or_unbounded_timeout) ... ok
+2026-10-09T01:37:40.2617076Z test_timeout_is_fallback_not_delivery_exception (test_changelog_summary.OpportunisticArtifactTests.test_timeout_is_fallback_not_delivery_exception) ... ok
+2026-10-09T01:37:40.2630019Z test_traversal_duplicate_context_or_zip_bomb_are_refused_without_extracting (test_changelog_summary.OpportunisticArtifactTests.test_traversal_duplicate_context_or_zip_bomb_are_refused_without_extracting) ... ok
+2026-10-09T01:37:40.2632748Z test_api_timeout_preserves_commits_without_retaining_token_stderr (test_changelog_summary.OptionalCollectionTests.test_api_timeout_preserves_commits_without_retaining_token_stderr) ... ok
+2026-10-09T01:37:40.2645924Z test_cli_collector_writes_context_without_touching_candidate (test_changelog_summary.OptionalCollectionTests.test_cli_collector_writes_context_without_touching_candidate) ... ok
+2026-10-09T01:37:40.2649081Z test_collector_enforces_total_budget_without_waiting_for_other_commits (test_changelog_summary.OptionalCollectionTests.test_collector_enforces_total_budget_without_waiting_for_other_commits) ... ok
+2026-10-09T01:37:40.2652537Z test_collects_only_merged_pr_in_exact_commit_interval (test_changelog_summary.OptionalCollectionTests.test_collects_only_merged_pr_in_exact_commit_interval) ... ok
+2026-10-09T01:37:40.2660119Z test_existing_capture_never_overwritten (test_collect_evidence.CollectorTests.test_existing_capture_never_overwritten) ... ok
+2026-10-09T01:37:40.2666794Z test_log_error_keeps_bytes_and_marks_partial (test_collect_evidence.CollectorTests.test_log_error_keeps_bytes_and_marks_partial) ... ok
+2026-10-09T01:37:40.2673433Z test_original_failure_and_ansi_preserved_without_claiming_scenario_pass (test_collect_evidence.CollectorTests.test_original_failure_and_ansi_preserved_without_claiming_scenario_pass) ... ok
+2026-10-09T01:37:40.2674739Z test_other_repository_or_non_numeric_run_refused_before_io (test_collect_evidence.CollectorTests.test_other_repository_or_non_numeric_run_refused_before_io) ... ok
+2026-10-09T01:37:40.2680016Z test_pending_job_not_queried_for_unavailable_log (test_collect_evidence.CollectorTests.test_pending_job_not_queried_for_unavailable_log) ... ok
+2026-10-09T01:37:40.2710098Z test_admin_bypass_divergence_remains_blocked_without_overwriting (test_configure_release_lab.ConfigureIdempotenceTests.test_admin_bypass_divergence_remains_blocked_without_overwriting) ... ok
+2026-10-09T01:37:40.2730766Z test_real_required_review_count_divergence_remains_blocked_without_overwriting (test_configure_release_lab.ConfigureIdempotenceTests.test_real_required_review_count_divergence_remains_blocked_without_overwriting) ... ok
+2026-10-09T01:37:40.2754392Z test_repeated_configuration_accepts_safe_github_defaults_without_creating_more_rulesets (test_configure_release_lab.ConfigureIdempotenceTests.test_repeated_configuration_accepts_safe_github_defaults_without_creating_more_rulesets) ... ok
+2026-10-09T01:37:40.2774263Z test_unexpected_required_reviewer_defaults_are_not_silently_ignored (test_configure_release_lab.ConfigureIdempotenceTests.test_unexpected_required_reviewer_defaults_are_not_silently_ignored) ... ok
+2026-10-09T01:37:40.2794886Z test_unsafe_extra_approval_default_is_not_treated_as_safe_normalization (test_configure_release_lab.ConfigureIdempotenceTests.test_unsafe_extra_approval_default_is_not_treated_as_safe_normalization) ... ok
+2026-10-09T01:37:40.4941649Z test_creates_one_verified_object_and_ref_with_owner_audit_without_state_writes (test_create_lab_tag.CreateLabTagTests.test_creates_one_verified_object_and_ref_with_owner_audit_without_state_writes) ... ok
+2026-10-09T01:37:40.7115100Z test_existing_exact_tag_is_read_only_idempotent (test_create_lab_tag.CreateLabTagTests.test_existing_exact_tag_is_read_only_idempotent) ... ok
+2026-10-09T01:37:40.9114444Z test_existing_wrong_tag_is_never_replaced (test_create_lab_tag.CreateLabTagTests.test_existing_wrong_tag_is_never_replaced) ... ok
+2026-10-09T01:37:41.1423934Z test_lost_ref_reply_manual_get_confirms_existing_tag_without_another_post (test_create_lab_tag.CreateLabTagTests.test_lost_ref_reply_manual_get_confirms_existing_tag_without_another_post) ... ok
+2026-10-09T01:37:41.3470424Z test_lost_tag_object_reply_preserves_uncertainty_without_creating_ref_or_retry (test_create_lab_tag.CreateLabTagTests.test_lost_tag_object_reply_preserves_uncertainty_without_creating_ref_or_retry) ... ok
+2026-10-09T01:37:41.5469183Z test_spec_cannot_substitute_another_manifest_hash (test_create_lab_tag.CreateLabTagTests.test_spec_cannot_substitute_another_manifest_hash) ... ok
+2026-10-09T01:37:41.7932623Z test_tampered_source_message_ref_identity_and_extra_field_never_mutate (test_create_lab_tag.CreateLabTagTests.test_tampered_source_message_ref_identity_and_extra_field_never_mutate) ... ok
+2026-10-09T01:37:41.9844598Z test_unprotected_namespace_blocks_before_any_post (test_create_lab_tag.CreateLabTagTests.test_unprotected_namespace_blocks_before_any_post) ... ok
+2026-10-09T01:37:42.1703821Z test_user_api_error_is_sanitized_and_never_echoes_cli_stderr (test_create_lab_tag.CreateLabTagTests.test_user_api_error_is_sanitized_and_never_echoes_cli_stderr) ... ok
+2026-10-09T01:37:42.3519070Z test_wrong_owner_login_or_id_and_actions_identity_are_rejected (test_create_lab_tag.CreateLabTagTests.test_wrong_owner_login_or_id_and_actions_identity_are_rejected) ... ok
+2026-10-09T01:37:42.5807274Z test_wrong_tag_object_reply_blocks_ref_and_keeps_uncertain_checkpoint (test_create_lab_tag.CreateLabTagTests.test_wrong_tag_object_reply_blocks_ref_and_keeps_uncertain_checkpoint) ... ok
+2026-10-09T01:37:42.5820812Z test_legacy_signature_and_first_baseline_remain_supported (test_github_candidate.CandidateTests.test_legacy_signature_and_first_baseline_remain_supported) ... ok
+2026-10-09T01:37:42.5823516Z test_missing_baseline_and_invalid_delivery_reject_without_remote_access (test_github_candidate.CandidateTests.test_missing_baseline_and_invalid_delivery_reject_without_remote_access) ... ok
+2026-10-09T01:37:42.5847566Z test_namespace_rules_are_required_before_any_mutation (test_github_candidate.CandidateTests.test_namespace_rules_are_required_before_any_mutation) ... ok
+2026-10-09T01:37:42.5853872Z test_neutral_rc_and_release_branch_bind_exact_snapshot (test_github_candidate.CandidateTests.test_neutral_rc_and_release_branch_bind_exact_snapshot) ... ok
+2026-10-09T01:37:42.5859609Z test_open_candidate_blocks_new_rc_without_mutations (test_github_candidate.CandidateTests.test_open_candidate_blocks_new_rc_without_mutations) ... ok
+2026-10-09T01:37:42.5866182Z test_rc2_fixes_release_without_using_new_main_or_rc1_as_baseline (test_github_candidate.CandidateTests.test_rc2_fixes_release_without_using_new_main_or_rc1_as_baseline) ... ok
+2026-10-09T01:37:42.5869655Z test_unrelated_release_snapshot_cannot_force_push (test_github_candidate.CandidateTests.test_unrelated_release_snapshot_cannot_force_push) ... ok
+2026-10-09T01:37:42.5871714Z test_adds_neutral_rule_without_replacing_legacy_or_weakening_two_reviews (test_github_candidate.ConfigureTests.test_adds_neutral_rule_without_replacing_legacy_or_weakening_two_reviews) ... ok
+2026-10-09T01:37:42.5873581Z test_conflicting_existing_rule_causes_no_mutations (test_github_candidate.ConfigureTests.test_conflicting_existing_rule_causes_no_mutations) ... ok
+2026-10-09T01:37:42.5879824Z test_delivery_identity_mismatch_rejects_before_tag_read (test_github_candidate.InspectTests.test_delivery_identity_mismatch_rejects_before_tag_read) ... ok
+2026-10-09T01:37:42.5884777Z test_neutral_manifest_preserves_real_review_gate_and_fixed_snapshot (test_github_candidate.InspectTests.test_neutral_manifest_preserves_real_review_gate_and_fixed_snapshot) ... ok
+2026-10-09T01:37:42.5889109Z test_original_snapshot_cannot_replace_corrected_snapshot (test_github_candidate.InspectTests.test_original_snapshot_cannot_replace_corrected_snapshot) ... ok
+2026-10-09T01:37:42.5891774Z test_old_rc_cannot_publish_after_newer_tag_exists (test_github_candidate.RealApprovalBoundaryTests.test_old_rc_cannot_publish_after_newer_tag_exists) ... ok
+2026-10-09T01:37:42.5900964Z test_rc_created_during_asset_upload_leaves_release_in_draft (test_github_candidate.RealApprovalBoundaryTests.test_rc_created_during_asset_upload_leaves_release_in_draft) ... ok
+2026-10-09T01:37:42.5902222Z test_simulated_required_names_do_not_count_as_real_reviews (test_github_candidate.RealApprovalBoundaryTests.test_simulated_required_names_do_not_count_as_real_reviews) ... ok
+2026-10-09T01:37:42.5903514Z test_two_reviews_only_release_the_manual_command (test_github_candidate.RealApprovalBoundaryTests.test_two_reviews_only_release_the_manual_command) ... ok
+2026-10-09T01:37:42.8108343Z test_asset_id_drift_after_effect_prevents_success_confirmation (test_github_lab_promote.GitHubLabPromoteTests.test_asset_id_drift_after_effect_prevents_success_confirmation) ... ok
+2026-10-09T01:37:43.0844208Z test_asset_id_replaced_before_patch_fails_even_with_identical_digest (test_github_lab_promote.GitHubLabPromoteTests.test_asset_id_replaced_before_patch_fails_even_with_identical_digest) ... ok
+2026-10-09T01:37:43.3050324Z test_comment_identity_and_dates_cannot_claim_other_issue (test_github_lab_promote.GitHubLabPromoteTests.test_comment_identity_and_dates_cannot_claim_other_issue) ... ok
+2026-10-09T01:37:43.5390447Z test_comment_pagination_limit_duplicate_ids_and_invalid_ids_fail_closed (test_github_lab_promote.GitHubLabPromoteTests.test_comment_pagination_limit_duplicate_ids_and_invalid_ids_fail_closed) ... ok
+2026-10-09T01:37:43.7591021Z test_deleted_selected_approval_is_not_accepted (test_github_lab_promote.GitHubLabPromoteTests.test_deleted_selected_approval_is_not_accepted) ... ok
+2026-10-09T01:37:43.9930868Z test_edited_latest_command_invalidates_earlier_approval (test_github_lab_promote.GitHubLabPromoteTests.test_edited_latest_command_invalidates_earlier_approval) ... ok
+2026-10-09T01:37:44.2155826Z test_harmless_download_count_changes_do_not_block_promotion (test_github_lab_promote.GitHubLabPromoteTests.test_harmless_download_count_changes_do_not_block_promotion) ... ok
+2026-10-09T01:37:44.4750962Z test_issue_must_be_open_owner_assigned_exact_record_and_not_a_pr (test_github_lab_promote.GitHubLabPromoteTests.test_issue_must_be_open_owner_assigned_exact_record_and_not_a_pr) ... ok
+2026-10-09T01:37:44.6972389Z test_latest_owner_decisive_comment_wins_by_id (test_github_lab_promote.GitHubLabPromoteTests.test_latest_owner_decisive_comment_wins_by_id) ... ok
+2026-10-09T01:37:44.9373701Z test_missing_draft_changed_release_tag_or_asset_is_blocked (test_github_lab_promote.GitHubLabPromoteTests.test_missing_draft_changed_release_tag_or_asset_is_blocked) ... ok
+2026-10-09T01:37:45.1604084Z test_newer_edited_owner_comment_cannot_resurrect_older_approval (test_github_lab_promote.GitHubLabPromoteTests.test_newer_edited_owner_comment_cannot_resurrect_older_approval) ... ok
+2026-10-09T01:37:45.4023870Z test_old_owner_comment_edited_after_approval_requires_new_decision (test_github_lab_promote.GitHubLabPromoteTests.test_old_owner_comment_edited_after_approval_requires_new_decision) ... ok
+2026-10-09T01:37:45.6317219Z test_only_exact_owner_user_command_without_simulation_counts (test_github_lab_promote.GitHubLabPromoteTests.test_only_exact_owner_user_command_without_simulation_counts) ... ok
+2026-10-09T01:37:45.8494800Z test_owner_workflow_branch_and_actor_numeric_id_required (test_github_lab_promote.GitHubLabPromoteTests.test_owner_workflow_branch_and_actor_numeric_id_required) ... ok
+2026-10-09T01:37:46.0900250Z test_plan_after_revocation_reports_stable_history_without_rewriting (test_github_lab_promote.GitHubLabPromoteTests.test_plan_after_revocation_reports_stable_history_without_rewriting) ... ok
+2026-10-09T01:37:46.3065130Z test_plan_without_approval_is_read_only_and_awaits_real_issue_review (test_github_lab_promote.GitHubLabPromoteTests.test_plan_without_approval_is_read_only_and_awaits_real_issue_review) ... ok
+2026-10-09T01:37:46.5261113Z test_promotion_preserves_same_id_tag_source_asset_ids_and_bytes (test_github_lab_promote.GitHubLabPromoteTests.test_promotion_preserves_same_id_tag_source_asset_ids_and_bytes) ... ok
+2026-10-09T01:37:46.7647549Z test_repeat_after_promotion_verifies_same_receipt_without_remote_writes (test_github_lab_promote.GitHubLabPromoteTests.test_repeat_after_promotion_verifies_same_receipt_without_remote_writes) ... ok
+2026-10-09T01:37:46.9840630Z test_review_revoke_or_issue_edit_during_recheck_blocks_only_patch (test_github_lab_promote.GitHubLabPromoteTests.test_review_revoke_or_issue_edit_during_recheck_blocks_only_patch) ... ok
+2026-10-09T01:37:47.2273486Z test_revoked_candidate_during_recheck_blocks_promotion (test_github_lab_promote.GitHubLabPromoteTests.test_revoked_candidate_during_recheck_blocks_promotion) ... ok
+2026-10-09T01:37:47.4650364Z test_uncertain_promotion_reply_recovers_on_next_manual_run_without_retry (test_github_lab_promote.GitHubLabPromoteTests.test_uncertain_promotion_reply_recovers_on_next_manual_run_without_retry) ... ok
+2026-10-09T01:37:47.6744560Z test_wrong_manifest_hash_never_promotes (test_github_lab_promote.GitHubLabPromoteTests.test_wrong_manifest_hash_never_promotes) ... ok
+2026-10-09T01:37:47.8866503Z test_ambiguous_upload_is_not_retried_and_manual_run_recovers_same_draft (test_github_lab_release.GitHubLabReleaseTests.test_ambiguous_upload_is_not_retried_and_manual_run_recovers_same_draft) ... ok
+2026-10-09T01:37:48.0986382Z test_lost_publication_reply_preserves_checkpoint_then_manual_read_confirms (test_github_lab_release.GitHubLabReleaseTests.test_lost_publication_reply_preserves_checkpoint_then_manual_read_confirms) ... ok
+2026-10-09T01:37:48.2747654Z test_owner_repository_main_workflow_and_triggering_identity_gates (test_github_lab_release.GitHubLabReleaseTests.test_owner_repository_main_workflow_and_triggering_identity_gates) ... ok
+2026-10-09T01:37:48.4482442Z test_plan_has_no_effects_or_database_assets_and_labels_two_simulated_zero_real (test_github_lab_release.GitHubLabReleaseTests.test_plan_has_no_effects_or_database_assets_and_labels_two_simulated_zero_real) ... ok
+2026-10-09T01:37:48.6477744Z test_publish_draft_uploads_confirmed_assets_then_records_prerelease (test_github_lab_release.GitHubLabReleaseTests.test_publish_draft_uploads_confirmed_assets_then_records_prerelease) ... ok
+2026-10-09T01:37:48.8420481Z test_publish_requires_existing_owner_tag_and_existing_protection (test_github_lab_release.GitHubLabReleaseTests.test_publish_requires_existing_owner_tag_and_existing_protection) ... ok
+2026-10-09T01:37:49.0627856Z test_published_matching_identity_is_read_only_idempotent_across_runs (test_github_lab_release.GitHubLabReleaseTests.test_published_matching_identity_is_read_only_idempotent_across_runs) ... ok
+2026-10-09T01:37:49.9559347Z test_real_gh_stdin_upload_requires_explicit_byte_length_and_preserves_bytes (test_github_lab_release.GitHubLabReleaseTests.test_real_gh_stdin_upload_requires_explicit_byte_length_and_preserves_bytes) ... ok
+2026-10-09T01:37:50.2521670Z test_revocation_during_upload_keeps_draft_unpublished (test_github_lab_release.GitHubLabReleaseTests.test_revocation_during_upload_keeps_draft_unpublished) ... ok
+2026-10-09T01:37:50.6287980Z test_unsafe_zip_or_wrong_zip_bytes_are_rejected_before_release_creation (test_github_lab_release.GitHubLabReleaseTests.test_unsafe_zip_or_wrong_zip_bytes_are_rejected_before_release_creation) ... ok
+2026-10-09T01:37:50.8088081Z test_upload_uses_absolute_github_uploads_url_and_sanitizes_cli_errors (test_github_lab_release.GitHubLabReleaseTests.test_upload_uses_absolute_github_uploads_url_and_sanitizes_cli_errors) ... ok
+2026-10-09T01:37:51.0065161Z test_wrong_existing_draft_asset_fails_without_overwrite_or_delete (test_github_lab_release.GitHubLabReleaseTests.test_wrong_existing_draft_asset_fails_without_overwrite_or_delete) ... ok
+2026-10-09T01:37:51.2136445Z test_wrong_manifest_hash_source_tree_and_missing_simulated_approval_fail (test_github_lab_release.GitHubLabReleaseTests.test_wrong_manifest_hash_source_tree_and_missing_simulated_approval_fail) ... ok
+2026-10-09T01:37:51.4137733Z test_wrong_tag_source_or_annotation_is_never_overwritten (test_github_lab_release.GitHubLabReleaseTests.test_wrong_tag_source_or_annotation_is_never_overwritten) ... ok
+2026-10-09T01:37:51.7169670Z test_abandon_refuses_confirmed_or_unknown_effect_in_same_provider (test_lab_engine.LaboratoryTests.test_abandon_refuses_confirmed_or_unknown_effect_in_same_provider) ... ok
+2026-10-09T01:37:51.9985719Z test_audit_history_and_manifests_are_immutable_and_seed_cannot_reset_production (test_lab_engine.LaboratoryTests.test_audit_history_and_manifests_are_immutable_and_seed_cannot_reset_production) ... ok
+2026-10-09T01:37:52.3107547Z test_concurrent_preparations_leave_exactly_one_active_candidate (test_lab_engine.LaboratoryTests.test_concurrent_preparations_leave_exactly_one_active_candidate) ... ok
+2026-10-09T01:37:52.6060271Z test_failure_after_effect_but_before_receipt_record_is_reconciled (test_lab_engine.LaboratoryTests.test_failure_after_effect_but_before_receipt_record_is_reconciled) ... ok
+2026-10-09T01:37:52.9736768Z test_final_command_does_not_follow_advanced_branch_and_is_repeatable (test_lab_engine.LaboratoryTests.test_final_command_does_not_follow_advanced_branch_and_is_repeatable) ... ok
+2026-10-09T01:37:53.2746710Z test_missing_base_evidence_and_native_change_block_publication (test_lab_engine.LaboratoryTests.test_missing_base_evidence_and_native_change_block_publication) ... ok
+2026-10-09T01:37:53.6417588Z test_provider_warning_blocks_and_never_falls_back_to_store (test_lab_engine.LaboratoryTests.test_provider_warning_blocks_and_never_falls_back_to_store) ... ok
+2026-10-09T01:37:54.0995003Z test_queue_revisions_replace_queued_rc_and_old_production_requires_new_rc (test_lab_engine.LaboratoryTests.test_queue_revisions_replace_queued_rc_and_old_production_requires_new_rc) ... ok
+2026-10-09T01:37:54.3425405Z test_recovery_cannot_switch_provider_to_claim_no_effects_or_repeat (test_lab_engine.LaboratoryTests.test_recovery_cannot_switch_provider_to_claim_no_effects_or_repeat) ... ok
+2026-10-09T01:37:54.7770151Z test_reopened_database_preserves_roles_gate_and_explicit_final_command (test_lab_engine.LaboratoryTests.test_reopened_database_preserves_roles_gate_and_explicit_final_command) ... ok
+2026-10-09T01:37:54.9226518Z test_request_ids_are_idempotent_and_payload_bound (test_lab_engine.LaboratoryTests.test_request_ids_are_idempotent_and_payload_bound) ... ok
+2026-10-09T01:37:55.1581209Z test_revision_invalidates_old_hash_and_zeroes_approvals (test_lab_engine.LaboratoryTests.test_revision_invalidates_old_hash_and_zeroes_approvals) ... ok
+2026-10-09T01:37:55.4339900Z test_source_older_than_confirmed_production_is_rejected (test_lab_engine.LaboratoryTests.test_source_older_than_confirmed_production_is_rejected) ... ok
+2026-10-09T01:37:55.6276157Z test_tampered_preview_wrong_identity_and_destination_reduction_block (test_lab_engine.LaboratoryTests.test_tampered_preview_wrong_identity_and_destination_reduction_block) ... ok
+2026-10-09T01:37:56.1527617Z test_timeout_requires_lookup_before_resume_and_does_not_duplicate (test_lab_engine.LaboratoryTests.test_timeout_requires_lookup_before_resume_and_does_not_duplicate) ... ok
+2026-10-09T01:37:56.5182789Z test_two_publishers_cannot_run_and_revocation_stops_remaining_destinations (test_lab_engine.LaboratoryTests.test_two_publishers_cannot_run_and_revocation_stops_remaining_destinations) ... ok
+2026-10-09T01:37:56.8393836Z test_urgency_is_blocked_until_partial_result_is_reconciled (test_lab_engine.LaboratoryTests.test_urgency_is_blocked_until_partial_result_is_reconciled) ... ok
+2026-10-09T01:37:57.2659555Z test_urgent_fix_excludes_main_features_then_reintegration_gets_new_approvals (test_lab_engine.LaboratoryTests.test_urgent_fix_excludes_main_features_then_reintegration_gets_new_approvals) ... ok
+2026-10-09T01:37:57.2678129Z test_android_packages_exact_snapshot_and_records_no_distribution_or_patch (test_mobile_build.MobileBuildTests.test_android_packages_exact_snapshot_and_records_no_distribution_or_patch) ... ok
+2026-10-09T01:37:57.2689137Z test_build_cannot_package_artifact_left_by_prior_attempt (test_mobile_build.MobileBuildTests.test_build_cannot_package_artifact_left_by_prior_attempt) ... ok
+2026-10-09T01:37:57.2690927Z test_build_flags_are_fixed_and_defines_are_arguments_without_shell (test_mobile_build.MobileBuildTests.test_build_flags_are_fixed_and_defines_are_arguments_without_shell) ... ok
+2026-10-09T01:37:57.2696834Z test_bundle_cannot_reference_files_outside_itself (test_mobile_build.MobileBuildTests.test_bundle_cannot_reference_files_outside_itself) ... ok
+2026-10-09T01:37:57.2703920Z test_compiler_error_produces_no_metadata (test_mobile_build.MobileBuildTests.test_compiler_error_produces_no_metadata) ... ok
+2026-10-09T01:37:57.2708493Z test_ios_linux_runner_is_rejected (test_mobile_build.MobileBuildTests.test_ios_linux_runner_is_rejected) ... ok
+2026-10-09T01:37:57.2728457Z test_ios_without_codesign_packages_xcarchive_and_does_not_claim_ipa (test_mobile_build.MobileBuildTests.test_ios_without_codesign_packages_xcarchive_and_does_not_claim_ipa) ... ok
+2026-10-09T01:37:57.2733355Z test_mutable_ref_and_wrong_checkout_never_start_compiler (test_mobile_build.MobileBuildTests.test_mutable_ref_and_wrong_checkout_never_start_compiler) ... ok
+2026-10-09T01:37:57.2737058Z test_tools_checkout_must_match_the_caller_commit (test_mobile_build.MobileBuildTests.test_tools_checkout_must_match_the_caller_commit) ... ok
+2026-10-09T01:37:57.2749048Z test_tracked_change_during_build_invalidates_result (test_mobile_build.MobileBuildTests.test_tracked_change_during_build_invalidates_result) ... ok
+2026-10-09T01:37:57.2759572Z test_wrong_sdk_version_or_revision_blocks_build (test_mobile_build.MobileBuildTests.test_wrong_sdk_version_or_revision_blocks_build) ... ok
+2026-10-09T01:37:57.3199483Z test_delivery_is_visible_separately_from_app_metadata (test_pages_preview.PagesPreviewTests.test_delivery_is_visible_separately_from_app_metadata) ... ok
+2026-10-09T01:37:57.3734958Z test_existing_bytes_cannot_be_replaced (test_pages_preview.PagesPreviewTests.test_existing_bytes_cannot_be_replaced) ... ok
+2026-10-09T01:37:57.4275308Z test_existing_snapshot_reuses_bytes_without_rebuilding (test_pages_preview.PagesPreviewTests.test_existing_snapshot_reuses_bytes_without_rebuilding) ... ok
+2026-10-09T01:37:57.4892698Z test_export_excludes_git_and_blocks_state (test_pages_preview.PagesPreviewTests.test_export_excludes_git_and_blocks_state) ... ok
+2026-10-09T01:37:57.5585440Z test_flutter_build_marker_is_not_published (test_pages_preview.PagesPreviewTests.test_flutter_build_marker_is_not_published) ... ok
+2026-10-09T01:37:57.6135951Z test_frozen_candidate_must_identify_the_same_source_and_tag (test_pages_preview.PagesPreviewTests.test_frozen_candidate_must_identify_the_same_source_and_tag) ... ok
+2026-10-09T01:37:57.6377952Z test_invalid_delivery_tag_is_rejected_before_build (test_pages_preview.PagesPreviewTests.test_invalid_delivery_tag_is_rejected_before_build) ... ok
+2026-10-09T01:37:57.7058666Z test_mutable_checkout_and_unknown_sha_are_rejected (test_pages_preview.PagesPreviewTests.test_mutable_checkout_and_unknown_sha_are_rejected) ... ok
+2026-10-09T01:37:57.8721684Z test_new_snapshot_retains_previous_and_updates_root (test_pages_preview.PagesPreviewTests.test_new_snapshot_retains_previous_and_updates_root) ... ok
+2026-10-09T01:37:57.9537637Z test_other_hidden_files_are_still_rejected (test_pages_preview.PagesPreviewTests.test_other_hidden_files_are_still_rejected) ... ok
+2026-10-09T01:37:58.0095862Z test_same_sha_in_another_candidate_preserves_original_snapshot_identity (test_pages_preview.PagesPreviewTests.test_same_sha_in_another_candidate_preserves_original_snapshot_identity) ... ok
+2026-10-09T01:37:58.0547588Z test_site_rejects_links_and_banks_hidden_as_assets (test_pages_preview.PagesPreviewTests.test_site_rejects_links_and_banks_hidden_as_assets) ... ok
+2026-10-09T01:37:58.1010674Z test_snapshot_metadata_matches_code_and_preserves_ci_identity (test_pages_preview.PagesPreviewTests.test_snapshot_metadata_matches_code_and_preserves_ci_identity) ... ok
+2026-10-09T01:37:58.1016120Z test_base_href_and_bootstrap_reference_are_checked_beyond_hashes (test_pages_smoke.PagesSmokeTests.test_base_href_and_bootstrap_reference_are_checked_beyond_hashes) ... ok
+2026-10-09T01:37:58.1018733Z test_confirms_snapshot_and_attests_full_map_without_downloading_engine (test_pages_smoke.PagesSmokeTests.test_confirms_snapshot_and_attests_full_map_without_downloading_engine) ... ok
+2026-10-09T01:37:58.1023376Z test_delivery_label_must_match_declared_metadata (test_pages_smoke.PagesSmokeTests.test_delivery_label_must_match_declared_metadata) ... ok
+2026-10-09T01:37:58.1043219Z test_http_only_retries_selected_statuses_and_refuses_redirects (test_pages_smoke.PagesSmokeTests.test_http_only_retries_selected_statuses_and_refuses_redirects) ... ok
+2026-10-09T01:37:58.1044932Z test_map_hash_must_match_trusted_build_even_if_metadata_claims_it_does (test_pages_smoke.PagesSmokeTests.test_map_hash_must_match_trusted_build_even_if_metadata_claims_it_does) ... ok
+2026-10-09T01:37:58.1046294Z test_metadata_tampering_with_recomputed_manifest_keeps_web_hash_but_is_rejected (test_pages_smoke.PagesSmokeTests.test_metadata_tampering_with_recomputed_manifest_keeps_web_hash_but_is_rejected) ... ok
+2026-10-09T01:37:58.1047881Z test_retries_propagation_and_stops_at_190_seconds (test_pages_smoke.PagesSmokeTests.test_retries_propagation_and_stops_at_190_seconds) ... Aguardando propagação Pages: HTTP 404
+2026-10-09T01:37:58.1048664Z Aguardando propagação Pages: HTTP 404
+2026-10-09T01:37:58.1049166Z Aguardando propagação Pages: HTTP 503
+2026-10-09T01:37:58.1049516Z Aguardando propagação Pages: HTTP 503
+2026-10-09T01:37:58.1049849Z Aguardando propagação Pages: HTTP 503
+2026-10-09T01:37:58.1050180Z Aguardando propagação Pages: HTTP 503
+2026-10-09T01:37:58.1050508Z Aguardando propagação Pages: HTTP 503
+2026-10-09T01:37:58.1050841Z Aguardando propagação Pages: HTTP 503
+2026-10-09T01:37:58.1051169Z Aguardando propagação Pages: HTTP 503
+2026-10-09T01:37:58.1051503Z Aguardando propagação Pages: HTTP 503
+2026-10-09T01:37:58.1051834Z Aguardando propagação Pages: HTTP 503
+2026-10-09T01:37:58.1052167Z Aguardando propagação Pages: HTTP 503
+2026-10-09T01:37:58.1052507Z Aguardando propagação Pages: HTTP 503
+2026-10-09T01:37:58.1052841Z Aguardando propagação Pages: HTTP 503
+2026-10-09T01:37:58.1053175Z Aguardando propagação Pages: HTTP 503
+2026-10-09T01:37:58.1053507Z Aguardando propagação Pages: HTTP 503
+2026-10-09T01:37:58.1053839Z Aguardando propagação Pages: HTTP 503
+2026-10-09T01:37:58.1054180Z Aguardando propagação Pages: HTTP 503
+2026-10-09T01:37:58.1054522Z Aguardando propagação Pages: HTTP 503
+2026-10-09T01:37:58.1054859Z Aguardando propagação Pages: HTTP 503
+2026-10-09T01:37:58.1055185Z Aguardando propagação Pages: HTTP 503
+2026-10-09T01:37:58.1055460Z ok
+2026-10-09T01:37:58.1056006Z test_unsafe_manifest_paths_fail_before_asset_requests (test_pages_smoke.PagesSmokeTests.test_unsafe_manifest_paths_fail_before_asset_requests) ... ok
+2026-10-09T01:37:58.1057180Z test_wrapper_tampering_with_recomputed_manifest_keeps_web_hash_but_is_rejected (test_pages_smoke.PagesSmokeTests.test_wrapper_tampering_with_recomputed_manifest_keeps_web_hash_but_is_rejected) ... ok
+2026-10-09T01:37:58.1058700Z test_wrong_metadata_or_main_bytes_fail_without_retry (test_pages_smoke.PagesSmokeTests.test_wrong_metadata_or_main_bytes_fail_without_retry) ... ok
+2026-10-09T01:37:58.1059945Z test_bot_and_pending_do_not_count (test_policy.ApprovalTests.test_bot_and_pending_do_not_count) ... ok
+2026-10-09T01:37:58.1061116Z test_comment_does_not_revoke_and_api_order_does_not_matter (test_policy.ApprovalTests.test_comment_does_not_revoke_and_api_order_does_not_matter) ... ok
+2026-10-09T01:37:58.1062156Z test_commit_change_invalidates_approvals (test_policy.ApprovalTests.test_commit_change_invalidates_approvals) ... ok
+2026-10-09T01:37:58.1063114Z test_dismissal_and_changes_requested_revoke (test_policy.ApprovalTests.test_dismissal_and_changes_requested_revoke) ... ok
+2026-10-09T01:37:58.1065743Z test_no_publish_side_effect_at_zero_one_or_unmerged_two (test_policy.ApprovalTests.test_no_publish_side_effect_at_zero_one_or_unmerged_two) ... ok
+2026-10-09T01:37:58.1066703Z test_only_one_new_manifest (test_policy.ApprovalTests.test_only_one_new_manifest) ... ok
+2026-10-09T01:37:58.1067536Z test_other_people_and_author_cannot_substitute (test_policy.ApprovalTests.test_other_people_and_author_cannot_substitute) ... ok
+2026-10-09T01:37:58.1068478Z test_reapproval_after_changes (test_policy.ApprovalTests.test_reapproval_after_changes) ... ok
+2026-10-09T01:37:58.1069601Z test_record_hash_binds_source_preview_and_changelog (test_policy.ApprovalTests.test_record_hash_binds_source_preview_and_changelog) ... ok
+2026-10-09T01:37:58.1070518Z test_same_person_twice_cannot_approve_alone (test_policy.ApprovalTests.test_same_person_twice_cannot_approve_alone) ... ok
+2026-10-09T01:37:58.1071405Z test_submission_time_wins_over_draft_creation_id (test_policy.ApprovalTests.test_submission_time_wins_over_draft_creation_id) ... ok
+2026-10-09T01:37:58.1072092Z test_zero_one_and_two (test_policy.ApprovalTests.test_zero_one_and_two) ... ok
+2026-10-09T01:37:58.1072640Z test_expiration_and_changed_inputs (test_policy.PreviewTests.test_expiration_and_changed_inputs) ... ok
+2026-10-09T01:37:58.1396594Z test_squash_sha_difference_preserves_content_identity (test_policy.PreviewTests.test_squash_sha_difference_preserves_content_identity) ... ok
+2026-10-09T01:37:58.1405849Z test_revocation_during_upload_never_publishes_draft (test_policy.PublisherBoundaryTests.test_revocation_during_upload_never_publishes_draft) ... ok
+2026-10-09T01:37:58.1413786Z test_two_current_review_payloads_allow_only_lab_release_and_receipt (test_policy.PublisherBoundaryTests.test_two_current_review_payloads_allow_only_lab_release_and_receipt) ... ok
+2026-10-09T01:37:58.1414791Z test_changed_source_cannot_reuse_candidate_authorization (test_release_lab.CandidateStateTests.test_changed_source_cannot_reuse_candidate_authorization) ... ok
+2026-10-09T01:37:58.1426386Z test_current_candidate_is_bound_to_its_exact_source_commit (test_release_lab.CandidateStateTests.test_current_candidate_is_bound_to_its_exact_source_commit) ... ok
+2026-10-09T01:37:58.1427154Z test_missing_record_does_not_get_created_by_the_gate (test_release_lab.CandidateStateTests.test_missing_record_does_not_get_created_by_the_gate) ... ok
+2026-10-09T01:37:58.1427701Z test_new_rc_blocks_old_rc_without_deleting_its_history (test_release_lab.CandidateStateTests.test_new_rc_blocks_old_rc_without_deleting_its_history) ... ok
+2026-10-09T01:37:58.1428259Z test_dart_only_is_a_preliminary_forecast_with_a_reason (test_release_lab.ClassificationTests.test_dart_only_is_a_preliminary_forecast_with_a_reason) ... ok
+2026-10-09T01:37:58.1429057Z test_dependency_change_remains_unknown_without_compatibility_evidence (test_release_lab.ClassificationTests.test_dependency_change_remains_unknown_without_compatibility_evidence) ... ok
+2026-10-09T01:37:58.1429711Z test_native_sdk_and_packaged_asset_changes_require_a_store_release (test_release_lab.ClassificationTests.test_native_sdk_and_packaged_asset_changes_require_a_store_release) ... ok
+2026-10-09T01:37:58.1430333Z test_unknown_mobile_base_blocks_patch_forecast_even_for_dart_only (test_release_lab.ClassificationTests.test_unknown_mobile_base_blocks_patch_forecast_even_for_dart_only) ... ok
+2026-10-09T01:37:58.1430897Z test_bot_cannot_be_counted_as_a_human_review (test_release_lab.EnvironmentReviewTests.test_bot_cannot_be_counted_as_a_human_review) ... ok
+2026-10-09T01:37:58.1431599Z test_changed_environment_id_invalidates_a_familiar_name (test_release_lab.EnvironmentReviewTests.test_changed_environment_id_invalidates_a_familiar_name) ... ok
+2026-10-09T01:37:58.1432191Z test_conflicting_history_cannot_choose_a_convenient_api_order (test_release_lab.EnvironmentReviewTests.test_conflicting_history_cannot_choose_a_convenient_api_order) ... ok
+2026-10-09T01:37:58.1432814Z test_duplicate_person_in_two_environments_is_not_two_approvals (test_release_lab.EnvironmentReviewTests.test_duplicate_person_in_two_environments_is_not_two_approvals) ... ok
+2026-10-09T01:37:58.1433414Z test_either_required_approver_can_take_the_final_decision (test_release_lab.EnvironmentReviewTests.test_either_required_approver_can_take_the_final_decision) ... ok
+2026-10-09T01:37:58.1434023Z test_final_decision_does_not_replace_a_missing_version_approval (test_release_lab.EnvironmentReviewTests.test_final_decision_does_not_replace_a_missing_version_approval) ... ok
+2026-10-09T01:37:58.1434609Z test_final_requires_a_third_separate_human_decision (test_release_lab.EnvironmentReviewTests.test_final_requires_a_third_separate_human_decision) ... ok
+2026-10-09T01:37:58.1435261Z test_login_alone_cannot_substitute_numeric_account_identity (test_release_lab.EnvironmentReviewTests.test_login_alone_cannot_substitute_numeric_account_identity) ... ok
+2026-10-09T01:37:58.1435842Z test_numeric_id_alone_cannot_substitute_another_login (test_release_lab.EnvironmentReviewTests.test_numeric_id_alone_cannot_substitute_another_login) ... ok
+2026-10-09T01:37:58.1436390Z test_rejection_or_pending_cannot_count_as_approval (test_release_lab.EnvironmentReviewTests.test_rejection_or_pending_cannot_count_as_approval) ... ok
+2026-10-09T01:37:58.1436983Z test_two_real_identities_enable_approval_stage_without_publishing (test_release_lab.EnvironmentReviewTests.test_two_real_identities_enable_approval_stage_without_publishing) ... ok
+2026-10-09T01:37:58.1437598Z test_unlisted_publisher_cannot_use_the_final_environment (test_release_lab.EnvironmentReviewTests.test_unlisted_publisher_cannot_use_the_final_environment) ... ok
+2026-10-09T01:37:58.1438238Z test_wrong_identity_in_history_cannot_be_hidden_behind_a_valid_approval (test_release_lab.EnvironmentReviewTests.test_wrong_identity_in_history_cannot_be_hidden_behind_a_valid_approval) ... ok
+2026-10-09T01:37:58.1439123Z test_zero_or_one_approval_cannot_enable_final_command (test_release_lab.EnvironmentReviewTests.test_zero_or_one_approval_cannot_enable_final_command) ... ok
+2026-10-09T01:37:58.1458071Z test_failed_cancelled_skipped_or_pending_job_cannot_complete (test_release_lab.FinalReceiptTests.test_failed_cancelled_skipped_or_pending_job_cannot_complete) ... ok
+2026-10-09T01:37:58.1464835Z test_old_run_cannot_complete_after_rc2_replaced_it (test_release_lab.FinalReceiptTests.test_old_run_cannot_complete_after_rc2_replaced_it) ... ok
+2026-10-09T01:37:58.1472596Z test_report_drift_cannot_complete_or_write_a_receipt (test_release_lab.FinalReceiptTests.test_report_drift_cannot_complete_or_write_a_receipt) ... ok
+2026-10-09T01:37:58.1480045Z test_reviews_without_both_successful_job_receipts_cannot_complete (test_release_lab.FinalReceiptTests.test_reviews_without_both_successful_job_receipts_cannot_complete) ... ok
+2026-10-09T01:37:58.1492687Z test_success_records_real_decisions_but_only_simulated_result (test_release_lab.FinalReceiptTests.test_success_records_real_decisions_but_only_simulated_result) ... ok
+2026-10-09T01:37:58.1495409Z test_advanced_release_requires_new_rc_instead_of_old_approval (test_release_lab.FrozenIdentityTests.test_advanced_release_requires_new_rc_instead_of_old_approval) ... ok
+2026-10-09T01:37:58.1496578Z test_changed_policy_does_not_reuse_frozen_approvals (test_release_lab.FrozenIdentityTests.test_changed_policy_does_not_reuse_frozen_approvals) ... ok
+2026-10-09T01:37:58.1498197Z test_moved_tag_blocks_before_reading_environment_rules (test_release_lab.FrozenIdentityTests.test_moved_tag_blocks_before_reading_environment_rules) ... ok
+2026-10-09T01:37:58.1507952Z test_invalid_version_or_title_is_rejected_before_any_remote_mutation (test_release_lab.InputValidationTests.test_invalid_version_or_title_is_rejected_before_any_remote_mutation) ... ok
+2026-10-09T01:37:58.1509284Z test_distinct_roles_cannot_share_one_environment (test_release_lab.PolicyTests.test_distinct_roles_cannot_share_one_environment) ... ok
+2026-10-09T01:37:58.1510086Z test_empty_or_ambiguous_account_identity_is_rejected (test_release_lab.PolicyTests.test_empty_or_ambiguous_account_identity_is_rejected) ... ok
+2026-10-09T01:37:58.1510871Z test_final_decision_has_its_own_environment (test_release_lab.PolicyTests.test_final_decision_has_its_own_environment) ... ok
+2026-10-09T01:37:58.1511663Z test_final_publishers_must_be_the_required_approver_set (test_release_lab.PolicyTests.test_final_publishers_must_be_the_required_approver_set) ... ok
+2026-10-09T01:37:58.1512485Z test_policy_accepts_distinct_mandatory_approvers_and_either_publisher (test_release_lab.PolicyTests.test_policy_accepts_distinct_mandatory_approvers_and_either_publisher) ... ok
+2026-10-09T01:37:58.1513194Z test_same_person_cannot_fill_both_mandatory_roles (test_release_lab.PolicyTests.test_same_person_cannot_fill_both_mandatory_roles) ... ok
+2026-10-09T01:37:58.2030584Z test_an_extra_valid_snapshot_cannot_cross_the_candidate_boundary (test_release_lab.StaticArtifactBoundaryTests.test_an_extra_valid_snapshot_cannot_cross_the_candidate_boundary) ... ok
+2026-10-09T01:37:58.2614239Z test_divergent_historical_snapshot_is_preserved_instead_of_overwritten (test_release_lab.StaticArtifactBoundaryTests.test_divergent_historical_snapshot_is_preserved_instead_of_overwritten) ... ok
+2026-10-09T01:37:58.3152218Z test_root_or_nested_git_payload_is_rejected_before_import (test_release_lab.StaticArtifactBoundaryTests.test_root_or_nested_git_payload_is_rejected_before_import) ... ok
+2026-10-09T01:37:58.4010318Z test_self_consistent_metadata_must_still_match_trusted_git_inputs (test_release_lab.StaticArtifactBoundaryTests.test_self_consistent_metadata_must_still_match_trusted_git_inputs) ... ok
+2026-10-09T01:37:58.4558426Z test_symlink_as_artifact_root_is_rejected_without_following_it (test_release_lab.StaticArtifactBoundaryTests.test_symlink_as_artifact_root_is_rejected_without_following_it) ... ok
+2026-10-09T01:37:58.4559638Z test_operator_can_prepare_only_once_from_main (test_release_lab.TrustedContextTests.test_operator_can_prepare_only_once_from_main) ... ok
+2026-10-09T01:37:58.4560660Z test_repository_account_and_trusted_ref_cannot_be_substituted (test_release_lab.TrustedContextTests.test_repository_account_and_trusted_ref_cannot_be_substituted) ... ok
+2026-10-09T01:37:58.4561679Z test_rerun_cannot_reuse_earlier_human_approvals (test_release_lab.TrustedContextTests.test_rerun_cannot_reuse_earlier_human_approvals) ... ok
+2026-10-09T01:37:58.5182297Z test_conflicting_release_name_body_or_state_is_not_patched (test_release_lab_promotion.PromotionFlowTests.test_conflicting_release_name_body_or_state_is_not_patched) ... ok
+2026-10-09T01:37:58.5821730Z test_conflicting_stable_ref_is_never_moved_or_deleted (test_release_lab_promotion.PromotionFlowTests.test_conflicting_stable_ref_is_never_moved_or_deleted) ... ok
+2026-10-09T01:37:58.6405401Z test_failed_preview_cannot_produce_report_approval_or_publication (test_release_lab_promotion.PromotionFlowTests.test_failed_preview_cannot_produce_report_approval_or_publication) ... ok
+2026-10-09T01:37:58.7109946Z test_interleaved_approval_writers_retry_cas_without_losing_either_receipt (test_release_lab_promotion.PromotionFlowTests.test_interleaved_approval_writers_retry_cas_without_losing_either_receipt) ... ok
+2026-10-09T01:37:58.7801177Z test_lost_release_post_response_is_read_back_before_receipt (test_release_lab_promotion.PromotionFlowTests.test_lost_release_post_response_is_read_back_before_receipt) ... ok
+2026-10-09T01:37:58.8232903Z test_lost_response_after_final_cut_journal_commit_returns_the_same_rc (test_release_lab_promotion.PromotionFlowTests.test_lost_response_after_final_cut_journal_commit_returns_the_same_rc) ... ok
+2026-10-09T01:37:58.9092805Z test_lost_responses_and_partial_failure_reconcile_exactly_one_release (test_release_lab_promotion.PromotionFlowTests.test_lost_responses_and_partial_failure_reconcile_exactly_one_release) ... ok
+2026-10-09T01:37:58.9785429Z test_lost_tag_post_response_is_proven_by_get_before_release_post (test_release_lab_promotion.PromotionFlowTests.test_lost_tag_post_response_is_proven_by_get_before_release_post) ... ok
+2026-10-09T01:37:59.1005085Z test_old_completed_version_wrong_initiator_rerun_and_bot_are_blocked (test_release_lab_promotion.PromotionFlowTests.test_old_completed_version_wrong_initiator_rerun_and_bot_are_blocked) ... ok
+2026-10-09T01:37:59.1587406Z test_pending_or_cancelled_review_job_blocks_external_effects_even_if_reviews_exist (test_release_lab_promotion.PromotionFlowTests.test_pending_or_cancelled_review_job_blocks_external_effects_even_if_reviews_exist) ... ok
+2026-10-09T01:37:59.2481621Z test_publication_failure_keeps_intent_and_blocks_new_candidate (test_release_lab_promotion.PromotionFlowTests.test_publication_failure_keeps_intent_and_blocks_new_candidate) ... ok
+2026-10-09T01:37:59.3261212Z test_recovery_cannot_continue_after_a_correction_changed_release_branch (test_release_lab_promotion.PromotionFlowTests.test_recovery_cannot_continue_after_a_correction_changed_release_branch) ... ok
+2026-10-09T01:37:59.4086201Z test_recovery_requires_new_final_decision_and_preserves_original_approval_evidence (test_release_lab_promotion.PromotionFlowTests.test_recovery_requires_new_final_decision_and_preserves_original_approval_evidence) ... ok
+2026-10-09T01:37:59.5332633Z test_rejected_rc1_is_preserved_corrected_rc2_starts_at_zero_and_is_promoted (test_release_lab_promotion.PromotionFlowTests.test_rejected_rc1_is_preserved_corrected_rc2_starts_at_zero_and_is_promoted) ... ok
+2026-10-09T01:37:59.5942293Z test_removed_rules_after_approvals_and_final_command_prevent_publication_intent (test_release_lab_promotion.PromotionFlowTests.test_removed_rules_after_approvals_and_final_command_prevent_publication_intent) ... ok
+2026-10-09T01:37:59.6643382Z test_removed_rules_after_stable_creation_block_release_and_preserve_partial_intent (test_release_lab_promotion.PromotionFlowTests.test_removed_rules_after_stable_creation_block_release_and_preserve_partial_intent) ... ok
+2026-10-09T01:37:59.7305771Z test_report_tag_release_branch_and_base_drift_do_not_reuse_approvals (test_release_lab_promotion.PromotionFlowTests.test_report_tag_release_branch_and_base_drift_do_not_reuse_approvals) ... ok
+2026-10-09T01:37:59.8079553Z test_same_attempt_process_retry_reuses_intent_and_cannot_duplicate_release (test_release_lab_promotion.PromotionFlowTests.test_same_attempt_process_retry_reuses_intent_and_cannot_duplicate_release) ... ok
+2026-10-09T01:37:59.8888607Z test_second_successful_finish_is_idempotent_without_a_second_post (test_release_lab_promotion.PromotionFlowTests.test_second_successful_finish_is_idempotent_without_a_second_post) ... ok
+2026-10-09T01:37:59.9325233Z test_simulated_completion_cannot_replace_the_real_stable_changelog_baseline (test_release_lab_promotion.PromotionFlowTests.test_simulated_completion_cannot_replace_the_real_stable_changelog_baseline) ... ok
+2026-10-09T01:38:00.0046877Z test_successful_post_without_published_get_proof_cannot_write_receipt (test_release_lab_promotion.PromotionFlowTests.test_successful_post_without_published_get_proof_cannot_write_receipt) ... ok
+2026-10-09T01:38:00.0652678Z test_unowned_stable_tag_at_same_commit_does_not_imply_publication_authority (test_release_lab_promotion.PromotionFlowTests.test_unowned_stable_tag_at_same_commit_does_not_imply_publication_authority) ... ok
+2026-10-09T01:38:00.0888547Z test_version_comparison_is_numeric_instead_of_lexicographic (test_release_lab_promotion.PromotionFlowTests.test_version_comparison_is_numeric_instead_of_lexicographic) ... ok
+2026-10-09T01:38:00.1652241Z test_zero_one_two_approvals_require_separate_command_before_github_promotion (test_release_lab_promotion.PromotionFlowTests.test_zero_one_two_approvals_require_separate_command_before_github_promotion) ... ok
+2026-10-09T01:38:00.2268084Z test_available_matching_pr_context_is_frozen_without_waiting_for_ai (test_release_lab_state.CandidateStateTests.test_available_matching_pr_context_is_frozen_without_waiting_for_ai) ... ok
+2026-10-09T01:38:00.2853086Z test_cancelled_original_run_is_registered_after_its_finalizer_cannot_run (test_release_lab_state.CandidateStateTests.test_cancelled_original_run_is_registered_after_its_finalizer_cannot_run) ... ok
+2026-10-09T01:38:00.3576528Z test_completed_release_survives_a_failed_evidence_upload_job (test_release_lab_state.CandidateStateTests.test_completed_release_survives_a_failed_evidence_upload_job) ... ok
+2026-10-09T01:38:00.4216225Z test_completion_observer_context_cannot_be_used_by_a_manual_effectful_command (test_release_lab_state.CandidateStateTests.test_completion_observer_context_cannot_be_used_by_a_manual_effectful_command) ... ok
+2026-10-09T01:38:00.4838362Z test_concurrent_second_approval_is_not_overwritten_by_older_reconciliation (test_release_lab_state.CandidateStateTests.test_concurrent_second_approval_is_not_overwritten_by_older_reconciliation) ... ok
+2026-10-09T01:38:00.5462309Z test_context_from_a_different_rc_is_ignored_with_immediate_commit_fallback (test_release_lab_state.CandidateStateTests.test_context_from_a_different_rc_is_ignored_with_immediate_commit_fallback) ... ok
+2026-10-09T01:38:00.6186111Z test_failed_or_cancelled_evaluation_cannot_reopen_after_later_observation (test_release_lab_state.CandidateStateTests.test_failed_or_cancelled_evaluation_cannot_reopen_after_later_observation) ... ok
+2026-10-09T01:38:00.7033114Z test_failed_preview_job_closes_evaluation_without_publishing (test_release_lab_state.CandidateStateTests.test_failed_preview_job_closes_evaluation_without_publishing) ... ok
+2026-10-09T01:38:00.7610030Z test_frozen_summary_hash_mismatch_is_blocked_before_creating_a_publication_intent (test_release_lab_state.CandidateStateTests.test_frozen_summary_hash_mismatch_is_blocked_before_creating_a_publication_intent) ... ok
+2026-10-09T01:38:00.8409738Z test_frozen_version_table_and_communication_are_copied_to_release_and_receipt (test_release_lab_state.CandidateStateTests.test_frozen_version_table_and_communication_are_copied_to_release_and_receipt) ... ok
+2026-10-09T01:38:00.9068022Z test_future_dated_optional_context_cannot_block_required_report (test_release_lab_state.CandidateStateTests.test_future_dated_optional_context_cannot_block_required_report) ... ok
+2026-10-09T01:38:01.0071017Z test_invalid_receipt_closes_observation_without_rewriting_the_receipt (test_release_lab_state.CandidateStateTests.test_invalid_receipt_closes_observation_without_rewriting_the_receipt) ... ok
+2026-10-09T01:38:01.0905511Z test_long_or_large_commit_history_is_preserved_without_blocking_required_report (test_release_lab_state.CandidateStateTests.test_long_or_large_commit_history_is_preserved_without_blocking_required_report) ... ok
+2026-10-09T01:38:01.1481048Z test_official_review_without_receipt_does_not_create_approval (test_release_lab_state.CandidateStateTests.test_official_review_without_receipt_does_not_create_approval) ... ok
+2026-10-09T01:38:01.2052031Z test_optional_slack_failure_does_not_close_an_otherwise_waiting_evaluation (test_release_lab_state.CandidateStateTests.test_optional_slack_failure_does_not_close_an_otherwise_waiting_evaluation) ... ok
+2026-10-09T01:38:01.2801476Z test_partial_publication_failure_is_preserved_for_explicit_recovery (test_release_lab_state.CandidateStateTests.test_partial_publication_failure_is_preserved_for_explicit_recovery) ... ok
+2026-10-09T01:38:01.3374811Z test_preparation_error_with_no_registered_evaluation_changes_no_candidate (test_release_lab_state.CandidateStateTests.test_preparation_error_with_no_registered_evaluation_changes_no_candidate) ... ok
+2026-10-09T01:38:01.3978132Z test_rejected_review_is_registered_without_modifying_frozen_material (test_release_lab_state.CandidateStateTests.test_rejected_review_is_registered_without_modifying_frozen_material) ... ok
+2026-10-09T01:38:01.4757363Z test_state_finalizer_uses_always_and_completion_observer_has_no_artifact_input (test_release_lab_state.CandidateStateTests.test_state_finalizer_uses_always_and_completion_observer_has_no_artifact_input) ... ok
+2026-10-09T01:38:01.5499409Z test_superseded_candidate_history_is_not_rewritten_by_late_completion (test_release_lab_state.CandidateStateTests.test_superseded_candidate_history_is_not_rewritten_by_late_completion) ... ok
+2026-10-09T01:38:01.6100265Z test_wrong_actor_rerun_or_untrusted_workflow_cannot_write_observational_state (test_release_lab_state.CandidateStateTests.test_wrong_actor_rerun_or_untrusted_workflow_cannot_write_observational_state) ... ok
+2026-10-09T01:38:01.6711616Z test_zero_one_and_two_recorded_approvals_have_distinct_waiting_states (test_release_lab_state.CandidateStateTests.test_zero_one_and_two_recorded_approvals_have_distinct_waiting_states) ... ok
+2026-10-09T01:38:01.8442890Z test_absent_provider_is_not_silently_recreated_or_treated_as_negative (test_remote_state.RemoteStateTests.test_absent_provider_is_not_silently_recreated_or_treated_as_negative) ... ok
+2026-10-09T01:38:02.1216737Z test_bootstrap_race_cannot_replace_another_initialized_ref (test_remote_state.RemoteStateTests.test_bootstrap_race_cannot_replace_another_initialized_ref) ... ok
+2026-10-09T01:38:02.3591328Z test_checkpoint_exists_before_ref_mutation (test_remote_state.RemoteStateTests.test_checkpoint_exists_before_ref_mutation) ... ok
+2026-10-09T01:38:02.6264089Z test_checksums_and_truncated_tree_or_extra_files_block_before_import (test_remote_state.RemoteStateTests.test_checksums_and_truncated_tree_or_extra_files_block_before_import) ... ok
+2026-10-09T01:38:02.8032201Z test_concurrent_sibling_writer_is_conflict_never_rebased_or_reapplied (test_remote_state.RemoteStateTests.test_concurrent_sibling_writer_is_conflict_never_rebased_or_reapplied) ... ok
+2026-10-09T01:38:03.0886454Z test_confirmation_after_another_writer_advances_still_identifies_our_commit (test_remote_state.RemoteStateTests.test_confirmation_after_another_writer_advances_still_identifies_our_commit) ... ok
+2026-10-09T01:38:03.2575986Z test_denied_update_can_only_retry_same_proposal_with_same_payload (test_remote_state.RemoteStateTests.test_denied_update_can_only_retry_same_proposal_with_same_payload) ... ok
+2026-10-09T01:38:03.4133453Z test_empty_directory_allowed_but_existing_state_is_not_overwritten (test_remote_state.RemoteStateTests.test_empty_directory_allowed_but_existing_state_is_not_overwritten) ... ok
+2026-10-09T01:38:03.5601562Z test_lost_ref_reply_is_reconciled_without_second_update (test_remote_state.RemoteStateTests.test_lost_ref_reply_is_reconciled_without_second_update) ... ok
+2026-10-09T01:38:03.7072204Z test_opaque_credential_setting_or_unexpected_secret_column_is_rejected (test_remote_state.RemoteStateTests.test_opaque_credential_setting_or_unexpected_secret_column_is_rejected) ... ok
+2026-10-09T01:38:03.8421444Z test_restriction_to_personal_repository_and_dedicated_ref (test_remote_state.RemoteStateTests.test_restriction_to_personal_repository_and_dedicated_ref) ... ok
+2026-10-09T01:38:04.0146130Z test_round_trip_preserves_hash_approvals_all_journals_and_path_plan (test_remote_state.RemoteStateTests.test_round_trip_preserves_hash_approvals_all_journals_and_path_plan) ... ok
+2026-10-09T01:38:04.1533255Z test_secret_values_are_rejected_and_never_written_to_git (test_remote_state.RemoteStateTests.test_secret_values_are_rejected_and_never_written_to_git) ... ok
+2026-10-09T01:38:04.3068951Z test_sqlite_wal_is_exported_by_backup_and_remote_journal_remains_consistent (test_remote_state.RemoteStateTests.test_sqlite_wal_is_exported_by_backup_and_remote_journal_remains_consistent) ... ok
+2026-10-09T01:38:04.4868411Z test_two_actions_advance_one_parent_without_force_and_preserve_zero_to_two (test_remote_state.RemoteStateTests.test_two_actions_advance_one_parent_without_force_and_preserve_zero_to_two) ... ok
+2026-10-09T01:38:04.6576638Z test_unknown_confirmation_preserves_checkpoint_and_exact_proposal_for_retry (test_remote_state.RemoteStateTests.test_unknown_confirmation_preserves_checkpoint_and_exact_proposal_for_retry) ... ok
+2026-10-09T01:38:05.0857086Z test_reopened_actions_preserve_zero_one_two_and_publish_exact_snapshot_once (test_runner.CoordinatorTests.test_reopened_actions_preserve_zero_one_two_and_publish_exact_snapshot_once) ... ok
+2026-10-09T01:38:05.1957504Z test_slack_checkpoint_failure_prevents_post_and_keeps_unknown_locally (test_runner.CoordinatorTests.test_slack_checkpoint_failure_prevents_post_and_keeps_unknown_locally) ... ok
+2026-10-09T01:38:05.3111780Z test_slack_unknown_checkpoint_is_remote_before_post_and_sent_rerun_does_not_duplicate (test_runner.CoordinatorTests.test_slack_unknown_checkpoint_is_remote_before_post_and_sent_rerun_does_not_duplicate) ... ok
+2026-10-09T01:38:05.3114785Z test_metadata_read_is_allowed_but_repo_root_mutation_is_rejected (test_runner.RequestTests.test_metadata_read_is_allowed_but_repo_root_mutation_is_rejected) ... ok
+2026-10-09T01:38:05.3116460Z test_only_authenticated_owner_on_personal_main_can_operate (test_runner.RequestTests.test_only_authenticated_owner_on_personal_main_can_operate) ... ok
+2026-10-09T01:38:05.3118061Z test_rc_and_urgency_do_not_silently_coerce_other_json_types (test_runner.RequestTests.test_rc_and_urgency_do_not_silently_coerce_other_json_types) ... ok
+2026-10-09T01:38:05.3119083Z test_sha_candidate_and_hash_require_text_before_regex_checks (test_runner.RequestTests.test_sha_candidate_and_hash_require_text_before_regex_checks) ... ok
+2026-10-09T01:38:05.3746361Z test_all_queued_events_are_drained_not_only_the_last_trigger (test_slack_events.SlackEventsTests.test_all_queued_events_are_drained_not_only_the_last_trigger) ... ok
+2026-10-09T01:38:05.4319020Z test_altered_tag_report_run_or_queued_pointer_is_blocked_before_sender (test_slack_events.SlackEventsTests.test_altered_tag_report_run_or_queued_pointer_is_blocked_before_sender) ... ok
+2026-10-09T01:38:05.4907606Z test_cancelled_run_is_queued_and_worker_does_not_reopen_the_candidate (test_slack_events.SlackEventsTests.test_cancelled_run_is_queued_and_worker_does_not_reopen_the_candidate) ... ok
+2026-10-09T01:38:05.5480107Z test_candidate_is_queued_only_after_report_and_keeps_commit_fallback (test_slack_events.SlackEventsTests.test_candidate_is_queued_only_after_report_and_keeps_commit_fallback) ... ok
+2026-10-09T01:38:05.6076997Z test_legacy_delivery_and_failed_unfrozen_preview_are_not_backfilled (test_slack_events.SlackEventsTests.test_legacy_delivery_and_failed_unfrozen_preview_are_not_backfilled) ... ok
+2026-10-09T01:38:05.6700732Z test_one_approval_then_two_approvals_queue_distinct_milestones_without_publish (test_slack_events.SlackEventsTests.test_one_approval_then_two_approvals_queue_distinct_milestones_without_publish) ... ok
+2026-10-09T01:38:05.7457850Z test_promotion_notice_requires_real_release_and_same_final_receipt (test_slack_events.SlackEventsTests.test_promotion_notice_requires_real_release_and_same_final_receipt) ... ok
+2026-10-09T01:38:05.8455482Z test_rejection_is_historical_and_new_rc_has_own_frozen_identity (test_slack_events.SlackEventsTests.test_rejection_is_historical_and_new_rc_has_own_frozen_identity) ... ok
+2026-10-09T01:38:05.9037217Z test_two_approvals_do_not_queue_publication_before_final_command (test_slack_events.SlackEventsTests.test_two_approvals_do_not_queue_publication_before_final_command) ... ok
+2026-10-09T01:38:05.9038206Z test_extra_human_or_another_bot_or_missing_israel_blocks (test_slack_notify.DestinationTests.test_extra_human_or_another_bot_or_missing_israel_blocks) ... ok
+2026-10-09T01:38:05.9039312Z test_membership_is_checked_through_all_pages (test_slack_notify.DestinationTests.test_membership_is_checked_through_all_pages) ... ok
+2026-10-09T01:38:05.9039965Z test_only_exact_private_channel_and_bot_plus_israel_are_accepted (test_slack_notify.DestinationTests.test_only_exact_private_channel_and_bot_plus_israel_are_accepted) ... ok
+2026-10-09T01:38:05.9040600Z test_repeated_or_malformed_cursor_fails_closed (test_slack_notify.DestinationTests.test_repeated_or_malformed_cursor_fails_closed) ... ok
+2026-10-09T01:38:05.9041321Z test_user_token_cannot_impersonate_israel (test_slack_notify.DestinationTests.test_user_token_cannot_impersonate_israel) ... ok
+2026-10-09T01:38:05.9041831Z test_wrong_public_shared_archived_or_renamed_channel_has_no_post (test_slack_notify.DestinationTests.test_wrong_public_shared_archived_or_renamed_channel_has_no_post) ... ok
+2026-10-09T01:38:05.9085383Z test_concurrent_attempt_is_blocked_while_first_post_is_in_flight (test_slack_notify.OutboxTests.test_concurrent_attempt_is_blocked_while_first_post_is_in_flight) ... ok
+2026-10-09T01:38:05.9119576Z test_confirmed_send_is_persisted_and_retry_has_no_api_call (test_slack_notify.OutboxTests.test_confirmed_send_is_persisted_and_retry_has_no_api_call) ... ok
+2026-10-09T01:38:05.9136249Z test_failed_destination_check_creates_no_attempt_and_never_posts (test_slack_notify.OutboxTests.test_failed_destination_check_creates_no_attempt_and_never_posts) ... ok
+2026-10-09T01:38:05.9153231Z test_missing_token_cannot_read_or_post_to_slack (test_slack_notify.OutboxTests.test_missing_token_cannot_read_or_post_to_slack) ... ok
+2026-10-09T01:38:05.9226731Z test_post_response_without_exact_channel_ts_is_unknown (test_slack_notify.OutboxTests.test_post_response_without_exact_channel_ts_is_unknown) ... ok
+2026-10-09T01:38:05.9259291Z test_same_key_with_changed_payload_blocks_repetition (test_slack_notify.OutboxTests.test_same_key_with_changed_payload_blocks_repetition) ... ok
+2026-10-09T01:38:05.9286312Z test_transport_uncertainty_stays_unknown_and_never_retries (test_slack_notify.OutboxTests.test_transport_uncertainty_stays_unknown_and_never_retries) ... ok
+2026-10-09T01:38:05.9287636Z test_client_id_is_stable_and_bound_to_candidate_and_content (test_slack_notify.RenderTests.test_client_id_is_stable_and_bound_to_candidate_and_content) ... ok
+2026-10-09T01:38:05.9297323Z test_default_cli_renders_without_token_network_or_outbox (test_slack_notify.RenderTests.test_default_cli_renders_without_token_network_or_outbox) ... ok
+2026-10-09T01:38:05.9298498Z test_github_links_cannot_redirect_to_other_repositories_or_mentions (test_slack_notify.RenderTests.test_github_links_cannot_redirect_to_other_repositories_or_mentions) ... ok
+2026-10-09T01:38:05.9299747Z test_lab_flags_are_explicit_and_real_notice_cannot_claim_distribution (test_slack_notify.RenderTests.test_lab_flags_are_explicit_and_real_notice_cannot_claim_distribution) ... ok
+2026-10-09T01:38:05.9300740Z test_status_uses_plain_text_and_does_not_enable_mentions (test_slack_notify.RenderTests.test_status_uses_plain_text_and_does_not_enable_mentions) ... ok
+2026-10-09T01:38:05.9301578Z test_cross_host_redirect_is_never_followed (test_slack_notify.TransportTests.test_cross_host_redirect_is_never_followed) ... ok
+2026-10-09T01:38:05.9305721Z test_network_errors_never_echo_token_or_raw_response (test_slack_notify.TransportTests.test_network_errors_never_echo_token_or_raw_response) ... ok
+2026-10-09T01:38:05.9312849Z test_token_is_header_only_and_write_is_json_to_fixed_slack_endpoint (test_slack_notify.TransportTests.test_token_is_header_only_and_write_is_json_to_fixed_slack_endpoint) ... ok
+2026-10-09T01:38:05.9313749Z test_unknown_method_does_not_call_network (test_slack_notify.TransportTests.test_unknown_method_does_not_call_network) ... ok
+2026-10-09T01:38:05.9332494Z test_actual_concurrent_writers_append_different_events_without_lost_updates (test_slack_outbox.DurableSlackTests.test_actual_concurrent_writers_append_different_events_without_lost_updates) ... ok
+2026-10-09T01:38:05.9362697Z test_checkpoint_persistence_failure_never_posts (test_slack_outbox.DurableSlackTests.test_checkpoint_persistence_failure_never_posts) ... ok
+2026-10-09T01:38:05.9370237Z test_cli_invalid_frozen_notice_is_optional_and_no_raw_content_is_printed (test_slack_outbox.DurableSlackTests.test_cli_invalid_frozen_notice_is_optional_and_no_raw_content_is_printed) ... ok
+2026-10-09T01:38:05.9445990Z test_competing_different_events_preserve_both_and_candidate_journal (test_slack_outbox.DurableSlackTests.test_competing_different_events_preserve_both_and_candidate_journal) ... ok
+2026-10-09T01:38:05.9488012Z test_evaluation_run_change_keeps_key_but_blocks_frozen_provenance_replacement (test_slack_outbox.DurableSlackTests.test_evaluation_run_change_keeps_key_but_blocks_frozen_provenance_replacement) ... ok
+2026-10-09T01:38:05.9526243Z test_history_pagination_is_bounded_and_positive_later_page_reconciles (test_slack_outbox.DurableSlackTests.test_history_pagination_is_bounded_and_positive_later_page_reconciles) ... ok
+2026-10-09T01:38:05.9563917Z test_lost_unknown_write_reply_rechecks_exact_checkpoint_before_post (test_slack_outbox.DurableSlackTests.test_lost_unknown_write_reply_rechecks_exact_checkpoint_before_post) ... ok
+2026-10-09T01:38:05.9579887Z test_missing_or_malformed_secret_skips_without_remote_or_slack_calls (test_slack_outbox.DurableSlackTests.test_missing_or_malformed_secret_skips_without_remote_or_slack_calls) ... ok
+2026-10-09T01:38:05.9616769Z test_only_preview_for_exact_frozen_source_is_allowed (test_slack_outbox.DurableSlackTests.test_only_preview_for_exact_frozen_source_is_allowed) ... ok
+2026-10-09T01:38:05.9665074Z test_post_timeout_remains_remote_unknown_and_fresh_retry_never_posts (test_slack_outbox.DurableSlackTests.test_post_timeout_remains_remote_unknown_and_fresh_retry_never_posts) ... ok
+2026-10-09T01:38:05.9726515Z test_public_or_shared_channel_or_extra_member_never_reserves (test_slack_outbox.DurableSlackTests.test_public_or_shared_channel_or_extra_member_never_reserves) ... ok
+2026-10-09T01:38:05.9764224Z test_receipts_logs_and_remote_checkpoints_exclude_secrets_and_full_payload (test_slack_outbox.DurableSlackTests.test_receipts_logs_and_remote_checkpoints_exclude_secrets_and_full_payload) ... ok
+2026-10-09T01:38:05.9801562Z test_remote_unknown_with_positive_history_reconciles_without_post (test_slack_outbox.DurableSlackTests.test_remote_unknown_with_positive_history_reconciles_without_post) ... ok
+2026-10-09T01:38:05.9841041Z test_same_logical_key_different_payload_blocks_before_slack_read (test_slack_outbox.DurableSlackTests.test_same_logical_key_different_payload_blocks_before_slack_read) ... ok
+2026-10-09T01:38:05.9910012Z test_sent_checkpoint_lost_requires_history_on_fresh_runner (test_slack_outbox.DurableSlackTests.test_sent_checkpoint_lost_requires_history_on_fresh_runner) ... ok
+2026-10-09T01:38:06.0031194Z test_sent_on_fresh_runner_skips_every_slack_call_and_restores_sqlite (test_slack_outbox.DurableSlackTests.test_sent_on_fresh_runner_skips_every_slack_call_and_restores_sqlite) ... ok
+2026-10-09T01:38:06.0070779Z test_success_is_unknown_before_post_then_sent_with_exact_receipt (test_slack_outbox.DurableSlackTests.test_success_is_unknown_before_post_then_sent_with_exact_receipt) ... ok
+2026-10-09T01:38:06.0136592Z test_two_fresh_runners_same_event_only_one_may_post (test_slack_outbox.DurableSlackTests.test_two_fresh_runners_same_event_only_one_may_post) ... ok
+2026-10-09T01:38:06.0166442Z test_unbounded_history_without_evidence_stops_at_three_pages (test_slack_outbox.DurableSlackTests.test_unbounded_history_without_evidence_stops_at_three_pages) ... ok
+2026-10-09T01:38:06.0260105Z test_unknown_client_id_with_wrong_hash_bot_app_or_channel_blocks (test_slack_outbox.DurableSlackTests.test_unknown_client_id_with_wrong_hash_bot_app_or_channel_blocks) ... ok
+2026-10-09T01:38:06.0310400Z test_unknown_empty_history_or_missing_scope_never_authorizes_resend (test_slack_outbox.DurableSlackTests.test_unknown_empty_history_or_missing_scope_never_authorizes_resend) ... ok
+2026-10-09T01:38:06.0359662Z test_wrong_exact_bot_or_app_never_reserves_or_posts (test_slack_outbox.DurableSlackTests.test_wrong_exact_bot_or_app_never_reserves_or_posts) ... ok
+2026-10-09T01:38:06.0369342Z test_cli_preserves_frozen_report_and_writes_preview (test_slack_preview.SlackPreviewTests.test_cli_preserves_frozen_report_and_writes_preview) ... ok
+2026-10-09T01:38:06.0373603Z test_credentials_are_not_read_or_inserted_in_the_artifact (test_slack_preview.SlackPreviewTests.test_credentials_are_not_read_or_inserted_in_the_artifact) ... ok
+2026-10-09T01:38:06.0377259Z test_frozen_pr_sections_are_labelled_without_claiming_ai_generated_them (test_slack_preview.SlackPreviewTests.test_frozen_pr_sections_are_labelled_without_claiming_ai_generated_them) ... ok
+2026-10-09T01:38:06.0378301Z test_legacy_report_remains_literal_fallback (test_slack_preview.SlackPreviewTests.test_legacy_report_remains_literal_fallback) ... ok
+2026-10-09T01:38:06.0391519Z test_long_commit_history_is_truncated_before_slack_limit (test_slack_preview.SlackPreviewTests.test_long_commit_history_is_truncated_before_slack_limit) ... ok
+2026-10-09T01:38:06.0418202Z test_long_subjects_and_controls_do_not_turn_optional_notice_into_failure (test_slack_preview.SlackPreviewTests.test_long_subjects_and_controls_do_not_turn_optional_notice_into_failure) ... ok
+2026-10-09T01:38:06.0419636Z test_modified_selected_summary_is_refused (test_slack_preview.SlackPreviewTests.test_modified_selected_summary_is_refused) ... ok
+2026-10-09T01:38:06.0424915Z test_send_option_does_not_exist (test_slack_preview.SlackPreviewTests.test_send_option_does_not_exist) ... usage: python3 -m unittest [-h] --report REPORT --policy POLICY --output
+2026-10-09T01:38:06.0425790Z                            OUTPUT
+2026-10-09T01:38:06.0426192Z python3 -m unittest: error: the following arguments are required: --report, --policy, --output
+2026-10-09T01:38:06.0426594Z ok
+2026-10-09T01:38:06.0427191Z test_summary_for_different_rc_is_refused_even_with_valid_digest (test_slack_preview.SlackPreviewTests.test_summary_for_different_rc_is_refused_even_with_valid_digest) ... ok
+2026-10-09T01:38:06.0428072Z test_wrong_preview_or_source_is_refused (test_slack_preview.SlackPreviewTests.test_wrong_preview_or_source_is_refused) ... ok
+2026-10-09T01:38:06.0980910Z test_complex_yaml_is_pending_instead_of_guessed (test_snapshots.PreAnalysisTests.test_complex_yaml_is_pending_instead_of_guessed) ... ok
+2026-10-09T01:38:06.1414834Z test_dart_prediction_is_distinct_from_web_and_native_validation (test_snapshots.PreAnalysisTests.test_dart_prediction_is_distinct_from_web_and_native_validation) ... ok
+2026-10-09T01:38:06.2489885Z test_dependency_manifest_lock_and_unknown_files_fail_closed (test_snapshots.PreAnalysisTests.test_dependency_manifest_lock_and_unknown_files_fail_closed) ... ok
+2026-10-09T01:38:06.3070282Z test_docs_and_tools_do_not_force_store_but_do_affect_preview_identity (test_snapshots.PreAnalysisTests.test_docs_and_tools_do_not_force_store_but_do_affect_preview_identity) ... ok
+2026-10-09T01:38:06.3572894Z test_each_platform_uses_its_own_release_base_not_last_rc (test_snapshots.PreAnalysisTests.test_each_platform_uses_its_own_release_base_not_last_rc) ... ok
+2026-10-09T01:38:06.3783003Z test_missing_candidate_input_is_pending_not_assumed_from_base (test_snapshots.PreAnalysisTests.test_missing_candidate_input_is_pending_not_assumed_from_base) ... ok
+2026-10-09T01:38:06.4112341Z test_missing_or_mismatched_base_evidence_blocks_prediction (test_snapshots.PreAnalysisTests.test_missing_or_mismatched_base_evidence_blocks_prediction) ... ok
+2026-10-09T01:38:06.5137625Z test_packaged_asset_and_resolution_variant_require_store (test_snapshots.PreAnalysisTests.test_packaged_asset_and_resolution_variant_require_store) ... ok
+2026-10-09T01:38:06.5492499Z test_platform_inputs_are_separate (test_snapshots.PreAnalysisTests.test_platform_inputs_are_separate) ... ok
+2026-10-09T01:38:06.5920486Z test_pubspec_asset_declarations_require_store (test_snapshots.PreAnalysisTests.test_pubspec_asset_declarations_require_store) ... ok
+2026-10-09T01:38:06.6914234Z test_toolchain_entrypoint_or_flavor_change_requires_store (test_snapshots.PreAnalysisTests.test_toolchain_entrypoint_or_flavor_change_requires_store) ... ok
+2026-10-09T01:38:06.7205963Z test_verified_release_needs_provider_identifier (test_snapshots.PreAnalysisTests.test_verified_release_needs_provider_identifier) ... ok
+2026-10-09T01:38:06.7788419Z test_build_fingerprint_is_conservative_and_json_is_finite (test_snapshots.PreviewTests.test_build_fingerprint_is_conservative_and_json_is_finite) ... ok
+2026-10-09T01:38:06.8092345Z test_cannot_substitute_origin_sha_even_with_claimed_candidate_fingerprint (test_snapshots.PreviewTests.test_cannot_substitute_origin_sha_even_with_claimed_candidate_fingerprint) ... ok
+2026-10-09T01:38:06.8394029Z test_changed_code_or_build_inputs_refuses_reuse (test_snapshots.PreviewTests.test_changed_code_or_build_inputs_refuses_reuse) ... ok
+2026-10-09T01:38:06.8818643Z test_equal_tree_with_different_commit_and_docs_can_reuse (test_snapshots.PreviewTests.test_equal_tree_with_different_commit_and_docs_can_reuse) ... ok
+2026-10-09T01:38:06.9197283Z test_fixture_format_is_explicit_and_flutter_zip_is_checked (test_snapshots.PreviewTests.test_fixture_format_is_explicit_and_flutter_zip_is_checked) ... ok
+2026-10-09T01:38:06.9439633Z test_flutter_zip_rejects_path_traversal (test_snapshots.PreviewTests.test_flutter_zip_rejects_path_traversal) ... ok
+2026-10-09T01:38:06.9843873Z test_hash_expiration_and_incomplete_metadata_block (test_snapshots.PreviewTests.test_hash_expiration_and_incomplete_metadata_block) ... ok
+2026-10-09T01:38:07.0357787Z test_candidate_requires_production_ancestor_and_exact_shas (test_snapshots.SnapshotTests.test_candidate_requires_production_ancestor_and_exact_shas) ... ok
+2026-10-09T01:38:07.0881767Z test_exception_in_build_still_removes_clone (test_snapshots.SnapshotTests.test_exception_in_build_still_removes_clone) ... ok
+2026-10-09T01:38:07.1042488Z test_latest_and_mutable_release_base_are_rejected (test_snapshots.SnapshotTests.test_latest_and_mutable_release_base_are_rejected) ... ok
+2026-10-09T01:38:07.1317157Z test_orphan_history_is_rejected_even_with_similar_versioned_files (test_snapshots.SnapshotTests.test_orphan_history_is_rejected_even_with_similar_versioned_files) ... ok
+2026-10-09T01:38:07.2270305Z test_release_correction_does_not_import_main_features (test_snapshots.SnapshotTests.test_release_correction_does_not_import_main_features) ... ok
+2026-10-09T01:38:07.3154658Z test_returning_to_a_branch_or_new_commit_blocks_even_if_source_files_match (test_snapshots.SnapshotTests.test_returning_to_a_branch_or_new_commit_blocks_even_if_source_files_match) ... ok
+2026-10-09T01:38:07.3775228Z test_snapshot_is_fixed_even_when_original_checkout_is_dirty (test_snapshots.SnapshotTests.test_snapshot_is_fixed_even_when_original_checkout_is_dirty) ... ok
+2026-10-09T01:38:07.4054382Z test_tracked_symlink_requires_audited_strategy (test_snapshots.SnapshotTests.test_tracked_symlink_requires_audited_strategy) ... ok
+2026-10-09T01:38:07.4600704Z test_wrong_tree_or_mutating_checkout_blocks_and_cleans_up (test_snapshots.SnapshotTests.test_wrong_tree_or_mutating_checkout_blocks_and_cleans_up) ... ok
+2026-10-09T01:38:07.4601536Z test_delivery_ref_and_source_cannot_drift (test_version_manifest.VersionManifestTests.test_delivery_ref_and_source_cannot_drift) ... ok
+2026-10-09T01:38:07.4602181Z test_delivery_version_and_web_metadata_have_independent_identity (test_version_manifest.VersionManifestTests.test_delivery_version_and_web_metadata_have_independent_identity) ... ok
+2026-10-09T01:38:07.4602916Z test_failed_or_different_preview_cannot_become_version_evidence (test_version_manifest.VersionManifestTests.test_failed_or_different_preview_cannot_become_version_evidence) ... ok
+2026-10-09T01:38:07.4603577Z test_mobile_input_is_not_an_observed_provider_result (test_version_manifest.VersionManifestTests.test_mobile_input_is_not_an_observed_provider_result) ... ok
+2026-10-09T01:38:07.4866452Z test_offline_cli_writes_both_machine_manifest_and_readable_table (test_version_manifest.VersionManifestTests.test_offline_cli_writes_both_machine_manifest_and_readable_table) ... ok
+2026-10-09T01:38:07.4867629Z test_patch_identification_refuses_web_latest_implicit_build_and_fake_numbers (test_version_manifest.VersionManifestTests.test_patch_identification_refuses_web_latest_implicit_build_and_fake_numbers) ... ok
+2026-10-09T01:38:07.4868743Z test_patch_identity_includes_app_platform_base_and_number (test_version_manifest.VersionManifestTests.test_patch_identity_includes_app_platform_base_and_number) ... ok
+2026-10-09T01:38:07.4870232Z test_platforms_may_have_different_exact_shorebird_bases (test_version_manifest.VersionManifestTests.test_platforms_may_have_different_exact_shorebird_bases) ... ok
+2026-10-09T01:38:07.4872599Z test_validating_frozen_plan_rejects_fabricated_mobile_delivery (test_version_manifest.VersionManifestTests.test_validating_frozen_plan_rejects_fabricated_mobile_delivery) ... ok
+2026-10-09T01:38:07.4873847Z test_web_does_not_acquire_shorebird_patch_or_an_altered_app_version (test_version_manifest.VersionManifestTests.test_web_does_not_acquire_shorebird_patch_or_an_altered_app_version) ... ok
+2026-10-09T01:38:07.4874233Z 
+2026-10-09T01:38:07.4874325Z ----------------------------------------------------------------------
+2026-10-09T01:38:07.4874572Z Ran 384 tests in 27.240s
+2026-10-09T01:38:07.4874693Z 
+2026-10-09T01:38:07.4874757Z OK
+2026-10-09T01:38:07.4875013Z Material copiado e selecionado; nenhuma IA consultada e nenhum aviso enviado.
+2026-10-09T01:38:07.4875412Z Material copiado e selecionado; nenhuma IA consultada e nenhum aviso enviado.
+2026-10-09T01:38:07.4875951Z https://github.com/example/pull/4
+2026-10-09T01:38:07.4876173Z https://github.com/example/pull/4
+2026-10-09T01:38:07.4876384Z https://github.com/example/pull/4
+2026-10-09T01:38:07.4877108Z Laboratório protegido: 2 reviews, status obrigatório, admins incluídos; RC legado e neutro sem update/delete.
+2026-10-09T01:38:07.4877644Z main e permissões de pessoas/Actions não foram alteradas.
+2026-10-09T01:38:07.4877943Z https://github.com/example/releases/tag/lab
+2026-10-09T01:38:07.4878325Z SIMULAÇÃO: aviso gerado localmente; nenhuma mensagem enviada ao Slack.
+2026-10-09T01:38:07.5204900Z ##[group]Run python3 - <<'PY'
+2026-10-09T01:38:07.5206187Z [36;1mpython3 - <<'PY'[0m
+2026-10-09T01:38:07.5206314Z [36;1mimport os[0m
+2026-10-09T01:38:07.5206479Z [36;1mwith open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:[0m
+2026-10-09T01:38:07.5207908Z [36;1m    summary.write('# Verificar PR\n\nFlutter analyze, Flutter test e testes dos contratos da esteira concluídos.\n\n')[0m
+2026-10-09T01:38:07.5209803Z [36;1m    summary.write('Revisão técnica continua humana. Este check não prepara RC, não pede avais e não distribui o aplicativo.\n')[0m
+2026-10-09T01:38:07.5210102Z [36;1mPY[0m
+2026-10-09T01:38:07.5260526Z shell: /usr/bin/bash -e {0}
+2026-10-09T01:38:07.5260670Z ##[endgroup]
+2026-10-09T01:38:07.5676778Z Post job cleanup.
+2026-10-09T01:38:07.6599752Z [command]/usr/bin/git version
+2026-10-09T01:38:07.6637166Z git version 2.55.0
+2026-10-09T01:38:07.6659559Z Temporarily overriding HOME='/home/runner/work/_temp/64a4da1e-3990-4d53-98fb-f24e692109e7' before making global git config changes
+2026-10-09T01:38:07.6660271Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T01:38:07.6662839Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/flutter_code_push_example/flutter_code_push_example/app
+2026-10-09T01:38:07.6690930Z Removing SSH command configuration
+2026-10-09T01:38:07.6695212Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T01:38:07.6726057Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T01:38:07.6923124Z Removing HTTP extra header
+2026-10-09T01:38:07.6927725Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T01:38:07.6964739Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T01:38:07.7172007Z Removing includeIf entries pointing to credentials config files
+2026-10-09T01:38:07.7177625Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T01:38:07.7208234Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T01:38:07.7512273Z Post job cleanup.
+2026-10-09T01:38:07.8098782Z [command]/usr/bin/git version
+2026-10-09T01:38:07.8132776Z git version 2.55.0
+2026-10-09T01:38:07.8153380Z Temporarily overriding HOME='/home/runner/work/_temp/1846dded-ddd0-44d5-9b22-df38e75db7c4' before making global git config changes
+2026-10-09T01:38:07.8154323Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T01:38:07.8156515Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+2026-10-09T01:38:07.8184166Z Removing SSH command configuration
+2026-10-09T01:38:07.8188290Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T01:38:07.8216411Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T01:38:07.8403877Z Removing HTTP extra header
+2026-10-09T01:38:07.8409051Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T01:38:07.8438500Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T01:38:07.8631351Z Removing includeIf entries pointing to credentials config files
+2026-10-09T01:38:07.8639036Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T01:38:07.8668580Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T01:38:07.8959099Z Cleaning up orphan processes

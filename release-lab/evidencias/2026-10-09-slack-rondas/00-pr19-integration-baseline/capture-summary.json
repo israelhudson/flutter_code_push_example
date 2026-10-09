@@ -1,0 +1,148 @@
+{
+  "schema": 1,
+  "stage": "pre_live_baseline",
+  "captured_at": "2026-10-09T01:41:33.731739+00:00",
+  "read_only": true,
+  "repository": "israelhudson/flutter_code_push_example",
+  "pr19_merged": true,
+  "pr19_merge_commit": "22b29663d85724ba619600766c78ff38cd3456ec",
+  "pr19_head": "b7464e160c38b678eeda29a5c812ee8645307a94",
+  "pr19_ci_status": "completed",
+  "pr19_ci_conclusion": "success",
+  "local_delivery_tests": 384,
+  "ci_delivery_tests": 384,
+  "ci_temporary_merge_commit": "98af25f84aebdb23a536048950a90545f14d2238",
+  "scenario_a_rc1_run": 37870868223,
+  "scenario_a_initial_run_status": "in_progress",
+  "scenario_a_initial_conclusion": null,
+  "state_observed_at_commit": "162c29ed880e991aefd48a53a2e94c07cebd66fe",
+  "captures": [
+    {
+      "name": "pr19",
+      "endpoint": "pulls/19",
+      "exit_code": 0,
+      "stdout_bytes": 20349,
+      "stderr_bytes": 0,
+      "stdout_sha256": "99890d7d38fd1b862c4898b3070f3804e2ffd00d04eb1373c8449639b272db4c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "pr19-reviews",
+      "endpoint": "pulls/19/reviews",
+      "exit_code": 0,
+      "stdout_bytes": 2186,
+      "stderr_bytes": 0,
+      "stdout_sha256": "25908171cc3f3970621ff08dda2a1babe0a4a6175fb6093d1cea63f2026bc102",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "pr19-ci-run",
+      "endpoint": "actions/runs/37870620819",
+      "exit_code": 0,
+      "stdout_bytes": 14057,
+      "stderr_bytes": 0,
+      "stdout_sha256": "7f3c04a075ce7bb0466d2d979cb6114db8648963484b532321503eb8c46b8b0f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "scenario-a-rc1-run-initial",
+      "endpoint": "actions/runs/37870868223",
+      "exit_code": 0,
+      "stdout_bytes": 14568,
+      "stderr_bytes": 0,
+      "stdout_sha256": "1f27de2aabb2a69a68df14023c9e8a576893ca7b58941ec35fdd9fa4b96fdeb3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "scenario-a-rc1-jobs-initial",
+      "endpoint": "actions/runs/37870868223/jobs?filter=all&per_page=100",
+      "exit_code": 0,
+      "stdout_bytes": 9123,
+      "stderr_bytes": 0,
+      "stdout_sha256": "7f067f6cc7b084516b1884e314073507def711099c4d80a50fdb2040e89a9de0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "state-branch-ref",
+      "endpoint": "git/ref/heads/codex/release-lab-state",
+      "exit_code": 0,
+      "stdout_bytes": 440,
+      "stderr_bytes": 0,
+      "stdout_sha256": "e27cc22f4d8b73be3691f342bca953be17d5418c0d37f54ad63d84d7daeeb854",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "state-branch-commit",
+      "endpoint": "git/commits/162c29ed880e991aefd48a53a2e94c07cebd66fe",
+      "exit_code": 0,
+      "stdout_bytes": 2369,
+      "stderr_bytes": 0,
+      "stdout_sha256": "b3e246295dda08436e4773cc932a30cae7ddd887f88d9ace350ba41423341ff2",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "state-branch-tree",
+      "endpoint": "git/trees/b1e038e27204a84e1af3b8d05f185005dcbb3dc9?recursive=1",
+      "exit_code": 0,
+      "stdout_bytes": 443822,
+      "stderr_bytes": 0,
+      "stdout_sha256": "510c908345a819940621a12e2457c97350e7c066d2054d38f0ab7e05e5a9531d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "state-blob",
+      "endpoint": "git/blobs/56535d476065b935c66271705b77ce09ffa0ebc5",
+      "exit_code": 0,
+      "stdout_bytes": 80939,
+      "stderr_bytes": 0,
+      "stdout_sha256": "aeb5b62665454fb01959668ee27ebc89137f49ad2da8a68e218d396edc92d8ba",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "state-snapshot",
+      "path": "release-lab/state.json",
+      "git_commit": "162c29ed880e991aefd48a53a2e94c07cebd66fe",
+      "git_blob_sha": "56535d476065b935c66271705b77ce09ffa0ebc5",
+      "bytes": 58523,
+      "sha256": "491db88f03e7ea635520f5ba2d06fcd6de227049e1e2054ec9b2bcff92c55036",
+      "read_only": true
+    },
+    {
+      "name": "tag-prefix-entrega-0170",
+      "endpoint": "git/matching-refs/tags/entrega-0170",
+      "exit_code": 0,
+      "stdout_bytes": 2,
+      "stderr_bytes": 0,
+      "stdout_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "tag-prefix-entrega-0180",
+      "endpoint": "git/matching-refs/tags/entrega-0180",
+      "exit_code": 0,
+      "stdout_bytes": 2,
+      "stderr_bytes": 0,
+      "stdout_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "tag-prefix-v1.7.0",
+      "endpoint": "git/matching-refs/tags/v1.7.0",
+      "exit_code": 0,
+      "stdout_bytes": 396,
+      "stderr_bytes": 0,
+      "stdout_sha256": "e0da4644f7509f445cfc3552fb81d7bb6523e807cc5a53c4ef1c6c63977f8a24",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "tag-prefix-v1.8.0",
+      "endpoint": "git/matching-refs/tags/v1.8.0",
+      "exit_code": 0,
+      "stdout_bytes": 2,
+      "stderr_bytes": 0,
+      "stdout_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "scenario_result": "in_progress_not_evaluated"
+}

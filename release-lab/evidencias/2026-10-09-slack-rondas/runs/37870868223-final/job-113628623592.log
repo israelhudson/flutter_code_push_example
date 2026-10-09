@@ -1,0 +1,802 @@
+﻿2026-10-09T01:40:48.2213032Z Current runner version: '2.337.0'
+2026-10-09T01:40:48.2238456Z ##[group]Runner Image Provisioner
+2026-10-09T01:40:48.2239400Z Hosted Compute Agent
+2026-10-09T01:40:48.2240250Z Version: 20261002.596
+2026-10-09T01:40:48.2240999Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-09T01:40:48.2241777Z Build Date: 2026-10-02T22:28:27Z
+2026-10-09T01:40:48.2242475Z Worker ID: {7d295a53-5371-400a-a995-1eb8efc3e240}
+2026-10-09T01:40:48.2243244Z Region: eastus
+2026-10-09T01:40:48.2243848Z Cloud: Azure
+2026-10-09T01:40:48.2244424Z ##[endgroup]
+2026-10-09T01:40:48.2245905Z ##[group]Operating System
+2026-10-09T01:40:48.2246618Z Ubuntu
+2026-10-09T01:40:48.2247234Z 24.04.5
+2026-10-09T01:40:48.2247762Z LTS
+2026-10-09T01:40:48.2248327Z ##[endgroup]
+2026-10-09T01:40:48.2248995Z ##[group]Runner Image
+2026-10-09T01:40:48.2249602Z Image: ubuntu-24.04
+2026-10-09T01:40:48.2251068Z Version: 20261004.327.1
+2026-10-09T01:40:48.2252632Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-09T01:40:48.2254329Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-09T01:40:48.2255304Z ##[endgroup]
+2026-10-09T01:40:48.2256444Z ##[group]GITHUB_TOKEN Permissions
+2026-10-09T01:40:48.2258411Z Contents: read
+2026-10-09T01:40:48.2259135Z Metadata: read
+2026-10-09T01:40:48.2259689Z ##[endgroup]
+2026-10-09T01:40:48.2262600Z Secret source: Actions
+2026-10-09T01:40:48.2263633Z Cache mode: write
+2026-10-09T01:40:48.2264602Z Prepare workflow directory
+2026-10-09T01:40:48.2595390Z Prepare all required actions
+2026-10-09T01:40:48.2644061Z Getting action download info
+2026-10-09T01:40:48.4866535Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-09T01:40:48.5808754Z Download action repository 'actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9' (SHA:cf430e030ddbb5b0abf93d22962f4752f3646cd9)
+2026-10-09T01:40:48.8886439Z Uses: israelhudson/flutter_code_push_example/.github/workflows/release-lab-evaluate.yml@refs/heads/main (22b29663d85724ba619600766c78ff38cd3456ec)
+2026-10-09T01:40:48.8892131Z ##[group] Inputs
+2026-10-09T01:40:48.8892676Z   candidate_tag: v1.7.0-rc.1
+2026-10-09T01:40:48.8893202Z   version: 1.7.0
+2026-10-09T01:40:48.8893728Z   title: Avisos Slack — ensaio de rejeição e correção
+2026-10-09T01:40:48.8894345Z ##[endgroup]
+2026-10-09T01:40:48.8895121Z Complete job name: Avaliar a mesma candidata / Verificar e compilar web sem permissões de publicação
+2026-10-09T01:40:48.9696566Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-10-09T01:40:48.9697639Z with:
+2026-10-09T01:40:48.9698113Z   ref: 22b29663d85724ba619600766c78ff38cd3456ec
+2026-10-09T01:40:48.9698693Z   path: trusted
+2026-10-09T01:40:48.9699114Z   fetch-depth: 0
+2026-10-09T01:40:48.9699554Z   persist-credentials: false
+2026-10-09T01:40:48.9700337Z   repository: israelhudson/flutter_code_push_example
+2026-10-09T01:40:48.9704709Z   token: ***
+2026-10-09T01:40:48.9705173Z   ssh-strict: true
+2026-10-09T01:40:48.9705602Z   ssh-user: git
+2026-10-09T01:40:48.9706011Z   clean: true
+2026-10-09T01:40:48.9706441Z   sparse-checkout-cone-mode: true
+2026-10-09T01:40:48.9706957Z   fetch-tags: false
+2026-10-09T01:40:48.9707401Z   show-progress: true
+2026-10-09T01:40:48.9707844Z   lfs: false
+2026-10-09T01:40:48.9708252Z   submodules: false
+2026-10-09T01:40:48.9708695Z   set-safe-directory: true
+2026-10-09T01:40:48.9709196Z   allow-unsafe-pr-checkout: false
+2026-10-09T01:40:48.9710182Z ##[endgroup]
+2026-10-09T01:40:49.0700916Z Syncing repository: israelhudson/flutter_code_push_example
+2026-10-09T01:40:49.0703381Z ##[group]Getting Git version info
+2026-10-09T01:40:49.0705086Z Working directory is '/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted'
+2026-10-09T01:40:49.0707624Z [command]/usr/bin/git version
+2026-10-09T01:40:49.0809151Z git version 2.55.0
+2026-10-09T01:40:49.0841812Z ##[endgroup]
+2026-10-09T01:40:49.0875028Z Temporarily overriding HOME='/home/runner/work/_temp/9122b199-a37b-434d-82c2-4490ed077975' before making global git config changes
+2026-10-09T01:40:49.0877664Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T01:40:49.0881055Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+2026-10-09T01:40:49.0937167Z ##[group]Determining repository object format
+2026-10-09T01:40:49.0938912Z ##[endgroup]
+2026-10-09T01:40:49.0940315Z ##[group]Initializing the repository
+2026-10-09T01:40:49.0944392Z [command]/usr/bin/git init /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+2026-10-09T01:40:49.1072701Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-09T01:40:49.1074860Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-09T01:40:49.1076482Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-09T01:40:49.1077842Z hint: call:
+2026-10-09T01:40:49.1078551Z hint:
+2026-10-09T01:40:49.1079466Z hint: 	git config --global init.defaultBranch <name>
+2026-10-09T01:40:49.1080757Z hint:
+2026-10-09T01:40:49.1081725Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-09T01:40:49.1083396Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-09T01:40:49.1084647Z hint:
+2026-10-09T01:40:49.1085325Z hint: 	git branch -m <name>
+2026-10-09T01:40:49.1086172Z hint:
+2026-10-09T01:40:49.1087241Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-09T01:40:49.1089472Z Initialized empty Git repository in /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/
+2026-10-09T01:40:49.1093062Z [command]/usr/bin/git remote add origin https://github.com/israelhudson/flutter_code_push_example
+2026-10-09T01:40:49.1147993Z ##[endgroup]
+2026-10-09T01:40:49.1149954Z ##[group]Disabling automatic garbage collection
+2026-10-09T01:40:49.1152007Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-09T01:40:49.1188944Z ##[endgroup]
+2026-10-09T01:40:49.1190279Z ##[group]Setting up auth
+2026-10-09T01:40:49.1191108Z Removing SSH command configuration
+2026-10-09T01:40:49.1195117Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T01:40:49.1231467Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T01:40:49.1635733Z Removing HTTP extra header
+2026-10-09T01:40:49.1642204Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T01:40:49.1680795Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T01:40:49.1910689Z Removing includeIf entries pointing to credentials config files
+2026-10-09T01:40:49.1915484Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T01:40:49.1959182Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T01:40:49.2209656Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-0e8b188c-2394-440c-8858-8ab0773ccf33.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-09T01:40:49.2259714Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git.path /home/runner/work/_temp/git-credentials-0e8b188c-2394-440c-8858-8ab0773ccf33.config
+2026-10-09T01:40:49.2299269Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-0e8b188c-2394-440c-8858-8ab0773ccf33.config
+2026-10-09T01:40:49.2339553Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/trusted/.git.path /github/runner_temp/git-credentials-0e8b188c-2394-440c-8858-8ab0773ccf33.config
+2026-10-09T01:40:49.2377848Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/trusted/.git/worktrees/*.path /github/runner_temp/git-credentials-0e8b188c-2394-440c-8858-8ab0773ccf33.config
+2026-10-09T01:40:49.2411898Z ##[endgroup]
+2026-10-09T01:40:49.2413722Z ##[group]Fetching the repository
+2026-10-09T01:40:49.2418676Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-10-09T01:40:50.3418421Z From https://github.com/israelhudson/flutter_code_push_example
+2026-10-09T01:40:50.3421410Z  * [new branch]      codex/candidate-lab-delivery-2026-10-06-rc.1 -> origin/codex/candidate-lab-delivery-2026-10-06-rc.1
+2026-10-09T01:40:50.3424419Z  * [new branch]      codex/delivery-state    -> origin/codex/delivery-state
+2026-10-09T01:40:50.3427062Z  * [new branch]      codex/fix-lab-release-upload -> origin/codex/fix-lab-release-upload
+2026-10-09T01:40:50.3429477Z  * [new branch]      codex/flutter-sdk-bootstrap -> origin/codex/flutter-sdk-bootstrap
+2026-10-09T01:40:50.3431978Z  * [new branch]      codex/github-release-approval-poc -> origin/codex/github-release-approval-poc
+2026-10-09T01:40:50.3433490Z  * [new branch]      codex/lab-promotion-evidence -> origin/codex/lab-promotion-evidence
+2026-10-09T01:40:50.3434545Z  * [new branch]      codex/lab-release-result -> origin/codex/lab-release-result
+2026-10-09T01:40:50.3435542Z  * [new branch]      codex/lab-reviewed-promotion -> origin/codex/lab-reviewed-promotion
+2026-10-09T01:40:50.3436503Z  * [new branch]      codex/lab-versions      -> origin/codex/lab-versions
+2026-10-09T01:40:50.3437520Z  * [new branch]      codex/laboratory-release-records -> origin/codex/laboratory-release-records
+2026-10-09T01:40:50.3438577Z  * [new branch]      codex/manual-dark-theme -> origin/codex/manual-dark-theme
+2026-10-09T01:40:50.3439655Z  * [new branch]      codex/operational-delivery-preview -> origin/codex/operational-delivery-preview
+2026-10-09T01:40:50.3441932Z  * [new branch]      codex/pages-previews    -> origin/codex/pages-previews
+2026-10-09T01:40:50.3443972Z  * [new branch]      codex/pages-publication-verification -> origin/codex/pages-publication-verification
+2026-10-09T01:40:50.3446172Z  * [new branch]      codex/rc-operator-planning -> origin/codex/rc-operator-planning
+2026-10-09T01:40:50.3447871Z  * [new branch]      codex/release-lab-backport -> origin/codex/release-lab-backport
+2026-10-09T01:40:50.3449683Z  * [new branch]      codex/release-lab-rc2-correction -> origin/codex/release-lab-rc2-correction
+2026-10-09T01:40:50.3451941Z  * [new branch]      codex/release-lab-real-promotion -> origin/codex/release-lab-real-promotion
+2026-10-09T01:40:50.3453680Z  * [new branch]      codex/release-lab-state -> origin/codex/release-lab-state
+2026-10-09T01:40:50.3454736Z  * [new branch]      codex/release-lab-two-approvers -> origin/codex/release-lab-two-approvers
+2026-10-09T01:40:50.3455827Z  * [new branch]      codex/slack-candidate-notices -> origin/codex/slack-candidate-notices
+2026-10-09T01:40:50.3456872Z  * [new branch]      codex/slack-connection-test -> origin/codex/slack-connection-test
+2026-10-09T01:40:50.3457897Z  * [new branch]      docs/estudo-shorebird-amulets -> origin/docs/estudo-shorebird-amulets
+2026-10-09T01:40:50.3459014Z  * [new branch]      feature/shorebird-code-push-setup -> origin/feature/shorebird-code-push-setup
+2026-10-09T01:40:50.3459946Z  * [new branch]      main                    -> origin/main
+2026-10-09T01:40:50.3461042Z  * [new branch]      release/1.4.0           -> origin/release/1.4.0
+2026-10-09T01:40:50.3461825Z  * [new branch]      release/1.5.0           -> origin/release/1.5.0
+2026-10-09T01:40:50.3462612Z  * [new branch]      release/1.6.0           -> origin/release/1.6.0
+2026-10-09T01:40:50.3463768Z  * [new branch]      release/1.7.0           -> origin/release/1.7.0
+2026-10-09T01:40:50.3464652Z  * [new tag]         entrega-0100-rc.1       -> entrega-0100-rc.1
+2026-10-09T01:40:50.3465764Z  * [new tag]         lab/delivery/2026-10-06-rc.1 -> lab/delivery/2026-10-06-rc.1
+2026-10-09T01:40:50.3467180Z  * [new tag]         v1.4.0-rc.1             -> v1.4.0-rc.1
+2026-10-09T01:40:50.3468064Z  * [new tag]         v1.5.0                  -> v1.5.0
+2026-10-09T01:40:50.3468742Z  * [new tag]         v1.5.0-rc.1             -> v1.5.0-rc.1
+2026-10-09T01:40:50.3469406Z  * [new tag]         v1.5.0-rc.2             -> v1.5.0-rc.2
+2026-10-09T01:40:50.3470325Z  * [new tag]         v1.6.0                  -> v1.6.0
+2026-10-09T01:40:50.3471036Z  * [new tag]         v1.6.0-rc.1             -> v1.6.0-rc.1
+2026-10-09T01:40:50.3471692Z  * [new tag]         v1.7.0-rc.1             -> v1.7.0-rc.1
+2026-10-09T01:40:50.3473539Z [command]/usr/bin/git rev-parse --verify --quiet 22b29663d85724ba619600766c78ff38cd3456ec^{object}
+2026-10-09T01:40:50.3484017Z 22b29663d85724ba619600766c78ff38cd3456ec
+2026-10-09T01:40:50.3490880Z ##[endgroup]
+2026-10-09T01:40:50.3492579Z ##[group]Determining the checkout info
+2026-10-09T01:40:50.3494378Z ##[endgroup]
+2026-10-09T01:40:50.3527061Z [command]/usr/bin/git sparse-checkout disable
+2026-10-09T01:40:50.3583768Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-09T01:40:50.3617563Z ##[group]Checking out the ref
+2026-10-09T01:40:50.3621581Z [command]/usr/bin/git checkout --progress --force 22b29663d85724ba619600766c78ff38cd3456ec
+2026-10-09T01:40:50.3999178Z Note: switching to '22b29663d85724ba619600766c78ff38cd3456ec'.
+2026-10-09T01:40:50.3999867Z 
+2026-10-09T01:40:50.4000789Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-09T01:40:50.4002545Z changes and commit them, and you can discard any commits you make in this
+2026-10-09T01:40:50.4004288Z state without impacting any branches by switching back to a branch.
+2026-10-09T01:40:50.4005319Z 
+2026-10-09T01:40:50.4005967Z If you want to create a new branch to retain commits you create, you may
+2026-10-09T01:40:50.4007520Z do so (now or later) by using -c with the switch command. Example:
+2026-10-09T01:40:50.4008430Z 
+2026-10-09T01:40:50.4008801Z   git switch -c <new-branch-name>
+2026-10-09T01:40:50.4009313Z 
+2026-10-09T01:40:50.4009558Z Or undo this operation with:
+2026-10-09T01:40:50.4009893Z 
+2026-10-09T01:40:50.4010508Z   git switch -
+2026-10-09T01:40:50.4010829Z 
+2026-10-09T01:40:50.4011545Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-09T01:40:50.4012607Z 
+2026-10-09T01:40:50.4013340Z HEAD is now at 22b2966 Merge pull request #19 from israelhudson/codex/slack-candidate-notices
+2026-10-09T01:40:50.4015410Z ##[endgroup]
+2026-10-09T01:40:50.4065579Z [command]/usr/bin/git log -1 --format=%H
+2026-10-09T01:40:50.4095415Z 22b29663d85724ba619600766c78ff38cd3456ec
+2026-10-09T01:40:50.4107584Z ##[group]Removing auth
+2026-10-09T01:40:50.4108574Z Removing SSH command configuration
+2026-10-09T01:40:50.4111914Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T01:40:50.4150941Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T01:40:50.4384744Z Removing HTTP extra header
+2026-10-09T01:40:50.4390281Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T01:40:50.4431697Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T01:40:50.4655700Z Removing includeIf entries pointing to credentials config files
+2026-10-09T01:40:50.4659890Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T01:40:50.4693630Z includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git.path
+2026-10-09T01:40:50.4695650Z includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/worktrees/*.path
+2026-10-09T01:40:50.4697507Z includeif.gitdir:/github/workspace/trusted/.git.path
+2026-10-09T01:40:50.4698473Z includeif.gitdir:/github/workspace/trusted/.git/worktrees/*.path
+2026-10-09T01:40:50.4702654Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git.path
+2026-10-09T01:40:50.4729746Z /home/runner/work/_temp/git-credentials-0e8b188c-2394-440c-8858-8ab0773ccf33.config
+2026-10-09T01:40:50.4740284Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-0e8b188c\-2394\-440c\-8858\-8ab0773ccf33\.config
+2026-10-09T01:40:50.4776581Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/worktrees/*.path
+2026-10-09T01:40:50.4801537Z /home/runner/work/_temp/git-credentials-0e8b188c-2394-440c-8858-8ab0773ccf33.config
+2026-10-09T01:40:50.4816721Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-0e8b188c\-2394\-440c\-8858\-8ab0773ccf33\.config
+2026-10-09T01:40:50.4851838Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/trusted/.git.path
+2026-10-09T01:40:50.4879499Z /github/runner_temp/git-credentials-0e8b188c-2394-440c-8858-8ab0773ccf33.config
+2026-10-09T01:40:50.4888633Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/trusted/.git.path \/github\/runner_temp\/git\-credentials\-0e8b188c\-2394\-440c\-8858\-8ab0773ccf33\.config
+2026-10-09T01:40:50.4931387Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/trusted/.git/worktrees/*.path
+2026-10-09T01:40:50.4957618Z /github/runner_temp/git-credentials-0e8b188c-2394-440c-8858-8ab0773ccf33.config
+2026-10-09T01:40:50.4965332Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/trusted/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-0e8b188c\-2394\-440c\-8858\-8ab0773ccf33\.config
+2026-10-09T01:40:50.5000935Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T01:40:50.5223532Z Removing credentials config '/home/runner/work/_temp/git-credentials-0e8b188c-2394-440c-8858-8ab0773ccf33.config'
+2026-10-09T01:40:50.5232646Z ##[endgroup]
+2026-10-09T01:40:50.5599809Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-10-09T01:40:50.5600782Z with:
+2026-10-09T01:40:50.5601251Z   ref: 22b29663d85724ba619600766c78ff38cd3456ec
+2026-10-09T01:40:50.5601809Z   path: app
+2026-10-09T01:40:50.5602207Z   fetch-depth: 0
+2026-10-09T01:40:50.5602647Z   persist-credentials: false
+2026-10-09T01:40:50.5603210Z   repository: israelhudson/flutter_code_push_example
+2026-10-09T01:40:50.5607484Z   token: ***
+2026-10-09T01:40:50.5607900Z   ssh-strict: true
+2026-10-09T01:40:50.5608316Z   ssh-user: git
+2026-10-09T01:40:50.5608719Z   clean: true
+2026-10-09T01:40:50.5609151Z   sparse-checkout-cone-mode: true
+2026-10-09T01:40:50.5609660Z   fetch-tags: false
+2026-10-09T01:40:50.5610245Z   show-progress: true
+2026-10-09T01:40:50.5610686Z   lfs: false
+2026-10-09T01:40:50.5611086Z   submodules: false
+2026-10-09T01:40:50.5611517Z   set-safe-directory: true
+2026-10-09T01:40:50.5612017Z   allow-unsafe-pr-checkout: false
+2026-10-09T01:40:50.5612568Z ##[endgroup]
+2026-10-09T01:40:50.6465366Z Syncing repository: israelhudson/flutter_code_push_example
+2026-10-09T01:40:50.6481582Z ##[group]Getting Git version info
+2026-10-09T01:40:50.6483263Z Working directory is '/home/runner/work/flutter_code_push_example/flutter_code_push_example/app'
+2026-10-09T01:40:50.6527024Z [command]/usr/bin/git version
+2026-10-09T01:40:50.6574179Z git version 2.55.0
+2026-10-09T01:40:50.6597945Z ##[endgroup]
+2026-10-09T01:40:50.6609463Z Temporarily overriding HOME='/home/runner/work/_temp/242033a3-ad21-4b97-b30a-1fee438dd05b' before making global git config changes
+2026-10-09T01:40:50.6612355Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T01:40:50.6617441Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/flutter_code_push_example/flutter_code_push_example/app
+2026-10-09T01:40:50.6657041Z ##[group]Determining repository object format
+2026-10-09T01:40:50.6659364Z ##[endgroup]
+2026-10-09T01:40:50.6661177Z ##[group]Initializing the repository
+2026-10-09T01:40:50.6666333Z [command]/usr/bin/git init /home/runner/work/flutter_code_push_example/flutter_code_push_example/app
+2026-10-09T01:40:50.6716767Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-09T01:40:50.6718715Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-09T01:40:50.6720907Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-09T01:40:50.6722151Z hint: call:
+2026-10-09T01:40:50.6723078Z hint:
+2026-10-09T01:40:50.6724314Z hint: 	git config --global init.defaultBranch <name>
+2026-10-09T01:40:50.6725554Z hint:
+2026-10-09T01:40:50.6726616Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-09T01:40:50.6728398Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-09T01:40:50.6729778Z hint:
+2026-10-09T01:40:50.6730972Z hint: 	git branch -m <name>
+2026-10-09T01:40:50.6731792Z hint:
+2026-10-09T01:40:50.6732932Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-09T01:40:50.6735263Z Initialized empty Git repository in /home/runner/work/flutter_code_push_example/flutter_code_push_example/app/.git/
+2026-10-09T01:40:50.6739072Z [command]/usr/bin/git remote add origin https://github.com/israelhudson/flutter_code_push_example
+2026-10-09T01:40:50.6775959Z ##[endgroup]
+2026-10-09T01:40:50.6777206Z ##[group]Disabling automatic garbage collection
+2026-10-09T01:40:50.6780971Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-09T01:40:50.6827417Z ##[endgroup]
+2026-10-09T01:40:50.6828694Z ##[group]Setting up auth
+2026-10-09T01:40:50.6829594Z Removing SSH command configuration
+2026-10-09T01:40:50.6834400Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T01:40:50.6878679Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T01:40:50.7128782Z Removing HTTP extra header
+2026-10-09T01:40:50.7134672Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T01:40:50.7178463Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T01:40:50.7444933Z Removing includeIf entries pointing to credentials config files
+2026-10-09T01:40:50.7451655Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T01:40:50.7495236Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T01:40:50.7756974Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-132ed547-5d60-48f0-a80b-c72ad1638a98.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-09T01:40:50.7805090Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/app/.git.path /home/runner/work/_temp/git-credentials-132ed547-5d60-48f0-a80b-c72ad1638a98.config
+2026-10-09T01:40:50.7840323Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/app/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-132ed547-5d60-48f0-a80b-c72ad1638a98.config
+2026-10-09T01:40:50.7874542Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/app/.git.path /github/runner_temp/git-credentials-132ed547-5d60-48f0-a80b-c72ad1638a98.config
+2026-10-09T01:40:50.7920267Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/app/.git/worktrees/*.path /github/runner_temp/git-credentials-132ed547-5d60-48f0-a80b-c72ad1638a98.config
+2026-10-09T01:40:50.7945698Z ##[endgroup]
+2026-10-09T01:40:50.7947460Z ##[group]Fetching the repository
+2026-10-09T01:40:50.7955999Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-10-09T01:40:51.9118757Z From https://github.com/israelhudson/flutter_code_push_example
+2026-10-09T01:40:51.9120773Z  * [new branch]      codex/candidate-lab-delivery-2026-10-06-rc.1 -> origin/codex/candidate-lab-delivery-2026-10-06-rc.1
+2026-10-09T01:40:51.9121897Z  * [new branch]      codex/delivery-state    -> origin/codex/delivery-state
+2026-10-09T01:40:51.9123083Z  * [new branch]      codex/fix-lab-release-upload -> origin/codex/fix-lab-release-upload
+2026-10-09T01:40:51.9124122Z  * [new branch]      codex/flutter-sdk-bootstrap -> origin/codex/flutter-sdk-bootstrap
+2026-10-09T01:40:51.9125336Z  * [new branch]      codex/github-release-approval-poc -> origin/codex/github-release-approval-poc
+2026-10-09T01:40:51.9126407Z  * [new branch]      codex/lab-promotion-evidence -> origin/codex/lab-promotion-evidence
+2026-10-09T01:40:51.9127554Z  * [new branch]      codex/lab-release-result -> origin/codex/lab-release-result
+2026-10-09T01:40:51.9128641Z  * [new branch]      codex/lab-reviewed-promotion -> origin/codex/lab-reviewed-promotion
+2026-10-09T01:40:51.9129951Z  * [new branch]      codex/lab-versions      -> origin/codex/lab-versions
+2026-10-09T01:40:51.9131399Z  * [new branch]      codex/laboratory-release-records -> origin/codex/laboratory-release-records
+2026-10-09T01:40:51.9132596Z  * [new branch]      codex/manual-dark-theme -> origin/codex/manual-dark-theme
+2026-10-09T01:40:51.9133697Z  * [new branch]      codex/operational-delivery-preview -> origin/codex/operational-delivery-preview
+2026-10-09T01:40:51.9134818Z  * [new branch]      codex/pages-previews    -> origin/codex/pages-previews
+2026-10-09T01:40:51.9136439Z  * [new branch]      codex/pages-publication-verification -> origin/codex/pages-publication-verification
+2026-10-09T01:40:51.9137791Z  * [new branch]      codex/rc-operator-planning -> origin/codex/rc-operator-planning
+2026-10-09T01:40:51.9138503Z  * [new branch]      codex/release-lab-backport -> origin/codex/release-lab-backport
+2026-10-09T01:40:51.9139342Z  * [new branch]      codex/release-lab-rc2-correction -> origin/codex/release-lab-rc2-correction
+2026-10-09T01:40:51.9140369Z  * [new branch]      codex/release-lab-real-promotion -> origin/codex/release-lab-real-promotion
+2026-10-09T01:40:51.9141030Z  * [new branch]      codex/release-lab-state -> origin/codex/release-lab-state
+2026-10-09T01:40:51.9141676Z  * [new branch]      codex/release-lab-two-approvers -> origin/codex/release-lab-two-approvers
+2026-10-09T01:40:51.9142346Z  * [new branch]      codex/slack-candidate-notices -> origin/codex/slack-candidate-notices
+2026-10-09T01:40:51.9143026Z  * [new branch]      codex/slack-connection-test -> origin/codex/slack-connection-test
+2026-10-09T01:40:51.9143660Z  * [new branch]      docs/estudo-shorebird-amulets -> origin/docs/estudo-shorebird-amulets
+2026-10-09T01:40:51.9144371Z  * [new branch]      feature/shorebird-code-push-setup -> origin/feature/shorebird-code-push-setup
+2026-10-09T01:40:51.9144939Z  * [new branch]      main                    -> origin/main
+2026-10-09T01:40:51.9145583Z  * [new branch]      release/1.4.0           -> origin/release/1.4.0
+2026-10-09T01:40:51.9146051Z  * [new branch]      release/1.5.0           -> origin/release/1.5.0
+2026-10-09T01:40:51.9146520Z  * [new branch]      release/1.6.0           -> origin/release/1.6.0
+2026-10-09T01:40:51.9147064Z  * [new branch]      release/1.7.0           -> origin/release/1.7.0
+2026-10-09T01:40:51.9147678Z  * [new tag]         entrega-0100-rc.1       -> entrega-0100-rc.1
+2026-10-09T01:40:51.9148176Z  * [new tag]         lab/delivery/2026-10-06-rc.1 -> lab/delivery/2026-10-06-rc.1
+2026-10-09T01:40:51.9148648Z  * [new tag]         v1.4.0-rc.1             -> v1.4.0-rc.1
+2026-10-09T01:40:51.9149039Z  * [new tag]         v1.5.0                  -> v1.5.0
+2026-10-09T01:40:51.9149439Z  * [new tag]         v1.5.0-rc.1             -> v1.5.0-rc.1
+2026-10-09T01:40:51.9149831Z  * [new tag]         v1.5.0-rc.2             -> v1.5.0-rc.2
+2026-10-09T01:40:51.9150534Z  * [new tag]         v1.6.0                  -> v1.6.0
+2026-10-09T01:40:51.9150944Z  * [new tag]         v1.6.0-rc.1             -> v1.6.0-rc.1
+2026-10-09T01:40:51.9151329Z  * [new tag]         v1.7.0-rc.1             -> v1.7.0-rc.1
+2026-10-09T01:40:51.9152756Z [command]/usr/bin/git rev-parse --verify --quiet 22b29663d85724ba619600766c78ff38cd3456ec^{object}
+2026-10-09T01:40:51.9162869Z 22b29663d85724ba619600766c78ff38cd3456ec
+2026-10-09T01:40:51.9166957Z ##[endgroup]
+2026-10-09T01:40:51.9167895Z ##[group]Determining the checkout info
+2026-10-09T01:40:51.9168692Z ##[endgroup]
+2026-10-09T01:40:51.9172170Z [command]/usr/bin/git sparse-checkout disable
+2026-10-09T01:40:51.9217256Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-09T01:40:51.9251712Z ##[group]Checking out the ref
+2026-10-09T01:40:51.9256287Z [command]/usr/bin/git checkout --progress --force 22b29663d85724ba619600766c78ff38cd3456ec
+2026-10-09T01:40:51.9629445Z Note: switching to '22b29663d85724ba619600766c78ff38cd3456ec'.
+2026-10-09T01:40:51.9630088Z 
+2026-10-09T01:40:51.9630608Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-09T01:40:51.9631496Z changes and commit them, and you can discard any commits you make in this
+2026-10-09T01:40:51.9632364Z state without impacting any branches by switching back to a branch.
+2026-10-09T01:40:51.9632862Z 
+2026-10-09T01:40:51.9633216Z If you want to create a new branch to retain commits you create, you may
+2026-10-09T01:40:51.9634056Z do so (now or later) by using -c with the switch command. Example:
+2026-10-09T01:40:51.9634517Z 
+2026-10-09T01:40:51.9634725Z   git switch -c <new-branch-name>
+2026-10-09T01:40:51.9635045Z 
+2026-10-09T01:40:51.9635242Z Or undo this operation with:
+2026-10-09T01:40:51.9635560Z 
+2026-10-09T01:40:51.9635735Z   git switch -
+2026-10-09T01:40:51.9635965Z 
+2026-10-09T01:40:51.9636585Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-09T01:40:51.9637159Z 
+2026-10-09T01:40:51.9637785Z HEAD is now at 22b2966 Merge pull request #19 from israelhudson/codex/slack-candidate-notices
+2026-10-09T01:40:51.9641202Z ##[endgroup]
+2026-10-09T01:40:51.9684551Z [command]/usr/bin/git log -1 --format=%H
+2026-10-09T01:40:51.9713667Z 22b29663d85724ba619600766c78ff38cd3456ec
+2026-10-09T01:40:51.9723571Z ##[group]Removing auth
+2026-10-09T01:40:51.9724149Z Removing SSH command configuration
+2026-10-09T01:40:51.9727224Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T01:40:51.9762410Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T01:40:51.9987350Z Removing HTTP extra header
+2026-10-09T01:40:51.9994932Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T01:40:52.0029586Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T01:40:52.0252644Z Removing includeIf entries pointing to credentials config files
+2026-10-09T01:40:52.0256210Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T01:40:52.0284082Z includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/app/.git.path
+2026-10-09T01:40:52.0285891Z includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/app/.git/worktrees/*.path
+2026-10-09T01:40:52.0292918Z includeif.gitdir:/github/workspace/app/.git.path
+2026-10-09T01:40:52.0293945Z includeif.gitdir:/github/workspace/app/.git/worktrees/*.path
+2026-10-09T01:40:52.0303052Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/app/.git.path
+2026-10-09T01:40:52.0321812Z /home/runner/work/_temp/git-credentials-132ed547-5d60-48f0-a80b-c72ad1638a98.config
+2026-10-09T01:40:52.0331647Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/app/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-132ed547\-5d60\-48f0\-a80b\-c72ad1638a98\.config
+2026-10-09T01:40:52.0367169Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/app/.git/worktrees/*.path
+2026-10-09T01:40:52.0394347Z /home/runner/work/_temp/git-credentials-132ed547-5d60-48f0-a80b-c72ad1638a98.config
+2026-10-09T01:40:52.0403625Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/app/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-132ed547\-5d60\-48f0\-a80b\-c72ad1638a98\.config
+2026-10-09T01:40:52.0439206Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/app/.git.path
+2026-10-09T01:40:52.0466404Z /github/runner_temp/git-credentials-132ed547-5d60-48f0-a80b-c72ad1638a98.config
+2026-10-09T01:40:52.0476245Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/app/.git.path \/github\/runner_temp\/git\-credentials\-132ed547\-5d60\-48f0\-a80b\-c72ad1638a98\.config
+2026-10-09T01:40:52.0546585Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/app/.git/worktrees/*.path
+2026-10-09T01:40:52.0590258Z /github/runner_temp/git-credentials-132ed547-5d60-48f0-a80b-c72ad1638a98.config
+2026-10-09T01:40:52.0597865Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/app/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-132ed547\-5d60\-48f0\-a80b\-c72ad1638a98\.config
+2026-10-09T01:40:52.0635198Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T01:40:52.0856370Z Removing credentials config '/home/runner/work/_temp/git-credentials-132ed547-5d60-48f0-a80b-c72ad1638a98.config'
+2026-10-09T01:40:52.0866005Z ##[endgroup]
+2026-10-09T01:40:52.1112753Z Prepare all required actions
+2026-10-09T01:40:52.1195411Z ##[group]Run ./trusted/.github/actions/setup-flutter
+2026-10-09T01:40:52.1195797Z with:
+2026-10-09T01:40:52.1196105Z   build-inputs: app/delivery/build-inputs.json
+2026-10-09T01:40:52.1196475Z ##[endgroup]
+2026-10-09T01:40:52.1258479Z ##[start-action display=Run python3 - <<'PY';id=__self.inputs]
+2026-10-09T01:40:52.1299991Z ##[group]Run python3 - <<'PY'
+2026-10-09T01:40:52.1300634Z [36;1mpython3 - <<'PY'[0m
+2026-10-09T01:40:52.1300943Z [36;1mimport json, os, re[0m
+2026-10-09T01:40:52.1301258Z [36;1mfrom pathlib import Path[0m
+2026-10-09T01:40:52.1301696Z [36;1mworkspace = Path(os.environ['GITHUB_WORKSPACE']).resolve()[0m
+2026-10-09T01:40:52.1302200Z [36;1mpath = Path(os.environ['BUILD_INPUTS']).resolve()[0m
+2026-10-09T01:40:52.1302621Z [36;1mif not path.is_relative_to(workspace):[0m
+2026-10-09T01:40:52.1303129Z [36;1m    raise ValueError('Build inputs precisa pertencer ao checkout deste job.')[0m
+2026-10-09T01:40:52.1303922Z [36;1minputs = json.loads(path.read_text())[0m
+2026-10-09T01:40:52.1304404Z [36;1mversion, revision = inputs['flutter_version'], inputs['flutter_revision'][0m
+2026-10-09T01:40:52.1305054Z [36;1mif not re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+', version) or not re.fullmatch(r'[0-9a-f]{40}', revision):[0m
+2026-10-09T01:40:52.1305734Z [36;1m    raise ValueError('Versão e revisão Flutter precisam estar fixadas.')[0m
+2026-10-09T01:40:52.1306278Z [36;1mwith open(os.environ['GITHUB_OUTPUT'], 'a') as f:[0m
+2026-10-09T01:40:52.1306771Z [36;1m    f.write('version=' + version + '\nrevision=' + revision + '\n')[0m
+2026-10-09T01:40:52.1307193Z [36;1mPY[0m
+2026-10-09T01:40:52.1592646Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-09T01:40:52.1593369Z env:
+2026-10-09T01:40:52.1593873Z   BUILD_INPUTS: app/delivery/build-inputs.json
+2026-10-09T01:40:52.1594515Z ##[endgroup]
+2026-10-09T01:40:52.2019884Z ##[end-action id=__self.inputs;outcome=success;conclusion=success;duration_ms=76]
+2026-10-09T01:40:52.2027430Z ##[start-action display=Instalar e conferir o SDK;id=__self.__run]
+2026-10-09T01:40:52.2050566Z ##[group]Run set -euo pipefail
+2026-10-09T01:40:52.2050935Z [36;1mset -euo pipefail[0m
+2026-10-09T01:40:52.2051289Z [36;1mSDK_PATH="$RUNNER_TEMP/flutter-delivery"[0m
+2026-10-09T01:40:52.2051960Z [36;1mgit clone --no-checkout --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$SDK_PATH"[0m
+2026-10-09T01:40:52.2052697Z [36;1mtest "$(git -C "$SDK_PATH" rev-parse HEAD)" = "$FLUTTER_REVISION"[0m
+2026-10-09T01:40:52.2053234Z [36;1mgit -C "$SDK_PATH" checkout --detach "$FLUTTER_REVISION"[0m
+2026-10-09T01:40:52.2053789Z [36;1m# The first invocation bootstraps the tool and prints a welcome banner.[0m
+2026-10-09T01:40:52.2054362Z [36;1m# Run it before helpers parse --version --machine as strict JSON.[0m
+2026-10-09T01:40:52.2054813Z [36;1m"$SDK_PATH/bin/flutter" --version[0m
+2026-10-09T01:40:52.2055204Z [36;1mecho "$SDK_PATH/bin" >> "$GITHUB_PATH"[0m
+2026-10-09T01:40:52.2118784Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-09T01:40:52.2119229Z env:
+2026-10-09T01:40:52.2119501Z   FLUTTER_VERSION: 3.44.1
+2026-10-09T01:40:52.2119879Z   FLUTTER_REVISION: 924134a44c189315be2148659913dda1671cbe99
+2026-10-09T01:40:52.2120753Z ##[endgroup]
+2026-10-09T01:40:52.2220550Z Cloning into '/home/runner/work/_temp/flutter-delivery'...
+2026-10-09T01:40:58.8965481Z HEAD is now at 924134a4 Update CHANGELOG with Flutter 3.44 changes (#187258)
+2026-10-09T01:40:58.9388629Z Downloading Linux x64 Dart SDK from Flutter engine c416acfeb8126e097f758c664aaa3da929e27da0...
+2026-10-09T01:40:58.9495203Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+2026-10-09T01:40:58.9496215Z                                  Dload  Upload   Total   Spent    Left  Speed
+2026-10-09T01:40:58.9496709Z 
+2026-10-09T01:40:59.8176412Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-10-09T01:40:59.8733046Z  92  222M   92  205M    0     0   237M      0 --:--:-- --:--:-- --:--:--  236M
+2026-10-09T01:40:59.8734510Z 100  222M  100  222M    0     0   240M      0 --:--:-- --:--:-- --:--:--  240M
+2026-10-09T01:41:04.5934078Z Building flutter tool...
+2026-10-09T01:41:04.6116080Z Resolving dependencies...
+2026-10-09T01:41:04.9979299Z Downloading packages...
+2026-10-09T01:41:08.0747330Z + _fe_analyzer_shared 95.0.0 (109.0.0 available)
+2026-10-09T01:41:08.0748291Z + analyzer 10.1.0 (14.5.0 available)
+2026-10-09T01:41:08.0748913Z + archive 3.6.1 (4.3.0 available)
+2026-10-09T01:41:08.0749510Z + args 2.7.0
+2026-10-09T01:41:08.0750583Z + async 2.13.1
+2026-10-09T01:41:08.0751176Z + boolean_selector 2.1.2
+2026-10-09T01:41:08.0751930Z + browser_launcher 1.1.3 (1.2.0 available)
+2026-10-09T01:41:08.0752742Z + built_collection 5.1.1 (5.1.2 available)
+2026-10-09T01:41:08.0753585Z + built_value 8.12.5 (8.13.0 available)
+2026-10-09T01:41:08.0754347Z + checked_yaml 2.0.4
+2026-10-09T01:41:08.0755332Z + cli_config 0.2.0
+2026-10-09T01:41:08.0755972Z + clock 1.1.2 (1.1.3 available)
+2026-10-09T01:41:08.0756699Z + code_assets 1.0.0 (2.1.0 available)
+2026-10-09T01:41:08.0757567Z + code_builder 4.11.1 (4.12.0 available)
+2026-10-09T01:41:08.0758348Z + collection 1.19.1
+2026-10-09T01:41:08.0758964Z + completion 1.0.2
+2026-10-09T01:41:08.0759557Z + convert 3.1.2
+2026-10-09T01:41:08.0760397Z + coverage 1.15.0 (1.15.1 available)
+2026-10-09T01:41:08.0761142Z + crypto 3.0.7
+2026-10-09T01:41:08.0761708Z + csslib 1.0.2
+2026-10-09T01:41:08.0762260Z + dap 1.4.0
+2026-10-09T01:41:08.0762851Z + dart_service_protocol_shared 0.0.3
+2026-10-09T01:41:08.0763649Z + dart_style 3.1.7 (3.1.13 available)
+2026-10-09T01:41:08.0787378Z + data_assets 0.19.6 (0.20.0 available)
+2026-10-09T01:41:08.0787867Z + dds 5.3.0 (5.4.0 available)
+2026-10-09T01:41:08.0788298Z + dds_service_extensions 2.1.0
+2026-10-09T01:41:08.0788742Z + devtools_shared 12.1.0 (14.0.0 available)
+2026-10-09T01:41:08.0789206Z + dtd 4.0.0
+2026-10-09T01:41:08.0789553Z + dwds 26.2.5 (27.1.4 available)
+2026-10-09T01:41:08.0790179Z + extension_discovery 2.1.0
+2026-10-09T01:41:08.0790580Z + fake_async 1.3.3
+2026-10-09T01:41:08.0790913Z + ffi 2.2.0
+2026-10-09T01:41:08.0791120Z + file 7.0.1
+2026-10-09T01:41:08.0791345Z + file_testing 3.0.2 (3.1.0 available)
+2026-10-09T01:41:08.0791630Z + fixnum 1.1.1
+2026-10-09T01:41:08.0791880Z + flutter_template_images 5.0.0 (5.0.1 available)
+2026-10-09T01:41:08.0792231Z + frontend_server_client 4.0.0 (4.1.0 available)
+2026-10-09T01:41:08.0792549Z + glob 2.1.3 (2.2.0 available)
+2026-10-09T01:41:08.0792811Z + graphs 2.3.2
+2026-10-09T01:41:08.0793028Z + hooks 1.0.2 (2.2.0 available)
+2026-10-09T01:41:08.0793294Z + hooks_runner 1.1.1 (1.6.4 available)
+2026-10-09T01:41:08.0793575Z + html 0.15.6 (0.15.7 available)
+2026-10-09T01:41:08.0793829Z + http 1.6.0
+2026-10-09T01:41:08.0794043Z + http_multi_server 3.2.2
+2026-10-09T01:41:08.0794290Z + http_parser 4.1.2
+2026-10-09T01:41:08.0794523Z + intl 0.20.2 (0.20.3 available)
+2026-10-09T01:41:08.0794786Z + io 1.0.5 (1.1.0 available)
+2026-10-09T01:41:08.0795029Z + js 0.7.2 (discontinued)
+2026-10-09T01:41:08.0795271Z + json_annotation 4.11.0 (4.12.0 available)
+2026-10-09T01:41:08.0795559Z + json_rpc_2 4.1.0
+2026-10-09T01:41:08.0795774Z + logging 1.3.0
+2026-10-09T01:41:08.0795996Z + matcher 0.12.19 (0.12.20 available)
+2026-10-09T01:41:08.0796258Z + meta 1.18.0 (1.19.0 available)
+2026-10-09T01:41:08.0796504Z + mime 2.0.0 (2.1.0 available)
+2026-10-09T01:41:08.0796752Z + multicast_dns 0.3.3 (0.3.3+1 available)
+2026-10-09T01:41:08.0797040Z + mustache_template 2.0.4 (2.0.6 available)
+2026-10-09T01:41:08.0797339Z + native_stack_traces 0.6.1 (0.7.0 available)
+2026-10-09T01:41:08.0797627Z + node_preamble 2.0.2
+2026-10-09T01:41:08.0797863Z + package_config 2.2.0 (3.0.0 available)
+2026-10-09T01:41:08.0798127Z + path 1.9.1
+2026-10-09T01:41:08.0798348Z + petitparser 7.0.2 (7.1.0 available)
+2026-10-09T01:41:08.0798628Z + platform 3.1.6 (3.2.0 available)
+2026-10-09T01:41:08.0798884Z + pool 1.5.2 (1.5.3 available)
+2026-10-09T01:41:08.0799135Z + process 5.0.5 (5.0.6 available)
+2026-10-09T01:41:08.0799637Z + pub_semver 2.2.0 (2.2.1 available)
+2026-10-09T01:41:08.0799919Z + pubspec_parse 1.5.0 (1.6.0 available)
+2026-10-09T01:41:08.0800528Z + record_use 0.6.0 (1.1.1 available)
+2026-10-09T01:41:08.0800915Z + shelf 1.4.2
+2026-10-09T01:41:08.0801136Z + shelf_packages_handler 3.0.2
+2026-10-09T01:41:08.0801396Z + shelf_proxy 1.0.4 (1.0.5 available)
+2026-10-09T01:41:08.0801662Z + shelf_static 1.1.3
+2026-10-09T01:41:08.0801892Z + shelf_web_socket 3.0.0
+2026-10-09T01:41:08.0802131Z + source_map_stack_trace 2.1.2
+2026-10-09T01:41:08.0802389Z + source_maps 0.10.13 (0.10.14 available)
+2026-10-09T01:41:08.0802657Z + source_span 1.10.2
+2026-10-09T01:41:08.0802869Z + sprintf 7.0.0
+2026-10-09T01:41:08.0803077Z + sse 4.1.8 (4.2.0 available)
+2026-10-09T01:41:08.0803318Z + stack_trace 1.12.1 (1.12.2 available)
+2026-10-09T01:41:08.0803619Z + standard_message_codec 0.0.1+4 (0.0.1+5 available)
+2026-10-09T01:41:08.0803928Z + stream_channel 2.1.4
+2026-10-09T01:41:08.0804332Z + string_scanner 1.4.1
+2026-10-09T01:41:08.0804568Z + sync_http 0.3.1
+2026-10-09T01:41:08.0804783Z + term_glyph 1.2.2
+2026-10-09T01:41:08.0804991Z + test 1.31.0 (1.33.0 available)
+2026-10-09T01:41:08.0805231Z + test_api 0.7.11 (0.7.15 available)
+2026-10-09T01:41:08.0805485Z + test_core 0.6.17 (0.6.21 available)
+2026-10-09T01:41:08.0805726Z + typed_data 1.4.0
+2026-10-09T01:41:08.0805948Z + unified_analytics 8.0.14 (8.0.18 available)
+2026-10-09T01:41:08.0806225Z + usage 4.1.1 (discontinued)
+2026-10-09T01:41:08.0806464Z + uuid 4.5.3 (4.6.0 available)
+2026-10-09T01:41:08.0806710Z + vm_service 15.0.2 (15.3.0 available)
+2026-10-09T01:41:08.0806970Z + vm_service_interface 2.0.1
+2026-10-09T01:41:08.0807212Z + vm_snapshot_analysis 0.7.6
+2026-10-09T01:41:08.0807440Z + watcher 1.2.1
+2026-10-09T01:41:08.0807631Z + web 1.1.1
+2026-10-09T01:41:08.0807813Z + web_socket 1.0.1
+2026-10-09T01:41:08.0808021Z + web_socket_channel 3.0.3
+2026-10-09T01:41:08.0808253Z + webdriver 3.1.0 (3.2.0 available)
+2026-10-09T01:41:08.0808533Z + webkit_inspection_protocol 1.2.1
+2026-10-09T01:41:08.0808805Z + xml 6.6.1 (7.1.0 available)
+2026-10-09T01:41:08.0809039Z + yaml 3.1.3 (3.1.4 available)
+2026-10-09T01:41:08.0809264Z + yaml_edit 2.2.4
+2026-10-09T01:41:08.0809490Z Changed 102 dependencies!
+2026-10-09T01:41:08.0809730Z 2 packages are discontinued.
+2026-10-09T01:41:08.0810352Z 53 packages have newer versions incompatible with dependency constraints.
+2026-10-09T01:41:08.0810788Z Try `dart pub outdated` for more information.
+2026-10-09T01:41:24.3330318Z Flutter 3.44.1 • channel [user-branch] • unknown source
+2026-10-09T01:41:24.3331129Z Framework • revision 924134a44c (4 months ago) • 2026-05-29 12:13:22 -0400
+2026-10-09T01:41:24.3332432Z Engine • hash 39b1f7043775b9578bbb26a1676e79c4e31c8b5e (revision c416acfeb8) (4 months ago) • 2026-05-27 20:19:31.000Z
+2026-10-09T01:41:24.3333453Z Tools • Dart 3.12.1 • DevTools 2.57.0
+2026-10-09T01:41:24.3378051Z ##[end-action id=__self.__run;outcome=success;conclusion=success;duration_ms=32134]
+2026-10-09T01:41:24.3438314Z ##[group]Run flutter pub get --enforce-lockfile
+2026-10-09T01:41:24.3438731Z [36;1mflutter pub get --enforce-lockfile[0m
+2026-10-09T01:41:24.3439050Z [36;1mflutter analyze[0m
+2026-10-09T01:41:24.3439296Z [36;1mflutter test[0m
+2026-10-09T01:41:24.3508397Z shell: /usr/bin/bash -e {0}
+2026-10-09T01:41:24.3508748Z ##[endgroup]
+2026-10-09T01:41:24.7083563Z [1/10] Material Fonts                                              201ms
+2026-10-09T01:41:24.7666202Z [2/10] Gradle Wrapper                                                9ms
+2026-10-09T01:41:24.7792554Z [3/10] Flutter SDK
+2026-10-09T01:41:24.8970509Z   ├─ [1/5] sky_engine                                              112ms
+2026-10-09T01:41:25.0039722Z   ├─ [2/5] flutter_gpu                                              37ms
+2026-10-09T01:41:25.2080581Z   ├─ [3/5] flutter_patched_sdk                                     190ms
+2026-10-09T01:41:25.4634684Z   ├─ [4/5] flutter_patched_sdk_product                             163ms
+2026-10-09T01:41:26.4107223Z   └─ [5/5] linux-x64                                               853ms
+2026-10-09T01:41:27.1190904Z [10/10] linux-x64/font-subset                                      101ms
+2026-10-09T01:41:27.2407322Z Resolving dependencies...
+2026-10-09T01:41:27.4851135Z Downloading packages...
+2026-10-09T01:41:28.5684624Z   clock 1.1.2 (1.1.3 available)
+2026-10-09T01:41:28.5685677Z   cupertino_icons 1.0.9 (2.0.0 available)
+2026-10-09T01:41:28.5686711Z   matcher 0.12.19 (0.12.20 available)
+2026-10-09T01:41:28.5687507Z   material_color_utilities 0.13.0 (0.13.1 available)
+2026-10-09T01:41:28.5688201Z   meta 1.18.0 (1.19.0 available)
+2026-10-09T01:41:28.5688750Z   stack_trace 1.12.1 (1.12.2 available)
+2026-10-09T01:41:28.5689270Z   test_api 0.7.11 (0.7.15 available)
+2026-10-09T01:41:28.5689726Z   vector_math 2.2.0 (2.4.3 available)
+2026-10-09T01:41:28.5690773Z   vm_service 15.2.0 (15.3.0 available)
+2026-10-09T01:41:28.5691245Z Got dependencies!
+2026-10-09T01:41:28.5691858Z 9 packages have newer versions incompatible with dependency constraints.
+2026-10-09T01:41:28.5692877Z Try `flutter pub outdated` for more information.
+2026-10-09T01:41:28.9565073Z Resolving dependencies...
+2026-10-09T01:41:28.9808888Z Downloading packages...
+2026-10-09T01:41:28.9821217Z   clock 1.1.2 (1.1.3 available)
+2026-10-09T01:41:28.9821706Z   cupertino_icons 1.0.9 (2.0.0 available)
+2026-10-09T01:41:28.9822174Z   matcher 0.12.19 (0.12.20 available)
+2026-10-09T01:41:28.9822823Z   material_color_utilities 0.13.0 (0.13.1 available)
+2026-10-09T01:41:28.9823317Z   meta 1.18.0 (1.19.0 available)
+2026-10-09T01:41:28.9823711Z   stack_trace 1.12.1 (1.12.2 available)
+2026-10-09T01:41:28.9824125Z   test_api 0.7.11 (0.7.15 available)
+2026-10-09T01:41:28.9824529Z   vector_math 2.2.0 (2.4.3 available)
+2026-10-09T01:41:28.9824937Z   vm_service 15.2.0 (15.3.0 available)
+2026-10-09T01:41:28.9825335Z Got dependencies!
+2026-10-09T01:41:28.9825867Z 9 packages have newer versions incompatible with dependency constraints.
+2026-10-09T01:41:28.9826591Z Try `flutter pub outdated` for more information.
+2026-10-09T01:41:36.9913771Z Analyzing app...                                                
+2026-10-09T01:41:36.9931239Z No issues found! (ran in 7.5s)
+2026-10-09T01:41:37.1900848Z Resolving dependencies...
+2026-10-09T01:41:37.2147527Z Downloading packages...
+2026-10-09T01:41:37.2160017Z   clock 1.1.2 (1.1.3 available)
+2026-10-09T01:41:37.2160696Z   cupertino_icons 1.0.9 (2.0.0 available)
+2026-10-09T01:41:37.2162818Z   matcher 0.12.19 (0.12.20 available)
+2026-10-09T01:41:37.2163438Z   material_color_utilities 0.13.0 (0.13.1 available)
+2026-10-09T01:41:37.2164060Z   meta 1.18.0 (1.19.0 available)
+2026-10-09T01:41:37.2164558Z   stack_trace 1.12.1 (1.12.2 available)
+2026-10-09T01:41:37.2165089Z   test_api 0.7.11 (0.7.15 available)
+2026-10-09T01:41:37.2165617Z   vector_math 2.2.0 (2.4.3 available)
+2026-10-09T01:41:37.2166139Z   vm_service 15.2.0 (15.3.0 available)
+2026-10-09T01:41:37.2166644Z Got dependencies!
+2026-10-09T01:41:37.2167700Z 9 packages have newer versions incompatible with dependency constraints.
+2026-10-09T01:41:37.2168305Z Try `flutter pub outdated` for more information.
+2026-10-09T01:41:37.8533761Z 
+2026-10-09T01:41:46.3188146Z ##[group]✅ exibe a mensagem inicial
+2026-10-09T01:41:46.3189119Z -------------------------------------------------------------------------------
+2026-10-09T01:41:46.3190539Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:41:46.3191527Z -------------------------------------------------------------------------------
+2026-10-09T01:41:46.3192656Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:41:46.3193761Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:41:46.3195113Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:41:46.3196319Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:41:46.3197187Z 
+2026-10-09T01:41:46.3197920Z -------------------------------------------------------------------------------
+2026-10-09T01:41:46.3199135Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:41:46.3200569Z -------------------------------------------------------------------------------
+2026-10-09T01:41:46.3201850Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:41:46.3202886Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:41:46.3203721Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:41:46.3204635Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:41:46.3205142Z 
+2026-10-09T01:41:46.3205596Z ##[endgroup]
+2026-10-09T01:41:46.5656663Z ##[group]✅ inicia claro e ignora mudanças do tema do sistema
+2026-10-09T01:41:46.5657702Z -------------------------------------------------------------------------------
+2026-10-09T01:41:46.5658847Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:41:46.5660451Z -------------------------------------------------------------------------------
+2026-10-09T01:41:46.5661511Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:41:46.5662578Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:41:46.5664073Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:41:46.5665446Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:41:46.5665975Z 
+2026-10-09T01:41:46.5666444Z -------------------------------------------------------------------------------
+2026-10-09T01:41:46.5667162Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:41:46.5667773Z -------------------------------------------------------------------------------
+2026-10-09T01:41:46.5668422Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:41:46.5669118Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:41:46.5669874Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:41:46.5670856Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:41:46.5671261Z 
+2026-10-09T01:41:46.5671780Z ##[endgroup]
+2026-10-09T01:41:46.7675079Z ##[group]✅ alterna pelo botão e reinicia claro sem persistir a escolha
+2026-10-09T01:41:46.7676994Z -------------------------------------------------------------------------------
+2026-10-09T01:41:46.7692558Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:41:46.7693310Z -------------------------------------------------------------------------------
+2026-10-09T01:41:46.7694033Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:41:46.7694786Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:41:46.7696144Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:41:46.7697102Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:41:46.7697571Z 
+2026-10-09T01:41:46.7697865Z -------------------------------------------------------------------------------
+2026-10-09T01:41:46.7698642Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:41:46.7699415Z -------------------------------------------------------------------------------
+2026-10-09T01:41:46.7700425Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:41:46.7701115Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:41:46.7701920Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:41:46.7702452Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:41:46.7702970Z 
+2026-10-09T01:41:46.7703294Z -------------------------------------------------------------------------------
+2026-10-09T01:41:46.7704096Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:41:46.7704878Z -------------------------------------------------------------------------------
+2026-10-09T01:41:46.7705691Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:41:46.7706432Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:41:46.7707280Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:41:46.7708101Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:41:46.7708534Z 
+2026-10-09T01:41:46.7708784Z -------------------------------------------------------------------------------
+2026-10-09T01:41:46.7709462Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:41:46.7710385Z -------------------------------------------------------------------------------
+2026-10-09T01:41:46.7711462Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:41:46.7712249Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:41:46.7713040Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:41:46.7713854Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:41:46.7714278Z 
+2026-10-09T01:41:46.7714720Z ##[endgroup]
+2026-10-09T01:41:46.9828345Z ##[group]✅ aviso de atualização acompanha as cores do tema escuro
+2026-10-09T01:41:46.9829767Z -------------------------------------------------------------------------------
+2026-10-09T01:41:46.9831443Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:41:46.9832671Z -------------------------------------------------------------------------------
+2026-10-09T01:41:46.9834007Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:41:46.9835414Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:41:46.9836593Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:41:46.9837720Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:41:46.9838398Z 
+2026-10-09T01:41:46.9838864Z -------------------------------------------------------------------------------
+2026-10-09T01:41:46.9839828Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:41:46.9840996Z -------------------------------------------------------------------------------
+2026-10-09T01:41:46.9841980Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:41:46.9843023Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:41:46.9844238Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:41:46.9845819Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:41:46.9846525Z 
+2026-10-09T01:41:46.9847186Z ##[endgroup]
+2026-10-09T01:41:47.0611860Z ##[group]✅ botão de tema funciona em tela estreita
+2026-10-09T01:41:47.0612353Z -------------------------------------------------------------------------------
+2026-10-09T01:41:47.0612868Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:41:47.0613357Z -------------------------------------------------------------------------------
+2026-10-09T01:41:47.0614010Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:41:47.0614625Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:41:47.0615219Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:41:47.0615821Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:41:47.0616145Z 
+2026-10-09T01:41:47.0616352Z -------------------------------------------------------------------------------
+2026-10-09T01:41:47.0616856Z The Shorebird Updater is unavailable in the current environment.
+2026-10-09T01:41:47.0617335Z -------------------------------------------------------------------------------
+2026-10-09T01:41:47.0617833Z This occurs when using pkg:shorebird_code_push in an app that does not
+2026-10-09T01:41:47.0618362Z contain the Shorebird Engine. Most commonly this is due to building with
+2026-10-09T01:41:47.0618938Z `flutter build` or `flutter run` instead of `shorebird release` or `shorebird preview`.
+2026-10-09T01:41:47.0619504Z It can also occur when running on an unsupported platform (e.g. web).
+2026-10-09T01:41:47.0619813Z 
+2026-10-09T01:41:47.0620361Z ##[endgroup]
+2026-10-09T01:41:47.0819801Z 
+2026-10-09T01:41:47.0826375Z 🎉 5 tests passed.
+2026-10-09T01:41:47.1486306Z ##[group]Run python3 trusted/deploy/pages_preview.py build --repo app --source-sha "$SOURCE_SHA" --delivery-tag "$CANDIDATE_TAG" --site "$RUNNER_TEMP/new-pages-site" > "$RUNNER_TEMP/pages-build-metadata.json"
+2026-10-09T01:41:47.1488356Z [36;1mpython3 trusted/deploy/pages_preview.py build --repo app --source-sha "$SOURCE_SHA" --delivery-tag "$CANDIDATE_TAG" --site "$RUNNER_TEMP/new-pages-site" > "$RUNNER_TEMP/pages-build-metadata.json"[0m
+2026-10-09T01:41:47.1553539Z shell: /usr/bin/bash -e {0}
+2026-10-09T01:41:47.1553875Z env:
+2026-10-09T01:41:47.1554196Z   SOURCE_SHA: 22b29663d85724ba619600766c78ff38cd3456ec
+2026-10-09T01:41:47.1554643Z   CANDIDATE_TAG: v1.7.0-rc.1
+2026-10-09T01:41:47.1554978Z ##[endgroup]
+2026-10-09T01:41:47.5558990Z Resolving dependencies...
+2026-10-09T01:41:47.5816279Z Downloading packages...
+2026-10-09T01:41:47.5828211Z   clock 1.1.2 (1.1.3 available)
+2026-10-09T01:41:47.5828955Z   cupertino_icons 1.0.9 (2.0.0 available)
+2026-10-09T01:41:47.5829903Z   matcher 0.12.19 (0.12.20 available)
+2026-10-09T01:41:47.5831001Z   material_color_utilities 0.13.0 (0.13.1 available)
+2026-10-09T01:41:47.5831906Z   meta 1.18.0 (1.19.0 available)
+2026-10-09T01:41:47.5832637Z   stack_trace 1.12.1 (1.12.2 available)
+2026-10-09T01:41:47.5833436Z   test_api 0.7.11 (0.7.15 available)
+2026-10-09T01:41:47.5834202Z   vector_math 2.2.0 (2.4.3 available)
+2026-10-09T01:41:47.5834920Z   vm_service 15.2.0 (15.3.0 available)
+2026-10-09T01:41:47.5835377Z Got dependencies!
+2026-10-09T01:41:47.5835948Z 9 packages have newer versions incompatible with dependency constraints.
+2026-10-09T01:41:47.5836700Z Try `flutter pub outdated` for more information.
+2026-10-09T01:41:49.0842386Z [1/1] Web SDK                                                    1,130ms
+2026-10-09T01:41:49.8815871Z Resolving dependencies...
+2026-10-09T01:41:49.9060703Z Downloading packages...
+2026-10-09T01:41:49.9072811Z   clock 1.1.2 (1.1.3 available)
+2026-10-09T01:41:49.9073478Z   cupertino_icons 1.0.9 (2.0.0 available)
+2026-10-09T01:41:49.9074252Z   matcher 0.12.19 (0.12.20 available)
+2026-10-09T01:41:49.9075002Z   material_color_utilities 0.13.0 (0.13.1 available)
+2026-10-09T01:41:49.9075606Z   meta 1.18.0 (1.19.0 available)
+2026-10-09T01:41:49.9075994Z   stack_trace 1.12.1 (1.12.2 available)
+2026-10-09T01:41:49.9076421Z   test_api 0.7.11 (0.7.15 available)
+2026-10-09T01:41:49.9076823Z   vector_math 2.2.0 (2.4.3 available)
+2026-10-09T01:41:49.9077226Z   vm_service 15.2.0 (15.3.0 available)
+2026-10-09T01:41:49.9077626Z Got dependencies!
+2026-10-09T01:41:49.9078147Z 9 packages have newer versions incompatible with dependency constraints.
+2026-10-09T01:41:49.9078825Z Try `flutter pub outdated` for more information.
+2026-10-09T01:42:16.7415336Z Compiling lib/main.dart for the Web...                          
+2026-10-09T01:42:16.7425077Z Wasm dry run succeeded. Consider building and testing your application with the `--wasm` flag. See docs for more info: https://docs.flutter.dev/platform-integration/web/wasm
+2026-10-09T01:42:16.7426898Z Use --no-wasm-dry-run to disable these warnings.
+2026-10-09T01:42:18.2165461Z Font asset "CupertinoIcons.ttf" was tree-shaken, reducing it from 257628 to 1472 bytes (99.4% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.
+2026-10-09T01:42:18.2178387Z Font asset "MaterialIcons-Regular.otf" was tree-shaken, reducing it from 1645184 to 8260 bytes (99.5% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.
+2026-10-09T01:42:18.4900734Z Compiling lib/main.dart for the Web...                             28.4s
+2026-10-09T01:42:18.4909513Z ✓ Built build/web
+2026-10-09T01:42:18.7433046Z ##[group]Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+2026-10-09T01:42:18.7433479Z with:
+2026-10-09T01:42:18.7433683Z   name: release-lab-built-web
+2026-10-09T01:42:18.7433970Z   path: /home/runner/work/_temp/new-pages-site/
+2026-10-09T01:42:18.7434278Z   if-no-files-found: error
+2026-10-09T01:42:18.7434512Z   retention-days: 90
+2026-10-09T01:42:18.7434725Z   overwrite: false
+2026-10-09T01:42:18.7434938Z   compression-level: 6
+2026-10-09T01:42:18.7435182Z   include-hidden-files: false
+2026-10-09T01:42:18.7435421Z   archive: true
+2026-10-09T01:42:18.7435814Z ##[endgroup]
+2026-10-09T01:42:18.8981726Z With the provided path, there will be 43 files uploaded
+2026-10-09T01:42:18.8987894Z Artifact name is valid!
+2026-10-09T01:42:18.8988356Z Root directory input is valid!
+2026-10-09T01:42:19.1118563Z Uploading artifact: release-lab-built-web.zip
+2026-10-09T01:42:19.1160313Z Beginning upload of artifact content to blob storage
+2026-10-09T01:42:20.3408992Z Uploaded bytes 8388608
+2026-10-09T01:42:20.6211880Z Uploaded bytes 14135354
+2026-10-09T01:42:20.6362740Z Finished uploading artifact content to blob storage!
+2026-10-09T01:42:20.6367013Z SHA256 digest of uploaded artifact is 5d00750e63b62359875c9209f5784c2a907afeb1eafd49c140b4d3a9c559b8ad
+2026-10-09T01:42:20.6368831Z Finalizing artifact upload
+2026-10-09T01:42:20.9221480Z Artifact release-lab-built-web successfully finalized. Artifact ID 11590436886
+2026-10-09T01:42:20.9222951Z Artifact release-lab-built-web has been successfully uploaded! Final size is 14135354 bytes. Artifact ID is 11590436886
+2026-10-09T01:42:20.9227858Z Artifact download URL: https://github.com/israelhudson/flutter_code_push_example/actions/runs/37870868223/artifacts/11590436886
+2026-10-09T01:42:20.9422812Z Post job cleanup.
+2026-10-09T01:42:21.0301749Z [command]/usr/bin/git version
+2026-10-09T01:42:21.0345845Z git version 2.55.0
+2026-10-09T01:42:21.0395016Z Temporarily overriding HOME='/home/runner/work/_temp/4a185589-863b-4ef2-8e42-1c691287f346' before making global git config changes
+2026-10-09T01:42:21.0396537Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T01:42:21.0401547Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/flutter_code_push_example/flutter_code_push_example/app
+2026-10-09T01:42:21.0436623Z Removing SSH command configuration
+2026-10-09T01:42:21.0443953Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T01:42:21.0482638Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T01:42:21.0729294Z Removing HTTP extra header
+2026-10-09T01:42:21.0735375Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T01:42:21.0776710Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T01:42:21.1026541Z Removing includeIf entries pointing to credentials config files
+2026-10-09T01:42:21.1035204Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T01:42:21.1078499Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T01:42:21.1535809Z Post job cleanup.
+2026-10-09T01:42:21.2421432Z [command]/usr/bin/git version
+2026-10-09T01:42:21.2474696Z git version 2.55.0
+2026-10-09T01:42:21.2517252Z Temporarily overriding HOME='/home/runner/work/_temp/d9fd4ca4-7626-43ef-add9-7777c4d5cbf0' before making global git config changes
+2026-10-09T01:42:21.2518593Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T01:42:21.2523380Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+2026-10-09T01:42:21.2558858Z Removing SSH command configuration
+2026-10-09T01:42:21.2566344Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T01:42:21.2604028Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T01:42:21.2856033Z Removing HTTP extra header
+2026-10-09T01:42:21.2862280Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T01:42:21.2899295Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T01:42:21.3148751Z Removing includeIf entries pointing to credentials config files
+2026-10-09T01:42:21.3157569Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T01:42:21.3198694Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T01:42:21.3605603Z Cleaning up orphan processes

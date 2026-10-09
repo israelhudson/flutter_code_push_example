@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "read_only": true,
+  "trusted_main_commit": "fbcf01271e9a03834f7f54bfd92b0ae21745cf0f",
+  "actual_release_correction_merge": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+  "trusted_roots": [
+    ".github/",
+    "delivery/release-lab-policy.json",
+    "deploy/",
+    "tools/delivery/"
+  ],
+  "compared_files": 36,
+  "differences": [],
+  "exact_blob_match": true,
+  "policy_blob_main": "4836cb9687cd25e605149f11ea75b08f32d1690d",
+  "policy_blob_release": "4836cb9687cd25e605149f11ea75b08f32d1690d",
+  "release_parent_commits": [
+    "22b29663d85724ba619600766c78ff38cd3456ec",
+    "532ae653afe32f3eb515ab5881e34bdfc22385ac"
+  ],
+  "scope": "Actual merge tree validation; preparation and publication remain separate actions."
+}

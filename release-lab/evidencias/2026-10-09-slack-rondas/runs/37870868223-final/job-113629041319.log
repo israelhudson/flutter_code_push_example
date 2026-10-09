@@ -1,0 +1,1145 @@
+﻿2026-10-09T01:42:26.9574350Z Current runner version: '2.337.0'
+2026-10-09T01:42:26.9595838Z ##[group]Runner Image Provisioner
+2026-10-09T01:42:26.9596619Z Hosted Compute Agent
+2026-10-09T01:42:26.9597116Z Version: 20261002.596
+2026-10-09T01:42:26.9597687Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-09T01:42:26.9598357Z Build Date: 2026-10-02T22:28:27Z
+2026-10-09T01:42:26.9599164Z Worker ID: {fd7716fc-f28f-4c46-8adf-b2a5a7f6e26e}
+2026-10-09T01:42:26.9599826Z Region: eastus
+2026-10-09T01:42:26.9600283Z Cloud: Azure
+2026-10-09T01:42:26.9600762Z ##[endgroup]
+2026-10-09T01:42:26.9602570Z ##[group]Operating System
+2026-10-09T01:42:26.9603106Z Ubuntu
+2026-10-09T01:42:26.9603625Z 24.04.5
+2026-10-09T01:42:26.9604061Z LTS
+2026-10-09T01:42:26.9604483Z ##[endgroup]
+2026-10-09T01:42:26.9605036Z ##[group]Runner Image
+2026-10-09T01:42:26.9605582Z Image: ubuntu-24.04
+2026-10-09T01:42:26.9606125Z Version: 20261004.327.1
+2026-10-09T01:42:26.9607178Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-09T01:42:26.9608513Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-09T01:42:26.9609470Z ##[endgroup]
+2026-10-09T01:42:26.9610556Z ##[group]GITHUB_TOKEN Permissions
+2026-10-09T01:42:26.9612466Z Actions: read
+2026-10-09T01:42:26.9613063Z Contents: write
+2026-10-09T01:42:26.9613573Z Metadata: read
+2026-10-09T01:42:26.9614033Z Pages: write
+2026-10-09T01:42:26.9614570Z ##[endgroup]
+2026-10-09T01:42:26.9616280Z Secret source: Actions
+2026-10-09T01:42:26.9617170Z Cache mode: write
+2026-10-09T01:42:26.9617963Z Prepare workflow directory
+2026-10-09T01:42:26.9877869Z Prepare all required actions
+2026-10-09T01:42:26.9916500Z Getting action download info
+2026-10-09T01:42:27.2065842Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-09T01:42:27.3095734Z Download action repository 'actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333' (SHA:9000827ccba6bdab643e8b6fd33ac0654aef8333)
+2026-10-09T01:42:27.4793087Z Download action repository 'actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b' (SHA:7b1f4a764d45c48632c6b24a0339c27f5614fb0b)
+2026-10-09T01:42:27.5564304Z Download action repository 'actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e' (SHA:d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e)
+2026-10-09T01:42:27.7242893Z Download action repository 'actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9' (SHA:cf430e030ddbb5b0abf93d22962f4752f3646cd9)
+2026-10-09T01:42:27.9511908Z Getting action download info
+2026-10-09T01:42:28.0332956Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-09T01:42:28.5842306Z Uses: israelhudson/flutter_code_push_example/.github/workflows/release-lab-evaluate.yml@refs/heads/main (22b29663d85724ba619600766c78ff38cd3456ec)
+2026-10-09T01:42:28.5847076Z ##[group] Inputs
+2026-10-09T01:42:28.5847819Z   candidate_tag: v1.7.0-rc.1
+2026-10-09T01:42:28.5848577Z   version: 1.7.0
+2026-10-09T01:42:28.5849551Z   title: Avisos Slack — ensaio de rejeição e correção
+2026-10-09T01:42:28.5850491Z ##[endgroup]
+2026-10-09T01:42:28.5851723Z Complete job name: Avaliar a mesma candidata / Publicar bytes verificados, confirmar preview e changelog
+2026-10-09T01:42:28.6659742Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-10-09T01:42:28.6661508Z with:
+2026-10-09T01:42:28.6662378Z   ref: 22b29663d85724ba619600766c78ff38cd3456ec
+2026-10-09T01:42:28.6663487Z   path: trusted
+2026-10-09T01:42:28.6664294Z   fetch-depth: 0
+2026-10-09T01:42:28.6665086Z   persist-credentials: false
+2026-10-09T01:42:28.6666160Z   repository: israelhudson/flutter_code_push_example
+2026-10-09T01:42:28.6674227Z   token: ***
+2026-10-09T01:42:28.6732139Z   ssh-strict: true
+2026-10-09T01:42:28.6732962Z   ssh-user: git
+2026-10-09T01:42:28.6733656Z   clean: true
+2026-10-09T01:42:28.6734438Z   sparse-checkout-cone-mode: true
+2026-10-09T01:42:28.6735704Z   fetch-tags: false
+2026-10-09T01:42:28.6736426Z   show-progress: true
+2026-10-09T01:42:28.6737131Z   lfs: false
+2026-10-09T01:42:28.6737771Z   submodules: false
+2026-10-09T01:42:28.6738485Z   set-safe-directory: true
+2026-10-09T01:42:28.6739430Z   allow-unsafe-pr-checkout: false
+2026-10-09T01:42:28.6741181Z ##[endgroup]
+2026-10-09T01:42:28.7604405Z Syncing repository: israelhudson/flutter_code_push_example
+2026-10-09T01:42:28.7607769Z ##[group]Getting Git version info
+2026-10-09T01:42:28.7610108Z Working directory is '/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted'
+2026-10-09T01:42:28.7613123Z [command]/usr/bin/git version
+2026-10-09T01:42:28.8548437Z git version 2.55.0
+2026-10-09T01:42:28.8565290Z ##[endgroup]
+2026-10-09T01:42:28.8574208Z Temporarily overriding HOME='/home/runner/work/_temp/43db8198-d97a-49ab-b8e8-64589a8febd5' before making global git config changes
+2026-10-09T01:42:28.8577099Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T01:42:28.8580442Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+2026-10-09T01:42:28.8624421Z ##[group]Determining repository object format
+2026-10-09T01:42:28.8626421Z ##[endgroup]
+2026-10-09T01:42:28.8628103Z ##[group]Initializing the repository
+2026-10-09T01:42:28.8630394Z [command]/usr/bin/git init /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+2026-10-09T01:42:28.8724530Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-09T01:42:28.8726632Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-09T01:42:28.8728729Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-09T01:42:28.8730691Z hint: call:
+2026-10-09T01:42:28.8731600Z hint:
+2026-10-09T01:42:28.8732773Z hint: 	git config --global init.defaultBranch <name>
+2026-10-09T01:42:28.8734233Z hint:
+2026-10-09T01:42:28.8735599Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-09T01:42:28.8737946Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-09T01:42:28.8740172Z hint:
+2026-10-09T01:42:28.8741094Z hint: 	git branch -m <name>
+2026-10-09T01:42:28.8742193Z hint:
+2026-10-09T01:42:28.8743660Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-09T01:42:28.8746393Z Initialized empty Git repository in /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/
+2026-10-09T01:42:28.8749912Z [command]/usr/bin/git remote add origin https://github.com/israelhudson/flutter_code_push_example
+2026-10-09T01:42:28.8786683Z ##[endgroup]
+2026-10-09T01:42:28.8788514Z ##[group]Disabling automatic garbage collection
+2026-10-09T01:42:28.8790261Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-09T01:42:28.8820675Z ##[endgroup]
+2026-10-09T01:42:28.8822444Z ##[group]Setting up auth
+2026-10-09T01:42:28.8825039Z Removing SSH command configuration
+2026-10-09T01:42:28.8832698Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T01:42:28.8857152Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T01:42:28.9974104Z Removing HTTP extra header
+2026-10-09T01:42:28.9980439Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T01:42:29.0013546Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T01:42:29.0209837Z Removing includeIf entries pointing to credentials config files
+2026-10-09T01:42:29.0214921Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T01:42:29.0246804Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T01:42:29.0451258Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-5c524235-2475-41d9-8262-2d52dd64e436.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-09T01:42:29.0488696Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git.path /home/runner/work/_temp/git-credentials-5c524235-2475-41d9-8262-2d52dd64e436.config
+2026-10-09T01:42:29.0518544Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-5c524235-2475-41d9-8262-2d52dd64e436.config
+2026-10-09T01:42:29.0711598Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/trusted/.git.path /github/runner_temp/git-credentials-5c524235-2475-41d9-8262-2d52dd64e436.config
+2026-10-09T01:42:29.0742754Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/trusted/.git/worktrees/*.path /github/runner_temp/git-credentials-5c524235-2475-41d9-8262-2d52dd64e436.config
+2026-10-09T01:42:29.0773522Z ##[endgroup]
+2026-10-09T01:42:29.0774631Z ##[group]Fetching the repository
+2026-10-09T01:42:29.0778650Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-10-09T01:42:30.1905138Z From https://github.com/israelhudson/flutter_code_push_example
+2026-10-09T01:42:30.1906136Z  * [new branch]      codex/candidate-lab-delivery-2026-10-06-rc.1 -> origin/codex/candidate-lab-delivery-2026-10-06-rc.1
+2026-10-09T01:42:30.1906926Z  * [new branch]      codex/delivery-state    -> origin/codex/delivery-state
+2026-10-09T01:42:30.1907563Z  * [new branch]      codex/fix-lab-release-upload -> origin/codex/fix-lab-release-upload
+2026-10-09T01:42:30.1908286Z  * [new branch]      codex/flutter-sdk-bootstrap -> origin/codex/flutter-sdk-bootstrap
+2026-10-09T01:42:30.1909174Z  * [new branch]      codex/github-release-approval-poc -> origin/codex/github-release-approval-poc
+2026-10-09T01:42:30.1909941Z  * [new branch]      codex/lab-promotion-evidence -> origin/codex/lab-promotion-evidence
+2026-10-09T01:42:30.1910631Z  * [new branch]      codex/lab-release-result -> origin/codex/lab-release-result
+2026-10-09T01:42:30.1911308Z  * [new branch]      codex/lab-reviewed-promotion -> origin/codex/lab-reviewed-promotion
+2026-10-09T01:42:30.1911964Z  * [new branch]      codex/lab-versions      -> origin/codex/lab-versions
+2026-10-09T01:42:30.1912649Z  * [new branch]      codex/laboratory-release-records -> origin/codex/laboratory-release-records
+2026-10-09T01:42:30.1913331Z  * [new branch]      codex/manual-dark-theme -> origin/codex/manual-dark-theme
+2026-10-09T01:42:30.1914088Z  * [new branch]      codex/operational-delivery-preview -> origin/codex/operational-delivery-preview
+2026-10-09T01:42:30.1914842Z  * [new branch]      codex/pages-previews    -> origin/codex/pages-previews
+2026-10-09T01:42:30.1915662Z  * [new branch]      codex/pages-publication-verification -> origin/codex/pages-publication-verification
+2026-10-09T01:42:30.1916862Z  * [new branch]      codex/rc-operator-planning -> origin/codex/rc-operator-planning
+2026-10-09T01:42:30.1917525Z  * [new branch]      codex/release-lab-backport -> origin/codex/release-lab-backport
+2026-10-09T01:42:30.1918253Z  * [new branch]      codex/release-lab-rc2-correction -> origin/codex/release-lab-rc2-correction
+2026-10-09T01:42:30.1919204Z  * [new branch]      codex/release-lab-real-promotion -> origin/codex/release-lab-real-promotion
+2026-10-09T01:42:30.1919914Z  * [new branch]      codex/release-lab-state -> origin/codex/release-lab-state
+2026-10-09T01:42:30.1920637Z  * [new branch]      codex/release-lab-two-approvers -> origin/codex/release-lab-two-approvers
+2026-10-09T01:42:30.1921609Z  * [new branch]      codex/slack-candidate-notices -> origin/codex/slack-candidate-notices
+2026-10-09T01:42:30.1922345Z  * [new branch]      codex/slack-connection-test -> origin/codex/slack-connection-test
+2026-10-09T01:42:30.1923059Z  * [new branch]      docs/estudo-shorebird-amulets -> origin/docs/estudo-shorebird-amulets
+2026-10-09T01:42:30.1924027Z  * [new branch]      feature/shorebird-code-push-setup -> origin/feature/shorebird-code-push-setup
+2026-10-09T01:42:30.1924593Z  * [new branch]      main                    -> origin/main
+2026-10-09T01:42:30.1924905Z  * [new branch]      release/1.4.0           -> origin/release/1.4.0
+2026-10-09T01:42:30.1925222Z  * [new branch]      release/1.5.0           -> origin/release/1.5.0
+2026-10-09T01:42:30.1925535Z  * [new branch]      release/1.6.0           -> origin/release/1.6.0
+2026-10-09T01:42:30.1925987Z  * [new branch]      release/1.7.0           -> origin/release/1.7.0
+2026-10-09T01:42:30.1926524Z  * [new tag]         entrega-0100-rc.1       -> entrega-0100-rc.1
+2026-10-09T01:42:30.1926891Z  * [new tag]         lab/delivery/2026-10-06-rc.1 -> lab/delivery/2026-10-06-rc.1
+2026-10-09T01:42:30.1927229Z  * [new tag]         v1.4.0-rc.1             -> v1.4.0-rc.1
+2026-10-09T01:42:30.1927524Z  * [new tag]         v1.5.0                  -> v1.5.0
+2026-10-09T01:42:30.1927800Z  * [new tag]         v1.5.0-rc.1             -> v1.5.0-rc.1
+2026-10-09T01:42:30.1928061Z  * [new tag]         v1.5.0-rc.2             -> v1.5.0-rc.2
+2026-10-09T01:42:30.1928313Z  * [new tag]         v1.6.0                  -> v1.6.0
+2026-10-09T01:42:30.1928560Z  * [new tag]         v1.6.0-rc.1             -> v1.6.0-rc.1
+2026-10-09T01:42:30.1929055Z  * [new tag]         v1.7.0-rc.1             -> v1.7.0-rc.1
+2026-10-09T01:42:30.1930355Z [command]/usr/bin/git rev-parse --verify --quiet 22b29663d85724ba619600766c78ff38cd3456ec^{object}
+2026-10-09T01:42:30.1942736Z 22b29663d85724ba619600766c78ff38cd3456ec
+2026-10-09T01:42:30.1946497Z ##[endgroup]
+2026-10-09T01:42:30.1946882Z ##[group]Determining the checkout info
+2026-10-09T01:42:30.1947450Z ##[endgroup]
+2026-10-09T01:42:30.1951441Z [command]/usr/bin/git sparse-checkout disable
+2026-10-09T01:42:30.2061513Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-09T01:42:30.2090920Z ##[group]Checking out the ref
+2026-10-09T01:42:30.2094524Z [command]/usr/bin/git checkout --progress --force 22b29663d85724ba619600766c78ff38cd3456ec
+2026-10-09T01:42:30.2392977Z Note: switching to '22b29663d85724ba619600766c78ff38cd3456ec'.
+2026-10-09T01:42:30.2393405Z 
+2026-10-09T01:42:30.2393664Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-09T01:42:30.2394060Z changes and commit them, and you can discard any commits you make in this
+2026-10-09T01:42:30.2394456Z state without impacting any branches by switching back to a branch.
+2026-10-09T01:42:30.2394670Z 
+2026-10-09T01:42:30.2394833Z If you want to create a new branch to retain commits you create, you may
+2026-10-09T01:42:30.2395190Z do so (now or later) by using -c with the switch command. Example:
+2026-10-09T01:42:30.2395426Z 
+2026-10-09T01:42:30.2395532Z   git switch -c <new-branch-name>
+2026-10-09T01:42:30.2395682Z 
+2026-10-09T01:42:30.2395774Z Or undo this operation with:
+2026-10-09T01:42:30.2395908Z 
+2026-10-09T01:42:30.2395982Z   git switch -
+2026-10-09T01:42:30.2396088Z 
+2026-10-09T01:42:30.2396441Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-09T01:42:30.2396708Z 
+2026-10-09T01:42:30.2396942Z HEAD is now at 22b2966 Merge pull request #19 from israelhudson/codex/slack-candidate-notices
+2026-10-09T01:42:30.2402728Z ##[endgroup]
+2026-10-09T01:42:30.2443969Z [command]/usr/bin/git log -1 --format=%H
+2026-10-09T01:42:30.2469246Z 22b29663d85724ba619600766c78ff38cd3456ec
+2026-10-09T01:42:30.2476865Z ##[group]Removing auth
+2026-10-09T01:42:30.2477133Z Removing SSH command configuration
+2026-10-09T01:42:30.2480059Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T01:42:30.2509221Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T01:42:30.2698019Z Removing HTTP extra header
+2026-10-09T01:42:30.2701849Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T01:42:30.2738151Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T01:42:30.2924648Z Removing includeIf entries pointing to credentials config files
+2026-10-09T01:42:30.2927967Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T01:42:30.2960140Z includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git.path
+2026-10-09T01:42:30.2961005Z includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/worktrees/*.path
+2026-10-09T01:42:30.2961581Z includeif.gitdir:/github/workspace/trusted/.git.path
+2026-10-09T01:42:30.2961953Z includeif.gitdir:/github/workspace/trusted/.git/worktrees/*.path
+2026-10-09T01:42:30.2972426Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git.path
+2026-10-09T01:42:30.2994786Z /home/runner/work/_temp/git-credentials-5c524235-2475-41d9-8262-2d52dd64e436.config
+2026-10-09T01:42:30.3002480Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-5c524235\-2475\-41d9\-8262\-2d52dd64e436\.config
+2026-10-09T01:42:30.3033055Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/worktrees/*.path
+2026-10-09T01:42:30.3054642Z /home/runner/work/_temp/git-credentials-5c524235-2475-41d9-8262-2d52dd64e436.config
+2026-10-09T01:42:30.3061295Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-5c524235\-2475\-41d9\-8262\-2d52dd64e436\.config
+2026-10-09T01:42:30.3095754Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/trusted/.git.path
+2026-10-09T01:42:30.3117382Z /github/runner_temp/git-credentials-5c524235-2475-41d9-8262-2d52dd64e436.config
+2026-10-09T01:42:30.3123995Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/trusted/.git.path \/github\/runner_temp\/git\-credentials\-5c524235\-2475\-41d9\-8262\-2d52dd64e436\.config
+2026-10-09T01:42:30.3173639Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/trusted/.git/worktrees/*.path
+2026-10-09T01:42:30.3225305Z /github/runner_temp/git-credentials-5c524235-2475-41d9-8262-2d52dd64e436.config
+2026-10-09T01:42:30.3255155Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/trusted/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-5c524235\-2475\-41d9\-8262\-2d52dd64e436\.config
+2026-10-09T01:42:30.3258438Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T01:42:30.3444380Z Removing credentials config '/home/runner/work/_temp/git-credentials-5c524235-2475-41d9-8262-2d52dd64e436.config'
+2026-10-09T01:42:30.3451967Z ##[endgroup]
+2026-10-09T01:42:30.3657536Z ##[group]Run actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+2026-10-09T01:42:30.3657885Z with:
+2026-10-09T01:42:30.3658070Z   name: release-lab-built-web
+2026-10-09T01:42:30.3658315Z   path: /home/runner/work/_temp/incoming-site
+2026-10-09T01:42:30.3658573Z   merge-multiple: false
+2026-10-09T01:42:30.3659198Z   repository: israelhudson/flutter_code_push_example
+2026-10-09T01:42:30.3659459Z   run-id: 37870868223
+2026-10-09T01:42:30.3659644Z   skip-decompress: false
+2026-10-09T01:42:30.3659840Z   digest-mismatch: error
+2026-10-09T01:42:30.3660022Z ##[endgroup]
+2026-10-09T01:42:30.4716514Z Downloading single artifact
+2026-10-09T01:42:30.5472181Z Preparing to download the following artifacts:
+2026-10-09T01:42:30.5473023Z - release-lab-built-web (ID: 11590436886, Size: 14135354, Expected Digest: sha256:5d00750e63b62359875c9209f5784c2a907afeb1eafd49c140b4d3a9c559b8ad)
+2026-10-09T01:42:30.6957621Z Redirecting to blob download url: https://productionresultssa9.blob.core.windows.net/actions-results/e119c607-01ca-4cbc-ac1e-9f4e3a17c29b/workflow-job-run-9e1ff0fa-ee8a-5fac-8bbc-2a0aecae3b1a/artifacts/b2f197a25b3e88f343981c4bce2107c68e655ba7e09fe63109d7c57c2506660f.zip
+2026-10-09T01:42:30.6959502Z Starting download of artifact to: /home/runner/work/_temp/incoming-site
+2026-10-09T01:42:30.8095990Z (node:2174) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2026-10-09T01:42:30.8097387Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-09T01:42:31.1196022Z SHA256 digest of downloaded artifact is 5d00750e63b62359875c9209f5784c2a907afeb1eafd49c140b4d3a9c559b8ad
+2026-10-09T01:42:31.1196769Z Artifact download completed successfully.
+2026-10-09T01:42:31.1197138Z Total of 1 artifact(s) downloaded
+2026-10-09T01:42:31.1201023Z Download artifact has finished successfully
+2026-10-09T01:42:31.1314428Z ##[group]Run python3 trusted/deploy/pages_preview.py history --site "$RUNNER_TEMP/pages-site"
+2026-10-09T01:42:31.1315022Z [36;1mpython3 trusted/deploy/pages_preview.py history --site "$RUNNER_TEMP/pages-site"[0m
+2026-10-09T01:42:31.4303934Z shell: /usr/bin/bash -e {0}
+2026-10-09T01:42:31.4304187Z env:
+2026-10-09T01:42:31.4306166Z   GH_TOKEN: ***
+2026-10-09T01:42:31.4306353Z ##[endgroup]
+2026-10-09T01:42:33.8366379Z {
+2026-10-09T01:42:33.8366847Z   "history_branch": "codex/pages-previews",
+2026-10-09T01:42:33.8367295Z   "existing": true
+2026-10-09T01:42:33.8367615Z }
+2026-10-09T01:42:34.0056527Z ##[group]Run python3 trusted/tools/delivery/release_lab.py merge-preview --candidate-tag "$CANDIDATE_TAG" --incoming "$RUNNER_TEMP/incoming-site" --site "$RUNNER_TEMP/pages-site" --output "$RUNNER_TEMP/release-lab"
+2026-10-09T01:42:34.0057626Z [36;1mpython3 trusted/tools/delivery/release_lab.py merge-preview --candidate-tag "$CANDIDATE_TAG" --incoming "$RUNNER_TEMP/incoming-site" --site "$RUNNER_TEMP/pages-site" --output "$RUNNER_TEMP/release-lab"[0m
+2026-10-09T01:42:34.0113872Z shell: /usr/bin/bash -e {0}
+2026-10-09T01:42:34.0114083Z env:
+2026-10-09T01:42:34.0116041Z   GH_TOKEN: ***
+2026-10-09T01:42:34.0116238Z   CANDIDATE_TAG: v1.7.0-rc.1
+2026-10-09T01:42:34.0116447Z ##[endgroup]
+2026-10-09T01:42:38.7747249Z {"web_content_sha256": "07b9a36f088e12130db289114ada0de5917db42c0e46834797f62de856157d99", "snapshot_manifest_sha256": "bbe6e670a858cc060bcc7356e096b0a36ad4d25461f194002e7808215825add9"}
+2026-10-09T01:42:38.9742446Z ##[group]Run python3 trusted/deploy/pages_preview.py persist --site "$RUNNER_TEMP/pages-site"
+2026-10-09T01:42:38.9743017Z [36;1mpython3 trusted/deploy/pages_preview.py persist --site "$RUNNER_TEMP/pages-site"[0m
+2026-10-09T01:42:38.9798597Z shell: /usr/bin/bash -e {0}
+2026-10-09T01:42:38.9798906Z env:
+2026-10-09T01:42:38.9800869Z   GH_TOKEN: ***
+2026-10-09T01:42:38.9801055Z ##[endgroup]
+2026-10-09T01:42:43.5456754Z {
+2026-10-09T01:42:43.5457127Z   "history_branch": "codex/pages-previews",
+2026-10-09T01:42:43.5457481Z   "snapshots": [
+2026-10-09T01:42:43.5457699Z     "05634b4b620cc30a053e5acab5fefb0667f2544e",
+2026-10-09T01:42:43.5457963Z     "0817b4fbf84204b24a20858925fa414a1dcac54a",
+2026-10-09T01:42:43.5458217Z     "08ce07d615905e33f0572f9264808683cab53349",
+2026-10-09T01:42:43.5458467Z     "0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928",
+2026-10-09T01:42:43.5458716Z     "1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935",
+2026-10-09T01:42:43.5459536Z     "22b29663d85724ba619600766c78ff38cd3456ec",
+2026-10-09T01:42:43.5459776Z     "6e48aef9b03778593bc639ababa885b9e2792c35",
+2026-10-09T01:42:43.5460133Z     "989fe3443ad16df0c67ff0068d6efb3f458c8ace",
+2026-10-09T01:42:43.5460388Z     "9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0",
+2026-10-09T01:42:43.5460643Z     "9e0320fca6fdfba5931d6c80d9181c362ac33c17",
+2026-10-09T01:42:43.5460881Z     "b8763ec5adc5e24ce34f474a66a079b48a9ffa0f",
+2026-10-09T01:42:43.5461120Z     "e34f36f5c8b191f96ea6a18280a9b51c18ebacfa"
+2026-10-09T01:42:43.5461339Z   ]
+2026-10-09T01:42:43.5461498Z }
+2026-10-09T01:42:43.5556512Z ##[group]Run python3 trusted/deploy/pages_preview.py export --site "$RUNNER_TEMP/pages-site" --output "$RUNNER_TEMP/pages-public"
+2026-10-09T01:42:43.5557210Z [36;1mpython3 trusted/deploy/pages_preview.py export --site "$RUNNER_TEMP/pages-site" --output "$RUNNER_TEMP/pages-public"[0m
+2026-10-09T01:42:43.5613991Z shell: /usr/bin/bash -e {0}
+2026-10-09T01:42:43.5614230Z ##[endgroup]
+2026-10-09T01:42:47.4495785Z {
+2026-10-09T01:42:47.4496196Z   "output": "/home/runner/work/_temp/pages-public",
+2026-10-09T01:42:47.4496489Z   "snapshots": [
+2026-10-09T01:42:47.4496701Z     "05634b4b620cc30a053e5acab5fefb0667f2544e",
+2026-10-09T01:42:47.4496959Z     "0817b4fbf84204b24a20858925fa414a1dcac54a",
+2026-10-09T01:42:47.4497208Z     "08ce07d615905e33f0572f9264808683cab53349",
+2026-10-09T01:42:47.4497463Z     "0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928",
+2026-10-09T01:42:47.4497712Z     "1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935",
+2026-10-09T01:42:47.4498040Z     "22b29663d85724ba619600766c78ff38cd3456ec",
+2026-10-09T01:42:47.4498269Z     "6e48aef9b03778593bc639ababa885b9e2792c35",
+2026-10-09T01:42:47.4498496Z     "989fe3443ad16df0c67ff0068d6efb3f458c8ace",
+2026-10-09T01:42:47.4498745Z     "9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0",
+2026-10-09T01:42:47.4499255Z     "9e0320fca6fdfba5931d6c80d9181c362ac33c17",
+2026-10-09T01:42:47.4499493Z     "b8763ec5adc5e24ce34f474a66a079b48a9ffa0f",
+2026-10-09T01:42:47.4499743Z     "e34f36f5c8b191f96ea6a18280a9b51c18ebacfa"
+2026-10-09T01:42:47.4499957Z   ]
+2026-10-09T01:42:47.4500113Z }
+2026-10-09T01:42:47.4636824Z ##[group]Run actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b
+2026-10-09T01:42:47.4637168Z with:
+2026-10-09T01:42:47.4637374Z   path: /home/runner/work/_temp/pages-public
+2026-10-09T01:42:47.4637610Z   retention-days: 1
+2026-10-09T01:42:47.4637792Z   name: github-pages
+2026-10-09T01:42:47.4637973Z ##[endgroup]
+2026-10-09T01:42:47.4685170Z ##[start-action display=Archive artifact;id=__actions_upload-pages-artifact.__run]
+2026-10-09T01:42:47.4715139Z ##[group]Run echo ::group::Archive artifact
+2026-10-09T01:42:47.4715435Z [36;1mecho ::group::Archive artifact[0m
+2026-10-09T01:42:47.4715659Z [36;1mtar \[0m
+2026-10-09T01:42:47.4715873Z [36;1m  --dereference --hard-dereference \[0m
+2026-10-09T01:42:47.4716140Z [36;1m  --directory "$INPUT_PATH" \[0m
+2026-10-09T01:42:47.4716379Z [36;1m  -cvf "$RUNNER_TEMP/artifact.tar" \[0m
+2026-10-09T01:42:47.4716625Z [36;1m  --exclude=.git \[0m
+2026-10-09T01:42:47.4716823Z [36;1m  --exclude=.github \[0m
+2026-10-09T01:42:47.4717078Z [36;1m  --exclude=".[^/]*" \[0m
+2026-10-09T01:42:47.4717271Z [36;1m  .[0m
+2026-10-09T01:42:47.4717436Z [36;1mecho ::endgroup::[0m
+2026-10-09T01:42:47.4740480Z shell: /usr/bin/sh -e {0}
+2026-10-09T01:42:47.4740703Z env:
+2026-10-09T01:42:47.4740912Z   INPUT_PATH: /home/runner/work/_temp/pages-public
+2026-10-09T01:42:47.4741165Z ##[endgroup]
+2026-10-09T01:42:47.4773792Z ##[group]Archive artifact
+2026-10-09T01:42:47.4785052Z ./
+2026-10-09T01:42:47.4785302Z ./index.html
+2026-10-09T01:42:47.4785559Z ./snapshots/
+2026-10-09T01:42:47.4785876Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/
+2026-10-09T01:42:47.4786341Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/
+2026-10-09T01:42:47.4809416Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/manifest.json
+2026-10-09T01:42:47.4819524Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/icons/
+2026-10-09T01:42:47.4820385Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/icons/Icon-512.png
+2026-10-09T01:42:47.4821046Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/icons/Icon-192.png
+2026-10-09T01:42:47.4821723Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/icons/Icon-maskable-192.png
+2026-10-09T01:42:47.4822450Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/icons/Icon-maskable-512.png
+2026-10-09T01:42:47.4823032Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/flutter_bootstrap.js
+2026-10-09T01:42:47.4823411Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/assets/
+2026-10-09T01:42:47.4823812Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/assets/AssetManifest.bin.json
+2026-10-09T01:42:47.4824242Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/assets/NOTICES
+2026-10-09T01:42:47.4824633Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/assets/shorebird.yaml
+2026-10-09T01:42:47.4825051Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/assets/AssetManifest.bin
+2026-10-09T01:42:47.4825479Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/assets/packages/
+2026-10-09T01:42:47.4825923Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/assets/packages/cupertino_icons/
+2026-10-09T01:42:47.4826422Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/assets/packages/cupertino_icons/assets/
+2026-10-09T01:42:47.4826997Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+2026-10-09T01:42:47.4827542Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/assets/FontManifest.json
+2026-10-09T01:42:47.4827944Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/assets/shaders/
+2026-10-09T01:42:47.4828355Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/assets/shaders/ink_sparkle.frag
+2026-10-09T01:42:47.4828930Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/assets/shaders/stretch_effect.frag
+2026-10-09T01:42:47.4829384Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/assets/fonts/
+2026-10-09T01:42:47.4830015Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/assets/fonts/MaterialIcons-Regular.otf
+2026-10-09T01:42:47.4830461Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/index.html
+2026-10-09T01:42:47.4830828Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/version.json
+2026-10-09T01:42:47.4831240Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/flutter_service_worker.js
+2026-10-09T01:42:47.4831633Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/flutter.js
+2026-10-09T01:42:47.4831981Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/favicon.png
+2026-10-09T01:42:47.4832347Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/main.dart.js
+2026-10-09T01:42:47.4832689Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/
+2026-10-09T01:42:47.4833053Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/wimp.wasm
+2026-10-09T01:42:47.4839104Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/chromium/
+2026-10-09T01:42:47.4839843Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/chromium/canvaskit.js
+2026-10-09T01:42:47.4840640Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/chromium/canvaskit.wasm
+2026-10-09T01:42:47.4879248Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/chromium/canvaskit.js.symbols
+2026-10-09T01:42:47.4887826Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/skwasm_heavy.js.symbols
+2026-10-09T01:42:47.4899542Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/canvaskit.js
+2026-10-09T01:42:47.4900281Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/skwasm.js
+2026-10-09T01:42:47.4900962Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/canvaskit.wasm
+2026-10-09T01:42:47.4951769Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/skwasm.wasm
+2026-10-09T01:42:47.4975874Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/skwasm.js.symbols
+2026-10-09T01:42:47.4986311Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/skwasm_heavy.wasm
+2026-10-09T01:42:47.5021342Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/canvaskit.js.symbols
+2026-10-09T01:42:47.5030705Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/experimental_webparagraph/
+2026-10-09T01:42:47.5031592Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/experimental_webparagraph/canvaskit.js
+2026-10-09T01:42:47.5032369Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/experimental_webparagraph/canvaskit.wasm
+2026-10-09T01:42:47.5059281Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/experimental_webparagraph/canvaskit.js.symbols
+2026-10-09T01:42:47.5065906Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/wimp.js
+2026-10-09T01:42:47.5066575Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/skwasm_heavy.js
+2026-10-09T01:42:47.5067325Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/app/canvaskit/wimp.js.symbols
+2026-10-09T01:42:47.5079316Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/metadata.json
+2026-10-09T01:42:47.5079863Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/index.html
+2026-10-09T01:42:47.5080383Z ./snapshots/e34f36f5c8b191f96ea6a18280a9b51c18ebacfa/files.json
+2026-10-09T01:42:47.5080857Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/
+2026-10-09T01:42:47.5081329Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/
+2026-10-09T01:42:47.5081861Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/manifest.json
+2026-10-09T01:42:47.5082423Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/icons/
+2026-10-09T01:42:47.5083044Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/icons/Icon-512.png
+2026-10-09T01:42:47.5083538Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/icons/Icon-192.png
+2026-10-09T01:42:47.5083967Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/icons/Icon-maskable-192.png
+2026-10-09T01:42:47.5084630Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/icons/Icon-maskable-512.png
+2026-10-09T01:42:47.5085064Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/flutter_bootstrap.js
+2026-10-09T01:42:47.5085441Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/assets/
+2026-10-09T01:42:47.5085850Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/assets/AssetManifest.bin.json
+2026-10-09T01:42:47.5086291Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/assets/NOTICES
+2026-10-09T01:42:47.5091750Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/assets/shorebird.yaml
+2026-10-09T01:42:47.5092451Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/assets/AssetManifest.bin
+2026-10-09T01:42:47.5093125Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/assets/packages/
+2026-10-09T01:42:47.5093834Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/assets/packages/cupertino_icons/
+2026-10-09T01:42:47.5094673Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/assets/packages/cupertino_icons/assets/
+2026-10-09T01:42:47.5095626Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+2026-10-09T01:42:47.5096494Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/assets/FontManifest.json
+2026-10-09T01:42:47.5097159Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/assets/shaders/
+2026-10-09T01:42:47.5097858Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/assets/shaders/ink_sparkle.frag
+2026-10-09T01:42:47.5098609Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/assets/shaders/stretch_effect.frag
+2026-10-09T01:42:47.5099228Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/assets/fonts/
+2026-10-09T01:42:47.5099670Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/assets/fonts/MaterialIcons-Regular.otf
+2026-10-09T01:42:47.5100271Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/index.html
+2026-10-09T01:42:47.5100642Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/version.json
+2026-10-09T01:42:47.5101039Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/flutter_service_worker.js
+2026-10-09T01:42:47.5101421Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/flutter.js
+2026-10-09T01:42:47.5101775Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/favicon.png
+2026-10-09T01:42:47.5102126Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/main.dart.js
+2026-10-09T01:42:47.5109340Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/
+2026-10-09T01:42:47.5109960Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/wimp.wasm
+2026-10-09T01:42:47.5133155Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/chromium/
+2026-10-09T01:42:47.5133900Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/chromium/canvaskit.js
+2026-10-09T01:42:47.5134710Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/chromium/canvaskit.wasm
+2026-10-09T01:42:47.5172852Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/chromium/canvaskit.js.symbols
+2026-10-09T01:42:47.5181422Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/skwasm_heavy.js.symbols
+2026-10-09T01:42:47.5192974Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/canvaskit.js
+2026-10-09T01:42:47.5193685Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/skwasm.js
+2026-10-09T01:42:47.5194370Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/canvaskit.wasm
+2026-10-09T01:42:47.5242203Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/skwasm.wasm
+2026-10-09T01:42:47.5265846Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/skwasm.js.symbols
+2026-10-09T01:42:47.5276236Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/skwasm_heavy.wasm
+2026-10-09T01:42:47.5310954Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/canvaskit.js.symbols
+2026-10-09T01:42:47.5320498Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/experimental_webparagraph/
+2026-10-09T01:42:47.5321409Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/experimental_webparagraph/canvaskit.js
+2026-10-09T01:42:47.5322368Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/experimental_webparagraph/canvaskit.wasm
+2026-10-09T01:42:47.5348700Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/experimental_webparagraph/canvaskit.js.symbols
+2026-10-09T01:42:47.5355565Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/wimp.js
+2026-10-09T01:42:47.5356457Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/skwasm_heavy.js
+2026-10-09T01:42:47.5357175Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/app/canvaskit/wimp.js.symbols
+2026-10-09T01:42:47.5369163Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/metadata.json
+2026-10-09T01:42:47.5369734Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/index.html
+2026-10-09T01:42:47.5370261Z ./snapshots/9c4ad37fc415a98ef2a8cfdc5be8d5cf97fe35b0/files.json
+2026-10-09T01:42:47.5370751Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/
+2026-10-09T01:42:47.5371225Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/
+2026-10-09T01:42:47.5371752Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/manifest.json
+2026-10-09T01:42:47.5372310Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/icons/
+2026-10-09T01:42:47.5372913Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/icons/Icon-512.png
+2026-10-09T01:42:47.5373557Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/icons/Icon-192.png
+2026-10-09T01:42:47.5374235Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/icons/Icon-maskable-192.png
+2026-10-09T01:42:47.5374965Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/icons/Icon-maskable-512.png
+2026-10-09T01:42:47.5375684Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/flutter_bootstrap.js
+2026-10-09T01:42:47.5376072Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/assets/
+2026-10-09T01:42:47.5376462Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/assets/AssetManifest.bin.json
+2026-10-09T01:42:47.5376874Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/assets/NOTICES
+2026-10-09T01:42:47.5381928Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/assets/shorebird.yaml
+2026-10-09T01:42:47.5382620Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/assets/AssetManifest.bin
+2026-10-09T01:42:47.5383275Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/assets/packages/
+2026-10-09T01:42:47.5383990Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/assets/packages/cupertino_icons/
+2026-10-09T01:42:47.5384831Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/assets/packages/cupertino_icons/assets/
+2026-10-09T01:42:47.5385796Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+2026-10-09T01:42:47.5386668Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/assets/FontManifest.json
+2026-10-09T01:42:47.5387334Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/assets/shaders/
+2026-10-09T01:42:47.5388041Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/assets/shaders/ink_sparkle.frag
+2026-10-09T01:42:47.5388746Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/assets/shaders/stretch_effect.frag
+2026-10-09T01:42:47.5389353Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/assets/fonts/
+2026-10-09T01:42:47.5389803Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/assets/fonts/MaterialIcons-Regular.otf
+2026-10-09T01:42:47.5390241Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/index.html
+2026-10-09T01:42:47.5390591Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/version.json
+2026-10-09T01:42:47.5390987Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/flutter_service_worker.js
+2026-10-09T01:42:47.5391508Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/flutter.js
+2026-10-09T01:42:47.5391865Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/favicon.png
+2026-10-09T01:42:47.5392224Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/main.dart.js
+2026-10-09T01:42:47.5399321Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/
+2026-10-09T01:42:47.5399944Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/wimp.wasm
+2026-10-09T01:42:47.5423057Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/chromium/
+2026-10-09T01:42:47.5423800Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/chromium/canvaskit.js
+2026-10-09T01:42:47.5424552Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/chromium/canvaskit.wasm
+2026-10-09T01:42:47.5463504Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/chromium/canvaskit.js.symbols
+2026-10-09T01:42:47.5472513Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/skwasm_heavy.js.symbols
+2026-10-09T01:42:47.5484180Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/canvaskit.js
+2026-10-09T01:42:47.5485288Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/skwasm.js
+2026-10-09T01:42:47.5486082Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/canvaskit.wasm
+2026-10-09T01:42:47.5536226Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/skwasm.wasm
+2026-10-09T01:42:47.5560109Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/skwasm.js.symbols
+2026-10-09T01:42:47.5570585Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/skwasm_heavy.wasm
+2026-10-09T01:42:47.5605233Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/canvaskit.js.symbols
+2026-10-09T01:42:47.5614752Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/experimental_webparagraph/
+2026-10-09T01:42:47.5615723Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/experimental_webparagraph/canvaskit.js
+2026-10-09T01:42:47.5616324Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/experimental_webparagraph/canvaskit.wasm
+2026-10-09T01:42:47.5644557Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/experimental_webparagraph/canvaskit.js.symbols
+2026-10-09T01:42:47.5651541Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/wimp.js
+2026-10-09T01:42:47.5652236Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/skwasm_heavy.js
+2026-10-09T01:42:47.5652964Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/app/canvaskit/wimp.js.symbols
+2026-10-09T01:42:47.5665776Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/metadata.json
+2026-10-09T01:42:47.5666208Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/index.html
+2026-10-09T01:42:47.5666531Z ./snapshots/9e0320fca6fdfba5931d6c80d9181c362ac33c17/files.json
+2026-10-09T01:42:47.5669224Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/
+2026-10-09T01:42:47.5669739Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/
+2026-10-09T01:42:47.5670272Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/manifest.json
+2026-10-09T01:42:47.5670845Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/icons/
+2026-10-09T01:42:47.5671442Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/icons/Icon-512.png
+2026-10-09T01:42:47.5672094Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/icons/Icon-192.png
+2026-10-09T01:42:47.5672775Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/icons/Icon-maskable-192.png
+2026-10-09T01:42:47.5673494Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/icons/Icon-maskable-512.png
+2026-10-09T01:42:47.5674188Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/flutter_bootstrap.js
+2026-10-09T01:42:47.5674808Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/assets/
+2026-10-09T01:42:47.5675461Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/assets/AssetManifest.bin.json
+2026-10-09T01:42:47.5676373Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/assets/NOTICES
+2026-10-09T01:42:47.5680057Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/assets/shorebird.yaml
+2026-10-09T01:42:47.5680826Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/assets/AssetManifest.bin
+2026-10-09T01:42:47.5681522Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/assets/packages/
+2026-10-09T01:42:47.5682281Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/assets/packages/cupertino_icons/
+2026-10-09T01:42:47.5683129Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/assets/packages/cupertino_icons/assets/
+2026-10-09T01:42:47.5684125Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+2026-10-09T01:42:47.5685062Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/assets/FontManifest.json
+2026-10-09T01:42:47.5685791Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/assets/shaders/
+2026-10-09T01:42:47.5686534Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/assets/shaders/ink_sparkle.frag
+2026-10-09T01:42:47.5687376Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/assets/shaders/stretch_effect.frag
+2026-10-09T01:42:47.5688132Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/assets/fonts/
+2026-10-09T01:42:47.5689049Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/assets/fonts/MaterialIcons-Regular.otf
+2026-10-09T01:42:47.5689756Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/index.html
+2026-10-09T01:42:47.5690334Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/version.json
+2026-10-09T01:42:47.5690968Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/flutter_service_worker.js
+2026-10-09T01:42:47.5691596Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/flutter.js
+2026-10-09T01:42:47.5692334Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/favicon.png
+2026-10-09T01:42:47.5692928Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/main.dart.js
+2026-10-09T01:42:47.5699565Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/
+2026-10-09T01:42:47.5700181Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/wimp.wasm
+2026-10-09T01:42:47.5723775Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/chromium/
+2026-10-09T01:42:47.5724619Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/chromium/canvaskit.js
+2026-10-09T01:42:47.5725405Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/chromium/canvaskit.wasm
+2026-10-09T01:42:47.5763782Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/chromium/canvaskit.js.symbols
+2026-10-09T01:42:47.5772354Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/skwasm_heavy.js.symbols
+2026-10-09T01:42:47.5783554Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/canvaskit.js
+2026-10-09T01:42:47.5784266Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/skwasm.js
+2026-10-09T01:42:47.5784945Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/canvaskit.wasm
+2026-10-09T01:42:47.5833412Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/skwasm.wasm
+2026-10-09T01:42:47.5857200Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/skwasm.js.symbols
+2026-10-09T01:42:47.5867435Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/skwasm_heavy.wasm
+2026-10-09T01:42:47.5901697Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/canvaskit.js.symbols
+2026-10-09T01:42:47.5911673Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/experimental_webparagraph/
+2026-10-09T01:42:47.5912573Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/experimental_webparagraph/canvaskit.js
+2026-10-09T01:42:47.5913522Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/experimental_webparagraph/canvaskit.wasm
+2026-10-09T01:42:47.5940493Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/experimental_webparagraph/canvaskit.js.symbols
+2026-10-09T01:42:47.5946843Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/wimp.js
+2026-10-09T01:42:47.5947509Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/skwasm_heavy.js
+2026-10-09T01:42:47.5948213Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/app/canvaskit/wimp.js.symbols
+2026-10-09T01:42:47.5960396Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/metadata.json
+2026-10-09T01:42:47.5960951Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/index.html
+2026-10-09T01:42:47.5961464Z ./snapshots/05634b4b620cc30a053e5acab5fefb0667f2544e/files.json
+2026-10-09T01:42:47.5961937Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/
+2026-10-09T01:42:47.5962393Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/
+2026-10-09T01:42:47.5962932Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/manifest.json
+2026-10-09T01:42:47.5963484Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/icons/
+2026-10-09T01:42:47.5964057Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/icons/Icon-512.png
+2026-10-09T01:42:47.5964703Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/icons/Icon-192.png
+2026-10-09T01:42:47.5965392Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/icons/Icon-maskable-192.png
+2026-10-09T01:42:47.5966121Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/icons/Icon-maskable-512.png
+2026-10-09T01:42:47.5966723Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/flutter_bootstrap.js
+2026-10-09T01:42:47.5967102Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/assets/
+2026-10-09T01:42:47.5967512Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/assets/AssetManifest.bin.json
+2026-10-09T01:42:47.5967932Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/assets/NOTICES
+2026-10-09T01:42:47.5972826Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/assets/shorebird.yaml
+2026-10-09T01:42:47.5973522Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/assets/AssetManifest.bin
+2026-10-09T01:42:47.5974183Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/assets/packages/
+2026-10-09T01:42:47.5974887Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/assets/packages/cupertino_icons/
+2026-10-09T01:42:47.5975709Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/assets/packages/cupertino_icons/assets/
+2026-10-09T01:42:47.5976643Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+2026-10-09T01:42:47.5977500Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/assets/FontManifest.json
+2026-10-09T01:42:47.5978147Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/assets/shaders/
+2026-10-09T01:42:47.5978967Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/assets/shaders/ink_sparkle.frag
+2026-10-09T01:42:47.5979678Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/assets/shaders/stretch_effect.frag
+2026-10-09T01:42:47.5980098Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/assets/fonts/
+2026-10-09T01:42:47.5980532Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/assets/fonts/MaterialIcons-Regular.otf
+2026-10-09T01:42:47.5980957Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/index.html
+2026-10-09T01:42:47.5981306Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/version.json
+2026-10-09T01:42:47.5981702Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/flutter_service_worker.js
+2026-10-09T01:42:47.5982090Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/flutter.js
+2026-10-09T01:42:47.5982431Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/favicon.png
+2026-10-09T01:42:47.5982776Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/main.dart.js
+2026-10-09T01:42:47.5990391Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/
+2026-10-09T01:42:47.5991202Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/wimp.wasm
+2026-10-09T01:42:47.6014505Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/chromium/
+2026-10-09T01:42:47.6015236Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/chromium/canvaskit.js
+2026-10-09T01:42:47.6015997Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/chromium/canvaskit.wasm
+2026-10-09T01:42:47.6053810Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/chromium/canvaskit.js.symbols
+2026-10-09T01:42:47.6062491Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/skwasm_heavy.js.symbols
+2026-10-09T01:42:47.6073690Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/canvaskit.js
+2026-10-09T01:42:47.6074349Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/skwasm.js
+2026-10-09T01:42:47.6075024Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/canvaskit.wasm
+2026-10-09T01:42:47.6123539Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/skwasm.wasm
+2026-10-09T01:42:47.6147274Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/skwasm.js.symbols
+2026-10-09T01:42:47.6157572Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/skwasm_heavy.wasm
+2026-10-09T01:42:47.6191714Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/canvaskit.js.symbols
+2026-10-09T01:42:47.6201601Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/experimental_webparagraph/
+2026-10-09T01:42:47.6202483Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/experimental_webparagraph/canvaskit.js
+2026-10-09T01:42:47.6203428Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/experimental_webparagraph/canvaskit.wasm
+2026-10-09T01:42:47.6230100Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/experimental_webparagraph/canvaskit.js.symbols
+2026-10-09T01:42:47.6236648Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/wimp.js
+2026-10-09T01:42:47.6237327Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/skwasm_heavy.js
+2026-10-09T01:42:47.6238025Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/app/canvaskit/wimp.js.symbols
+2026-10-09T01:42:47.6250241Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/metadata.json
+2026-10-09T01:42:47.6250784Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/index.html
+2026-10-09T01:42:47.6251223Z ./snapshots/0817b4fbf84204b24a20858925fa414a1dcac54a/files.json
+2026-10-09T01:42:47.6252686Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/
+2026-10-09T01:42:47.6253017Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/
+2026-10-09T01:42:47.6253350Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/manifest.json
+2026-10-09T01:42:47.6253694Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/icons/
+2026-10-09T01:42:47.6254074Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/icons/Icon-512.png
+2026-10-09T01:42:47.6254465Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/icons/Icon-192.png
+2026-10-09T01:42:47.6254871Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/icons/Icon-maskable-192.png
+2026-10-09T01:42:47.6255306Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/icons/Icon-maskable-512.png
+2026-10-09T01:42:47.6256163Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/flutter_bootstrap.js
+2026-10-09T01:42:47.6256667Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/assets/
+2026-10-09T01:42:47.6257237Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/assets/AssetManifest.bin.json
+2026-10-09T01:42:47.6257750Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/assets/NOTICES
+2026-10-09T01:42:47.6262546Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/assets/shorebird.yaml
+2026-10-09T01:42:47.6263525Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/assets/AssetManifest.bin
+2026-10-09T01:42:47.6264339Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/assets/packages/
+2026-10-09T01:42:47.6265428Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/assets/packages/cupertino_icons/
+2026-10-09T01:42:47.6266171Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/assets/packages/cupertino_icons/assets/
+2026-10-09T01:42:47.6266864Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+2026-10-09T01:42:47.6267521Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/assets/FontManifest.json
+2026-10-09T01:42:47.6268066Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/assets/shaders/
+2026-10-09T01:42:47.6268639Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/assets/shaders/ink_sparkle.frag
+2026-10-09T01:42:47.6269320Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/assets/shaders/stretch_effect.frag
+2026-10-09T01:42:47.6269878Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/assets/fonts/
+2026-10-09T01:42:47.6270479Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/assets/fonts/MaterialIcons-Regular.otf
+2026-10-09T01:42:47.6271012Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/index.html
+2026-10-09T01:42:47.6271504Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/version.json
+2026-10-09T01:42:47.6285786Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/flutter_service_worker.js
+2026-10-09T01:42:47.6286305Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/flutter.js
+2026-10-09T01:42:47.6286692Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/favicon.png
+2026-10-09T01:42:47.6287080Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/main.dart.js
+2026-10-09T01:42:47.6287670Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/
+2026-10-09T01:42:47.6288307Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/wimp.wasm
+2026-10-09T01:42:47.6306821Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/chromium/
+2026-10-09T01:42:47.6307808Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/chromium/canvaskit.js
+2026-10-09T01:42:47.6308619Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/chromium/canvaskit.wasm
+2026-10-09T01:42:47.6346982Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/chromium/canvaskit.js.symbols
+2026-10-09T01:42:47.6356003Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/skwasm_heavy.js.symbols
+2026-10-09T01:42:47.6367514Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/canvaskit.js
+2026-10-09T01:42:47.6368248Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/skwasm.js
+2026-10-09T01:42:47.6369104Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/canvaskit.wasm
+2026-10-09T01:42:47.6418934Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/skwasm.wasm
+2026-10-09T01:42:47.6442648Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/skwasm.js.symbols
+2026-10-09T01:42:47.6453106Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/skwasm_heavy.wasm
+2026-10-09T01:42:47.6488095Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/canvaskit.js.symbols
+2026-10-09T01:42:47.6497696Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/experimental_webparagraph/
+2026-10-09T01:42:47.6498377Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/experimental_webparagraph/canvaskit.js
+2026-10-09T01:42:47.6499173Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/experimental_webparagraph/canvaskit.wasm
+2026-10-09T01:42:47.6526320Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/experimental_webparagraph/canvaskit.js.symbols
+2026-10-09T01:42:47.6533337Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/wimp.js
+2026-10-09T01:42:47.6533867Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/skwasm_heavy.js
+2026-10-09T01:42:47.6534734Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/app/canvaskit/wimp.js.symbols
+2026-10-09T01:42:47.6547617Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/metadata.json
+2026-10-09T01:42:47.6548189Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/index.html
+2026-10-09T01:42:47.6548710Z ./snapshots/b8763ec5adc5e24ce34f474a66a079b48a9ffa0f/files.json
+2026-10-09T01:42:47.6549318Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/
+2026-10-09T01:42:47.6549779Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/
+2026-10-09T01:42:47.6550311Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/manifest.json
+2026-10-09T01:42:47.6550871Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/icons/
+2026-10-09T01:42:47.6551460Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/icons/Icon-512.png
+2026-10-09T01:42:47.6552106Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/icons/Icon-192.png
+2026-10-09T01:42:47.6552794Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/icons/Icon-maskable-192.png
+2026-10-09T01:42:47.6553535Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/icons/Icon-maskable-512.png
+2026-10-09T01:42:47.6554238Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/flutter_bootstrap.js
+2026-10-09T01:42:47.6554847Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/assets/
+2026-10-09T01:42:47.6569554Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/assets/AssetManifest.bin.json
+2026-10-09T01:42:47.6570250Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/assets/NOTICES
+2026-10-09T01:42:47.6570909Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/assets/shorebird.yaml
+2026-10-09T01:42:47.6571595Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/assets/AssetManifest.bin
+2026-10-09T01:42:47.6572264Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/assets/packages/
+2026-10-09T01:42:47.6572850Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/assets/packages/cupertino_icons/
+2026-10-09T01:42:47.6573589Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/assets/packages/cupertino_icons/assets/
+2026-10-09T01:42:47.6574157Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+2026-10-09T01:42:47.6574683Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/assets/FontManifest.json
+2026-10-09T01:42:47.6575090Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/assets/shaders/
+2026-10-09T01:42:47.6575512Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/assets/shaders/ink_sparkle.frag
+2026-10-09T01:42:47.6575985Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/assets/shaders/stretch_effect.frag
+2026-10-09T01:42:47.6576420Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/assets/fonts/
+2026-10-09T01:42:47.6576870Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/assets/fonts/MaterialIcons-Regular.otf
+2026-10-09T01:42:47.6577436Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/index.html
+2026-10-09T01:42:47.6578003Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/version.json
+2026-10-09T01:42:47.6578650Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/flutter_service_worker.js
+2026-10-09T01:42:47.6579408Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/flutter.js
+2026-10-09T01:42:47.6579973Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/favicon.png
+2026-10-09T01:42:47.6580543Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/main.dart.js
+2026-10-09T01:42:47.6581086Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/
+2026-10-09T01:42:47.6581461Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/wimp.wasm
+2026-10-09T01:42:47.6601278Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/chromium/
+2026-10-09T01:42:47.6602000Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/chromium/canvaskit.js
+2026-10-09T01:42:47.6602800Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/chromium/canvaskit.wasm
+2026-10-09T01:42:47.6641554Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/chromium/canvaskit.js.symbols
+2026-10-09T01:42:47.6649849Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/skwasm_heavy.js.symbols
+2026-10-09T01:42:47.6660835Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/canvaskit.js
+2026-10-09T01:42:47.6661582Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/skwasm.js
+2026-10-09T01:42:47.6662272Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/canvaskit.wasm
+2026-10-09T01:42:47.6710150Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/skwasm.wasm
+2026-10-09T01:42:47.6733818Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/skwasm.js.symbols
+2026-10-09T01:42:47.6744273Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/skwasm_heavy.wasm
+2026-10-09T01:42:47.6778735Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/canvaskit.js.symbols
+2026-10-09T01:42:47.6788246Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/experimental_webparagraph/
+2026-10-09T01:42:47.6789244Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/experimental_webparagraph/canvaskit.js
+2026-10-09T01:42:47.6790202Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/experimental_webparagraph/canvaskit.wasm
+2026-10-09T01:42:47.6816893Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/experimental_webparagraph/canvaskit.js.symbols
+2026-10-09T01:42:47.6823594Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/wimp.js
+2026-10-09T01:42:47.6824274Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/skwasm_heavy.js
+2026-10-09T01:42:47.6824983Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/app/canvaskit/wimp.js.symbols
+2026-10-09T01:42:47.6837048Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/metadata.json
+2026-10-09T01:42:47.6837862Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/index.html
+2026-10-09T01:42:47.6838389Z ./snapshots/6e48aef9b03778593bc639ababa885b9e2792c35/files.json
+2026-10-09T01:42:47.6838989Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/
+2026-10-09T01:42:47.6839444Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/
+2026-10-09T01:42:47.6839975Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/manifest.json
+2026-10-09T01:42:47.6840512Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/icons/
+2026-10-09T01:42:47.6841086Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/icons/Icon-512.png
+2026-10-09T01:42:47.6841710Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/icons/Icon-192.png
+2026-10-09T01:42:47.6842375Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/icons/Icon-maskable-192.png
+2026-10-09T01:42:47.6843087Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/icons/Icon-maskable-512.png
+2026-10-09T01:42:47.6843612Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/flutter_bootstrap.js
+2026-10-09T01:42:47.6843994Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/assets/
+2026-10-09T01:42:47.6844381Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/assets/AssetManifest.bin.json
+2026-10-09T01:42:47.6844783Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/assets/NOTICES
+2026-10-09T01:42:47.6849316Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/assets/shorebird.yaml
+2026-10-09T01:42:47.6849991Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/assets/AssetManifest.bin
+2026-10-09T01:42:47.6850639Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/assets/packages/
+2026-10-09T01:42:47.6851338Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/assets/packages/cupertino_icons/
+2026-10-09T01:42:47.6852137Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/assets/packages/cupertino_icons/assets/
+2026-10-09T01:42:47.6853050Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+2026-10-09T01:42:47.6854074Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/assets/FontManifest.json
+2026-10-09T01:42:47.6854731Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/assets/shaders/
+2026-10-09T01:42:47.6855400Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/assets/shaders/ink_sparkle.frag
+2026-10-09T01:42:47.6856169Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/assets/shaders/stretch_effect.frag
+2026-10-09T01:42:47.6856669Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/assets/fonts/
+2026-10-09T01:42:47.6857117Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/assets/fonts/MaterialIcons-Regular.otf
+2026-10-09T01:42:47.6857541Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/index.html
+2026-10-09T01:42:47.6857885Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/version.json
+2026-10-09T01:42:47.6858272Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/flutter_service_worker.js
+2026-10-09T01:42:47.6858655Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/flutter.js
+2026-10-09T01:42:47.6859176Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/favicon.png
+2026-10-09T01:42:47.6859518Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/main.dart.js
+2026-10-09T01:42:47.6866992Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/
+2026-10-09T01:42:47.6867588Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/wimp.wasm
+2026-10-09T01:42:47.6891487Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/chromium/
+2026-10-09T01:42:47.6892197Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/chromium/canvaskit.js
+2026-10-09T01:42:47.6892930Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/chromium/canvaskit.wasm
+2026-10-09T01:42:47.6930917Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/chromium/canvaskit.js.symbols
+2026-10-09T01:42:47.6939424Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/skwasm_heavy.js.symbols
+2026-10-09T01:42:47.6950661Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/canvaskit.js
+2026-10-09T01:42:47.6951432Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/skwasm.js
+2026-10-09T01:42:47.6952094Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/canvaskit.wasm
+2026-10-09T01:42:47.7000931Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/skwasm.wasm
+2026-10-09T01:42:47.7024550Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/skwasm.js.symbols
+2026-10-09T01:42:47.7034886Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/skwasm_heavy.wasm
+2026-10-09T01:42:47.7069905Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/canvaskit.js.symbols
+2026-10-09T01:42:47.7079197Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/experimental_webparagraph/
+2026-10-09T01:42:47.7080110Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/experimental_webparagraph/canvaskit.js
+2026-10-09T01:42:47.7080922Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/experimental_webparagraph/canvaskit.wasm
+2026-10-09T01:42:47.7108043Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/experimental_webparagraph/canvaskit.js.symbols
+2026-10-09T01:42:47.7114755Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/wimp.js
+2026-10-09T01:42:47.7115416Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/skwasm_heavy.js
+2026-10-09T01:42:47.7116114Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/app/canvaskit/wimp.js.symbols
+2026-10-09T01:42:47.7128264Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/metadata.json
+2026-10-09T01:42:47.7128901Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/index.html
+2026-10-09T01:42:47.7129421Z ./snapshots/08ce07d615905e33f0572f9264808683cab53349/files.json
+2026-10-09T01:42:47.7129923Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/
+2026-10-09T01:42:47.7130454Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/
+2026-10-09T01:42:47.7149644Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/manifest.json
+2026-10-09T01:42:47.7150221Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/icons/
+2026-10-09T01:42:47.7150713Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/icons/Icon-512.png
+2026-10-09T01:42:47.7151120Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/icons/Icon-192.png
+2026-10-09T01:42:47.7151544Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/icons/Icon-maskable-192.png
+2026-10-09T01:42:47.7151989Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/icons/Icon-maskable-512.png
+2026-10-09T01:42:47.7152410Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/flutter_bootstrap.js
+2026-10-09T01:42:47.7152794Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/assets/
+2026-10-09T01:42:47.7153189Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/assets/AssetManifest.bin.json
+2026-10-09T01:42:47.7153637Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/assets/NOTICES
+2026-10-09T01:42:47.7154037Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/assets/shorebird.yaml
+2026-10-09T01:42:47.7154468Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/assets/AssetManifest.bin
+2026-10-09T01:42:47.7154883Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/assets/packages/
+2026-10-09T01:42:47.7155317Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/assets/packages/cupertino_icons/
+2026-10-09T01:42:47.7155818Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/assets/packages/cupertino_icons/assets/
+2026-10-09T01:42:47.7156374Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+2026-10-09T01:42:47.7156957Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/assets/FontManifest.json
+2026-10-09T01:42:47.7157793Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/assets/shaders/
+2026-10-09T01:42:47.7158276Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/assets/shaders/ink_sparkle.frag
+2026-10-09T01:42:47.7158751Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/assets/shaders/stretch_effect.frag
+2026-10-09T01:42:47.7159266Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/assets/fonts/
+2026-10-09T01:42:47.7159723Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/assets/fonts/MaterialIcons-Regular.otf
+2026-10-09T01:42:47.7160156Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/index.html
+2026-10-09T01:42:47.7160510Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/version.json
+2026-10-09T01:42:47.7160904Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/flutter_service_worker.js
+2026-10-09T01:42:47.7161292Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/flutter.js
+2026-10-09T01:42:47.7161641Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/favicon.png
+2026-10-09T01:42:47.7161997Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/main.dart.js
+2026-10-09T01:42:47.7162340Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/
+2026-10-09T01:42:47.7162711Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/wimp.wasm
+2026-10-09T01:42:47.7180902Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/chromium/
+2026-10-09T01:42:47.7181613Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/chromium/canvaskit.js
+2026-10-09T01:42:47.7182378Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/chromium/canvaskit.wasm
+2026-10-09T01:42:47.7220379Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/chromium/canvaskit.js.symbols
+2026-10-09T01:42:47.7228967Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/skwasm_heavy.js.symbols
+2026-10-09T01:42:47.7240134Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/canvaskit.js
+2026-10-09T01:42:47.7240827Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/skwasm.js
+2026-10-09T01:42:47.7241725Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/canvaskit.wasm
+2026-10-09T01:42:47.7290171Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/skwasm.wasm
+2026-10-09T01:42:47.7314072Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/skwasm.js.symbols
+2026-10-09T01:42:47.7324309Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/skwasm_heavy.wasm
+2026-10-09T01:42:47.7359250Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/canvaskit.js.symbols
+2026-10-09T01:42:47.7368533Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/experimental_webparagraph/
+2026-10-09T01:42:47.7369552Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/experimental_webparagraph/canvaskit.js
+2026-10-09T01:42:47.7370325Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/experimental_webparagraph/canvaskit.wasm
+2026-10-09T01:42:47.7397085Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/experimental_webparagraph/canvaskit.js.symbols
+2026-10-09T01:42:47.7403845Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/wimp.js
+2026-10-09T01:42:47.7404521Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/skwasm_heavy.js
+2026-10-09T01:42:47.7405239Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/app/canvaskit/wimp.js.symbols
+2026-10-09T01:42:47.7417223Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/metadata.json
+2026-10-09T01:42:47.7417779Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/index.html
+2026-10-09T01:42:47.7418299Z ./snapshots/0fc06c8f2b79a83bd8bcf135b24fcd02ef1bd928/files.json
+2026-10-09T01:42:47.7418901Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/
+2026-10-09T01:42:47.7419378Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/
+2026-10-09T01:42:47.7419903Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/manifest.json
+2026-10-09T01:42:47.7420728Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/icons/
+2026-10-09T01:42:47.7421269Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/icons/Icon-512.png
+2026-10-09T01:42:47.7421662Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/icons/Icon-192.png
+2026-10-09T01:42:47.7422071Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/icons/Icon-maskable-192.png
+2026-10-09T01:42:47.7422516Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/icons/Icon-maskable-512.png
+2026-10-09T01:42:47.7422959Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/flutter_bootstrap.js
+2026-10-09T01:42:47.7423339Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/assets/
+2026-10-09T01:42:47.7423737Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/assets/AssetManifest.bin.json
+2026-10-09T01:42:47.7424166Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/assets/NOTICES
+2026-10-09T01:42:47.7429645Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/assets/shorebird.yaml
+2026-10-09T01:42:47.7430348Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/assets/AssetManifest.bin
+2026-10-09T01:42:47.7431007Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/assets/packages/
+2026-10-09T01:42:47.7431717Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/assets/packages/cupertino_icons/
+2026-10-09T01:42:47.7432525Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/assets/packages/cupertino_icons/assets/
+2026-10-09T01:42:47.7433453Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+2026-10-09T01:42:47.7434210Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/assets/FontManifest.json
+2026-10-09T01:42:47.7434618Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/assets/shaders/
+2026-10-09T01:42:47.7435040Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/assets/shaders/ink_sparkle.frag
+2026-10-09T01:42:47.7435524Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/assets/shaders/stretch_effect.frag
+2026-10-09T01:42:47.7436098Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/assets/fonts/
+2026-10-09T01:42:47.7436543Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/assets/fonts/MaterialIcons-Regular.otf
+2026-10-09T01:42:47.7436974Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/index.html
+2026-10-09T01:42:47.7437335Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/version.json
+2026-10-09T01:42:47.7437738Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/flutter_service_worker.js
+2026-10-09T01:42:47.7438126Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/flutter.js
+2026-10-09T01:42:47.7438471Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/favicon.png
+2026-10-09T01:42:47.7439041Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/main.dart.js
+2026-10-09T01:42:47.7447342Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/
+2026-10-09T01:42:47.7447951Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/wimp.wasm
+2026-10-09T01:42:47.7471036Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/chromium/
+2026-10-09T01:42:47.7471761Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/chromium/canvaskit.js
+2026-10-09T01:42:47.7472483Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/chromium/canvaskit.wasm
+2026-10-09T01:42:47.7509943Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/chromium/canvaskit.js.symbols
+2026-10-09T01:42:47.7518432Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/skwasm_heavy.js.symbols
+2026-10-09T01:42:47.7529745Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/canvaskit.js
+2026-10-09T01:42:47.7530411Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/skwasm.js
+2026-10-09T01:42:47.7531086Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/canvaskit.wasm
+2026-10-09T01:42:47.7597673Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/skwasm.wasm
+2026-10-09T01:42:47.7631034Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/skwasm.js.symbols
+2026-10-09T01:42:47.7642929Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/skwasm_heavy.wasm
+2026-10-09T01:42:47.7681254Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/canvaskit.js.symbols
+2026-10-09T01:42:47.7690455Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/experimental_webparagraph/
+2026-10-09T01:42:47.7691385Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/experimental_webparagraph/canvaskit.js
+2026-10-09T01:42:47.7692363Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/experimental_webparagraph/canvaskit.wasm
+2026-10-09T01:42:47.7720026Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/experimental_webparagraph/canvaskit.js.symbols
+2026-10-09T01:42:47.7726898Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/wimp.js
+2026-10-09T01:42:47.7727659Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/skwasm_heavy.js
+2026-10-09T01:42:47.7729631Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/canvaskit/wimp.js.symbols
+2026-10-09T01:42:47.7741261Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/metadata.json
+2026-10-09T01:42:47.7741887Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/index.html
+2026-10-09T01:42:47.7742450Z ./snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/files.json
+2026-10-09T01:42:47.7742950Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/
+2026-10-09T01:42:47.7743421Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/
+2026-10-09T01:42:47.7743968Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/manifest.json
+2026-10-09T01:42:47.7744551Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/icons/
+2026-10-09T01:42:47.7745144Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/icons/Icon-512.png
+2026-10-09T01:42:47.7745807Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/icons/Icon-192.png
+2026-10-09T01:42:47.7746739Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/icons/Icon-maskable-192.png
+2026-10-09T01:42:47.7747496Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/icons/Icon-maskable-512.png
+2026-10-09T01:42:47.7748197Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/flutter_bootstrap.js
+2026-10-09T01:42:47.7749018Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/assets/
+2026-10-09T01:42:47.7749662Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/assets/AssetManifest.bin.json
+2026-10-09T01:42:47.7750334Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/assets/NOTICES
+2026-10-09T01:42:47.7754251Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/assets/shorebird.yaml
+2026-10-09T01:42:47.7755006Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/assets/AssetManifest.bin
+2026-10-09T01:42:47.7755710Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/assets/packages/
+2026-10-09T01:42:47.7756450Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/assets/packages/cupertino_icons/
+2026-10-09T01:42:47.7757264Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/assets/packages/cupertino_icons/assets/
+2026-10-09T01:42:47.7758169Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+2026-10-09T01:42:47.7759189Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/assets/FontManifest.json
+2026-10-09T01:42:47.7759862Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/assets/shaders/
+2026-10-09T01:42:47.7760570Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/assets/shaders/ink_sparkle.frag
+2026-10-09T01:42:47.7761419Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/assets/shaders/stretch_effect.frag
+2026-10-09T01:42:47.7762146Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/assets/fonts/
+2026-10-09T01:42:47.7763204Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/assets/fonts/MaterialIcons-Regular.otf
+2026-10-09T01:42:47.7763969Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/index.html
+2026-10-09T01:42:47.7764567Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/version.json
+2026-10-09T01:42:47.7765226Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/flutter_service_worker.js
+2026-10-09T01:42:47.7765881Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/flutter.js
+2026-10-09T01:42:47.7766475Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/favicon.png
+2026-10-09T01:42:47.7767055Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/main.dart.js
+2026-10-09T01:42:47.7772087Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/
+2026-10-09T01:42:47.7772839Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/wimp.wasm
+2026-10-09T01:42:47.7796143Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/chromium/
+2026-10-09T01:42:47.7796918Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/chromium/canvaskit.js
+2026-10-09T01:42:47.7797715Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/chromium/canvaskit.wasm
+2026-10-09T01:42:47.7835585Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/chromium/canvaskit.js.symbols
+2026-10-09T01:42:47.7844264Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/skwasm_heavy.js.symbols
+2026-10-09T01:42:47.7856013Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/canvaskit.js
+2026-10-09T01:42:47.7859462Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/skwasm.js
+2026-10-09T01:42:47.7879582Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/canvaskit.wasm
+2026-10-09T01:42:47.7906704Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/skwasm.wasm
+2026-10-09T01:42:47.7930780Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/skwasm.js.symbols
+2026-10-09T01:42:47.7941438Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/skwasm_heavy.wasm
+2026-10-09T01:42:47.7976996Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/canvaskit.js.symbols
+2026-10-09T01:42:47.7986261Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/experimental_webparagraph/
+2026-10-09T01:42:47.7987211Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/experimental_webparagraph/canvaskit.js
+2026-10-09T01:42:47.7988189Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/experimental_webparagraph/canvaskit.wasm
+2026-10-09T01:42:47.8015855Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/experimental_webparagraph/canvaskit.js.symbols
+2026-10-09T01:42:47.8023054Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/wimp.js
+2026-10-09T01:42:47.8023908Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/skwasm_heavy.js
+2026-10-09T01:42:47.8024676Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/app/canvaskit/wimp.js.symbols
+2026-10-09T01:42:47.8036838Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/metadata.json
+2026-10-09T01:42:47.8037440Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/index.html
+2026-10-09T01:42:47.8037985Z ./snapshots/22b29663d85724ba619600766c78ff38cd3456ec/files.json
+2026-10-09T01:42:47.8038496Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/
+2026-10-09T01:42:47.8039121Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/
+2026-10-09T01:42:47.8039653Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/manifest.json
+2026-10-09T01:42:47.8040234Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/icons/
+2026-10-09T01:42:47.8040864Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/icons/Icon-512.png
+2026-10-09T01:42:47.8041557Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/icons/Icon-192.png
+2026-10-09T01:42:47.8042279Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/icons/Icon-maskable-192.png
+2026-10-09T01:42:47.8043311Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/icons/Icon-maskable-512.png
+2026-10-09T01:42:47.8044079Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/flutter_bootstrap.js
+2026-10-09T01:42:47.8044723Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/assets/
+2026-10-09T01:42:47.8045393Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/assets/AssetManifest.bin.json
+2026-10-09T01:42:47.8046121Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/assets/NOTICES
+2026-10-09T01:42:47.8049334Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/assets/shorebird.yaml
+2026-10-09T01:42:47.8050092Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/assets/AssetManifest.bin
+2026-10-09T01:42:47.8050798Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/assets/packages/
+2026-10-09T01:42:47.8051565Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/assets/packages/cupertino_icons/
+2026-10-09T01:42:47.8052461Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/assets/packages/cupertino_icons/assets/
+2026-10-09T01:42:47.8053472Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+2026-10-09T01:42:47.8054377Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/assets/FontManifest.json
+2026-10-09T01:42:47.8055092Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/assets/shaders/
+2026-10-09T01:42:47.8055819Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/assets/shaders/ink_sparkle.frag
+2026-10-09T01:42:47.8056643Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/assets/shaders/stretch_effect.frag
+2026-10-09T01:42:47.8057394Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/assets/fonts/
+2026-10-09T01:42:47.8058142Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/assets/fonts/MaterialIcons-Regular.otf
+2026-10-09T01:42:47.8059055Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/index.html
+2026-10-09T01:42:47.8059669Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/version.json
+2026-10-09T01:42:47.8060570Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/flutter_service_worker.js
+2026-10-09T01:42:47.8061230Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/flutter.js
+2026-10-09T01:42:47.8061809Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/favicon.png
+2026-10-09T01:42:47.8062408Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/main.dart.js
+2026-10-09T01:42:47.8067647Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/
+2026-10-09T01:42:47.8068442Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/wimp.wasm
+2026-10-09T01:42:47.8091975Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/chromium/
+2026-10-09T01:42:47.8092795Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/chromium/canvaskit.js
+2026-10-09T01:42:47.8093642Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/chromium/canvaskit.wasm
+2026-10-09T01:42:47.8131980Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/chromium/canvaskit.js.symbols
+2026-10-09T01:42:47.8140450Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/skwasm_heavy.js.symbols
+2026-10-09T01:42:47.8152649Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/canvaskit.js
+2026-10-09T01:42:47.8159604Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/skwasm.js
+2026-10-09T01:42:47.8179644Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/canvaskit.wasm
+2026-10-09T01:42:47.8203116Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/skwasm.wasm
+2026-10-09T01:42:47.8227296Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/skwasm.js.symbols
+2026-10-09T01:42:47.8238475Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/skwasm_heavy.wasm
+2026-10-09T01:42:47.8275542Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/canvaskit.js.symbols
+2026-10-09T01:42:47.8284986Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/experimental_webparagraph/
+2026-10-09T01:42:47.8286041Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/experimental_webparagraph/canvaskit.js
+2026-10-09T01:42:47.8287101Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/experimental_webparagraph/canvaskit.wasm
+2026-10-09T01:42:47.8314122Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/experimental_webparagraph/canvaskit.js.symbols
+2026-10-09T01:42:47.8320701Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/wimp.js
+2026-10-09T01:42:47.8321444Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/skwasm_heavy.js
+2026-10-09T01:42:47.8322194Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/app/canvaskit/wimp.js.symbols
+2026-10-09T01:42:47.8335070Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/metadata.json
+2026-10-09T01:42:47.8335684Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/index.html
+2026-10-09T01:42:47.8336304Z ./snapshots/989fe3443ad16df0c67ff0068d6efb3f458c8ace/files.json
+2026-10-09T01:42:47.8338918Z ##[endgroup]
+2026-10-09T01:42:47.8351824Z ##[end-action id=__actions_upload-pages-artifact.__run;outcome=success;conclusion=success;duration_ms=366]
+2026-10-09T01:42:47.8355697Z ##[start-action display=Archive artifact;id=__actions_upload-pages-artifact.__run_2]
+2026-10-09T01:42:47.8360404Z ##[end-action id=__actions_upload-pages-artifact.__run_2;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-09T01:42:47.8362579Z ##[start-action display=Archive artifact;id=__actions_upload-pages-artifact.__run_3]
+2026-10-09T01:42:47.8365481Z ##[end-action id=__actions_upload-pages-artifact.__run_3;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-09T01:42:47.8367050Z ##[start-action display=Upload artifact;id=__actions_upload-pages-artifact.upload-artifact]
+2026-10-09T01:42:47.8401496Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-09T01:42:47.8401844Z with:
+2026-10-09T01:42:47.8402027Z   name: github-pages
+2026-10-09T01:42:47.8402437Z   path: /home/runner/work/_temp/artifact.tar
+2026-10-09T01:42:47.8402687Z   retention-days: 1
+2026-10-09T01:42:47.8402873Z   if-no-files-found: error
+2026-10-09T01:42:47.8403077Z   compression-level: 6
+2026-10-09T01:42:47.8403267Z   overwrite: false
+2026-10-09T01:42:47.8403453Z   include-hidden-files: false
+2026-10-09T01:42:47.8403660Z ##[endgroup]
+2026-10-09T01:42:47.9815143Z (node:2312) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-09T01:42:47.9815724Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-09T01:42:47.9854976Z With the provided path, there will be 1 file uploaded
+2026-10-09T01:42:47.9879651Z Artifact name is valid!
+2026-10-09T01:42:47.9899453Z Root directory input is valid!
+2026-10-09T01:42:48.1818016Z Beginning upload of artifact content to blob storage
+2026-10-09T01:42:48.8018075Z (node:2312) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-09T01:42:49.0291701Z Uploaded bytes 8388608
+2026-10-09T01:42:49.5151801Z Uploaded bytes 16777216
+2026-10-09T01:42:50.1311733Z Uploaded bytes 25165824
+2026-10-09T01:42:50.8099899Z Uploaded bytes 33554432
+2026-10-09T01:42:51.4016590Z Uploaded bytes 41943040
+2026-10-09T01:42:51.9437685Z Uploaded bytes 50331648
+2026-10-09T01:42:52.5404637Z Uploaded bytes 58720256
+2026-10-09T01:42:53.1548004Z Uploaded bytes 67108864
+2026-10-09T01:42:53.7798304Z Uploaded bytes 75497472
+2026-10-09T01:42:54.3359570Z Uploaded bytes 83886080
+2026-10-09T01:42:55.1130017Z Uploaded bytes 92274688
+2026-10-09T01:42:55.6794753Z Uploaded bytes 100663296
+2026-10-09T01:42:56.3448593Z Uploaded bytes 109051904
+2026-10-09T01:42:56.9667973Z Uploaded bytes 117440512
+2026-10-09T01:42:57.5974327Z Uploaded bytes 125829120
+2026-10-09T01:42:58.2980910Z Uploaded bytes 134217728
+2026-10-09T01:42:58.8303297Z Uploaded bytes 142606336
+2026-10-09T01:42:59.4194153Z Uploaded bytes 150994944
+2026-10-09T01:43:00.0396257Z Uploaded bytes 159383552
+2026-10-09T01:43:00.6020906Z Uploaded bytes 167772160
+2026-10-09T01:43:00.6944496Z Uploaded bytes 169604277
+2026-10-09T01:43:00.7192545Z Finished uploading artifact content to blob storage!
+2026-10-09T01:43:00.7195152Z SHA256 digest of uploaded artifact zip is 11623aca1d0c1311306025b653d02266ddb254723fcda8bcc03258badf6e975a
+2026-10-09T01:43:00.7196966Z Finalizing artifact upload
+2026-10-09T01:43:00.9619795Z Artifact github-pages.zip successfully finalized. Artifact ID 11590247410
+2026-10-09T01:43:00.9620608Z Artifact github-pages has been successfully uploaded! Final size is 169604277 bytes. Artifact ID is 11590247410
+2026-10-09T01:43:00.9621299Z Artifact download URL: https://github.com/israelhudson/flutter_code_push_example/actions/runs/37870868223/artifacts/11590247410
+2026-10-09T01:43:00.9733864Z ##[end-action id=__actions_upload-pages-artifact.upload-artifact;outcome=success;conclusion=success;duration_ms=13136]
+2026-10-09T01:43:00.9813945Z ##[group]Run actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e
+2026-10-09T01:43:00.9814288Z with:
+2026-10-09T01:43:00.9816106Z   token: ***
+2026-10-09T01:43:00.9816295Z   timeout: 600000
+2026-10-09T01:43:00.9816473Z   error_count: 10
+2026-10-09T01:43:00.9816647Z   reporting_interval: 5000
+2026-10-09T01:43:00.9816973Z   artifact_name: github-pages
+2026-10-09T01:43:00.9817187Z   preview: false
+2026-10-09T01:43:00.9817373Z ##[endgroup]
+2026-10-09T01:43:01.1329724Z (node:2325) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-09T01:43:01.1330359Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-09T01:43:01.1974442Z Fetching artifact metadata for "github-pages" in this workflow run
+2026-10-09T01:43:01.2775816Z Found 5 artifact(s)
+2026-10-09T01:43:01.2787120Z Creating Pages deployment with payload:
+2026-10-09T01:43:01.2787541Z {
+2026-10-09T01:43:01.2787867Z 	"artifact_id": 11590247410,
+2026-10-09T01:43:01.2788315Z 	"pages_build_version": "22b29663d85724ba619600766c78ff38cd3456ec",
+2026-10-09T01:43:01.2839702Z 	"oidc_token": "***"
+2026-10-09T01:43:01.2840062Z }
+2026-10-09T01:43:02.5482422Z Created deployment for 22b29663d85724ba619600766c78ff38cd3456ec, ID: 22b29663d85724ba619600766c78ff38cd3456ec
+2026-10-09T01:43:07.5492637Z Getting Pages deployment status...
+2026-10-09T01:43:07.7031936Z Current status: deployment_in_progress
+2026-10-09T01:43:12.7042746Z Getting Pages deployment status...
+2026-10-09T01:43:12.8542201Z Current status: finished_file_sync
+2026-10-09T01:43:17.8550287Z Getting Pages deployment status...
+2026-10-09T01:43:17.9497319Z Reported success!
+2026-10-09T01:43:17.9621521Z ##[group]Run python3 - <<'PY'
+2026-10-09T01:43:17.9621811Z [36;1mpython3 - <<'PY'[0m
+2026-10-09T01:43:17.9622032Z [36;1mimport json, os, re[0m
+2026-10-09T01:43:17.9622270Z [36;1mfrom pathlib import Path[0m
+2026-10-09T01:43:17.9622685Z [36;1mmetadata = json.loads(Path(os.environ['RUNNER_TEMP'], 'release-lab', 'preview-metadata.json').read_text())[0m
+2026-10-09T01:43:17.9623212Z [36;1mkeys = ('web_content_sha256', 'snapshot_manifest_sha256')[0m
+2026-10-09T01:43:17.9623713Z [36;1mif metadata['source_sha'] != os.environ['SOURCE_SHA'] or any(not re.fullmatch(r'[0-9a-f]{64}', metadata[key]) for key in keys):[0m
+2026-10-09T01:43:17.9624255Z [36;1m    raise ValueError('Metadata não corresponde à fonte congelada.')[0m
+2026-10-09T01:43:17.9624657Z [36;1mwith open(os.environ['GITHUB_OUTPUT'], 'a') as output:[0m
+2026-10-09T01:43:17.9624954Z [36;1m    for key in keys:[0m
+2026-10-09T01:43:17.9625202Z [36;1m        output.write(key + '=' + metadata[key] + '\n')[0m
+2026-10-09T01:43:17.9625494Z [36;1mPY[0m
+2026-10-09T01:43:17.9681766Z shell: /usr/bin/bash -e {0}
+2026-10-09T01:43:17.9681997Z env:
+2026-10-09T01:43:17.9682210Z   SOURCE_SHA: 22b29663d85724ba619600766c78ff38cd3456ec
+2026-10-09T01:43:17.9682643Z ##[endgroup]
+2026-10-09T01:43:18.0001803Z ##[group]Run python3 trusted/deploy/pages_smoke.py --source-sha "$SOURCE_SHA" --expected-web-content-sha256 "$WEB_CONTENT_SHA256" --expected-snapshot-manifest-sha256 "$SNAPSHOT_MANIFEST_SHA256" --output "$RUNNER_TEMP/pages-smoke.json"
+2026-10-09T01:43:18.0003078Z [36;1mpython3 trusted/deploy/pages_smoke.py --source-sha "$SOURCE_SHA" --expected-web-content-sha256 "$WEB_CONTENT_SHA256" --expected-snapshot-manifest-sha256 "$SNAPSHOT_MANIFEST_SHA256" --output "$RUNNER_TEMP/pages-smoke.json"[0m
+2026-10-09T01:43:18.0059208Z shell: /usr/bin/bash -e {0}
+2026-10-09T01:43:18.0059431Z env:
+2026-10-09T01:43:18.0059655Z   SOURCE_SHA: 22b29663d85724ba619600766c78ff38cd3456ec
+2026-10-09T01:43:18.0060023Z   WEB_CONTENT_SHA256: 07b9a36f088e12130db289114ada0de5917db42c0e46834797f62de856157d99
+2026-10-09T01:43:18.0060496Z   SNAPSHOT_MANIFEST_SHA256: bbe6e670a858cc060bcc7356e096b0a36ad4d25461f194002e7808215825add9
+2026-10-09T01:43:18.0060869Z ##[endgroup]
+2026-10-09T01:43:18.4414423Z {
+2026-10-09T01:43:18.4415005Z   "success": true,
+2026-10-09T01:43:18.4415495Z   "source_sha": "22b29663d85724ba619600766c78ff38cd3456ec",
+2026-10-09T01:43:18.4416177Z   "web_content_sha256": "07b9a36f088e12130db289114ada0de5917db42c0e46834797f62de856157d99",
+2026-10-09T01:43:18.4417027Z   "snapshot_manifest_sha256": "bbe6e670a858cc060bcc7356e096b0a36ad4d25461f194002e7808215825add9",
+2026-10-09T01:43:18.4418086Z   "snapshot_url": "https://israelhudson.github.io/flutter_code_push_example/snapshots/22b29663d85724ba619600766c78ff38cd3456ec/",
+2026-10-09T01:43:18.4419058Z   "verified_files": [
+2026-10-09T01:43:18.4419368Z     "files.json",
+2026-10-09T01:43:18.4419647Z     "metadata.json",
+2026-10-09T01:43:18.4419943Z     "index.html",
+2026-10-09T01:43:18.4420221Z     "app/index.html",
+2026-10-09T01:43:18.4420528Z     "app/flutter_bootstrap.js",
+2026-10-09T01:43:18.4420865Z     "app/main.dart.js"
+2026-10-09T01:43:18.4421139Z   ],
+2026-10-09T01:43:18.4421411Z   "attempts": 1
+2026-10-09T01:43:18.4421678Z }
+2026-10-09T01:43:18.4522164Z ##[group]Run python3 trusted/tools/delivery/release_lab.py report --candidate-tag "$CANDIDATE_TAG" --preview-report "$RUNNER_TEMP/pages-smoke.json" --preview-metadata "$RUNNER_TEMP/release-lab/preview-metadata.json" --context-artifact release-lab-context --output "$RUNNER_TEMP/release-lab"
+2026-10-09T01:43:18.4523754Z [36;1mpython3 trusted/tools/delivery/release_lab.py report --candidate-tag "$CANDIDATE_TAG" --preview-report "$RUNNER_TEMP/pages-smoke.json" --preview-metadata "$RUNNER_TEMP/release-lab/preview-metadata.json" --context-artifact release-lab-context --output "$RUNNER_TEMP/release-lab"[0m
+2026-10-09T01:43:18.4579969Z shell: /usr/bin/bash -e {0}
+2026-10-09T01:43:18.4580196Z env:
+2026-10-09T01:43:18.4582104Z   GH_TOKEN: ***
+2026-10-09T01:43:18.4582305Z   CANDIDATE_TAG: v1.7.0-rc.1
+2026-10-09T01:43:18.4582529Z ##[endgroup]
+2026-10-09T01:43:21.8716089Z {"report_digest": "599978109e365559faf17b02dd9efc956e9c544c7186ac492cc13b25a1d462a3", "report_url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/37870868223", "preview_url": "https://israelhudson.github.io/flutter_code_push_example/snapshots/22b29663d85724ba619600766c78ff38cd3456ec/"}
+2026-10-09T01:43:21.8885577Z ##[group]Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+2026-10-09T01:43:21.8885917Z with:
+2026-10-09T01:43:21.8886113Z   name: release-lab-evaluation
+2026-10-09T01:43:21.8886454Z   path: /home/runner/work/_temp/release-lab/
+/home/runner/work/_temp/pages-smoke.json
+
+2026-10-09T01:43:21.8886817Z   if-no-files-found: ignore
+2026-10-09T01:43:21.8887022Z   retention-days: 90
+2026-10-09T01:43:21.8887205Z   overwrite: false
+2026-10-09T01:43:21.8887402Z   compression-level: 6
+2026-10-09T01:43:21.8887600Z   include-hidden-files: false
+2026-10-09T01:43:21.8887831Z   archive: true
+2026-10-09T01:43:21.8888023Z ##[endgroup]
+2026-10-09T01:43:22.0201469Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-10-09T01:43:22.0204218Z The least common ancestor is /home/runner/work/_temp. This will be the root directory of the artifact
+2026-10-09T01:43:22.0204938Z With the provided path, there will be 6 files uploaded
+2026-10-09T01:43:22.0208614Z Artifact name is valid!
+2026-10-09T01:43:22.0209171Z Root directory input is valid!
+2026-10-09T01:43:22.2022667Z Uploading artifact: release-lab-evaluation.zip
+2026-10-09T01:43:22.2056015Z Beginning upload of artifact content to blob storage
+2026-10-09T01:43:22.2828894Z Uploaded bytes 13124
+2026-10-09T01:43:22.3176683Z Finished uploading artifact content to blob storage!
+2026-10-09T01:43:22.3177692Z SHA256 digest of uploaded artifact is 4dcd8e55245b02ef1dbbbdc662273982ecee8aed502a998fcba97ac0a83fa505
+2026-10-09T01:43:22.3178489Z Finalizing artifact upload
+2026-10-09T01:43:22.5747309Z Artifact release-lab-evaluation successfully finalized. Artifact ID 11590431987
+2026-10-09T01:43:22.5747896Z Artifact release-lab-evaluation has been successfully uploaded! Final size is 13124 bytes. Artifact ID is 11590431987
+2026-10-09T01:43:22.5751763Z Artifact download URL: https://github.com/israelhudson/flutter_code_push_example/actions/runs/37870868223/artifacts/11590431987
+2026-10-09T01:43:22.5917141Z Post job cleanup.
+2026-10-09T01:43:22.6590109Z [command]/usr/bin/git version
+2026-10-09T01:43:22.6628453Z git version 2.55.0
+2026-10-09T01:43:22.6693937Z Temporarily overriding HOME='/home/runner/work/_temp/21e727b9-70dc-49b9-8387-fdc2a44510a7' before making global git config changes
+2026-10-09T01:43:22.6694996Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T01:43:22.6697540Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+2026-10-09T01:43:22.6732655Z Removing SSH command configuration
+2026-10-09T01:43:22.6735241Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T01:43:22.6770129Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T01:43:22.6982895Z Removing HTTP extra header
+2026-10-09T01:43:22.6983594Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T01:43:22.7019269Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T01:43:22.7219697Z Removing includeIf entries pointing to credentials config files
+2026-10-09T01:43:22.7225947Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T01:43:22.7260991Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T01:43:22.7600827Z Evaluate and set job outputs
+2026-10-09T01:43:22.7605395Z Set output 'report_digest'
+2026-10-09T01:43:22.7607178Z Set output 'report_url'
+2026-10-09T01:43:22.7607864Z Set output 'preview_url'
+2026-10-09T01:43:22.7608362Z Evaluate and set environment url
+2026-10-09T01:43:22.7610885Z Evaluated environment url: https://israelhudson.github.io/flutter_code_push_example/snapshots/22b29663d85724ba619600766c78ff38cd3456ec/
+2026-10-09T01:43:22.7611759Z Cleaning up orphan processes
+2026-10-09T01:43:22.7861789Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

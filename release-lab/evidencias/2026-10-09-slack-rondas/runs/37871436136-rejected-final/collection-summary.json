@@ -1,0 +1,255 @@
+{
+  "schema": 1,
+  "collected_at": "2026-10-09T01:54:46.717631+00:00",
+  "repository": "israelhudson/flutter_code_push_example",
+  "run_id": "37871436136",
+  "run_status": "completed",
+  "run_conclusion": "cancelled",
+  "run_attempt": 1,
+  "collection_status": "partial",
+  "requests": [
+    {
+      "name": "run",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/runs/37871436136",
+      "exit_code": 0,
+      "stdout_bytes": 14547,
+      "stderr_bytes": 0,
+      "stdout_sha256": "ff0d52f02a3d9dbfb42a996b9f363905e6757dfa356d1bfa4b2ea01427ebd51b",
+      "status": "collected"
+    },
+    {
+      "name": "reviews",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/runs/37871436136/approvals",
+      "exit_code": 0,
+      "stdout_bytes": 1767,
+      "stderr_bytes": 0,
+      "stdout_sha256": "d5ccd491c25728cb2bf79f75c019cf51c6d685b67a724ee32d7fc68aa0414e1a",
+      "status": "collected"
+    },
+    {
+      "name": "jobs-page-1",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/runs/37871436136/jobs?filter=all&per_page=100&page=1",
+      "exit_code": 0,
+      "stdout_bytes": 27416,
+      "stderr_bytes": 0,
+      "stdout_sha256": "3c180e394487b649620268dde935f38993cf26b6f7d43965d65f7904978eb3e3",
+      "status": "collected"
+    },
+    {
+      "name": "job-113630212184",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/jobs/113630212184/logs",
+      "exit_code": 0,
+      "stdout_bytes": 22301,
+      "stderr_bytes": 0,
+      "stdout_sha256": "6538bc8fa0fbc5fac545652ea378dc21601a2a35dbf23598da78dce9031a8226",
+      "status": "collected"
+    },
+    {
+      "name": "job-113630306490",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/jobs/113630306490/logs",
+      "exit_code": 0,
+      "stdout_bytes": 23333,
+      "stderr_bytes": 0,
+      "stdout_sha256": "97c6fe1e77bfc3c4146f62e55e76d58aef08c6ee0843ef52487b9135b01ce7dd",
+      "status": "collected"
+    },
+    {
+      "name": "job-113630363714",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/jobs/113630363714/logs",
+      "exit_code": 0,
+      "stdout_bytes": 26107,
+      "stderr_bytes": 0,
+      "stdout_sha256": "de054e819437365f5e8a0ee857e57bd1c184784e6e99fc866bdef46dce04aec5",
+      "status": "collected"
+    },
+    {
+      "name": "job-113630363748",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/jobs/113630363748/logs",
+      "exit_code": 0,
+      "stdout_bytes": 71190,
+      "stderr_bytes": 0,
+      "stdout_sha256": "1dac0b785f32206194f76bac34f0c14b652f3e994cf5714ed91eaca4aa122347",
+      "status": "collected"
+    },
+    {
+      "name": "job-113630695771",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/jobs/113630695771/logs",
+      "exit_code": 0,
+      "stdout_bytes": 114546,
+      "stderr_bytes": 0,
+      "stdout_sha256": "759175acc7c16e67d3a91357c84c24f5dff7fd470ce5be79e237ce85b401f64d",
+      "status": "collected"
+    },
+    {
+      "name": "job-113630935243",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/jobs/113630935243/logs",
+      "exit_code": 1,
+      "stdout_bytes": 215,
+      "stderr_bytes": 13,
+      "stdout_sha256": "a2a2a51cf65df14c41eb441a8cefa4d71aabcf820474760b5bf1762d3c31ae32",
+      "status": "collection_failed"
+    },
+    {
+      "name": "job-113630935257",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/jobs/113630935257/logs",
+      "exit_code": 1,
+      "stdout_bytes": 215,
+      "stderr_bytes": 13,
+      "stdout_sha256": "dfe6d623b4febaeece20073b0d7758e066b882f90947710a79f33e486e85e7af",
+      "status": "collection_failed"
+    },
+    {
+      "name": "job-113630935375",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/jobs/113630935375/logs",
+      "exit_code": 0,
+      "stdout_bytes": 24760,
+      "stderr_bytes": 0,
+      "stdout_sha256": "21e048086a3bbdd686c541180b5504c7bdd77e6c36fd9c92a555bb62f782a315",
+      "status": "collected"
+    },
+    {
+      "name": "job-113631748113",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/jobs/113631748113/logs",
+      "exit_code": 0,
+      "stdout_bytes": 19494,
+      "stderr_bytes": 0,
+      "stdout_sha256": "21c9aa9b2430e0e00fd772d8d8bf4a15fb18b6c97e6b76133fee2635aac44ef7",
+      "status": "collected"
+    },
+    {
+      "name": "job-113631748299",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/jobs/113631748299/logs",
+      "exit_code": 1,
+      "stdout_bytes": 215,
+      "stderr_bytes": 13,
+      "stdout_sha256": "224a78c8ca07acd5240e004b397f8c0abf4a065bcde2aaec04e1d6160cd83957",
+      "status": "collection_failed"
+    },
+    {
+      "name": "job-113631748455",
+      "endpoint": "repos/israelhudson/flutter_code_push_example/actions/jobs/113631748455/logs",
+      "exit_code": 1,
+      "stdout_bytes": 215,
+      "stderr_bytes": 13,
+      "stdout_sha256": "143611f3dc8d5556a9c9700c08df78ada3d8d394fb4452edf42996f4999340c9",
+      "status": "collection_failed"
+    }
+  ],
+  "jobs": [
+    {
+      "job_id": "113630212184",
+      "name": "Congelar candidata revisada",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "log_status": "collected"
+    },
+    {
+      "job_id": "113630306490",
+      "name": "Avaliar a mesma candidata / Conferir RC ativa, papéis e proteções",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "log_status": "collected"
+    },
+    {
+      "job_id": "113630363714",
+      "name": "Avaliar a mesma candidata / Preparar contexto do changelog — opcional, sem aguardar IA",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "log_status": "collected"
+    },
+    {
+      "job_id": "113630363748",
+      "name": "Avaliar a mesma candidata / Verificar e compilar web sem permissões de publicação",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "log_status": "collected"
+    },
+    {
+      "job_id": "113630695771",
+      "name": "Avaliar a mesma candidata / Publicar bytes verificados, confirmar preview e changelog",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "log_status": "collected"
+    },
+    {
+      "job_id": "113630935243",
+      "name": "Avaliar a mesma candidata / Registrar aprovação — israelhudson / Gate first",
+      "run_attempt": 1,
+      "conclusion": "cancelled",
+      "log_status": "collection_failed"
+    },
+    {
+      "job_id": "113630935257",
+      "name": "Avaliar a mesma candidata / Registrar aprovação — fahnassau30 / Gate second",
+      "run_attempt": 1,
+      "conclusion": "failure",
+      "log_status": "collection_failed"
+    },
+    {
+      "job_id": "113630935375",
+      "name": "Avaliar a mesma candidata / Avisar candidata pronta — Slack opcional / Avisos opcionais — fila congelada, sem decidir a entrega",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "log_status": "collected"
+    },
+    {
+      "job_id": "113631255066",
+      "name": "Avaliar a mesma candidata / Avisar aval de Fabrícia — Slack opcional",
+      "run_attempt": 1,
+      "conclusion": "skipped",
+      "log_status": "not_applicable_skipped"
+    },
+    {
+      "job_id": "113631747991",
+      "name": "Avaliar a mesma candidata / Avisar 2/2 e comando separado — Slack opcional",
+      "run_attempt": 1,
+      "conclusion": "skipped",
+      "log_status": "not_applicable_skipped"
+    },
+    {
+      "job_id": "113631748113",
+      "name": "Avaliar a mesma candidata / Consolidar resultado da candidata — sem aprovar ou publicar",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "log_status": "collected"
+    },
+    {
+      "job_id": "113631748151",
+      "name": "Avaliar a mesma candidata / Avisar aval de Israel — Slack opcional",
+      "run_attempt": 1,
+      "conclusion": "skipped",
+      "log_status": "not_applicable_skipped"
+    },
+    {
+      "job_id": "113631748299",
+      "name": "Avaliar a mesma candidata / PROMOVER — tag estável e Release no GitHub, sem distribuição mobile",
+      "run_attempt": 1,
+      "conclusion": "cancelled",
+      "log_status": "collection_failed"
+    },
+    {
+      "job_id": "113631748455",
+      "name": "Avaliar a mesma candidata / AUTORIZAR PUBLICAR — Israel OU Fabrícia, após os dois avais",
+      "run_attempt": 1,
+      "conclusion": "cancelled",
+      "log_status": "collection_failed"
+    },
+    {
+      "job_id": "113631748788",
+      "name": "Avaliar a mesma candidata / Avisar resultado de promoção — Slack opcional",
+      "run_attempt": 1,
+      "conclusion": "skipped",
+      "log_status": "not_applicable_skipped"
+    },
+    {
+      "job_id": "113631805265",
+      "name": "Avaliar a mesma candidata / Avisar encerramento — Slack opcional",
+      "run_attempt": 1,
+      "conclusion": "skipped",
+      "log_status": "not_applicable_skipped"
+    }
+  ],
+  "read_only": true,
+  "scenario_result": "not_evaluated",
+  "note": "Coleta não transforma falha do workflow em teste aprovado; comparar efeitos e objetivo separadamente."
+}
