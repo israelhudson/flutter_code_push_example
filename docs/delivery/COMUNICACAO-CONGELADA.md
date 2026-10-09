@@ -1,6 +1,13 @@
 # Comunicação vinculada à mesma candidata
 
-Implementação integrada pela [PR #18](https://github.com/israelhudson/flutter_code_push_example/pull/18), em 09/10/2026 UTC (08/10 em Fortaleza). Provedor de IA e Plane permanecem inativos. A [conexão Slack real](CONFIGURAR-SLACK-LAB.md) tem prova isolada; os [avisos automáticos da candidata](SLACK-AUTOMATICO.md) estão preparados na branch, aguardando integração e ensaio próprio. Nenhuma dessas provas comprova distribuição do aplicativo.
+Implementação integrada pela [PR #18](https://github.com/israelhudson/flutter_code_push_example/pull/18), em 09/10/2026 UTC (08/10 em Fortaleza). Provedor de IA e Plane permanecem inativos. A [conexão Slack real](CONFIGURAR-SLACK-LAB.md) tem prova isolada; os [avisos automáticos da candidata](SLACK-AUTOMATICO.md) foram integrados pela PR #19 e comprovados na 1.7.0, com cinco mensagens reais. A RC1 da 1.8.0 foi rejeitada e conciliada após cancelamento operacional; RC2 pendente. Nenhuma dessas provas comprova distribuição do aplicativo.
+
+A descrição histórica de um PR não confirma o estado atual. A 1.8.0 RC1
+confirmou o fallback sem commits adicionais quando base e fonte eram iguais;
+não reutilizou contexto de PR antigo. Preservar o relatório aprovado e seus
+recibos, e mostrar a observação atual com fonte própria. O novo encerramento
+automático após rejeição e a leitura curta de `sent` concorrente estão em
+preparação, sem novo negativo remoto.
 
 ## O que o código faz
 

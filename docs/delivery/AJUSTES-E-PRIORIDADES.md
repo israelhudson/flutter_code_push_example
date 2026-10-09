@@ -12,21 +12,32 @@ O bot `Flutter Deploy LAB` e o secret `SLACK_BOT_TOKEN` já foram configurados.
 A [execução isolada 37869235129](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37869235129)
 confirmou envio real ao canal privado `app-deploy-test-isr`, com verificação de
 identidade/membros e recibo `sent`. Os avisos automáticos da candidata estão
-preparados na branch desta rodada, aguardando integração e prova própria. O
+integrados pela [PR #19](https://github.com/israelhudson/flutter_code_push_example/pull/19) e comprovados na jornada 1.7.0, com cinco mensagens reais. RC1 da 1.8.0 foi rejeitada e conciliada após cancelamento operacional; RC2 pendente. O
 workflow de teste de conexão permanece separado desse fluxo.
 
 O [coletor de evidências](COLETAR-EVIDENCIAS.md) está implementado e coletou os oito logs reais da entrega 1.6.0. O orquestrador que julga os cenários negativos ainda é pendente. [Comunicação congelada](COMUNICACAO-CONGELADA.md) e [versionamento por plataforma](VERSIONAMENTO-ENTREGA-E-PLATAFORMAS.md) explicam os contratos e limites.
 
 Integração e ensaios remotos desses ajustes têm prova própria no relatório desta rodada. Testes locais de estados/contexto/versões não comprovam cancelamento real no GitHub ou distribuição mobile. A ordem abaixo permanece como roteiro antes do Amulets, com essas partes de código já preparadas.
 
+## Incidente real e correções em preparação
+
+Fabrícia rejeitou a RC1 da 1.8.0, mas o gate Israel continuou esperando. Foi
+necessário cancelar o run e executar a conciliação: estado `rejected`, 0/2,
+review preservada, autorização/promoção canceladas e aviso de rejeição real.
+O [manual Slack](SLACK-AUTOMATICO.md) preserva as fontes e a ação operacional.
+O novo encerramento automático por review oficial está em preparação, com
+testes locais/CI e sem nova prova negativa real. Outra melhoria em preparação
+lê brevemente um `sent` concorrente na outbox, sem novo POST e sem liberar
+reenvio de `unknown`. Pins Pages Node 24 também precisam do novo preview real.
+
 ## Ordem de trabalho proposta
 
 | Ordem | Prioridade e momento | Ajuste | Como comprovar |
 | --- | --- | --- | --- |
-| 1 | **P1 — próxima rodada do LAB** | Consolidar estados e identidade visível: distinguir aguardando revisores, aguardando comando final, rejeitada, cancelada e publicada; mostrar versão da candidata e versão interna do app com rótulos claros | Conferir journal, reviews e run em 0/2, 1/2, 2/2, rejeição e cancelamento. Preview identifica RC/SHA e explica `pubspec_version`; hoje mostra `1.1.0+2` para RC `1.6.0-rc.1` |
+| 1 | **P1 — correção do incidente da 1.8.0** | Encerrar esperas após rejeição oficial, preservar 0/2/review e conciliar o estado; manter identidade da candidata e versão interna do app com rótulos claros | RC1 precisou de cancelamento operacional. Validar o guard em testes/CI; o novo fecho automático não terá negativo remoto adicional nesta rodada. Confirmar decisões novas e estado próprio da RC2 |
 | 2 | **P1 — antes de adaptar à Amulets** | Completar os cinco subcasos remotos e o caso de fonte congelada com avanço da main/workflows | Ensaiar conflito de tag, recuperação parcial, deriva de proteções, writers concorrentes e preview falho. Validar permissões da promoção sem mover a tag nem ampliar acesso como contorno |
 | 3 | **P1 — decisão com o time antes da Amulets** | Definir quem gera RC, substituto, recuperador e contas Samuel/Vinícius; validar revisão independente e destinos mobile | Matriz acordada com Samuel; duas decisões próprias na mesma RC, comando final separado e aceites específicos por destino/dispositivo. Release GitHub não comprova distribuição mobile |
-| 4 | **P2 — comunicação da entrega** | Integrar avisos automáticos com o bot já validado, comunicação congelada, fallback e outbox persistente; avaliar IA/Plane separadamente | Confirmar mensagem da candidata, recibo e reexecução segura. Slack indisponível produz aviso opcional e não segura gates/promoção; `unknown` exige reconciliação positiva e não reenvio automático |
+| 4 | **P2 — comunicação da entrega** | Validar os avisos automáticos integrados, com comunicação congelada, fallback e outbox persistente; avaliar IA/Plane separadamente | Confirmar mensagem da candidata, recibo e reexecução segura. Slack indisponível produz aviso opcional e não segura gates/promoção; `unknown` exige reconciliação positiva e não reenvio automático |
 | 5 | **P3 — manutenção e apresentação** | Automatizar o coletor de evidências e o relatório de testes negativos; atualizar os materiais após as correções | Coletar por tentativa/job, indicar logs ausentes e guardar coleta parcial. Teste negativo recebe PASS só após provar bloqueio esperado e ausência de efeitos; preservar o job original e erros reais |
 
 P1 não significa que a entrega GitHub 1.6.0 falhou. Indica a ordem de refinamento do LAB e as condições antes de ampliar o processo ao projeto de trabalho. Não há um bypass crítico comprovado nos relatórios consultados; a rechecagem das proteções já foi corrigida antes da promoção anterior.
@@ -37,7 +48,7 @@ P1 não significa que a entrega GitHub 1.6.0 falhou. Indica a ordem de refinamen
 - Gerador `tools/delivery/slack_preview.py`: cria `slack-message.json`, `slack-preview.md` e `slack-preview-metadata.json`, sem operação de envio nem leitura de credenciais.
 - Job opcional **ILUSTRAR AVISO SLACK — simulação, sem envio** no workflow de avaliação. Usa o relatório congelado, mostra o texto no resumo e preserva o artefato `release-lab-slack-preview`.
 - Os jobs de aprovação, autorização e promoção não dependem desse job. Ele tem apenas leitura, timeout curto e falha opcional; não tem Environment de aprovação.
-- O [manual de operação](SLACK-AUTOMATICO.md) descreve a integração preparada dos avisos, os estados da outbox e a retomada de resultado incerto. Integrar e ensaiar esse fluxo antes de declarar os avisos automáticos ativos.
+- O [manual de operação](SLACK-AUTOMATICO.md) descreve os avisos integrados, os estados da outbox e a retomada de resultado incerto. A jornada 1.7.0 comprova cinco avisos; concluir a 1.8.0 e as verificações de recuperação, mantendo explícitos os limites da correção de encerramento.
 - O provedor de IA, a consulta ao Plane e a atualização da mesma mensagem continuam pendentes. A captura paralela e o resumo literal das seções de PR já foram integrados. Configurar o secret não transforma o gerador ilustrativo em remetente; a rodada 1.6.0 não recebe novos passos retroativamente.
 
 ## Contrato de comunicação registrado

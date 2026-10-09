@@ -2,8 +2,9 @@
 
 Registro atualizado em 08/10/2026, Fortaleza, após a entrega do tema escuro.
 **Comunicação congelada e fallback já estão integrados; o bot Slack tem prova
-de conexão real. Os avisos automáticos da candidata estão preparados na branch,
-aguardando integração e ensaio próprio. O provedor de IA permanece inativo.**
+de conexão real. Os avisos automáticos integrados no PR #19 foram comprovados
+na 1.7.0, com cinco mensagens reais; RC1 da 1.8.0 foi rejeitada e conciliada
+após cancelamento operacional. RC2 continua pendente. O provedor de IA permanece inativo.**
 
 A [PR #18](https://github.com/israelhudson/flutter_code_push_example/pull/18)
 integrou os ajustes de estados, versões e comunicação. O
@@ -12,6 +13,12 @@ comprova credencial, destino e envio real; o
 [manual de operação](SLACK-AUTOMATICO.md) distingue essa prova da automação da
 candidata. As seções sobre Copilot e Plane abaixo continuam como proposta de
 adaptação, sem consumo de IA ou ativação de acesso ao Plane.
+
+O [manual](SLACK-AUTOMATICO.md) registra os runs, cinco avisos da 1.7.0,
+rejeição real da 1.8.0 e o incidente do outro gate ainda esperando. Encerramento
+automático e leitura curta de `sent` concorrente estão em preparação; não têm
+prova nova de rejeição real. Preservar texto/recibos históricos e mostrar o
+estado atual observado separadamente.
 
 ## Tags: preservar a candidata após a promoção
 
