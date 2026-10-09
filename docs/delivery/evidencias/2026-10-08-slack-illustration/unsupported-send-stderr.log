@@ -1,0 +1,2 @@
+usage: slack_preview.py [-h] --report REPORT --policy POLICY --output OUTPUT
+slack_preview.py: error: unrecognized arguments: --send

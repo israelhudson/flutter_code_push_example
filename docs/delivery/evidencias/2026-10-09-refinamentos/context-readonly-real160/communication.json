@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "context": {
+    "schema": 1,
+    "candidate_tag": "v1.6.0-rc.1",
+    "source_sha": "1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935",
+    "changelog_base_sha": "b8763ec5adc5e24ce34f474a66a079b48a9ffa0f",
+    "changes": [
+      "Merge pull request #17 from israelhudson/codex/manual-dark-theme",
+      "feat: adicionar tema escuro manual",
+      "Merge pull request #16 from israelhudson/codex/release-lab-backport",
+      "docs: registrar promoção real e provas da validação",
+      "fix: identificar laboratório na candidata corrigida"
+    ],
+    "source_history_sha256": "78817401a38c492ea89cdb0493c9ebcba6a4bec9c9a6776242037ffe89dca0e8",
+    "commit_count": 5,
+    "history_truncated": false,
+    "sources": [
+      {
+        "kind": "pr",
+        "id": "17",
+        "url": "https://github.com/israelhudson/flutter_code_push_example/pull/17",
+        "title": "feat: adicionar tema escuro manual",
+        "body": ""
+      },
+      {
+        "kind": "pr",
+        "id": "16",
+        "url": "https://github.com/israelhudson/flutter_code_push_example/pull/16",
+        "title": "fix: preservar na main a correção validada na RC2",
+        "body": "A RC1 foi rejeitada e a mensagem inicial foi corrigida na branch da release. Este PR leva a mesma correção validada na RC2 para a main, sem integrar todo o histórico da release. A expectativa existente do teste de widget acompanha o texto.\n\nO guia de validação passa a apontar para a promoção real concluída, a matriz por subcaso e a auditoria com logs e prints. A tag v1.5.0 e a Release GitHub foram conferidas no commit aprovado da RC2; a distribuição mobile continua fora deste ensaio.\n\nValidação: analyze, testes Flutter e 273 testes da esteira passaram no PR para a release. Este PR também exige check e revisão antes do merge. Aprovações realizadas como automação de ensaio autorizada por Israel, sem alegar revisão humana independente da Fabrícia."
+      }
+    ],
+    "collected_at": "2026-10-09T01:08:06.000000+00:00",
+    "context_sha256": "3e4108955348b0d63d8932f0bb54bba3fcc21648870b846e674defb394a953b9"
+  },
+  "selection": {
+    "schema": 1,
+    "candidate_tag": "v1.6.0-rc.1",
+    "source_sha": "1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935",
+    "context_sha256": "3e4108955348b0d63d8932f0bb54bba3fcc21648870b846e674defb394a953b9",
+    "source": "commits_fallback",
+    "text": "• Merge pull request #17 from israelhudson/codex/manual-dark-theme\n• feat: adicionar tema escuro manual\n• Merge pull request #16 from israelhudson/codex/release-lab-backport\n• docs: registrar promoção real e provas da validação\n• fix: identificar laboratório na candidata corrigida",
+    "fallback_reason": "ai_not_configured",
+    "selected_at": "2026-10-09T01:08:06.000000+00:00",
+    "optional_result_status": "not_configured",
+    "optional_result_sha256": null,
+    "selected_sha256": "3911c1a5dfd1a81d5e73b40adcd1ad7ab7f943de3c6045229ecada96c5d6cc8e"
+  }
+}

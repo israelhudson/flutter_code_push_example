@@ -1,0 +1,27 @@
+{
+  "observed_at": "2026-10-09T00:22:54.826972+00:00",
+  "run_id": 37863610149,
+  "candidate_tag": "v1.6.0-rc.1",
+  "source_sha": "1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935",
+  "report_digest": "1ac71795e140ada599233af0132c8631d62a5f6c0a8a1975d52b5172d46c3469",
+  "completed_success_jobs": 6,
+  "approvals": {
+    "first": "israelhudson",
+    "second": "fahnassau30"
+  },
+  "waiting_jobs": [
+    "Avaliar a mesma candidata / AUTORIZAR PUBLICAR — Israel OU Fabrícia, após os dois avais"
+  ],
+  "published": false,
+  "agent_sent_approval": false,
+  "preview_checks": {
+    "light": true,
+    "dark_toggle": true,
+    "reset_to_light_on_reload": true
+  },
+  "refinements": [
+    "Exibir RC e versão interna com rótulos claros",
+    "Changelog de produto sem repetição de backports",
+    "Estado específico para aguardar o comando final"
+  ]
+}

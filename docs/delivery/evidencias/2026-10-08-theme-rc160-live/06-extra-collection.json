@@ -1,0 +1,40 @@
+{
+  "captured_at": "2026-10-09T00:37:24.580307+00:00",
+  "commands": [
+    {
+      "command": [
+        "gh",
+        "api",
+        "--allow-escape-sequences",
+        "repos/israelhudson/flutter_code_push_example/actions/jobs/113607501573/logs"
+      ],
+      "exit_code": 0,
+      "bytes": 3386
+    },
+    {
+      "command": [
+        "gh",
+        "api",
+        "--allow-escape-sequences",
+        "repos/israelhudson/flutter_code_push_example/actions/jobs/113608428316/logs"
+      ],
+      "exit_code": 0,
+      "bytes": 16125
+    },
+    {
+      "command": [
+        "gh",
+        "run",
+        "download",
+        "37863610149",
+        "--repo",
+        "israelhudson/flutter_code_push_example",
+        "--name",
+        "release-lab-publication",
+        "--dir",
+        "docs/delivery/evidencias/2026-10-08-theme-rc160-live/publication-artifact"
+      ],
+      "exit_code": 0
+    }
+  ]
+}

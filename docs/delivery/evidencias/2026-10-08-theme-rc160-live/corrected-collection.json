@@ -1,0 +1,61 @@
+{
+  "captured_at": "2026-10-09T00:20:03.109891+00:00",
+  "commands": [
+    {
+      "command": [
+        "gh",
+        "api",
+        "repos/israelhudson/flutter_code_push_example/contents/release-lab/state.json",
+        "-f",
+        "ref=codex/release-lab-state",
+        "-X",
+        "GET"
+      ],
+      "exit_code": 0
+    },
+    {
+      "job_id": 113604967206,
+      "command": [
+        "gh",
+        "api",
+        "--allow-escape-sequences",
+        "repos/israelhudson/flutter_code_push_example/actions/jobs/113604967206/logs"
+      ],
+      "exit_code": 0,
+      "bytes": 17878
+    },
+    {
+      "job_id": 113605089015,
+      "command": [
+        "gh",
+        "api",
+        "--allow-escape-sequences",
+        "repos/israelhudson/flutter_code_push_example/actions/jobs/113605089015/logs"
+      ],
+      "exit_code": 0,
+      "bytes": 18911
+    },
+    {
+      "job_id": 113605145062,
+      "command": [
+        "gh",
+        "api",
+        "--allow-escape-sequences",
+        "repos/israelhudson/flutter_code_push_example/actions/jobs/113605145062/logs"
+      ],
+      "exit_code": 0,
+      "bytes": 61412
+    },
+    {
+      "job_id": 113605623215,
+      "command": [
+        "gh",
+        "api",
+        "--allow-escape-sequences",
+        "repos/israelhudson/flutter_code_push_example/actions/jobs/113605623215/logs"
+      ],
+      "exit_code": 0,
+      "bytes": 103830
+    }
+  ]
+}

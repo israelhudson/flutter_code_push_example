@@ -1,0 +1,11 @@
+{
+  "captured_at": "2026-10-09T00:22:54.825899+00:00",
+  "command": [
+    "gh",
+    "api",
+    "--allow-escape-sequences",
+    "repos/israelhudson/flutter_code_push_example/actions/jobs/113605983459/logs"
+  ],
+  "exit_code": 0,
+  "bytes": 16246
+}

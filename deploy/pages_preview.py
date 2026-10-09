@@ -24,6 +24,7 @@ HISTORY_BRANCH = 'codex/pages-previews'
 REPOSITORY = 'israelhudson/flutter_code_push_example'
 PROJECT_BASE = '/flutter_code_push_example/'
 MAX_SITE_BYTES = 800 * 1024 * 1024
+DELIVERY_TAG = re.compile(r'v\d+\.\d+\.\d+-rc\.[1-9]\d*')
 
 
 def git(repo, *args, authenticated=False):
@@ -94,6 +95,8 @@ def validate_site(site):
         metadata = json_file(folder / 'metadata.json')
         if metadata['source_sha'] != sha or metadata['schema'] != 'pages-preview-v1':
             raise ValueError('Identidade do snapshot web inválida.')
+        if metadata.get('delivery_tag') is not None and not DELIVERY_TAG.fullmatch(str(metadata['delivery_tag'])):
+            raise ValueError('Identidade da entrega do snapshot web inválida.')
         if not (folder / 'index.html').is_file() or not (folder / 'app/index.html').is_file():
             raise ValueError('Snapshot web incompleto.')
         if metadata['web_content_sha256'] != digest(hashes(folder / 'app')):
@@ -126,19 +129,28 @@ def source_fingerprint(repo, sha, inputs):
     return digest({'files': entries, 'inputs': inputs})
 
 
-def entry_page(sha, version):
+def entry_page(sha, version, delivery_tag=None):
     safe_version = html.escape(version)
+    delivery = ('Criado para a entrega <strong>' + html.escape(delivery_tag) + '</strong> · '
+                if delivery_tag else 'Entrega: consultar a candidata no GitHub · ')
     return f'''<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Preview {safe_version} · {sha[:12]}</title>
 <style>html,body{{margin:0;height:100%;font-family:system-ui;background:#f5f5f5}}body{{display:flex;flex-direction:column}}header{{padding:8px 12px;font-size:13px;overflow-wrap:anywhere}}iframe{{width:100%;flex:1;border:0;background:white}}a{{color:#125dab}}</style>
-</head><body><header>Preview web · versão {safe_version}<br>Snapshot
+</head><body><header>Preview web · {delivery}metadado do app no build web: {safe_version}<br>Snapshot
 <a href="https://github.com/{REPOSITORY}/commit/{sha}">{sha}</a>
-· <a href="metadata.json">identidade</a> · Android/iOS não validados por este preview.</header><iframe title="Aplicativo Flutter web" src="app/"></iframe></body></html>'''
+· <a href="metadata.json">identidade</a> · Android/iOS não validados por este preview.<br>A tag da entrega e a versão do app são identificações diferentes. Este snapshot é imutável e pode ser reutilizado por outra candidata do mesmo código.</header><iframe title="Aplicativo Flutter web" src="app/"></iframe></body></html>'''
 
 
-def build(repo, sha, site):
+def build(repo, sha, site, delivery_tag=None, candidate_manifest=None):
     repo, site = Path(repo).resolve(), Path(site).resolve()
+    if candidate_manifest is not None:
+        candidate = json_file(candidate_manifest)
+        if candidate.get('source_sha') != sha or (delivery_tag and candidate.get('candidate_tag') != delivery_tag):
+            raise ValueError('Manifesto congelado não corresponde ao SHA/entrega do preview.')
+        delivery_tag = candidate.get('candidate_tag')
+    if delivery_tag is not None and not DELIVERY_TAG.fullmatch(str(delivery_tag)):
+        raise ValueError('Identidade da entrega exige tag RC explícita.')
     if not re.fullmatch(r'[0-9a-f]{40}', sha) or snapshots.resolve_commit(repo, sha) != sha:
         raise ValueError('Preview exige SHA40 completo, nunca branch/latest.')
     symbolic = subprocess.run(['git', '-C', str(repo), 'symbolic-ref', '-q', 'HEAD'], capture_output=True)
@@ -190,7 +202,9 @@ def build(repo, sha, site):
                     'fingerprint': snapshots.build_fingerprint(repo, sha, {**inputs, 'command': command}),
                     'web_content_sha256': digest(hashes(folder / 'app')),
                     'snapshot_path': 'snapshots/' + sha + '/'}
-        (folder / 'index.html').write_text(entry_page(sha, version), encoding='utf-8')
+        if delivery_tag is not None:
+            metadata['delivery_tag'] = delivery_tag
+        (folder / 'index.html').write_text(entry_page(sha, version, delivery_tag), encoding='utf-8')
         (folder / 'metadata.json').write_text(json.dumps(metadata, ensure_ascii=False, indent=2) + '\n')
         (folder / 'files.json').write_text(json.dumps(hashes(folder), sort_keys=True, indent=2) + '\n')
     (site / '.nojekyll').write_text('')
@@ -236,11 +250,13 @@ def main():
         sub.add_parser(name).add_argument('--site', required=True)
     p = sub.add_parser('build')
     p.add_argument('--site', required=True); p.add_argument('--repo', required=True); p.add_argument('--source-sha', required=True)
+    p.add_argument('--delivery-tag')
+    p.add_argument('--candidate-manifest', help='Manifesto congelado da preparação; SHA e tag devem coincidir.')
     p = sub.add_parser('export')
     p.add_argument('--site', required=True); p.add_argument('--output', required=True)
     args = parser.parse_args()
     if args.command == 'build':
-        result = build(args.repo, args.source_sha, args.site)
+        result = build(args.repo, args.source_sha, args.site, args.delivery_tag, args.candidate_manifest)
     elif args.command == 'export':
         result = export(args.site, args.output)
     else:

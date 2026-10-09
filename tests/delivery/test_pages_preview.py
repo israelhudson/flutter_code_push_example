@@ -29,7 +29,7 @@ class PagesPreviewTests(unittest.TestCase):
         self.site = self.folder / 'site'
         self.run = subprocess.run
 
-    def compile(self, sha=None, extra_file=None):
+    def compile(self, sha=None, extra_file=None, delivery_tag=None, candidate_manifest=None):
         def fake_run(args, **kwargs):
             if args[0] != 'flutter':
                 return self.run(args, **kwargs)
@@ -48,7 +48,42 @@ class PagesPreviewTests(unittest.TestCase):
         version = {'frameworkVersion': self.inputs['flutter_version'], 'frameworkRevision': self.inputs['flutter_revision']}
         with patch.object(pages.subprocess, 'check_output', return_value=json.dumps(version).encode()), \
                 patch.object(pages.subprocess, 'run', side_effect=fake_run):
-            return pages.build(self.repo.path, sha or self.sha, self.site)
+            return pages.build(self.repo.path, sha or self.sha, self.site, delivery_tag, candidate_manifest)
+
+    def test_delivery_is_visible_separately_from_app_metadata(self):
+        metadata = self.compile(delivery_tag='v1.7.0-rc.1')
+        wrapper = (self.site / 'snapshots' / self.sha / 'index.html').read_text()
+        self.assertIn('Criado para a entrega <strong>v1.7.0-rc.1</strong>', wrapper)
+        self.assertIn('metadado do app no build web: ' + metadata['version'], wrapper)
+        self.assertEqual(metadata['delivery_tag'], 'v1.7.0-rc.1')
+
+    def test_frozen_candidate_must_identify_the_same_source_and_tag(self):
+        candidate = self.folder / 'candidate.json'
+        candidate.write_text(json.dumps({'candidate_tag': 'v1.7.0-rc.1', 'source_sha': self.sha}))
+        metadata = self.compile(candidate_manifest=candidate)
+        self.assertEqual(metadata['delivery_tag'], 'v1.7.0-rc.1')
+        before = pages.hashes(self.site)
+        candidate.write_text(json.dumps({'candidate_tag': 'v1.7.0-rc.1', 'source_sha': 'a' * 40}))
+        with self.assertRaisesRegex(ValueError, 'Manifesto congelado'):
+            self.compile(candidate_manifest=candidate)
+        self.assertEqual(pages.hashes(self.site), before)
+        candidate.write_text(json.dumps({'candidate_tag': 'v1.7.0-rc.2', 'source_sha': self.sha}))
+        with self.assertRaisesRegex(ValueError, 'Manifesto congelado'):
+            self.compile(delivery_tag='v1.7.0-rc.1', candidate_manifest=candidate)
+
+    def test_same_sha_in_another_candidate_preserves_original_snapshot_identity(self):
+        original = self.compile(delivery_tag='v1.7.0-rc.1')
+        before = pages.hashes(self.site / 'snapshots' / self.sha)
+        reused = self.compile(delivery_tag='v1.7.0-rc.2')
+        self.assertEqual(reused, original)
+        self.assertEqual(pages.hashes(self.site / 'snapshots' / self.sha), before)
+        self.assertIn('pode ser reutilizado por outra candidata',
+                      (self.site / 'snapshots' / self.sha / 'index.html').read_text())
+
+    def test_invalid_delivery_tag_is_rejected_before_build(self):
+        with self.assertRaisesRegex(ValueError, 'tag RC'):
+            self.compile(delivery_tag='<script>latest</script>')
+        self.assertFalse(self.site.exists())
 
     def test_snapshot_metadata_matches_code_and_preserves_ci_identity(self):
         metadata = self.compile()

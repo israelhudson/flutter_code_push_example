@@ -1,0 +1,29 @@
+{
+  "captured_at": "2026-10-09T00:21:34.800021+00:00",
+  "commands": [
+    {
+      "command": [
+        "gh",
+        "api",
+        "repos/israelhudson/flutter_code_push_example/actions/runs/37863610149"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "gh",
+        "api",
+        "repos/israelhudson/flutter_code_push_example/actions/runs/37863610149/jobs"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "gh",
+        "api",
+        "repos/israelhudson/flutter_code_push_example/actions/runs/37863610149/approvals"
+      ],
+      "exit_code": 0
+    }
+  ]
+}

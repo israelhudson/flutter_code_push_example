@@ -1,0 +1,5 @@
+1cb8f3e Merge pull request #17 from israelhudson/codex/manual-dark-theme
+d6cba55 feat: adicionar tema escuro manual
+f989802 Merge pull request #16 from israelhudson/codex/release-lab-backport
+f74dcb3 docs: registrar promoção real e provas da validação
+54829ea fix: identificar laboratório na candidata corrigida

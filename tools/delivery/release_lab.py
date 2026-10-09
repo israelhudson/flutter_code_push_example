@@ -17,6 +17,9 @@ import subprocess
 import time
 from urllib.parse import quote
 
+import changelog_summary
+import version_manifest
+
 REPOSITORY = 'israelhudson/flutter_code_push_example'
 ROOT = Path(__file__).resolve().parents[2]
 POLICY_PATH = ROOT / 'delivery/release-lab-policy.json'
@@ -120,6 +123,13 @@ def validate_context(policy, operation, env):
         raise LabError('Execução aceita somente neste repositório.')
     if env.get('GITHUB_RUN_ATTEMPT') != '1' or not str(env.get('GITHUB_RUN_ID', '')).isdigit():
         raise LabError('Reexecução não reaproveita avais. Prepare uma nova RC para tentar novamente.')
+    if operation == 'reconcile-run':
+        # A completion observer is not an operator and cannot authorize effects.
+        # Its input is only the original run ID; identity is checked against the
+        # journal and REST API before any observational state can be written.
+        if env.get('GITHUB_EVENT_NAME') != 'workflow_run' or env.get('GITHUB_REF') != 'refs/heads/main':
+            raise LabError('Reconciliação externa exige workflow_run confiável na main.')
+        return
     actor = (int(env.get('GITHUB_ACTOR_ID', '0')), env.get('GITHUB_ACTOR', '').lower())
     if (actor not in {identity(p) for p in policy['operators']}
             or env.get('GITHUB_TRIGGERING_ACTOR', '').lower() != actor[1]):
@@ -135,6 +145,8 @@ def ensure_current(state, tag, source_sha=None):
     record = state.get('candidates', {}).get(tag)
     if state.get('active') != tag or not record or record.get('status') == 'superseded':
         raise LabError('Candidata substituída ou desconhecida; seus avais não autorizam a RC atual.')
+    if record.get('status') in ('rejected', 'cancelled', 'evaluation_failed'):
+        raise LabError('Avaliação encerrada sem publicação; prepare nova RC com novos avais.')
     if source_sha is not None and record.get('source_sha') != source_sha:
         raise LabError('Código da candidata diverge da identidade congelada.')
     return record
@@ -280,7 +292,7 @@ def resolve_tag(tag):
 def trusted_source(source_sha):
     git('fetch', '--no-tags', 'origin', source_sha)
     trusted = git('rev-parse', 'HEAD')
-    paths = ['.github', 'deploy', 'tools/delivery/release_lab.py', 'delivery/release-lab-policy.json']
+    paths = ['.github', 'deploy', 'tools/delivery', 'delivery/release-lab-policy.json']
     for path in paths:
         if git('rev-parse', source_sha + ':' + path) != git('rev-parse', trusted + ':' + path):
             raise LabError('Pipeline/política da candidata difere das ferramentas confiáveis; revisão específica necessária.')
@@ -496,8 +508,12 @@ def same_run(record):
         raise LabError('Run diferente da avaliação congelada; sem transporte de avais.')
 
 
-def report(policy, tag, smoke_path, metadata_path, folder):
+def report(policy, tag, smoke_path, metadata_path, folder, context_artifact=None):
     smoke, metadata = (json.loads(Path(p).read_text()) for p in (smoke_path, metadata_path))
+    context, context_observation = None, {'status': 'not_requested', 'waited_for_result': False}
+    if context_artifact:
+        context, context_observation = changelog_summary.read_available_context(
+            os.environ['GITHUB_RUN_ID'], artifact_name=context_artifact, budget_seconds=3)
     def register(state, record):
         same_run(record); assert_record(policy, record)
         sha = record['source_sha']
@@ -528,16 +544,48 @@ def report(policy, tag, smoke_path, metadata_path, folder):
             raise LabError('Modo do corte diverge do relatório; prepare outra RC sob a política atual.')
         if record.get('report_digest'):
             raise LabError('Relatório já congelado; nova avaliação requer nova RC.')
-        record.update(report=value, report_digest=digest(value), status='awaiting_approvals')
+        value['version_manifest'] = version_manifest.build_manifest(
+            candidate_tag=tag, stable_tag=value['stable_tag'], source_sha=sha,
+            pubspec_version=metadata['version'], platforms=platforms, preview=smoke)
+        value['version_manifest_digest'] = digest(value['version_manifest'])
+        context_input = context
+        observation = dict(context_observation)
+        if context_input:
+            try:
+                context_input = changelog_summary.verified_context(value, context_input)
+            except (KeyError, TypeError, ValueError):
+                context_input = None
+                observation.update(status='invalid_context_ignored', reason='candidate_or_input_digest_mismatch')
+        try:
+            value['communication'] = changelog_summary.frozen_communication(value, context=context_input)
+        except (KeyError, TypeError, ValueError):
+            if context_input is None:
+                raise
+            observation.update(status='invalid_context_ignored', reason='invalid_optional_selection_input')
+            value['communication'] = changelog_summary.frozen_communication(value)
+        value['communication_context_observation'] = observation
+        if metadata.get('delivery_tag'):
+            value['preview_original_delivery_tag'] = metadata['delivery_tag']
+        record.update(report=value, report_digest=digest(value), status='awaiting_approvals',
+                      approval_progress={'recorded': 0, 'required': 2, 'final_command_required': True})
         return value
     value = mutate(policy, tag, register, 'report_frozen')
     output(folder, 'report.json', value)
+    output(folder, 'version-manifest.json', value['version_manifest'])
+    output(folder, 'communication.json', value['communication'])
     report_url = 'https://github.com/' + REPOSITORY + '/actions/runs/' + os.environ['GITHUB_RUN_ID']
     target = 'resultado final SIMULADO' if value['result_simulated'] else 'tag estável **' + value['stable_tag'] + '** + Release GitHub reais; aplicativo não distribuído'
     lines = ['# ' + value['version'] + ' — ' + html.escape(value['title']), '',
              '**' + tag + '** · preview real · ' + target, '',
-             '[Abrir preview](' + value['preview']['snapshot_url'] + ')', '', '## Mudanças', '']
+             '[Abrir preview](' + value['preview']['snapshot_url'] + ')', '', '## Mudanças para revisão', '',
+             html.escape(value['communication']['selection']['text']), '',
+             'Fonte congelada do resumo: `' + value['communication']['selection']['source'] + '`. A seleção não aguardou IA.', '',
+             '## Histórico técnico completo', '']
     lines += ['- ' + html.escape(c) for c in value['changes']] or ['- Sem commits adicionais desde a base registrada.']
+    lines += ['', *version_manifest.render_markdown(value['version_manifest']).splitlines()]
+    if value.get('preview_original_delivery_tag') and value['preview_original_delivery_tag'] != tag:
+        lines += ['', 'O snapshot deste mesmo código foi preservado desde `' + value['preview_original_delivery_tag']
+                  + '`. A entrega atual é `' + tag + '`; reaproveitar os bytes não transporta avais anteriores.']
     lines += ['', '## Previsão mobile — não é patch validado', '', '| Plataforma | Base | Previsão | Motivo |', '|---|---|---|---|']
     for platform, item in value['platforms'].items():
         lines += ['| ' + platform + ' | ' + str(item['base'] or 'não configurada') + ' | ' + item['classification'] + ' | ' + item['reason'] + ' |']
@@ -560,12 +608,32 @@ def current_reviews(policy, record, run_id=None):
         raise LabError('Reviews só podem vir da avaliação original desta candidata.')
     if not record.get('report') or digest(record['report']) != record.get('report_digest'):
         raise LabError('Relatório congelado foi alterado; não reutilizar avais.')
+    frozen_material(record)
     ids = assert_record(policy, record)
     run = api(endpoint('actions/runs/' + str(run_id)))
     if run.get('run_attempt') != 1 or identity(run['actor']) != identity(record['preparer']):
         raise LabError('Run/ator não corresponde à avaliação original.')
     reviews = api(endpoint('actions/runs/' + str(run_id) + '/approvals'))
     return reviews, ids
+
+
+def frozen_material(record):
+    """Copy already approved optional fields; historical reports stay unchanged."""
+    value = record.get('report', {})
+    fields = {}
+    if 'version_manifest' in value or 'version_manifest_digest' in value:
+        manifest = version_manifest.validate_manifest(value.get('version_manifest'))
+        if (digest(manifest) != value.get('version_manifest_digest')
+                or manifest['delivery'] != {'candidate_tag': record['candidate_tag'],
+                                           'stable_tag': record['stable_tag'],
+                                           'source_sha': record['source_sha']}
+                or manifest['pubspec_metadata']['release_version'] != value.get('pubspec_version')):
+            raise LabError('Manifesto de versões diverge do plano aprovado.')
+        fields.update(version_manifest=manifest, version_manifest_digest=value['version_manifest_digest'])
+    if 'communication' in value:
+        changelog_summary.verify_communication(value)
+        fields['communication'] = value['communication']
+    return json.loads(canonical(fields))
 
 
 def approval(policy, tag, role, report_digest, folder):
@@ -577,11 +645,161 @@ def approval(policy, tag, role, report_digest, folder):
         review = review_for(reviews, person['environment'], ids[person['environment']], [person])
         value = {'candidate_tag': tag, 'source_sha': record['source_sha'], 'report_digest': report_digest,
                  'run_id': record['evaluation_run_id'], 'run_attempt': 1, 'review': review}
-        record.setdefault('approval_receipts', {})[role] = value
+        receipts = record.setdefault('approval_receipts', {})
+        if role in receipts and receipts[role] != value:
+            raise LabError('Recibo de aprovação já congelado; não substituir uma decisão.')
+        receipts[role] = value
+        count = approval_count(policy, record, reviews, ids)
+        record['status'] = 'awaiting_publish_authorization' if count == 2 else 'awaiting_approvals'
+        record['approval_progress'] = {'recorded': count, 'required': 2, 'final_command_required': True}
         return value
     value = mutate(policy, tag, record_decision, 'approval_' + role)
     output(folder, 'approval.json', value)
     outputs({'reviewer': value['review']['reviewer']['login'], 'report_digest': report_digest})
+
+
+def approval_count(policy, record, reviews, ids):
+    """Count validated receipts, not clicks, without creating new approvals."""
+    count = 0
+    for person in policy['approvers']:
+        item = record.get('approval_receipts', {}).get(person['role'])
+        if not item:
+            continue
+        review = review_for(reviews, person['environment'], ids[person['environment']], [person])
+        if (item.get('candidate_tag') != record['candidate_tag']
+                or item.get('source_sha') != record['source_sha']
+                or item.get('report_digest') != record.get('report_digest')
+                or str(item.get('run_id')) != str(record['evaluation_run_id'])
+                or item.get('run_attempt') != 1 or item.get('review') != review):
+            raise LabError('Recibo de aprovação diverge da review ou da identidade congelada.')
+        count += 1
+    return count
+
+
+def reconcile_run(policy, evaluation_run_id, folder):
+    """Project official run outcomes into the journal; never publish or approve."""
+    run_id = str(evaluation_run_id)
+    if not run_id.isdigit():
+        raise LabError('Run original inválido para reconciliação.')
+    state, _ = state_read(policy)
+    matches = [r for r in state.get('candidates', {}).values()
+               if str(r.get('evaluation_run_id')) == run_id]
+    if not matches:
+        value = {'schema': 1, 'run_id': run_id, 'updated': False, 'reason': 'no_registered_candidate'}
+        output(folder, 'candidate-status.json', value)
+        return value
+    if len(matches) != 1:
+        raise LabError('Run associado a múltiplas candidatas; reconciliação bloqueada.')
+    original = matches[0]
+    tag = original['candidate_tag']
+    run = api(endpoint('actions/runs/' + run_id))
+    workflow = str(run.get('path', '')).split('@', 1)[0]
+    if (str(run.get('id')) != run_id or run.get('run_attempt') != 1
+            or identity(run.get('actor', {})) != identity(original['preparer'])
+            or identity(run.get('actor', {})) not in {identity(p) for p in policy['operators']}
+            or workflow not in ('.github/workflows/release-lab-prepare.yml',
+                                '.github/workflows/release-lab-evaluate.yml')
+            or run.get('head_repository', {}).get('full_name', REPOSITORY) != REPOSITORY):
+        raise LabError('Observação não corresponde ao workflow/run/operador original da candidata.')
+    if original.get('status') in ('completed', 'superseded') or state.get('active') != tag:
+        value = {'schema': 1, 'candidate_tag': tag, 'run_id': run_id,
+                 'status': original.get('status'), 'updated': False, 'reason': 'preserved_terminal_history'}
+        output(folder, 'candidate-status.json', value)
+        return value
+    reviews = api(endpoint('actions/runs/' + run_id + '/approvals'))
+    jobs = api(endpoint('actions/runs/' + run_id + '/jobs?per_page=100'))['jobs']
+    # Reading environment IDs does not assert current protections: a cancelled
+    # evaluation still needs a truthful outcome when configuration has drifted.
+    ids = {name: api(endpoint('environments/' + quote(name, safe='')))['id']
+           for name in [p['environment'] for p in policy['approvers']] + [policy['final_environment']]}
+    gate_names = set(ids)
+    rejected = [r for r in reviews if r.get('state') == 'rejected'
+                and any(e.get('name') in gate_names and ids[e['name']] == e.get('id')
+                        for e in r.get('environments', []))]
+    required_suffixes = ('Conferir RC ativa, papéis e proteções',
+                         'Verificar e compilar web sem permissões de publicação',
+                         'Publicar bytes verificados, confirmar preview e changelog',
+                         'Gate first', 'Gate second',
+                         'AUTORIZAR PUBLICAR — Israel OU Fabrícia, após os dois avais',
+                         'PROMOVER — tag estável e Release no GitHub, sem distribuição mobile')
+    required_jobs = [j for j in jobs if any(j.get('name', '').endswith(s) for s in required_suffixes)]
+    invalid_receipts = None
+    try:
+        count = approval_count(policy, original, reviews, ids)
+    except LabError as error:
+        # An inconsistent approval cannot become a permission to publish.
+        count, invalid_receipts = 0, str(error)
+    outcome = None
+    if rejected:
+        outcome = 'rejected'
+    elif run.get('conclusion') == 'cancelled' or any(j.get('conclusion') == 'cancelled' for j in required_jobs):
+        outcome = 'cancelled'
+    elif (invalid_receipts or any(j.get('conclusion') in ('failure', 'timed_out', 'action_required', 'startup_failure')
+                                 for j in required_jobs)
+          or run.get('status') == 'completed'):
+        outcome = 'evaluation_failed'
+    elif original.get('report_digest'):
+        outcome = 'awaiting_publish_authorization' if count == 2 else 'awaiting_approvals'
+    else:
+        outcome = 'evaluating'
+    observation = {'run_id': run_id, 'run_attempt': 1, 'run_status': run.get('status'),
+                   'run_conclusion': run.get('conclusion'), 'observed_at': now(),
+                   'recorded_approvals': count, 'required_approvals': 2,
+                   'final_command_required': True, 'projected_status': outcome,
+                   'rejected_reviews': rejected, 'invalid_receipts': invalid_receipts,
+                   'required_jobs': [{'name': j['name'], 'conclusion': j.get('conclusion')} for j in required_jobs]}
+
+    def register(current):
+        record = current.get('candidates', {}).get(tag)
+        if (not record or str(record.get('evaluation_run_id')) != run_id
+                or record.get('source_sha') != original['source_sha']):
+            raise LabError('Identidade mudou durante a observação; não gravar resultado.')
+        # Completion, supersession and publication intents outrank observational
+        # failure. A failed artifact upload never undoes an already proven Release.
+        if record.get('status') in ('completed', 'superseded') or current.get('active') != tag:
+            return {'schema': 1, 'candidate_tag': tag, 'run_id': run_id,
+                    'status': record.get('status'), 'updated': False, 'reason': 'preserved_terminal_history'}
+        if record.get('report') and digest(record['report']) != record.get('report_digest'):
+            raise LabError('Relatório congelado diverge; reconciliação não altera evidências.')
+        current_count, current_invalid_receipts = count, invalid_receipts
+        latest_reviews = reviews
+        if record.get('approval_receipts') != original.get('approval_receipts'):
+            latest_reviews = api(endpoint('actions/runs/' + run_id + '/approvals'))
+            try:
+                current_count = approval_count(policy, record, latest_reviews, ids)
+                current_invalid_receipts = None
+            except LabError as error:
+                current_count, current_invalid_receipts = 0, str(error)
+        projected = record['status'] if record.get('publication') else outcome
+        if current_invalid_receipts and not record.get('publication'):
+            projected = 'evaluation_failed'
+        if projected in ('evaluating', 'awaiting_approvals', 'awaiting_publish_authorization'):
+            projected = ('awaiting_publish_authorization' if current_count == 2 else 'awaiting_approvals') if record.get('report_digest') else 'evaluating'
+        if record.get('status') in ('rejected', 'cancelled', 'evaluation_failed'):
+            projected = record['status']  # A closed attempt cannot reopen its gates.
+        record['status'] = projected
+        record['status_observation'] = {**observation, 'recorded_approvals': current_count,
+                                        'invalid_receipts': current_invalid_receipts, 'projected_status': projected}
+        record['approval_progress'] = {'recorded': current_count, 'required': 2, 'final_command_required': True}
+        return {'schema': 1, 'candidate_tag': tag, 'run_id': run_id,
+                'status': projected, 'updated': True, 'observation': record['status_observation']}
+
+    value = journal_change(policy, register, 'evaluation_reconciled', tag)
+    output(folder, 'candidate-status.json', value)
+    labels = {'awaiting_approvals': 'Aguardando os dois avais',
+              'awaiting_publish_authorization': 'Dois avais registrados; aguardando o comando PUBLICAR',
+              'rejected': 'Candidata rejeitada — preparar nova RC',
+              'cancelled': 'Avaliação cancelada — preparar nova RC',
+              'evaluation_failed': 'Avaliação falhou — preparar nova RC',
+              'completed': 'Publicação concluída', 'superseded': 'Candidata substituída'}
+    message = '# Estado da candidata\n\n' + tag + ': **' + labels.get(value['status'], value['status']) + '**.\n\n'
+    message += str(value.get('observation', observation)['recorded_approvals']) + '/2 recibos de aprovação verificados. O comando final continua separado.\n'
+    Path(folder, 'candidate-status.md').write_text(message)
+    if os.environ.get('GITHUB_STEP_SUMMARY'):
+        with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as stream:
+            stream.write(message)
+    outputs({'status': value['status'], 'candidate_tag': tag})
+    return value
 
 
 def frozen_publication(policy, record):
@@ -641,7 +859,14 @@ def release_payload(record, decision, intent_id):
              '- Comando final: ' + decision['publisher']['reviewer']['login'] + '.',
              '- [Preview avaliado](' + record['report']['preview']['snapshot_url'] + ').',
              '- [Relatório e execução aprovados](' + report_url + ').', '', '## Changelog aprovado', '']
+    material = frozen_material(record)
+    if material.get('communication'):
+        selected = material['communication']['selection']
+        lines += [html.escape(selected['text']), '', 'Fonte do resumo congelado: `' + selected['source'] + '`.',
+                  '', '### Histórico técnico completo', '']
     lines += ['- ' + html.escape(change) for change in record['report'].get('changes', [])] or ['- Sem commits adicionais desde a base registrada.']
+    if material.get('version_manifest'):
+        lines += ['', *version_manifest.render_markdown(material['version_manifest']).splitlines()]
     lines += ['', 'Reviews de contas verificadas não demonstram independência das pessoas que operaram essas contas.', '',
               '<!-- release-lab-intent:' + intent_id + ' -->',
               '<!-- release-lab-report:' + record['report_digest'] + ' -->']
@@ -749,7 +974,7 @@ def promote_effects(policy, tag, intent_id):
                  'review_independence_verified': False, 'publication_mode': 'github_release_only',
                  'result_simulated': False, 'distribution_performed': False, 'patch_generated': False,
                  'stable_tag_created': True, 'github_release_published': True,
-                 'github_release': release_value, 'release_url': release_value['url']}
+                 'github_release': release_value, 'release_url': release_value['url'], **frozen_material(record)}
         active.update(status='completed', receipt=value, updated_at=now())
         record.update(receipt=value, status='completed')
         state['last_completed_source_sha'] = record['source_sha']
@@ -903,7 +1128,7 @@ def finish(policy, tag, report_digest, folder):
                  'preparer': record['preparer'], **result, 'recorded_at': now(),
                  'platforms': record['report']['platforms'], 'preview': record['report']['preview'],
                  'human_decision_real': True, 'result_simulated': True,
-                 'distribution_performed': False, 'patch_generated': False}
+                 'distribution_performed': False, 'patch_generated': False, **frozen_material(record)}
         record.update(receipt=value, status='completed')
         state['last_completed_source_sha'] = record['source_sha']
         return value
@@ -938,6 +1163,8 @@ def merge_preview(policy, tag, incoming, site, folder):
     if pages.validate_site(incoming) != [sha]:
         raise LabError('Artifact contém snapshot diferente ou extra.')
     metadata = pages.json_file(incoming / 'snapshots' / sha / 'metadata.json')
+    if metadata.get('delivery_tag') is not None and metadata['delivery_tag'] != tag:
+        raise LabError('Novo artefato web identifica outra entrega; não importar para esta candidata.')
     git('fetch', '--no-tags', 'origin', sha)
     inputs = json.loads(git('show', sha + ':delivery/build-inputs.json'))
     command = ['flutter', 'build', 'web', '--release', '--base-href=' + pages.PROJECT_BASE + 'snapshots/' + sha + '/app/']
@@ -971,10 +1198,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest='command', required=True)
     p = sub.add_parser('prepare'); p.add_argument('--version', required=True); p.add_argument('--title', required=True)
+    for name in ('reconcile', 'reconcile-run'):
+        p = sub.add_parser(name); p.add_argument('--evaluation-run-id', required=True)
     for name in ('preflight', 'report', 'approval', 'finish', 'merge-preview', 'recovery-inspect', 'recover'):
         p = sub.add_parser(name); p.add_argument('--candidate-tag', required=True)
         if name == 'report':
             p.add_argument('--preview-report', required=True); p.add_argument('--preview-metadata', required=True)
+            p.add_argument('--context-artifact', choices=('release-lab-context',))
         if name in ('approval', 'finish'):
             p.add_argument('--report-digest', required=True)
         if name == 'recover':
@@ -992,7 +1222,7 @@ def main():
     elif args.command == 'preflight':
         preflight(policy, args.candidate_tag, args.output)
     elif args.command == 'report':
-        report(policy, args.candidate_tag, args.preview_report, args.preview_metadata, args.output)
+        report(policy, args.candidate_tag, args.preview_report, args.preview_metadata, args.output, args.context_artifact)
     elif args.command == 'approval':
         approval(policy, args.candidate_tag, args.role, args.report_digest, args.output)
     elif args.command == 'merge-preview':
@@ -1001,6 +1231,8 @@ def main():
         recovery_inspect(policy, args.candidate_tag, args.output)
     elif args.command == 'recover':
         recover(policy, args.candidate_tag, args.output, args.report_digest)
+    elif args.command in ('reconcile', 'reconcile-run'):
+        reconcile_run(policy, args.evaluation_run_id, args.output)
     else:
         finish(policy, args.candidate_tag, args.report_digest, args.output)
 

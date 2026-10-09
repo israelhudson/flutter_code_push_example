@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "review_kind": "independent_read_only_code_review",
+  "reviewed_at": "2026-10-09T01:11:00.321571+00:00",
+  "git_head": "9967e10d26f6fef7c33593742857f39f2cc9eeed",
+  "working_tree_uncommitted": true,
+  "reviewed_files_sha256": {
+    "tools/delivery/release_lab.py": "163e2c8cbf438edc7fd1ff3c7a3fe442695790c946658758ffc0f1d345004920",
+    "tools/delivery/version_manifest.py": "af548856b9bff161bb0dbe628d4abfb71a49d9a737cb4dec4c3c0eae067605d2",
+    "tools/delivery/changelog_summary.py": "5523889b094256b8e0a2e52591252a5922aa310e826ba4dfe47ad7681681b661",
+    "tools/delivery/slack_preview.py": "f811a9aa618e4b214c2cc5f486f0a62320b6cacad060098ddaf055b607551e47",
+    "tools/delivery/collect_evidence.py": "58a270d2c383ebd206cefcffefad789bdd55f4aeb130b97311c0f2f84729d32e",
+    "deploy/pages_preview.py": "7d84a59e15dc275a35480234983c1352fbb0cf4d7d1a65f154565964cc9c7658",
+    "deploy/pages_smoke.py": "a311271aeb77d2315f78cd7b00c10d81b20b9669fd0734f163ce9ad5ef344a3b",
+    ".github/workflows/release-lab-evaluate.yml": "f084ff78c1bd10be6c9cd60ba00e741309a65fb168c2077ce03b5008c8c6ba91",
+    ".github/workflows/release-lab-prepare.yml": "c9d1e7184b81eb89a3a9314e1d2370c2602ff9f3a06d0aa5be8c01e6cd605451",
+    ".github/workflows/release-lab-reconcile.yml": "b8274c5478d831971740505edd08e2144ae7e247b6e34da5950f87597091e0a0",
+    "tests/delivery/test_release_lab_state.py": "3c220f5caae7d513d6ae125d64b93c7e67d07e85bb6ed5ac72235d0b4cba1417",
+    "tests/delivery/test_changelog_summary.py": "6b285887b1d152cc226513273047d31d8582acf1b352e73e19c85241e9cf1c81",
+    "tests/delivery/test_version_manifest.py": "79e3d6678aa65c44cd63bbbdde79924c14035f13f4eb6efbbd518dba2cc00f27",
+    "tests/delivery/test_collect_evidence.py": "04ab2c3a841065e5a24059bebbb8f2272d099fcf0407f5504ea519b23e849515",
+    "tests/delivery/test_slack_preview.py": "96617463a1a6da3cd795166fedacbfc059adece306c202bf8e263d1a4d5816dc",
+    "tests/delivery/test_pages_preview.py": "1e26ddac76432d03e9c851cda6d904843e65d1c51c665970836af5309ae6f8d7",
+    "tests/delivery/test_pages_smoke.py": "ccf9fc41399d07801f0afc4ccd85a6532fcdc3d62cb076da904ecf02ec12c274",
+    "tests/delivery/test_release_lab.py": "a3b672a9644651d03db9b913dbb14d3a8f75ce155ff5f0ecb711304044076e34"
+  },
+  "reviewed_content_sha256": "5f1cbc38edfd3013354d0f2a2370b2d51edc87c9bb4ffd23fc3b60395eca1db0",
+  "findings_remaining": [],
+  "findings_resolved": [
+    {
+      "priority": "P2",
+      "issue": "optional communication limits blocked required report",
+      "resolution": "bounded copy plus full source history digest; integration tests preserve original history"
+    },
+    {
+      "priority": "P2",
+      "issue": "new snapshot could identify another candidate",
+      "resolution": "incoming delivery tag checked before privileged import; original snapshots preserved"
+    },
+    {
+      "priority": "P3",
+      "issue": "older reconciliation count conflicted with concurrent second approval",
+      "resolution": "current receipts revalidated; Markdown uses current count"
+    }
+  ],
+  "final_refresh": {
+    "timestamp_precision": "UTC normalized fixed microsecond precision; subsecond late result test passed",
+    "permissions_check": {
+      "exit_code": 0,
+      "result": {
+        "permission_scope": "optional_context_only_and_reusable_caller",
+        "web_needs": [
+          "preflight",
+          "build"
+        ],
+        "app_permissions": {
+          "contents": "read"
+        }
+      },
+      "stderr": ""
+    },
+    "changelog_precision_tests": {
+      "exit_code": 0,
+      "duration_seconds": 0.132,
+      "stdout": "Material copiado e selecionado; nenhuma IA consultada e nenhum aviso enviado.\nMaterial copiado e selecionado; nenhuma IA consultada e nenhum aviso enviado.\n",
+      "stderr": "test_ai_failure_timeout_or_no_credit_use_commits_instead_of_pr_sections (test_changelog_summary.FrozenCommunicationTests.test_ai_failure_timeout_or_no_credit_use_commits_instead_of_pr_sections) ... ok\ntest_cli_writes_copies_and_does_not_modify_source_report (test_changelog_summary.FrozenCommunicationTests.test_cli_writes_copies_and_does_not_modify_source_report) ... ok\ntest_context_from_other_rc_or_changed_commit_interval_is_refused (test_changelog_summary.FrozenCommunicationTests.test_context_from_other_rc_or_changed_commit_interval_is_refused) ... ok\ntest_duplicate_sources_or_invalid_url_fail (test_changelog_summary.FrozenCommunicationTests.test_duplicate_sources_or_invalid_url_fail) ... ok\ntest_explicit_pr_sections_are_copied_without_technical_section (test_changelog_summary.FrozenCommunicationTests.test_explicit_pr_sections_are_copied_without_technical_section) ... ok\ntest_fractional_seconds_do_not_make_late_ai_result_look_early (test_changelog_summary.FrozenCommunicationTests.test_fractional_seconds_do_not_make_late_ai_result_look_early) ... ok\ntest_frozen_selection_cannot_be_replaced_without_hash_change (test_changelog_summary.FrozenCommunicationTests.test_frozen_selection_cannot_be_replaced_without_hash_change) ... ok\ntest_late_result_is_evidence_only_even_if_it_arrives_during_revision (test_changelog_summary.FrozenCommunicationTests.test_late_result_is_evidence_only_even_if_it_arrives_during_revision) ... ok\ntest_legitimate_long_or_control_character_commit_history_never_blocks_freeze (test_changelog_summary.FrozenCommunicationTests.test_legitimate_long_or_control_character_commit_history_never_blocks_freeze) ... ok\ntest_long_commit_history_is_bounded_and_links_back_to_full_report (test_changelog_summary.FrozenCommunicationTests.test_long_commit_history_is_bounded_and_links_back_to_full_report) ... ok\ntest_missing_timestamp_invalid_sources_or_metadata_are_fallback (test_changelog_summary.FrozenCommunicationTests.test_missing_timestamp_invalid_sources_or_metadata_are_fallback) ... ok\ntest_no_context_is_immediate_commit_fallback (test_changelog_summary.FrozenCommunicationTests.test_no_context_is_immediate_commit_fallback) ... ok\ntest_old_rc_result_never_attaches_to_new_rc (test_changelog_summary.FrozenCommunicationTests.test_old_rc_result_never_attaches_to_new_rc) ... ok\ntest_oversized_pr_sections_fall_back_without_dropping_limitations (test_changelog_summary.FrozenCommunicationTests.test_oversized_pr_sections_fall_back_without_dropping_limitations) ... ok\ntest_source_edit_after_collect_does_not_mutate_snapshot (test_changelog_summary.FrozenCommunicationTests.test_source_edit_after_collect_does_not_mutate_snapshot) ... ok\ntest_tampered_source_description_fails_hash_verification (test_changelog_summary.FrozenCommunicationTests.test_tampered_source_description_fails_hash_verification) ... ok\ntest_technical_title_is_not_rewritten_as_a_product_claim (test_changelog_summary.FrozenCommunicationTests.test_technical_title_is_not_rewritten_as_a_product_claim) ... ok\ntest_valid_result_requires_exact_identity_sources_and_provider_metadata (test_changelog_summary.FrozenCommunicationTests.test_valid_result_requires_exact_identity_sources_and_provider_metadata) ... ok\ntest_available_context_read_is_bounded_and_linked_to_same_run (test_changelog_summary.OpportunisticArtifactTests.test_available_context_read_is_bounded_and_linked_to_same_run) ... ok\ntest_different_run_or_expired_or_oversized_metadata_prevent_download (test_changelog_summary.OpportunisticArtifactTests.test_different_run_or_expired_or_oversized_metadata_prevent_download) ... ok\ntest_missing_artifact_never_polls_or_downloads (test_changelog_summary.OpportunisticArtifactTests.test_missing_artifact_never_polls_or_downloads) ... ok\ntest_request_cannot_select_another_artifact_or_unbounded_timeout (test_changelog_summary.OpportunisticArtifactTests.test_request_cannot_select_another_artifact_or_unbounded_timeout) ... ok\ntest_timeout_is_fallback_not_delivery_exception (test_changelog_summary.OpportunisticArtifactTests.test_timeout_is_fallback_not_delivery_exception) ... ok\ntest_traversal_duplicate_context_or_zip_bomb_are_refused_without_extracting (test_changelog_summary.OpportunisticArtifactTests.test_traversal_duplicate_context_or_zip_bomb_are_refused_without_extracting) ... ok\ntest_api_timeout_preserves_commits_without_retaining_token_stderr (test_changelog_summary.OptionalCollectionTests.test_api_timeout_preserves_commits_without_retaining_token_stderr) ... ok\ntest_cli_collector_writes_context_without_touching_candidate (test_changelog_summary.OptionalCollectionTests.test_cli_collector_writes_context_without_touching_candidate) ... ok\ntest_collector_enforces_total_budget_without_waiting_for_other_commits (test_changelog_summary.OptionalCollectionTests.test_collector_enforces_total_budget_without_waiting_for_other_commits) ... ok\ntest_collects_only_merged_pr_in_exact_commit_interval (test_changelog_summary.OptionalCollectionTests.test_collects_only_merged_pr_in_exact_commit_interval) ... ok\n\n----------------------------------------------------------------------\nRan 28 tests in 0.014s\n\nOK\n"
+    },
+    "root_supplied_test_logs": {
+      "changelog-final-precision-tests.log": "4ce47970caa1abe48ff323fffc22062e533c9b7727d7387ddc730adbc8c20f3e",
+      "state-final-tests.log": "345d97a9db3f95ffd2a7d8d78070579e7683ef82ddf77441948ee955f86c2033"
+    }
+  },
+  "review_assurances": [
+    "Two separate approval receipts and final Environment decision required before publication intent",
+    "Reconciliation observes outcomes only and does not create approvals or publication effects",
+    "New helpers included in trusted source tree check",
+    "Manifest and communication copied frozen into approved report, Release and receipt",
+    "Context artifact scoped to same run; candidate/code/baseline/history digests checked with shared three second read budget",
+    "Optional context and Slack jobs not dependencies of required build/web/gates",
+    "Collector uses GET only and refuses existing output directories",
+    "Existing v1.6.0 reports and tags are not retrospectively changed"
+  ],
+  "limits": [
+    "No workflow dispatch or account approval performed by this reviewer",
+    "Local fixtures do not demonstrate mobile distribution or independent human review",
+    "Existing remote scenario validation gaps remain as declared in plan"
+  ]
+}

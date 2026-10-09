@@ -1,0 +1,50 @@
+﻿2026-10-09T00:25:03.5953981Z Current runner version: '2.337.0'
+2026-10-09T00:25:03.5980372Z ##[group]Runner Image Provisioner
+2026-10-09T00:25:03.5981316Z Hosted Compute Agent
+2026-10-09T00:25:03.5982102Z Version: 20261002.596
+2026-10-09T00:25:03.5982743Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-09T00:25:03.5983459Z Build Date: 2026-10-02T22:28:27Z
+2026-10-09T00:25:03.5984242Z Worker ID: {e96820da-dda0-417f-8f8c-d317a593da2c}
+2026-10-09T00:25:03.5984945Z Region: westus3
+2026-10-09T00:25:03.5985519Z Cloud: Azure
+2026-10-09T00:25:03.5986089Z ##[endgroup]
+2026-10-09T00:25:03.5988616Z ##[group]Operating System
+2026-10-09T00:25:03.5989519Z Ubuntu
+2026-10-09T00:25:03.5990046Z 24.04.5
+2026-10-09T00:25:03.5990633Z LTS
+2026-10-09T00:25:03.5991174Z ##[endgroup]
+2026-10-09T00:25:03.5991714Z ##[group]Runner Image
+2026-10-09T00:25:03.5992433Z Image: ubuntu-24.04
+2026-10-09T00:25:03.5993027Z Version: 20261004.327.1
+2026-10-09T00:25:03.5994392Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-09T00:25:03.5995960Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-09T00:25:03.5996976Z ##[endgroup]
+2026-10-09T00:25:03.5998313Z ##[group]GITHUB_TOKEN Permissions
+2026-10-09T00:25:03.6000758Z Contents: read
+2026-10-09T00:25:03.6001377Z Metadata: read
+2026-10-09T00:25:03.6001954Z ##[endgroup]
+2026-10-09T00:25:03.6004264Z Secret source: Actions
+2026-10-09T00:25:03.6005235Z Cache mode: write
+2026-10-09T00:25:03.6006586Z Prepare workflow directory
+2026-10-09T00:25:03.6360451Z Prepare all required actions
+2026-10-09T00:25:03.6466139Z Uses: israelhudson/flutter_code_push_example/.github/workflows/release-lab-evaluate.yml@refs/heads/main (1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935)
+2026-10-09T00:25:03.6472081Z ##[group] Inputs
+2026-10-09T00:25:03.6472771Z   candidate_tag: v1.6.0-rc.1
+2026-10-09T00:25:03.6473386Z   version: 1.6.0
+2026-10-09T00:25:03.6474249Z   title: Tema escuro manual
+2026-10-09T00:25:03.6474903Z ##[endgroup]
+2026-10-09T00:25:03.6475954Z Complete job name: Avaliar a mesma candidata / AUTORIZAR PUBLICAR — Israel OU Fabrícia, após os dois avais
+2026-10-09T00:25:03.7264247Z ##[group]Run python3 - <<'PY'
+2026-10-09T00:25:03.7265039Z [36;1mpython3 - <<'PY'[0m
+2026-10-09T00:25:03.7265794Z [36;1mimport os[0m
+2026-10-09T00:25:03.7266574Z [36;1mwith open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:[0m
+2026-10-09T00:25:03.7267799Z [36;1m    summary.write('# Comando final autorizado\n\n')[0m
+2026-10-09T00:25:03.7269004Z [36;1m    summary.write('Este gate registra a decisão final separada dos dois avais. ')[0m
+2026-10-09T00:25:03.7270427Z [36;1m    summary.write('O próximo job reconfere a candidata e as reviews antes de criar a tag estável e a Release no GitHub. ')[0m
+2026-10-09T00:25:03.7271904Z [36;1m    summary.write('Nenhum aplicativo ou patch mobile será distribuído.\n')[0m
+2026-10-09T00:25:03.7272803Z [36;1mPY[0m
+2026-10-09T00:25:03.8306201Z shell: /usr/bin/bash -e {0}
+2026-10-09T00:25:03.8307701Z ##[endgroup]
+2026-10-09T00:25:03.8871333Z Evaluate and set environment url
+2026-10-09T00:25:03.8902109Z Evaluated environment url: https://github.com/israelhudson/flutter_code_push_example/actions/runs/37863610149
+2026-10-09T00:25:03.8903901Z Cleaning up orphan processes

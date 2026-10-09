@@ -1,0 +1,187 @@
+﻿2026-10-09T00:25:09.2157588Z Current runner version: '2.337.0'
+2026-10-09T00:25:09.2179120Z ##[group]Runner Image Provisioner
+2026-10-09T00:25:09.2179802Z Hosted Compute Agent
+2026-10-09T00:25:09.2180355Z Version: 20261002.596
+2026-10-09T00:25:09.2181029Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-09T00:25:09.2181605Z Build Date: 2026-10-02T22:28:27Z
+2026-10-09T00:25:09.2182234Z Worker ID: {1e5c0b5f-04cd-4983-9f9a-952de0d96276}
+2026-10-09T00:25:09.2182849Z Region: westus3
+2026-10-09T00:25:09.2183338Z Cloud: Azure
+2026-10-09T00:25:09.2183827Z ##[endgroup]
+2026-10-09T00:25:09.2184944Z ##[group]Operating System
+2026-10-09T00:25:09.2185529Z Ubuntu
+2026-10-09T00:25:09.2185960Z 24.04.5
+2026-10-09T00:25:09.2186414Z LTS
+2026-10-09T00:25:09.2186887Z ##[endgroup]
+2026-10-09T00:25:09.2187373Z ##[group]Runner Image
+2026-10-09T00:25:09.2187928Z Image: ubuntu-24.04
+2026-10-09T00:25:09.2188437Z Version: 20261004.327.1
+2026-10-09T00:25:09.2189480Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-09T00:25:09.2191038Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-09T00:25:09.2191950Z ##[endgroup]
+2026-10-09T00:25:09.2192942Z ##[group]GITHUB_TOKEN Permissions
+2026-10-09T00:25:09.2194832Z Actions: read
+2026-10-09T00:25:09.2195329Z Contents: write
+2026-10-09T00:25:09.2196132Z Metadata: read
+2026-10-09T00:25:09.2196638Z ##[endgroup]
+2026-10-09T00:25:09.2198422Z Secret source: Actions
+2026-10-09T00:25:09.2199290Z Cache mode: write
+2026-10-09T00:25:09.2199898Z Prepare workflow directory
+2026-10-09T00:25:09.2469340Z Prepare all required actions
+2026-10-09T00:25:09.2511251Z Getting action download info
+2026-10-09T00:25:09.5529969Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-09T00:25:09.7422068Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-09T00:25:10.2628643Z Uses: israelhudson/flutter_code_push_example/.github/workflows/release-lab-evaluate.yml@refs/heads/main (1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935)
+2026-10-09T00:25:10.2632748Z ##[group] Inputs
+2026-10-09T00:25:10.2633230Z   candidate_tag: v1.6.0-rc.1
+2026-10-09T00:25:10.2633697Z   version: 1.6.0
+2026-10-09T00:25:10.2634091Z   title: Tema escuro manual
+2026-10-09T00:25:10.2634523Z ##[endgroup]
+2026-10-09T00:25:10.2635289Z Complete job name: Avaliar a mesma candidata / PROMOVER — tag estável e Release no GitHub, sem distribuição mobile
+2026-10-09T00:25:10.3598729Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-10-09T00:25:10.3599629Z with:
+2026-10-09T00:25:10.3600062Z   ref: 1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935
+2026-10-09T00:25:10.3600574Z   path: trusted
+2026-10-09T00:25:10.3601126Z   persist-credentials: false
+2026-10-09T00:25:10.3601623Z   repository: israelhudson/flutter_code_push_example
+2026-10-09T00:25:10.3605022Z   token: ***
+2026-10-09T00:25:10.3605457Z   ssh-strict: true
+2026-10-09T00:25:10.3605854Z   ssh-user: git
+2026-10-09T00:25:10.3606252Z   clean: true
+2026-10-09T00:25:10.3606644Z   sparse-checkout-cone-mode: true
+2026-10-09T00:25:10.3607099Z   fetch-depth: 1
+2026-10-09T00:25:10.3607476Z   fetch-tags: false
+2026-10-09T00:25:10.3607884Z   show-progress: true
+2026-10-09T00:25:10.3608284Z   lfs: false
+2026-10-09T00:25:10.3608649Z   submodules: false
+2026-10-09T00:25:10.3609110Z   set-safe-directory: true
+2026-10-09T00:25:10.3609804Z   allow-unsafe-pr-checkout: false
+2026-10-09T00:25:10.3611078Z ##[endgroup]
+2026-10-09T00:25:10.4514312Z Syncing repository: israelhudson/flutter_code_push_example
+2026-10-09T00:25:10.4517032Z ##[group]Getting Git version info
+2026-10-09T00:25:10.4518373Z Working directory is '/home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted'
+2026-10-09T00:25:10.4519557Z [command]/usr/bin/git version
+2026-10-09T00:25:10.5090860Z git version 2.55.0
+2026-10-09T00:25:10.5108988Z ##[endgroup]
+2026-10-09T00:25:10.5122183Z Temporarily overriding HOME='/home/runner/work/_temp/dff62e1d-616f-46f1-b9e0-c71fa143af29' before making global git config changes
+2026-10-09T00:25:10.5123401Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T00:25:10.5127187Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+2026-10-09T00:25:10.5210521Z ##[group]Initializing the repository
+2026-10-09T00:25:10.5212205Z [command]/usr/bin/git init /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+2026-10-09T00:25:10.5395071Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-09T00:25:10.5396529Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-09T00:25:10.5397757Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-09T00:25:10.5398775Z hint: call:
+2026-10-09T00:25:10.5399386Z hint:
+2026-10-09T00:25:10.5399975Z hint: 	git config --global init.defaultBranch <name>
+2026-10-09T00:25:10.5400528Z hint:
+2026-10-09T00:25:10.5401486Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-09T00:25:10.5402485Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-09T00:25:10.5403406Z hint:
+2026-10-09T00:25:10.5403772Z hint: 	git branch -m <name>
+2026-10-09T00:25:10.5404178Z hint:
+2026-10-09T00:25:10.5404701Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-09T00:25:10.5405836Z Initialized empty Git repository in /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted/.git/
+2026-10-09T00:25:10.5408658Z [command]/usr/bin/git remote add origin https://github.com/israelhudson/flutter_code_push_example
+2026-10-09T00:25:10.5587335Z ##[endgroup]
+2026-10-09T00:25:10.5588489Z ##[group]Disabling automatic garbage collection
+2026-10-09T00:25:10.5591227Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-09T00:25:10.5784130Z ##[endgroup]
+2026-10-09T00:25:10.5785281Z ##[group]Setting up auth
+2026-10-09T00:25:10.5790439Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T00:25:10.5824510Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T00:25:10.7995335Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T00:25:10.8029936Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T00:25:10.8226307Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T00:25:10.8258821Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T00:25:10.8456662Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-09T00:25:10.9470637Z ##[endgroup]
+2026-10-09T00:25:10.9472341Z ##[group]Fetching the repository
+2026-10-09T00:25:10.9480034Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935
+2026-10-09T00:25:12.3122805Z From https://github.com/israelhudson/flutter_code_push_example
+2026-10-09T00:25:12.3124181Z  * branch            1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935 -> FETCH_HEAD
+2026-10-09T00:25:12.3128460Z ##[endgroup]
+2026-10-09T00:25:12.3129273Z ##[group]Determining the checkout info
+2026-10-09T00:25:12.3131446Z ##[endgroup]
+2026-10-09T00:25:12.3138170Z [command]/usr/bin/git sparse-checkout disable
+2026-10-09T00:25:12.3410920Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-09T00:25:12.3495119Z ##[group]Checking out the ref
+2026-10-09T00:25:12.3509353Z [command]/usr/bin/git checkout --progress --force 1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935
+2026-10-09T00:25:12.4092383Z Note: switching to '1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935'.
+2026-10-09T00:25:12.4093115Z 
+2026-10-09T00:25:12.4093638Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-09T00:25:12.4094618Z changes and commit them, and you can discard any commits you make in this
+2026-10-09T00:25:12.4095489Z state without impacting any branches by switching back to a branch.
+2026-10-09T00:25:12.4095870Z 
+2026-10-09T00:25:12.4096188Z If you want to create a new branch to retain commits you create, you may
+2026-10-09T00:25:12.4096813Z do so (now or later) by using -c with the switch command. Example:
+2026-10-09T00:25:12.4097151Z 
+2026-10-09T00:25:12.4097319Z   git switch -c <new-branch-name>
+2026-10-09T00:25:12.4097589Z 
+2026-10-09T00:25:12.4097751Z Or undo this operation with:
+2026-10-09T00:25:12.4097982Z 
+2026-10-09T00:25:12.4098117Z   git switch -
+2026-10-09T00:25:12.4098293Z 
+2026-10-09T00:25:12.4098590Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-09T00:25:12.4098964Z 
+2026-10-09T00:25:12.4099308Z HEAD is now at 1cb8f3e Merge pull request #17 from israelhudson/codex/manual-dark-theme
+2026-10-09T00:25:12.4104123Z ##[endgroup]
+2026-10-09T00:25:12.4217279Z [command]/usr/bin/git log -1 --format=%H
+2026-10-09T00:25:12.4245005Z 1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935
+2026-10-09T00:25:12.4256492Z ##[group]Removing auth
+2026-10-09T00:25:12.4258141Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T00:25:12.4288492Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T00:25:12.4486565Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T00:25:12.4513590Z http.https://github.com/.extraheader
+2026-10-09T00:25:12.4519478Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-09T00:25:12.4705549Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T00:25:12.4912475Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T00:25:12.4943874Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T00:25:12.5144694Z ##[endgroup]
+2026-10-09T00:25:12.5621153Z ##[group]Run python3 trusted/tools/delivery/release_lab.py finish --candidate-tag "$CANDIDATE_TAG" --report-digest "$REPORT_DIGEST" --output "$RUNNER_TEMP/release-lab"
+2026-10-09T00:25:12.5622274Z [36;1mpython3 trusted/tools/delivery/release_lab.py finish --candidate-tag "$CANDIDATE_TAG" --report-digest "$REPORT_DIGEST" --output "$RUNNER_TEMP/release-lab"[0m
+2026-10-09T00:25:12.6874468Z shell: /usr/bin/bash -e {0}
+2026-10-09T00:25:12.6874813Z env:
+2026-10-09T00:25:12.6877281Z   GH_TOKEN: ***
+2026-10-09T00:25:12.6877523Z   CANDIDATE_TAG: v1.6.0-rc.1
+2026-10-09T00:25:12.6877898Z   REPORT_DIGEST: 1ac71795e140ada599233af0132c8631d62a5f6c0a8a1975d52b5172d46c3469
+2026-10-09T00:25:12.6878269Z ##[endgroup]
+2026-10-09T00:25:54.9914726Z {"status": "completed", "stable_tag": "v1.6.0", "release_url": "https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.6.0", "result_simulated": "false", "distribution_performed": "false"}
+2026-10-09T00:25:55.0117288Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-09T00:25:55.0117756Z with:
+2026-10-09T00:25:55.0117998Z   name: release-lab-publication
+2026-10-09T00:25:55.0118340Z   path: /home/runner/work/_temp/release-lab/
+2026-10-09T00:25:55.0118691Z   if-no-files-found: ignore
+2026-10-09T00:25:55.0119285Z   retention-days: 90
+2026-10-09T00:25:55.0119546Z   overwrite: false
+2026-10-09T00:25:55.0119800Z   compression-level: 6
+2026-10-09T00:25:55.0120089Z   include-hidden-files: false
+2026-10-09T00:25:55.0120389Z ##[endgroup]
+2026-10-09T00:25:55.1463491Z (node:2846) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-09T00:25:55.1464403Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-09T00:25:55.1520188Z With the provided path, there will be 4 files uploaded
+2026-10-09T00:25:55.1521692Z Artifact name is valid!
+2026-10-09T00:25:55.1522490Z Root directory input is valid!
+2026-10-09T00:25:55.5112452Z Beginning upload of artifact content to blob storage
+2026-10-09T00:25:55.5295916Z (node:2846) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-09T00:25:55.7308561Z Uploaded bytes 5611
+2026-10-09T00:25:55.7878503Z Finished uploading artifact content to blob storage!
+2026-10-09T00:25:55.7879264Z SHA256 digest of uploaded artifact zip is f03930c585b37b5362d642bff17a6b81a597c7a4dff849984251c50c526c28aa
+2026-10-09T00:25:55.7881094Z Finalizing artifact upload
+2026-10-09T00:25:56.0425998Z Artifact release-lab-publication.zip successfully finalized. Artifact ID 11587209840
+2026-10-09T00:25:56.0427058Z Artifact release-lab-publication has been successfully uploaded! Final size is 5611 bytes. Artifact ID is 11587209840
+2026-10-09T00:25:56.0433219Z Artifact download URL: https://github.com/israelhudson/flutter_code_push_example/actions/runs/37863610149/artifacts/11587209840
+2026-10-09T00:25:56.0605308Z Post job cleanup.
+2026-10-09T00:25:56.1280990Z [command]/usr/bin/git version
+2026-10-09T00:25:56.1318430Z git version 2.55.0
+2026-10-09T00:25:56.1348904Z Temporarily overriding HOME='/home/runner/work/_temp/5d80b3df-99e9-4148-9380-7f4543adf067' before making global git config changes
+2026-10-09T00:25:56.1349991Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T00:25:56.1353360Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/flutter_code_push_example/flutter_code_push_example/trusted
+2026-10-09T00:25:56.1388233Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T00:25:56.1418967Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T00:25:56.1635831Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T00:25:56.1671878Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T00:25:56.1903968Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T00:25:56.1938971Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T00:25:56.2293430Z Cleaning up orphan processes
+2026-10-09T00:25:56.2575575Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

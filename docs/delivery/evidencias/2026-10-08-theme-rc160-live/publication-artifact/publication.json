@@ -1,0 +1,166 @@
+{
+  "authorized_run_id": "37863610149",
+  "candidate_tag": "v1.6.0-rc.1",
+  "created_at": "2026-10-09T00:25:20.861148+00:00",
+  "decision": {
+    "approvers": [
+      {
+        "comment": "",
+        "environment": "aprovacao-israel",
+        "environment_id": 23819079490,
+        "reviewer": {
+          "id": 18661493,
+          "login": "israelhudson"
+        },
+        "state": "approved"
+      },
+      {
+        "comment": "",
+        "environment": "aprovacao-fahnassau30",
+        "environment_id": 23819080337,
+        "reviewer": {
+          "id": 339824994,
+          "login": "fahnassau30"
+        },
+        "state": "approved"
+      }
+    ],
+    "publisher": {
+      "comment": "",
+      "environment": "autorizar-publicacao",
+      "environment_id": 23819081174,
+      "reviewer": {
+        "id": 18661493,
+        "login": "israelhudson"
+      },
+      "state": "approved"
+    }
+  },
+  "decision_digest": "8feb81c285c1f3217fa42cf2c53216860c91c2784e4a9f9cd536dabf7b3a3f6b",
+  "github_release": {
+    "id": 407373367,
+    "payload_digest": "367e491a76241a97ee7b272df4bb6af82aed6f125e41587607db62c3e9ec4dff",
+    "published_at": "2026-10-09T00:25:49Z",
+    "tag_name": "v1.6.0",
+    "url": "https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.6.0"
+  },
+  "intent_id": "efd1356279fe334ac9470a5d7f6c85c16fae31b339a54d8c86ab3d4c6db0ea76",
+  "policy_digest": "cf976ff2b78fef243c81f99eb3c75cf3e4a191eadc6a2f1efe6f08179dc6c78d",
+  "publication_mode": "github_release_only",
+  "receipt": {
+    "account_review_verified": true,
+    "approval_evidence_kind": "github_account_review",
+    "approvers": [
+      {
+        "comment": "",
+        "environment": "aprovacao-israel",
+        "environment_id": 23819079490,
+        "reviewer": {
+          "id": 18661493,
+          "login": "israelhudson"
+        },
+        "state": "approved"
+      },
+      {
+        "comment": "",
+        "environment": "aprovacao-fahnassau30",
+        "environment_id": 23819080337,
+        "reviewer": {
+          "id": 339824994,
+          "login": "fahnassau30"
+        },
+        "state": "approved"
+      }
+    ],
+    "candidate_tag": "v1.6.0-rc.1",
+    "distribution_performed": false,
+    "github_release": {
+      "id": 407373367,
+      "payload_digest": "367e491a76241a97ee7b272df4bb6af82aed6f125e41587607db62c3e9ec4dff",
+      "published_at": "2026-10-09T00:25:49Z",
+      "tag_name": "v1.6.0",
+      "url": "https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.6.0"
+    },
+    "github_release_published": true,
+    "intent_id": "efd1356279fe334ac9470a5d7f6c85c16fae31b339a54d8c86ab3d4c6db0ea76",
+    "patch_generated": false,
+    "platforms": {
+      "android": {
+        "base": null,
+        "classification": "Inconclusivo — alvo bloqueado",
+        "evidence": "Git diff acumulado; nenhuma compilação mobile ou comparação Shorebird.",
+        "reason": "Release-base mobile real não configurada.",
+        "target_blocked": true
+      },
+      "ios": {
+        "base": null,
+        "classification": "Inconclusivo — alvo bloqueado",
+        "evidence": "Git diff acumulado; nenhuma compilação mobile ou comparação Shorebird.",
+        "reason": "Release-base mobile real não configurada.",
+        "target_blocked": true
+      }
+    },
+    "preparer": {
+      "id": 18661493,
+      "login": "israelhudson"
+    },
+    "preview": {
+      "attempts": 1,
+      "snapshot_manifest_sha256": "6a948e9abc550424d948f3a4f7e871a6537665ca0edd055ad9ef0864bc34db1b",
+      "snapshot_url": "https://israelhudson.github.io/flutter_code_push_example/snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/",
+      "source_sha": "1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935",
+      "success": true,
+      "verified_files": [
+        "files.json",
+        "metadata.json",
+        "index.html",
+        "app/index.html",
+        "app/flutter_bootstrap.js",
+        "app/main.dart.js"
+      ],
+      "web_content_sha256": "a53a0efc203a5f74db3534b5e3115ad182895275b3a456df40fa04a061b38c8a"
+    },
+    "publication_mode": "github_release_only",
+    "publisher": {
+      "comment": "",
+      "environment": "autorizar-publicacao",
+      "environment_id": 23819081174,
+      "reviewer": {
+        "id": 18661493,
+        "login": "israelhudson"
+      },
+      "state": "approved"
+    },
+    "recorded_at": "2026-10-09T00:25:53.161542+00:00",
+    "recovery_authorizations": [],
+    "release_url": "https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.6.0",
+    "report_digest": "1ac71795e140ada599233af0132c8631d62a5f6c0a8a1975d52b5172d46c3469",
+    "result_simulated": false,
+    "review_independence_verified": false,
+    "run_attempt": 1,
+    "run_id": "37863610149",
+    "schema": 1,
+    "source_sha": "1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935",
+    "stable_tag": "v1.6.0",
+    "stable_tag_created": true,
+    "title": "Tema escuro manual",
+    "version": "1.6.0"
+  },
+  "recovery_authorizations": [],
+  "release_payload": {
+    "body": "# 1.6.0 — Tema escuro manual\n\nRegistro de versão do laboratório no GitHub. **Nenhum aplicativo ou patch foi distribuído.**\n\n- Candidata aprovada: `v1.6.0-rc.1` (preservada).\n- Tag estável: `v1.6.0`.\n- Código aprovado: `1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935`.\n- Aprovações verificadas nas contas: israelhudson e fahnassau30.\n- Comando final: israelhudson.\n- [Preview avaliado](https://israelhudson.github.io/flutter_code_push_example/snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/).\n- [Relatório e execução aprovados](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37863610149).\n\n## Changelog aprovado\n\n- Merge pull request #17 from israelhudson/codex/manual-dark-theme\n- feat: adicionar tema escuro manual\n- Merge pull request #16 from israelhudson/codex/release-lab-backport\n- docs: registrar promoção real e provas da validação\n- fix: identificar laboratório na candidata corrigida\n\nReviews de contas verificadas não demonstram independência das pessoas que operaram essas contas.\n\n<!-- release-lab-intent:efd1356279fe334ac9470a5d7f6c85c16fae31b339a54d8c86ab3d4c6db0ea76 -->\n<!-- release-lab-report:1ac71795e140ada599233af0132c8631d62a5f6c0a8a1975d52b5172d46c3469 -->\n",
+    "draft": false,
+    "generate_release_notes": false,
+    "make_latest": "true",
+    "name": "1.6.0 — Tema escuro manual",
+    "prerelease": false,
+    "tag_name": "v1.6.0",
+    "target_commitish": "1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935"
+  },
+  "report_digest": "1ac71795e140ada599233af0132c8631d62a5f6c0a8a1975d52b5172d46c3469",
+  "source_sha": "1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935",
+  "stable_tag": "v1.6.0",
+  "stable_tag_verified": true,
+  "status": "completed",
+  "updated_at": "2026-10-09T00:25:53.161562+00:00"
+}

@@ -91,13 +91,50 @@ jobs:
       - name: Compilar snapshot web sem histórico ou credenciais
         env:
           SOURCE_SHA: ${{ needs.preflight.outputs.source_sha }}
-        run: python3 trusted/deploy/pages_preview.py build --repo app --source-sha "$SOURCE_SHA" --site "$RUNNER_TEMP/new-pages-site" > "$RUNNER_TEMP/pages-build-metadata.json"
+          CANDIDATE_TAG: ${{ needs.preflight.outputs.candidate_tag }}
+        run: python3 trusted/deploy/pages_preview.py build --repo app --source-sha "$SOURCE_SHA" --delivery-tag "$CANDIDATE_TAG" --site "$RUNNER_TEMP/new-pages-site" > "$RUNNER_TEMP/pages-build-metadata.json"
       - name: Entregar somente bytes compilados para outro runner
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: release-lab-built-web
           path: ${{ runner.temp }}/new-pages-site/
           if-no-files-found: error
+          retention-days: 90
+          overwrite: false
+  changelog_context:
+    name: Preparar contexto do changelog — opcional, sem aguardar IA
+    needs: preflight
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    continue-on-error: true
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: read
+    steps:
+      - name: Checkout das ferramentas confiáveis congeladas
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.preflight.outputs.tooling_sha }}
+          path: trusted
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Ler a identidade da mesma candidata
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: release-lab-preflight
+          path: ${{ runner.temp }}/context-input
+      - name: Congelar descrições de PRs; nenhuma chamada de IA
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 trusted/tools/delivery/changelog_summary.py --collect-candidate "$RUNNER_TEMP/context-input/candidate.json" --repo trusted --output "$RUNNER_TEMP/changelog-context"
+      - name: Preservar contexto auxiliar sem atrasar o caminho obrigatório
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-lab-context
+          path: ${{ runner.temp }}/changelog-context/
+          if-no-files-found: ignore
           retention-days: 90
           overwrite: false
   web:
@@ -185,7 +222,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           CANDIDATE_TAG: ${{ needs.preflight.outputs.candidate_tag }}
-        run: python3 trusted/tools/delivery/release_lab.py report --candidate-tag "$CANDIDATE_TAG" --preview-report "$RUNNER_TEMP/pages-smoke.json" --preview-metadata "$RUNNER_TEMP/release-lab/preview-metadata.json" --output "$RUNNER_TEMP/release-lab"
+        run: python3 trusted/tools/delivery/release_lab.py report --candidate-tag "$CANDIDATE_TAG" --preview-report "$RUNNER_TEMP/pages-smoke.json" --preview-metadata "$RUNNER_TEMP/release-lab/preview-metadata.json" --context-artifact release-lab-context --output "$RUNNER_TEMP/release-lab"
       - name: Preservar relatório e confirmação HTTP
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -194,6 +231,42 @@ jobs:
           path: |
             ${{ runner.temp }}/release-lab/
             ${{ runner.temp }}/pages-smoke.json
+          if-no-files-found: ignore
+          retention-days: 90
+          overwrite: false
+  slack_preview:
+    name: ILUSTRAR AVISO SLACK — simulação, sem envio
+    needs: [preflight, web]
+    if: ${{ !cancelled() && needs.web.result == 'success' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    # Optional illustration. No approval/publishing job depends on this job.
+    continue-on-error: true
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - name: Checkout das ferramentas congeladas, sem credenciais de envio
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.preflight.outputs.tooling_sha }}
+          path: trusted
+          persist-credentials: false
+      - name: Ler o relatório já congelado desta execução
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: release-lab-evaluation
+          path: ${{ runner.temp }}/slack-input
+      - name: Simular o aviso e mostrar os links no resumo do job
+        run: |
+          python3 trusted/tools/delivery/slack_preview.py --report "$RUNNER_TEMP/slack-input/release-lab/report.json" --policy trusted/delivery/release-lab-policy.json --output "$RUNNER_TEMP/slack-preview"
+          cat "$RUNNER_TEMP/slack-preview/slack-preview.md" >> "$GITHUB_STEP_SUMMARY"
+      - name: Preservar payload ilustrativo e identidade, sem envio
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-lab-slack-preview
+          path: ${{ runner.temp }}/slack-preview/
           if-no-files-found: ignore
           retention-days: 90
           overwrite: false
@@ -317,6 +390,38 @@ jobs:
         with:
           name: release-lab-publication
           path: ${{ runner.temp }}/release-lab/
+          if-no-files-found: ignore
+          retention-days: 90
+          overwrite: false
+  finalize_status:
+    name: Consolidar resultado da candidata — sem aprovar ou publicar
+    needs: [preflight, build, web, approve_first, approve_second, authorize_publish, publish]
+    if: ${{ always() && needs.preflight.result == 'success' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    concurrency:
+      group: release-lab-mutation
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - name: Checkout das ferramentas confiáveis congeladas
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.preflight.outputs.tooling_sha }}
+          path: trusted
+          persist-credentials: false
+      - name: Ler apenas o run e as reviews oficiais; consolidar o estado
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 trusted/tools/delivery/release_lab.py reconcile --evaluation-run-id "$GITHUB_RUN_ID" --output "$RUNNER_TEMP/release-lab-status"
+      - name: Preservar estado observado e motivo do encerramento
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-lab-final-status
+          path: ${{ runner.temp }}/release-lab-status/
           if-no-files-found: ignore
           retention-days: 90
           overwrite: false

@@ -1,0 +1,17 @@
+[
+  {
+    "id": 113604967206,
+    "name": "Congelar candidata revisada",
+    "exit_code": 1
+  },
+  {
+    "id": 113605089015,
+    "name": "Avaliar a mesma candidata / Conferir RC ativa, pap\u00e9is e prote\u00e7\u00f5es",
+    "exit_code": 1
+  },
+  {
+    "id": 113605145062,
+    "name": "Avaliar a mesma candidata / Verificar e compilar web sem permiss\u00f5es de publica\u00e7\u00e3o",
+    "exit_code": 1
+  }
+]

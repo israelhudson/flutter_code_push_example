@@ -60,6 +60,7 @@ jobs:
     permissions:
       contents: write
       actions: read
+      pull-requests: read
       pages: write
       id-token: write
     # GITHUB_TOKEN tag pushes do not start another push workflow. Calling the

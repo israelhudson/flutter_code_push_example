@@ -1,0 +1,203 @@
+diff --git a/lib/app/app.dart b/lib/app/app.dart
+index 139567b..8356837 100644
+--- a/lib/app/app.dart
++++ b/lib/app/app.dart
+@@ -4,16 +4,34 @@ import '../core/theme/app_theme.dart';
+ import '../features/home/home_page.dart';
+ import '../features/update/update_prompt.dart';
+ 
+-class App extends StatelessWidget {
++class App extends StatefulWidget {
+   const App({super.key});
+ 
++  @override
++  State<App> createState() => _AppState();
++}
++
++class _AppState extends State<App> {
++  // A escolha dura somente nesta execução. Todo novo início usa o tema claro.
++  ThemeMode _themeMode = ThemeMode.light;
++
++  void _toggleTheme() {
++    setState(() {
++      _themeMode = _themeMode == ThemeMode.light
++          ? ThemeMode.dark
++          : ThemeMode.light;
++    });
++  }
++
+   @override
+   Widget build(BuildContext context) {
+     return MaterialApp(
+       title: 'Flutter Code Push Example',
+       theme: AppTheme.light,
++      darkTheme: AppTheme.dark,
++      themeMode: _themeMode,
+       debugShowCheckedModeBanner: false,
+-      home: const UpdatePrompt(child: HomePage()),
++      home: UpdatePrompt(child: HomePage(onToggleTheme: _toggleTheme)),
+     );
+   }
+ }
+diff --git a/lib/core/theme/app_theme.dart b/lib/core/theme/app_theme.dart
+index 9b1a3d2..9f79b50 100644
+--- a/lib/core/theme/app_theme.dart
++++ b/lib/core/theme/app_theme.dart
+@@ -7,9 +7,63 @@ abstract final class AppColors {
+   static const champagne = Color(0xFFC6A15B);
+   static const cream = Color(0xFFF8F1E7);
+   static const porcelain = Color(0xFFFFFCF8);
++  static const petroleum = Color(0xFF0B2930);
++  static const petroleumSurface = Color(0xFF123943);
++  static const mist = Color(0xFFD3E2E5);
+ }
+ 
+ abstract final class AppTheme {
++  static ThemeData get dark {
++    final colorScheme =
++        ColorScheme.fromSeed(
++          seedColor: AppColors.petroleum,
++          brightness: Brightness.dark,
++        ).copyWith(
++          primary: AppColors.champagne,
++          onPrimary: AppColors.espresso,
++          secondary: AppColors.champagne,
++          onSecondary: AppColors.espresso,
++          surface: AppColors.petroleumSurface,
++          onSurface: AppColors.cream,
++          onSurfaceVariant: AppColors.mist,
++          inversePrimary: AppColors.espresso,
++        );
++
++    return ThemeData(
++      colorScheme: colorScheme,
++      scaffoldBackgroundColor: AppColors.petroleum,
++      useMaterial3: true,
++      fontFamily: 'Georgia',
++      appBarTheme: const AppBarTheme(
++        backgroundColor: AppColors.petroleumSurface,
++        foregroundColor: AppColors.cream,
++        centerTitle: true,
++        elevation: 0,
++        titleTextStyle: TextStyle(
++          color: AppColors.cream,
++          fontFamily: 'Georgia',
++          fontSize: 20,
++          fontWeight: FontWeight.bold,
++          letterSpacing: 0.4,
++        ),
++      ),
++      textTheme: const TextTheme(
++        bodyLarge: TextStyle(color: AppColors.cream, fontSize: 18),
++        bodyMedium: TextStyle(color: AppColors.mist, fontSize: 16),
++        headlineMedium: TextStyle(
++          color: AppColors.cream,
++          fontSize: 30,
++          fontWeight: FontWeight.bold,
++          letterSpacing: 0.5,
++        ),
++      ),
++      dividerTheme: const DividerThemeData(
++        color: AppColors.champagne,
++        thickness: 1,
++      ),
++    );
++  }
++
+   static ThemeData get light {
+     final colorScheme =
+         ColorScheme.fromSeed(
+diff --git a/lib/features/home/home_page.dart b/lib/features/home/home_page.dart
+index 2eb39bf..a4eb15e 100644
+--- a/lib/features/home/home_page.dart
++++ b/lib/features/home/home_page.dart
+@@ -4,7 +4,9 @@ import '../update/update_service.dart';
+ import '../update/widgets/update_available_sheet.dart';
+ 
+ class HomePage extends StatefulWidget {
+-  const HomePage({super.key, this.service});
++  const HomePage({super.key, this.service, required this.onToggleTheme});
++
++  final VoidCallback onToggleTheme;
+ 
+   /// Injetável para teste; em produção o serviço padrão dá conta.
+   final UpdateService? service;
+@@ -60,7 +62,8 @@ class _HomePageState extends State<HomePage> {
+       _status = switch (result) {
+         UpdateUpToDate() => 'Nenhuma atualização disponível.',
+         UpdateReady() => 'Atualização baixada, aguardando reinício.',
+-        UpdateUnavailable() => 'Serviço de atualização indisponível no momento.',
++        UpdateUnavailable() =>
++          'Serviço de atualização indisponível no momento.',
+         UpdateFailed(:final message) => 'Erro ao atualizar: $message',
+       };
+     });
+@@ -72,8 +75,19 @@ class _HomePageState extends State<HomePage> {
+ 
+   @override
+   Widget build(BuildContext context) {
++    final isDark = Theme.of(context).brightness == Brightness.dark;
++
+     return Scaffold(
+-      appBar: AppBar(title: const Text('Flutter Code Push Example')),
++      appBar: AppBar(
++        title: const Text('Flutter Code Push Example'),
++        actions: [
++          IconButton(
++            tooltip: isDark ? 'Ativar tema claro' : 'Ativar tema escuro',
++            onPressed: widget.onToggleTheme,
++            icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
++          ),
++        ],
++      ),
+       body: Center(
+         child: Padding(
+           padding: const EdgeInsets.all(24),
+diff --git a/lib/features/update/widgets/update_available_sheet.dart b/lib/features/update/widgets/update_available_sheet.dart
+index b6d259d..552591c 100644
+--- a/lib/features/update/widgets/update_available_sheet.dart
++++ b/lib/features/update/widgets/update_available_sheet.dart
+@@ -1,7 +1,5 @@
+ import 'package:flutter/material.dart';
+ 
+-import '../../../core/theme/app_theme.dart';
+-
+ /// Sobe o aviso de atualização ocupando 40% da altura da tela.
+ ///
+ /// É dispensável de propósito: o patch entra sozinho no próximo cold start, e
+@@ -14,7 +12,7 @@ Future<void> showUpdateAvailableSheet(
+     context: context,
+     // Sem isso o sheet fica preso na altura máxima padrão e não chega aos 40%.
+     isScrollControlled: true,
+-    backgroundColor: AppColors.porcelain,
++    backgroundColor: Theme.of(context).colorScheme.surface,
+     shape: const RoundedRectangleBorder(
+       borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+     ),
+@@ -33,6 +31,7 @@ class _UpdateAvailableSheet extends StatelessWidget {
+   @override
+   Widget build(BuildContext context) {
+     final textTheme = Theme.of(context).textTheme;
++    final colorScheme = Theme.of(context).colorScheme;
+ 
+     return Padding(
+       padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
+@@ -42,16 +41,12 @@ class _UpdateAvailableSheet extends StatelessWidget {
+             width: 40,
+             height: 4,
+             decoration: BoxDecoration(
+-              color: AppColors.champagne,
++              color: colorScheme.secondary,
+               borderRadius: BorderRadius.circular(2),
+             ),
+           ),
+           const SizedBox(height: 24),
+-          const Icon(
+-            Icons.system_update_alt,
+-            size: 36,
+-            color: AppColors.burgundy,
+-          ),
++          Icon(Icons.system_update_alt, size: 36, color: colorScheme.primary),
+           const SizedBox(height: 12),
+           Text(
+             'Nova versão disponível',

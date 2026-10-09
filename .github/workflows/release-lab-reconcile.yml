@@ -1,0 +1,41 @@
+name: LAB - Consolidar execução encerrada
+on:
+  workflow_run:
+    workflows: ['LAB - Preparar candidata', 'LAB - Avaliar entrega']
+    types: [completed]
+permissions:
+  contents: read
+jobs:
+  observe:
+    name: Registrar resultado oficial — sem efeitos de publicação
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    concurrency:
+      group: release-lab-mutation
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      # workflow_run can run after cancellation when a job in the cancelled
+      # workflow could not start. Never download its artifacts or execute app code.
+      - name: Checkout exclusivo das ferramentas confiáveis da main
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: refs/heads/main
+          path: trusted
+          persist-credentials: false
+      - name: Vincular a observação à candidata e ao run original registrados
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVALUATION_RUN_ID: ${{ github.event.workflow_run.id }}
+        run: python3 trusted/tools/delivery/release_lab.py reconcile-run --evaluation-run-id "$EVALUATION_RUN_ID" --output "$RUNNER_TEMP/release-lab-status"
+      - name: Preservar o estado observado
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-lab-reconciled-status
+          path: ${{ runner.temp }}/release-lab-status/
+          if-no-files-found: ignore
+          retention-days: 90
+          overwrite: false

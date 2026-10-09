@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "errors": [],
+  "provider_active": false,
+  "ai_requests": 0,
+  "tasks_collected": false,
+  "collection_kind": "merged_pr_descriptions",
+  "candidate_tag": "v1.6.0-rc.1",
+  "source_sha": "1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935"
+}

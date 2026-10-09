@@ -1,10 +1,10 @@
 # Plano de evolução da esteira no laboratório Flutter
 
-**Próximo passo: executar o [ensaio local](delivery/LABORATORIO.md).** Israel representa os quatro papéis, sem distribuir o aplicativo.
+**Próximo passo:** seguir o [quadro de ajustes e prioridades](delivery/AJUSTES-E-PRIORIDADES.md) e configurar o Slack pelo [manual](delivery/CONFIGURAR-SLACK-LAB.md). A etapa ilustrativa gera o aviso sem enviar.
 
-Data: 07/10/2026, Fortaleza. Responsável pelo laboratório: Israel. **Estado: etapas 1 a 6 implementadas para o laboratório local; ensaios reais da Etapa 7 pendentes.**
+Data original: 07/10/2026; atualização: 08/10/2026, Fortaleza. Responsável pelo laboratório: Israel. **Estado atual: promoção da 1.6.0 no GitHub validada; refinamentos, IA/envio Slack, aceites mobile e adaptação à Amulets continuam pendentes.**
 
-O objetivo é experimentar a esteira neste projeto pessoal antes de adaptar qualquer parte ao Amulets. O simulador local usa SQLite e provedor falso; comandos, snapshots e recuperação foram exercitados. Os workflows GitHub foram revisados para preparação e comando final manuais. Sua ativação remota, distribuição mobile, revisão de proteções e validação com identidades distintas continuam etapas próprias.
+O objetivo é experimentar a esteira neste projeto pessoal antes de adaptar qualquer parte ao Amulets. O simulador local usa SQLite e provedor falso; comandos, snapshots e recuperação foram exercitados. O LAB GitHub já validou preparação, duas contas aprovadoras e comando final separado, criando tags/Release reais. Distribuição mobile, revisão independente pelo time e adaptação à Amulets continuam aceites próprios. As seções marcadas como inventário de 07/10 preservam a fotografia original.
 
 ```bash
 python3 tools/delivery/lab.py demo --folder build/delivery-lab/meu-primeiro-ensaio
@@ -14,13 +14,17 @@ O demo cria repositório e previews **sintéticos** em uma sessão descartável;
 
 Leitura rápida: seções “Fluxo escolhido” e “Backlog por etapas”, cerca de 5 minutos. Os contratos e cenários servem de consulta durante a implementação.
 
+**Adendo de 08/10/2026:** [changelog semitécnico, IA independente e avisos no Slack](delivery/CHANGELOG-E-AVISOS-SLACK.md). A proposta preserva as tags RC após a promoção, usa descrições de PR/task para explicar o impacto e mantém o histórico de commits como fallback, sem atrasar os gates ou o comando final. A `v1.6.0` desta rodada foi publicada no GitHub; resumo por IA e novos avisos continuam planejados. O inventário de 07/10 abaixo permanece uma fotografia histórica.
+
+**Próxima rodada:** consultar [ajustes e prioridades](delivery/AJUSTES-E-PRIORIDADES.md) e o [manual Slack](delivery/CONFIGURAR-SLACK-LAB.md). A etapa ilustrativa de Slack foi preparada na branch de trabalho; gera payload e resumo, sem envio. Integração na main e remetente real continuam etapas próprias.
+
 ## Fluxo escolhido
 
 1. Israel desenvolve; o papel Ian/Yan faz a revisão técnica. PRs revisados integram a `main`, sem criar uma candidata por PR.
 2. Israel agrupa mudanças e aciona **Preparar candidata** no Actions. A automação fixa código, preview, changelog e destinos.
 3. A pré-análise classifica cada plataforma. Samuel e Vinícius avaliam a mesma candidata e registram duas aprovações de versão.
 4. **2/2 libera o comando Publicar agora.** A segunda aprovação e o merge de um registro não publicam automaticamente.
-5. Israel executa o comando final. A automação revalida tudo, processa cada destino e registra o resultado real de cada um.
+5. Na proposta Amulets, **Samuel OU Vinícius** executa o comando final. No LAB, **Israel OU Fabrícia**. A automação revalida tudo, processa os destinos autorizados e registra o resultado real de cada um.
 
 “RC” significa candidata à publicação. Durante o ensaio, a tela precisa dizer **LABORATÓRIO — papéis simulados por Israel**. “2/2 simulado” nunca significa duas pessoas diferentes.
 
@@ -342,6 +346,27 @@ Cada etapa entrega algo demonstrável antes de começar a próxima. **Etapas 1 a
 4. Auditar CI, flavors, app IDs, segredos, permissões e proteções atuais do Amulets somente em leitura; aprovar as diferenças antes de implementar.
 5. Registrar validação humana do fluxo e autorização para a adaptação. Nenhum comando Shorebird será executado no Amulets como parte deste laboratório.
 
+### Decisão com Samuel: quem poderá gerar uma RC na Amulets?
+
+**Pendente de definição pelo time.** Perguntar ao Samuel: **quem será autorizado
+a preparar/gerar as RCs, quem poderá substituir essa pessoa e quem poderá
+iniciar uma recuperação de publicação parcial?** Definir pessoas ou grupo,
+contas autenticadas e regras para entregas normais e urgentes antes de adaptar
+a esteira. Ser aprovador ou poder iniciar um Action não concede automaticamente
+o papel de preparador.
+
+No LAB atual, `operators` permite somente `israelhudson` preparar a candidata.
+Israel e Fabrícia aprovam, e qualquer um dos dois pode dar o comando final
+depois dos dois avais. Essa matriz do laboratório não define a política da Amulets.
+
+Na rodada manual de 08/10/2026, a conta `fahnassau30` tentou preparar `1.6.0` e
+foi recusada antes de criar a candidata, branch ou tag. É um bloqueio esperado
+da política; a orientação anterior não tinha explicitado a conta necessária.
+As [evidências e o procedimento para continuar](delivery/evidencias/2026-10-08-rc160-operator-block/RELATORIO.md)
+preservam a execução e o motivo. Melhoria de experiência pendente: apresentar
+os preparadores autorizados antes da execução e explicar a ausência de efeitos
+na mensagem de bloqueio. Não ampliar permissões como contorno.
+
 ## Cenários de aceite
 
 Os resultados são critérios de aceite. As suítes `test_lab_engine.py`, `test_snapshots.py`, `test_github_candidate.py` e `test_policy.py` cobrem cenários sintéticos; `lab.py demo` fornece evidência executável de snapshots e falha parcial. APIs substituídas e papéis simulados não são validação real. Consultar a saída da suíte executada e os recibos da sessão, preservando os testes anteriores.
@@ -396,6 +421,8 @@ Os resultados são critérios de aceite. As suítes `test_lab_engine.py`, `test_
 | Antes de criar novas refs remotas | Proteções para tags neutras, branches de release e registros; estratégia para conservar a POC histórica. |
 | Antes de ensaio real | Apps e release-bases isoladas, dispositivos, rota iOS, destinos web e autorização para efeitos externos. |
 | Antes de comprovar segregação | Identidades reais, permissões e responsáveis por publicação e incidentes. |
+| Antes de adaptar à Amulets | Confirmar com Samuel quem pode gerar RCs, substituir o preparador e iniciar recuperação; separar esses acessos dos avais e do comando final. |
+| Antes de ativar resumo/avisos | Definir acesso e orçamento Copilot, contexto de PR/Plane, timeout, canal/app Slack e congelamento do texto apresentado; IA/Slack não bloqueiam a esteira. Ver o adendo de changelog semitécnico. |
 | Na Etapa 7 | Validar procedimento de urgência e reconciliação com provedores reais e identidades distintas. |
 
 **Próxima ação:** executar o demo do [laboratório](delivery/LABORATORIO.md), abrir `report.json` e observar 0/2 → 1/2 → 2/2, RC2 no SHA de F′ e retomada parcial. Depois avaliar os critérios locais antes de ativar qualquer caminho remoto.

@@ -1,0 +1,6 @@
+ lib/app/app.dart                                   |  22 ++++-
+ lib/core/theme/app_theme.dart                      |  54 +++++++++++
+ lib/features/home/home_page.dart                   |  20 +++-
+ .../update/widgets/update_available_sheet.dart     |  13 +--
+ test/widget_test.dart                              | 104 +++++++++++++++++++++
+ 5 files changed, 199 insertions(+), 14 deletions(-)
