@@ -1,0 +1,20 @@
+[
+  {
+    "site": "sites/amulets-esteira-v5",
+    "archive": "sites/evidencias-v5/slack-rondas/v5-final.tar.gz",
+    "real_files": 21,
+    "source_mismatches": [],
+    "appledouble_entries": 24,
+    "all_real_files_match_pushed_source": true,
+    "comparison": "20 assets byte a byte e manifesto relocado pelo helper comparado como JSON. Hash do tar local nao equiparado ao content_hash do arquivo normalizado retornado pelo servico."
+  },
+  {
+    "site": "sites/amulets-esteira-v5-2",
+    "archive": "sites/evidencias-v5/slack-rondas/v5-2-final.tar.gz",
+    "real_files": 21,
+    "source_mismatches": [],
+    "appledouble_entries": 24,
+    "all_real_files_match_pushed_source": true,
+    "comparison": "20 assets byte a byte e manifesto relocado pelo helper comparado como JSON. Hash do tar local nao equiparado ao content_hash do arquivo normalizado retornado pelo servico."
+  }
+]

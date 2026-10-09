@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "created_at": "2026-10-09T02:35:27.025853+00:00",
+  "remote_root": "release-lab/evidencias/2026-10-09-slack-rondas/followup-sites-private",
+  "files": [
+    {
+      "path": "19-v5-2-proposal-final-local.jpg",
+      "bytes": 80581,
+      "sha256": "f3fc79e456a5b1db46514b78dee87f755a00b6c98af3a410fe54937d4150e46d",
+      "git_blob_sha": "98bb1dc5f03f4e449f3e73a3775ae4f94b47aca6"
+    },
+    {
+      "path": "AGENT-QA.md",
+      "bytes": 4524,
+      "sha256": "796f6da5abcf6954ba288dfbe7f545c4ca7042c79962a15b152802611a2875d6",
+      "git_blob_sha": "07ceac529033498c79209b416785b3f6cce3b826"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2881,
+      "sha256": "70cf8c0af8d1ea7967f7ab19a89e40aac07c7f05f2ef69e00a56f37c8fee33a2",
+      "git_blob_sha": "d798fbac249431024e8c0c97776789eb378f3c7f"
+    },
+    {
+      "path": "archive-source-verification.json",
+      "bytes": 883,
+      "sha256": "05ff2f3466fede32f6a9116d3b19fb658e42b95cee79b919275ea98fe27aeae1",
+      "git_blob_sha": "081108aeeca6144b9609ee932fbd266f3a51b736"
+    },
+    {
+      "path": "credential-scan.json",
+      "bytes": 349,
+      "sha256": "a2b33fed1dc44a8f2f1fcdc36f28b85af4d14a584d94254c57270f7547995ff7",
+      "git_blob_sha": "3720856d495f38237a50d18c428967412e46c83f"
+    },
+    {
+      "path": "publication-final.json",
+      "bytes": 5571,
+      "sha256": "34ab5cc70c5c398f9da5a5d6e67cd0c5a88a0b63e48ec10a031331d41e87ebc8",
+      "git_blob_sha": "5f936ea3a61f8c2c1915592a4006a58cbad24b63"
+    },
+    {
+      "path": "verification.json",
+      "bytes": 1569,
+      "sha256": "9eb1be79943843c5e85499a2eff215bd17d9edb7bdd8cd06e4e625a850852fb6",
+      "git_blob_sha": "397d6e57767cb7ea14f5e3f2f07442c4fdfdc351"
+    }
+  ],
+  "files_count": 7,
+  "bytes_total": 96358,
+  "raw_stdout_stderr_preserved": true,
+  "actual_credential_signatures_detected": 0,
+  "archives_included": false,
+  "excluded": [
+    "manifest.json(self)",
+    "SHA256SUMS(self)"
+  ]
+}

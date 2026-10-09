@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "checked_at": "2026-10-09T02:35:27.023765+00:00",
+  "read_only_local_source_inspection": true,
+  "source_files_copied_byte_for_byte": true,
+  "publications": [
+    {
+      "source_sha": "cedeb0bf586d8e225970f6b261aeb8da74e174f7",
+      "deployment_id": "appgdep_6ac851c91b048191beb339dbc1603ed9",
+      "status": "succeeded",
+      "version": 3,
+      "owner_only_verified": true,
+      "real_file_count": 21,
+      "source_mismatches": [],
+      "verification_kind": "Consistency check of root-collected service and local QA records; not a fresh authenticated hosted inspection"
+    },
+    {
+      "source_sha": "622332030f7a20c6ae2d58b0bfa2b07bccad17dc",
+      "deployment_id": "appgdep_6ac851fc21688191925bc0c7d6ecc74c",
+      "status": "succeeded",
+      "version": 1,
+      "owner_only_verified": true,
+      "real_file_count": 21,
+      "source_mismatches": [],
+      "verification_kind": "Consistency check of root-collected service and local QA records; not a fresh authenticated hosted inspection"
+    }
+  ],
+  "browser_observation": "Both origins required ChatGPT login, as recorded by root; authenticated hosted content reading was not performed.",
+  "archive_comparison": "20 content assets compared byte for byte; relocated manifest compared as JSON. Local tar hash is not equated with service-normalized archive content_hash.",
+  "archives_included": false,
+  "screenshot_review": "Viewed local JPG; only proposal interface and local LAB links visible, with no visible credential fields.",
+  "older_evidence_packages_unchanged": true
+}
