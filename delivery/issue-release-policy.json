@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "repository": "israelhudson/flutter_code_push_example",
+  "state_branch": "codex/issue-release-state",
+  "operators": [{"login": "israelhudson", "id": 18661493}],
+  "approvers": [{"login": "israelhudson", "id": 18661493}],
+  "publishers": [{"login": "israelhudson", "id": 18661493}],
+  "approval_mode": "1/1",
+  "publication_mode": "github_release_only",
+  "distribution_performed": false
+}

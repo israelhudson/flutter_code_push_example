@@ -9,6 +9,11 @@ Para o fluxo atual com dois gates e comando final separado, seguir
 [FLUXO-DOIS-APROVADORES.md](FLUXO-DOIS-APROVADORES.md); para a comunicação,
 seguir [SLACK-AUTOMATICO.md](SLACK-AUTOMATICO.md).
 
+A alternativa [Aprovação por Issue](APROVACAO-POR-ISSUE.md) usa workflows com
+prefixo **Issue ·**, uma ficha por candidata de teste, Israel em **1/1** e
+`/publicar` separado. Ela possui ativação e registros próprios e não substitui
+o fluxo atual de dois gates. Sua instalação e limites estão no guia específico.
+
 Estado atual: a entrega [1.7.0](https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.7.0)
 concluiu a jornada B com dois avais, comando final separado e cinco mensagens
 Slack reais. A jornada A, 1.8.0, teve RC1 rejeitada; outro gate continuou

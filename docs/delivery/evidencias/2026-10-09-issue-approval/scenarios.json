@@ -1,0 +1,527 @@
+{
+  "evidence_kind": "offline_stateful_github_fake",
+  "real_github_publication": false,
+  "scenarios": {
+    "rejection": {
+      "state": "rejected",
+      "publish": false,
+      "tag": "test-issue-1.13.0-rc.1"
+    },
+    "rc2_new_tag": "test-issue-1.13.0-rc.2",
+    "rc2_before_new_approval": {
+      "state": "awaiting_approval",
+      "publish": false,
+      "tag": "test-issue-1.13.0-rc.2"
+    },
+    "new_approval": {
+      "state": "approved",
+      "publish": false,
+      "tag": "test-issue-1.13.0-rc.2"
+    },
+    "separate_final_command": {
+      "state": "approved",
+      "publish": true,
+      "tag": "test-issue-1.13.0-rc.2"
+    },
+    "receipt": {
+      "tag": "test-issue-1.13.0-rc.2",
+      "stable_tag": "test-issue-1.13.0",
+      "source_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "report_digest": "59fb23ecf9a17cb6b077651f56150bdcf65d4ffa197bead22a9415bec7d71078",
+      "authorization": {
+        "approvals": [
+          {
+            "author": [
+              18661493,
+              "israelhudson"
+            ],
+            "command": "aprovar",
+            "comment_digest": "cd7e05c3281b8f6de14084dc52efdd42bf41c65cce5d66162c4ce5af5aede2fb",
+            "comment_id": 104
+          }
+        ],
+        "comment_digest": "b407501c440051b21231e5ae8d4050b09a644f4bef90a6beeca02e04c3e316a0",
+        "comment_id": 105,
+        "publisher": {
+          "id": 18661493,
+          "login": "israelhudson"
+        }
+      },
+      "release_id": 1,
+      "release_url": "https://github.com/israelhudson/flutter_code_push_example/releases/tag/test-issue-1.13.0",
+      "published_at": "2026-10-09T21:00:00Z",
+      "github_release_published": true,
+      "approval_mode": "1/1",
+      "distribution_performed": false
+    },
+    "repeated_receipt_equal": true
+  },
+  "effects": [
+    [
+      "ref",
+      "heads/codex/issue-release-state"
+    ],
+    [
+      "ref",
+      "heads/test-issue-release/1.13.0"
+    ],
+    [
+      "ref",
+      "tags/test-issue-1.13.0-rc.1"
+    ],
+    [
+      "issue",
+      1
+    ],
+    [
+      "ref",
+      "tags/test-issue-1.13.0-rc.2"
+    ],
+    [
+      "issue",
+      2
+    ],
+    [
+      "ref",
+      "tags/test-issue-1.13.0"
+    ],
+    [
+      "release",
+      "test-issue-1.13.0"
+    ]
+  ],
+  "final_journal": {
+    "active": "test-issue-1.13.0-rc.2",
+    "candidates": {
+      "test-issue-1.13.0-rc.1": {
+        "accepted_comments": {
+          "101": "cd419d9b1e5e494465bd607d74cb624acf9d0ccc7558ca19171386da04805ad2"
+        },
+        "approvals": [],
+        "base_publication": null,
+        "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "branch": "test-issue-release/1.13.0",
+        "created_at": "2026-10-09T21:36:57.057811+00:00",
+        "issue_body_digest": "d2340591b17e88a94ef1242f1c3dd59d9c76522c30df32b9853b325f9cde7dfc",
+        "issue_number": 1,
+        "issue_url": "https://github.com/israelhudson/flutter_code_push_example/issues/1",
+        "notices": {
+          "approved:5c8bae235fb131b531c5889a5aebf8970e7755008ffe7147cf7a32e440de7b65": {
+            "event": "approved",
+            "state": "pending"
+          },
+          "candidate:5c8bae235fb131b531c5889a5aebf8970e7755008ffe7147cf7a32e440de7b65": {
+            "event": "candidate",
+            "state": "pending"
+          },
+          "rejected:5c8bae235fb131b531c5889a5aebf8970e7755008ffe7147cf7a32e440de7b65": {
+            "event": "rejected",
+            "state": "pending"
+          },
+          "superseded:5c8bae235fb131b531c5889a5aebf8970e7755008ffe7147cf7a32e440de7b65": {
+            "event": "superseded",
+            "state": "pending"
+          }
+        },
+        "opened_at": "2026-10-09T21:00:00Z",
+        "policy_digest": "3c03ca295188933e1e3a19fdbc8cd5cd938d91efa81694b1186fb4f612d256dc",
+        "preparation_run": "123",
+        "report": {
+          "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "commits": [
+            {
+              "message": "Alteração testada",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            }
+          ],
+          "preview_url": "https://israelhudson.github.io/flutter_code_push_example/snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/",
+          "snapshot_manifest_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "source_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "stable_tag": "test-issue-1.13.0",
+          "tag": "test-issue-1.13.0-rc.1",
+          "title": "Mudança de exemplo",
+          "version": "1.13.0",
+          "web_content_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        },
+        "report_digest": "5c8bae235fb131b531c5889a5aebf8970e7755008ffe7147cf7a32e440de7b65",
+        "revoked_comment_ids": [],
+        "source_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "stable_tag": "test-issue-1.13.0",
+        "status": "superseded",
+        "tag": "test-issue-1.13.0-rc.1",
+        "title": "Mudança de exemplo",
+        "tooling_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "version": "1.13.0",
+        "view_update": {
+          "pending": false,
+          "previous_digest": "07f23c869aa23420e2931239b3dac7b54f58d37a59f17c033a034eb310c668f1"
+        }
+      },
+      "test-issue-1.13.0-rc.2": {
+        "accepted_comments": {
+          "104": "cd7e05c3281b8f6de14084dc52efdd42bf41c65cce5d66162c4ce5af5aede2fb"
+        },
+        "approvals": [
+          {
+            "author": [
+              18661493,
+              "israelhudson"
+            ],
+            "command": "aprovar",
+            "comment_digest": "cd7e05c3281b8f6de14084dc52efdd42bf41c65cce5d66162c4ce5af5aede2fb",
+            "comment_id": 104
+          }
+        ],
+        "base_publication": null,
+        "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "branch": "test-issue-release/1.13.0",
+        "created_at": "2026-10-09T21:36:57.061039+00:00",
+        "issue_body_digest": "510a9d7fd6aabc32e30d1d4924f55baec220d84666710a9544625b70c5b623bb",
+        "issue_number": 2,
+        "issue_url": "https://github.com/israelhudson/flutter_code_push_example/issues/2",
+        "notices": {
+          "approved:59fb23ecf9a17cb6b077651f56150bdcf65d4ffa197bead22a9415bec7d71078": {
+            "event": "approved",
+            "state": "pending"
+          },
+          "candidate:59fb23ecf9a17cb6b077651f56150bdcf65d4ffa197bead22a9415bec7d71078": {
+            "event": "candidate",
+            "state": "pending"
+          },
+          "published:59fb23ecf9a17cb6b077651f56150bdcf65d4ffa197bead22a9415bec7d71078": {
+            "event": "published",
+            "state": "pending"
+          }
+        },
+        "opened_at": "2026-10-09T21:00:00Z",
+        "policy_digest": "3c03ca295188933e1e3a19fdbc8cd5cd938d91efa81694b1186fb4f612d256dc",
+        "preparation_run": "123",
+        "publication": {
+          "authorization": {
+            "approvals": [
+              {
+                "author": [
+                  18661493,
+                  "israelhudson"
+                ],
+                "command": "aprovar",
+                "comment_digest": "cd7e05c3281b8f6de14084dc52efdd42bf41c65cce5d66162c4ce5af5aede2fb",
+                "comment_id": 104
+              }
+            ],
+            "comment_digest": "b407501c440051b21231e5ae8d4050b09a644f4bef90a6beeca02e04c3e316a0",
+            "comment_id": 105,
+            "publisher": {
+              "id": 18661493,
+              "login": "israelhudson"
+            }
+          },
+          "comment_id": 105,
+          "created_at": "2026-10-09T21:36:57.066225+00:00",
+          "id": "c8bf9771779862981586056790f6375634cb0d38af11d05bcf979cd7bc83cbcd",
+          "report_digest": "59fb23ecf9a17cb6b077651f56150bdcf65d4ffa197bead22a9415bec7d71078"
+        },
+        "receipt": {
+          "approval_mode": "1/1",
+          "authorization": {
+            "approvals": [
+              {
+                "author": [
+                  18661493,
+                  "israelhudson"
+                ],
+                "command": "aprovar",
+                "comment_digest": "cd7e05c3281b8f6de14084dc52efdd42bf41c65cce5d66162c4ce5af5aede2fb",
+                "comment_id": 104
+              }
+            ],
+            "comment_digest": "b407501c440051b21231e5ae8d4050b09a644f4bef90a6beeca02e04c3e316a0",
+            "comment_id": 105,
+            "publisher": {
+              "id": 18661493,
+              "login": "israelhudson"
+            }
+          },
+          "distribution_performed": false,
+          "github_release_published": true,
+          "published_at": "2026-10-09T21:00:00Z",
+          "release_id": 1,
+          "release_url": "https://github.com/israelhudson/flutter_code_push_example/releases/tag/test-issue-1.13.0",
+          "report_digest": "59fb23ecf9a17cb6b077651f56150bdcf65d4ffa197bead22a9415bec7d71078",
+          "source_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "stable_tag": "test-issue-1.13.0",
+          "tag": "test-issue-1.13.0-rc.2"
+        },
+        "report": {
+          "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "commits": [
+            {
+              "message": "Alteração testada",
+              "sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            }
+          ],
+          "preview_url": "https://israelhudson.github.io/flutter_code_push_example/snapshots/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/",
+          "snapshot_manifest_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "source_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "stable_tag": "test-issue-1.13.0",
+          "tag": "test-issue-1.13.0-rc.2",
+          "title": "Mudança de exemplo",
+          "version": "1.13.0",
+          "web_content_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        },
+        "report_digest": "59fb23ecf9a17cb6b077651f56150bdcf65d4ffa197bead22a9415bec7d71078",
+        "revoked_comment_ids": [],
+        "source_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "stable_tag": "test-issue-1.13.0",
+        "status": "published",
+        "tag": "test-issue-1.13.0-rc.2",
+        "title": "Mudança de exemplo",
+        "tooling_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "version": "1.13.0",
+        "view_update": {
+          "pending": false,
+          "previous_digest": "52324b5e07df77503b8412f0b9cc9da0c8f6935923937927b2c60a83edcab8ea"
+        }
+      }
+    },
+    "events": [
+      {
+        "action": "reserve-preparation",
+        "at": "2026-10-09T21:36:57.057963+00:00",
+        "run_id": "123",
+        "state_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "tag": "test-issue-1.13.0-rc.1"
+      },
+      {
+        "action": "freeze-candidate",
+        "at": "2026-10-09T21:36:57.058090+00:00",
+        "run_id": "123",
+        "state_digest": "8300d398878a91ec5e16726f1f0f07aeae1e1939eb1a49abe27c3e9377fa6219",
+        "tag": "test-issue-1.13.0-rc.1"
+      },
+      {
+        "action": "issue-create-intent",
+        "at": "2026-10-09T21:36:57.058620+00:00",
+        "run_id": "123",
+        "state_digest": "e8b5beda47945730754c56d321a9dead260c4269025c4bb05d527bd86dbd013f",
+        "tag": "test-issue-1.13.0-rc.1"
+      },
+      {
+        "action": "issue-opened",
+        "at": "2026-10-09T21:36:57.058731+00:00",
+        "run_id": "123",
+        "state_digest": "9cde784d04491cc3b4fc2551729c0e75c6bd7b868108c89fde1ab5aa1cca392e",
+        "tag": "test-issue-1.13.0-rc.1"
+      },
+      {
+        "action": "issue-view-intent",
+        "at": "2026-10-09T21:36:57.058821+00:00",
+        "run_id": "123",
+        "state_digest": "1968827ab3555017978a3d4d2a9d00b8816458966444ccf59c45f8c8dbe0fcc9",
+        "tag": "test-issue-1.13.0-rc.1"
+      },
+      {
+        "action": "issue-view-confirmed",
+        "at": "2026-10-09T21:36:57.058910+00:00",
+        "run_id": "123",
+        "state_digest": "6330d258ea836e77360a25dcf17ddd206689bf0a5322d39c7aec516541e95c01",
+        "tag": "test-issue-1.13.0-rc.1"
+      },
+      {
+        "action": "decisions-reconciled",
+        "at": "2026-10-09T21:36:57.059473+00:00",
+        "run_id": "123",
+        "state_digest": "ef20963f40cdc3bd23f1845e0830a900e7caaf193f8b930712e2aa5f7b068b0f",
+        "tag": "test-issue-1.13.0-rc.1"
+      },
+      {
+        "action": "issue-view-intent",
+        "at": "2026-10-09T21:36:57.059583+00:00",
+        "run_id": "123",
+        "state_digest": "4f5aaf7a9cc7134e8a8084a1d014d5b5b8c4f69b66daf02d236e9d804e696554",
+        "tag": "test-issue-1.13.0-rc.1"
+      },
+      {
+        "action": "issue-view-confirmed",
+        "at": "2026-10-09T21:36:57.059690+00:00",
+        "run_id": "123",
+        "state_digest": "f3635bf28fb81440cf0cc9c452df67423933750fe4ca77a03a986a4f7a29b438",
+        "tag": "test-issue-1.13.0-rc.1"
+      },
+      {
+        "action": "decisions-reconciled",
+        "at": "2026-10-09T21:36:57.060190+00:00",
+        "run_id": "123",
+        "state_digest": "491912394debb42a1c8712186b66d7e578f0c2d7c85cc607d60b12badce1229c",
+        "tag": "test-issue-1.13.0-rc.1"
+      },
+      {
+        "action": "issue-view-intent",
+        "at": "2026-10-09T21:36:57.060297+00:00",
+        "run_id": "123",
+        "state_digest": "b50eb9f70db250241656b42b8ed4c053cbea06e536c8e541107eadf630bf3e4d",
+        "tag": "test-issue-1.13.0-rc.1"
+      },
+      {
+        "action": "issue-view-confirmed",
+        "at": "2026-10-09T21:36:57.060400+00:00",
+        "run_id": "123",
+        "state_digest": "265a0a4ec07a8325ba4e92fe64d7a51b4ffb8ac9e39f329f0452812af66f1603",
+        "tag": "test-issue-1.13.0-rc.1"
+      },
+      {
+        "action": "reserve-preparation",
+        "at": "2026-10-09T21:36:57.061048+00:00",
+        "run_id": "123",
+        "state_digest": "265a0a4ec07a8325ba4e92fe64d7a51b4ffb8ac9e39f329f0452812af66f1603",
+        "tag": "test-issue-1.13.0-rc.2"
+      },
+      {
+        "action": "freeze-candidate",
+        "at": "2026-10-09T21:36:57.061281+00:00",
+        "run_id": "123",
+        "state_digest": "f814165e56a5945775e467add77cb99e11493b4ec86fdca4f8404447bd6085a5",
+        "tag": "test-issue-1.13.0-rc.2"
+      },
+      {
+        "action": "issue-create-intent",
+        "at": "2026-10-09T21:36:57.061748+00:00",
+        "run_id": "123",
+        "state_digest": "f41360c3a2fc71ee401cd8f9aac05f0b6130d96ccfd777660fb70d8601735cf5",
+        "tag": "test-issue-1.13.0-rc.2"
+      },
+      {
+        "action": "issue-opened",
+        "at": "2026-10-09T21:36:57.061926+00:00",
+        "run_id": "123",
+        "state_digest": "0291a140185edc38389464541950589c5a1322d6b2f91353189286194811cb7f",
+        "tag": "test-issue-1.13.0-rc.2"
+      },
+      {
+        "action": "issue-view-intent",
+        "at": "2026-10-09T21:36:57.062080+00:00",
+        "run_id": "123",
+        "state_digest": "d7fd922d512a3cf0451de1698c5005c57de8612e23b1113ee69623369cdb8cab",
+        "tag": "test-issue-1.13.0-rc.2"
+      },
+      {
+        "action": "issue-view-confirmed",
+        "at": "2026-10-09T21:36:57.062239+00:00",
+        "run_id": "123",
+        "state_digest": "af5b5da72a4aa21a9c921b8244ab52d1cbb91873161f69e9a7496eef620900cb",
+        "tag": "test-issue-1.13.0-rc.2"
+      },
+      {
+        "action": "decisions-reconciled",
+        "at": "2026-10-09T21:36:57.062822+00:00",
+        "run_id": "123",
+        "state_digest": "a7badd9dbe912f51ef4d76ff47ae7d39507e54973e8514107d6c2a2ffbb7f965",
+        "tag": "test-issue-1.13.0-rc.2"
+      },
+      {
+        "action": "issue-view-intent",
+        "at": "2026-10-09T21:36:57.062990+00:00",
+        "run_id": "123",
+        "state_digest": "3f44ac57c8748c54a1d959fc855f93f3079aa77a5db34dca4a64d3c51a6fc9be",
+        "tag": "test-issue-1.13.0-rc.2"
+      },
+      {
+        "action": "issue-view-confirmed",
+        "at": "2026-10-09T21:36:57.063157+00:00",
+        "run_id": "123",
+        "state_digest": "a7badd9dbe912f51ef4d76ff47ae7d39507e54973e8514107d6c2a2ffbb7f965",
+        "tag": "test-issue-1.13.0-rc.2"
+      },
+      {
+        "action": "decisions-reconciled",
+        "at": "2026-10-09T21:36:57.063749+00:00",
+        "run_id": "123",
+        "state_digest": "2c6644430ba54aa52f612dfdb4b6ab90359507d5698d8396339d6f1bc50e101f",
+        "tag": "test-issue-1.13.0-rc.2"
+      },
+      {
+        "action": "issue-view-intent",
+        "at": "2026-10-09T21:36:57.063933+00:00",
+        "run_id": "123",
+        "state_digest": "29119230bf4929dc8f62e6999ed011960144c54033ffc8808ec88310881b39cf",
+        "tag": "test-issue-1.13.0-rc.2"
+      },
+      {
+        "action": "issue-view-confirmed",
+        "at": "2026-10-09T21:36:57.064117+00:00",
+        "run_id": "123",
+        "state_digest": "eec265246b28d446dee6093387b8f81bf44692acecf7969e31383982ab1f7839",
+        "tag": "test-issue-1.13.0-rc.2"
+      },
+      {
+        "action": "decisions-reconciled",
+        "at": "2026-10-09T21:36:57.064738+00:00",
+        "run_id": "123",
+        "state_digest": "eec265246b28d446dee6093387b8f81bf44692acecf7969e31383982ab1f7839",
+        "tag": "test-issue-1.13.0-rc.2"
+      },
+      {
+        "action": "issue-view-intent",
+        "at": "2026-10-09T21:36:57.065025+00:00",
+        "run_id": "123",
+        "state_digest": "4a7c4e9ff87a2d6d08fa015ed9b5e29319b8bdb2b39ac4ad7d1342b8abe72a07",
+        "tag": "test-issue-1.13.0-rc.2"
+      },
+      {
+        "action": "issue-view-confirmed",
+        "at": "2026-10-09T21:36:57.065257+00:00",
+        "run_id": "123",
+        "state_digest": "9d219157d0f70a9756a9f1aa18aa1e42e9775fc6f13345f7b8340f1325586d3b",
+        "tag": "test-issue-1.13.0-rc.2"
+      },
+      {
+        "action": "publication-intent",
+        "at": "2026-10-09T21:36:57.066229+00:00",
+        "run_id": "123",
+        "state_digest": "d58b050390f5b9eb14107be0f34b316d03884f67d24b78e36769a132bd66855f",
+        "tag": "test-issue-1.13.0-rc.2"
+      },
+      {
+        "action": "issue-view-intent",
+        "at": "2026-10-09T21:36:57.066460+00:00",
+        "run_id": "123",
+        "state_digest": "f91c76524ffc010f6baedaf385e98d38a4d2f8bc8e407c6171a3eb6d1f45c42b",
+        "tag": "test-issue-1.13.0-rc.2"
+      },
+      {
+        "action": "issue-view-confirmed",
+        "at": "2026-10-09T21:36:57.066683+00:00",
+        "run_id": "123",
+        "state_digest": "9a5efb379c4f3f9594229848056ac51df9ae62500deb66915eab0368adb221cf",
+        "tag": "test-issue-1.13.0-rc.2"
+      },
+      {
+        "action": "published",
+        "at": "2026-10-09T21:36:57.067622+00:00",
+        "run_id": "123",
+        "state_digest": "557862a3272fe0418f96d1b80c5fa6f03b71e9d3c413a62fc2edc8fd85e1b8e3",
+        "tag": "test-issue-1.13.0-rc.2"
+      },
+      {
+        "action": "issue-view-intent",
+        "at": "2026-10-09T21:36:57.067864+00:00",
+        "run_id": "123",
+        "state_digest": "b859b0fb10976442ba53db2e4c79489cd7010c30edd357ae4f76f79c8dd15da1",
+        "tag": "test-issue-1.13.0-rc.2"
+      },
+      {
+        "action": "issue-view-confirmed",
+        "at": "2026-10-09T21:36:57.068111+00:00",
+        "run_id": "123",
+        "state_digest": "1d0bc28757614917fcd2a48e261be16074fbf15255ee6b2f15bd4cb1ea6bcbc4",
+        "tag": "test-issue-1.13.0-rc.2"
+      }
+    ],
+    "last_published": {
+      "source_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "tag": "test-issue-1.13.0",
+      "version": "1.13.0"
+    },
+    "schema": 1
+  }
+}
