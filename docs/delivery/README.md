@@ -13,8 +13,10 @@ Estado atual: a entrega [1.7.0](https://github.com/israelhudson/flutter_code_pus
 concluiu a jornada B com dois avais, comando final separado e cinco mensagens
 Slack reais. A jornada A, 1.8.0, teve RC1 rejeitada; outro gate continuou
 esperando e exigiu cancelamento operacional. A conciliação preservou `rejected`
-em 0/2 e seu aviso. Correção/RC2 permanecem pendentes; o novo encerramento
-automático e a leitura breve de `sent` concorrente estão em preparação.
+em 0/2 e seu aviso. A correção, RC2 com novos avais, publicação 1.8.0 e volta
+à main pelo PR #22 estão concluídas. Treze avisos reais foram confirmados.
+O novo encerramento e a leitura breve de `sent` concorrente foram integrados
+com CI404 aprovado; o autofecho continua sem negativo remoto próprio.
 [Fontes e limites atuais](SLACK-AUTOMATICO.md).
 
 ## Laboratório: nenhuma distribuição real
