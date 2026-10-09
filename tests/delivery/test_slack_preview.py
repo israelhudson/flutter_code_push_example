@@ -1,5 +1,6 @@
 """A Slack illustration renders frozen source text; it never sends a message."""
 from copy import deepcopy
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -16,7 +17,7 @@ import slack_preview as slack
 def report():
     sha = 'a' * 40
     return {'candidate_tag': 'v1.7.0-rc.1', 'source_sha': sha,
-            'changelog_base_sha': 'b' * 40, 'run_id': '123456', 'title': 'Tema manual',
+            'changelog_base_sha': 'b' * 40, 'run_id': '123456', 'title': 'Tema manual', 'presentation_schema': 2,
             'publication_mode': 'github_release_only', 'changes': ['feat: tema manual'],
             'preview': {'success': True, 'source_sha': sha,
                         'snapshot_url': 'https://israelhudson.github.io/flutter_code_push_example/snapshots/' + sha + '/'}}
@@ -29,14 +30,61 @@ def policy():
 
 
 class SlackPreviewTests(unittest.TestCase):
-    def test_legacy_report_remains_literal_fallback(self):
+    def test_schema_two_commit_fallback_uses_presentation_aliases(self):
         payload, markdown, metadata = slack.render_preview(report(), policy())
         self.assertFalse(metadata['message_sent'])
         self.assertEqual(metadata['summary_source'], 'commits_fallback')
-        self.assertIn('israelhudson E fahnassau30', markdown)
-        self.assertIn('israelhudson OU fahnassau30', markdown)
+        self.assertIn('Aprovador 1 E Aprovador 2', markdown)
+        self.assertIn('Aprovador 1 OU Aprovador 2', markdown)
         self.assertIn('gate final separado', markdown)
         self.assertIn('SIMULAÇÃO', payload['text'])
+
+    def test_unversioned_legacy_preview_keeps_exact_baseline_payload_hash(self):
+        value = report()
+        value.pop('presentation_schema')
+        payload, markdown, _ = slack.render_preview(value, policy())
+        raw = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()
+        self.assertEqual(hashlib.sha256(raw).hexdigest(),
+                         '53cb55a9c354ebc6a69071b5995c0b1a67762186a7576ae4c99e80a99af535ae')
+        self.assertIn('israelhudson E fahnassau30', markdown)
+        self.assertFalse(any(block['type'] == 'actions' for block in payload['blocks']))
+
+    def test_only_integer_two_uses_new_presentation_and_one_keeps_legacy(self):
+        value = report()
+        value.pop('presentation_schema')
+        legacy = slack.render_preview(value, policy())[0]
+        value['presentation_schema'] = 1
+        self.assertEqual(slack.render_preview(value, policy())[0], legacy)
+        for schema in (True, 2.0, '2', 3):
+            value['presentation_schema'] = schema
+            with self.subTest(schema=schema), self.assertRaises(ValueError):
+                slack.render_preview(value, policy())
+
+    def test_readable_blocks_have_dividers_three_url_buttons_and_accessible_fallback(self):
+        value = report()
+        payload, markdown, _ = slack.render_preview(value, policy())
+        actions = [block for block in payload['blocks'] if block['type'] == 'actions']
+        self.assertEqual(len(actions), 1)
+        self.assertEqual([button['text']['text'] for button in actions[0]['elements']],
+                         ['Preview', 'Changelog', 'Revisar GitHub'])
+        self.assertGreaterEqual(sum(block['type'] == 'divider' for block in payload['blocks']), 2)
+        for button in actions[0]['elements']:
+            self.assertIn(button['url'], payload['text'])
+            self.assertTrue(button['accessibility_label'])
+            self.assertNotIn('value', button)
+            self.assertNotIn('action_id', button)
+        self.assertIn('Aprovador 1', markdown)
+        self.assertNotIn('fahnassau30', markdown)
+        self.assertNotIn('israelhudson E', markdown)
+        self.assertLessEqual(len(payload['text']), 4000)
+
+    def test_plain_text_mentions_are_escaped_in_accessible_fallback(self):
+        value = report()
+        value['title'] = '<@U123> <!channel>'
+        payload, _, _ = slack.render_preview(value, policy())
+        self.assertIn('&lt;@U123&gt;', payload['text'])
+        self.assertTrue(all(block['text']['type'] == 'plain_text' for block in payload['blocks']
+                            if block['type'] == 'section'))
 
     def test_frozen_pr_sections_are_labelled_without_claiming_ai_generated_them(self):
         value = report()

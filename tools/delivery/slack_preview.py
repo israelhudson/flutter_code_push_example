@@ -12,7 +12,51 @@ import re
 import sys
 from urllib.parse import urlsplit
 
-from changelog_summary import normalized_changes, verify_communication
+from changelog_summary import verify_communication
+from release_notes import approver_labels, brief_notes
+import slack_legacy
+
+
+def readable_payload(heading, description, changes, footer, preview_url, run_url,
+                     *, source_label=None, truncated=False, limitations=None):
+    """URL buttons navigate only; fallback includes every readable section/link.
+
+    Official Block Kit docs checked 2026-10-09:
+    https://docs.slack.dev/reference/block-kit/block-elements/button-element/
+    https://docs.slack.dev/reference/block-kit/blocks/divider-block/
+    https://docs.slack.dev/reference/methods/chat.postMessage/
+    """
+    texts = [heading, '\n'.join(description)]
+    if changes:
+        change_text = 'Mudanças' + (' · ' + source_label if source_label else '') + '\n'
+        change_text += '\n'.join('• ' + value for value in changes)
+        if truncated:
+            change_text += '\nHistórico completo no changelog.'
+        texts.append(change_text)
+    if limitations:
+        texts.append('Limitações\n' + '\n'.join('• ' + value for value in limitations))
+    texts.append(footer)
+    buttons = [
+        {'type': 'button', 'text': {'type': 'plain_text', 'text': 'Preview', 'emoji': False},
+         'url': preview_url, 'accessibility_label': 'Abrir o preview congelado desta candidata'},
+        {'type': 'button', 'text': {'type': 'plain_text', 'text': 'Changelog', 'emoji': False},
+         'url': run_url, 'accessibility_label': 'Ler o changelog da mesma candidata no GitHub'},
+        {'type': 'button', 'text': {'type': 'plain_text', 'text': 'Revisar GitHub', 'emoji': False},
+         'url': run_url, 'accessibility_label': 'Abrir a execução e suas decisões no GitHub'},
+    ]
+    blocks = []
+    for position, text in enumerate(texts):
+        if len(text) > 2900:
+            raise ValueError('Seção do aviso excede o limite de texto.')
+        if position in (2, len(texts) - 1):
+            blocks.append({'type': 'divider'})
+        blocks.append({'type': 'section', 'text': {'type': 'plain_text', 'text': text, 'emoji': False}})
+    blocks += [{'type': 'divider'}, {'type': 'actions', 'elements': buttons}]
+    fallback = '\n\n'.join(texts) + '\n\n' + '\n'.join(button['text']['text'] + ': ' + button['url'] for button in buttons)
+    escaped = html.escape(fallback, quote=False)
+    if len(escaped) > 4000:
+        raise ValueError('Fallback do aviso excede o limite de texto.')
+    return {'text': escaped, 'blocks': blocks}, fallback
 
 
 def required_text(value, field, maximum=200):
@@ -23,6 +67,13 @@ def required_text(value, field, maximum=200):
 
 
 def render_preview(report, policy):
+    schema = report.get('presentation_schema', 1)
+    if type(schema) is not int:
+        raise ValueError('Schema de apresentação desconhecido.')
+    if schema == 1:
+        return slack_legacy.render_preview(report, policy)
+    if schema != 2:
+        raise ValueError('Schema de apresentação desconhecido.')
     repo = required_text(policy.get('repository'), 'Repositório')
     if not re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+', repo):
         raise ValueError('Repositório inválido.')
@@ -60,8 +111,7 @@ def render_preview(report, policy):
     changes = report.get('changes')
     if not isinstance(changes, list):
         raise ValueError('Histórico de commits ausente.')
-    original_count = len(changes)
-    changes, history_truncated = normalized_changes(changes)
+    notes = brief_notes(report)
     run_url = 'https://github.com/' + repo + '/actions/runs/' + run_id
     final = ('a tag estável e a Release no GitHub' if mode == 'github_release_only'
              else 'o resultado simulado da entrega')
@@ -70,47 +120,13 @@ def render_preview(report, policy):
         selection = verify_communication(report)
     summary_source = selection['source'] if selection else 'commits_fallback'
     fallback_reason = selection['fallback_reason'] if selection else 'ai_not_configured'
-    labels = {'commits_fallback': 'histórico de commits (fallback)',
-              'pr_sections': 'descrição das PRs (texto copiado; sem IA)',
-              'ai': 'resumo semitécnico por IA, congelado antes da revisão'}
-    lines = ['SIMULAÇÃO DE AVISO SLACK — nenhum envio', '', tag + ' — ' + title,
-             'Exemplo do aviso emitido quando a candidata fica pronta para revisão.',
-             'Consulte o estado atual das decisões na execução do GitHub.', '',
-             'Mudanças — ' + labels[summary_source] + ':']
-    if selection:
-        lines.append(selection['text'])
-    else:
-        # Older frozen reports do not include communication. Keep a bounded
-        # literal fallback; never attach later source descriptions to them.
-        size, included = 0, 0
-        for change in changes[:8]:
-            if size + len(change) + 3 > 1300:
-                break
-            lines.append('• ' + change)
-            size += len(change) + 3
-            included += 1
-        if not changes:
-            lines.append('• Sem commits adicionais.')
-        elif included < original_count or history_truncated:
-            lines.append('• Histórico completo no relatório da execução.')
-    lines += ['', 'Aprovação da candidata: ' + ' E '.join(people) + '.',
-              'Depois dos dois avais, ' + ' OU '.join(publishers)
-              + ' pode autorizar ' + final + ' no gate final separado.',
-              'Este aviso não aprova nem publica. Não distribui aplicativo mobile.']
-    body = '\n'.join(lines)
-    # Slack plain_text sections have a 3000-character limit. Full source data
-    # stays in the report; the notification links back to that report.
-    if len(body) > 2900:
-        raise ValueError('Aviso excede o limite de texto; reduzir histórico da entrada.')
-    payload = {
-        'text': html.escape(body, quote=False),
-        'blocks': [
-            {'type': 'section', 'text': {'type': 'plain_text', 'text': body, 'emoji': False}},
-            {'type': 'section', 'text': {'type': 'mrkdwn', 'verbatim': True,
-                                       'text': '<' + preview_url + '|Abrir preview> · <'
-                                       + run_url + '|Ler changelog e revisar no GitHub>'}},
-        ],
-    }
+    aliases = approver_labels(policy)
+    footer = ('Próximo passo: ' + ' E '.join(aliases) + ' revisam esta candidata.\n'
+              'Com 2/2, ' + ' OU '.join(aliases) + ' autoriza ' + final + ' no gate final separado.\n'
+              'Este aviso não aprova nem publica. Mobile não distribuído.')
+    payload, body = readable_payload('SIMULAÇÃO DE AVISO SLACK — nenhum envio\n' + tag + ' · ' + title,
+        notes['description'], notes['changes'], footer, preview_url, run_url,
+        source_label=notes['source_label'], truncated=notes['truncated'], limitations=notes['limitations'])
     canonical = json.dumps(report, ensure_ascii=False, sort_keys=True, separators=(',', ':'))
     metadata = {'notification_simulated': True, 'message_sent': False,
                 'candidate_tag': tag, 'source_sha': source, 'run_id': run_id,
@@ -122,7 +138,7 @@ def render_preview(report, policy):
                         selected_summary_sha256=selection['selected_sha256'],
                         optional_result_status=selection['optional_result_status'])
     markdown = '# SIMULAÇÃO — aviso Slack, sem envio\n\n' + body + '\n\n'
-    markdown += '[Abrir preview](' + preview_url + ') · [Ler changelog e revisar no GitHub](' + run_url + ')\n'
+    markdown += '[Preview](' + preview_url + ') · [Changelog](' + run_url + ') · [Revisar GitHub](' + run_url + ')\n'
     return payload, markdown, metadata
 
 

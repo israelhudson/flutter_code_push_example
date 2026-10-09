@@ -2,11 +2,11 @@
 
 ## Esteira atual do laboratório
 
-Use **Actions → LAB - Preparar candidata**, informando versão e título. O fluxo cria a RC, valida o app e publica o preview. **Israel E Fabrícia** aprovam; depois **Israel OU Fabrícia** autoriza PUBLICAR em uma etapa separada. A promoção cria **uma nova tag estável e uma Release real no GitHub, no mesmo commit da RC aprovada**, preservando as tags candidatas. Não distribui o app nem gera patch mobile.
+Use **Actions → LAB · Criar candidata**, informando versão e título. O fluxo cria a RC, valida o app e publica o preview. **Israel E Fabrícia** aprovam; depois **Israel OU Fabrícia** autoriza PUBLICAR em uma etapa separada. A promoção cria **uma nova tag estável e uma Release real no GitHub, no mesmo commit da RC aprovada**, preservando as tags candidatas. Não distribui o app nem gera patch mobile.
 
 [Passo a passo do fluxo com dois aprovadores](docs/delivery/FLUXO-DOIS-APROVADORES.md) · [Cenários, logs, evidências e lições para Amulets](docs/delivery/VALIDACAO-E-PROMOCAO.md). A matriz distingue implementação, testes locais e validação remota. O primeiro ensaio tinha resultado final simulado; novas permissões de publicação exigem nova RC e novos avais.
 
-Os workflows anteriores foram arquivados em [workflows-historicos](docs/delivery/workflows-historicos/); seus runs e evidências permanecem preservados. Para uma promoção parcial, use **LAB - Recuperar promoção** com a tag RC original, após conferir o diagnóstico e obter nova autorização final.
+Os workflows anteriores foram arquivados em [workflows-historicos](docs/delivery/workflows-historicos/); seus runs e evidências permanecem preservados. Para uma promoção parcial, use **LAB · Recuperar publicação** com a tag RC original, após conferir o diagnóstico e obter nova autorização final.
 
 Prática do uso do code push do Flutter com ShoreBird.
 

@@ -1,4 +1,4 @@
-name: LAB - Avisos automáticos no Slack
+name: LAB · Avisos no Slack
 on:
   workflow_call:
     inputs:

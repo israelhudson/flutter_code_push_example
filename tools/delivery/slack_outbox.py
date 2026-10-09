@@ -145,11 +145,34 @@ def validate_notice(notice):
             or not isinstance(payload.get('text'), str) or not payload['text']
             or len(payload['text']) > 4000 or len(canonical(notice).encode()) > 100000):
         raise OutboxError('Payload do aviso fora do canal/modo autorizado.')
-    # Keep this adapter noninteractive. The frozen renderer owns the plain
-    # text and repository links; actions, buttons and arbitrary mention parsing
-    # cannot enter through a notice JSON supplied to the CLI.
+    # URL buttons navigate only to the same frozen preview/evaluation run.
+    # No value, action_id, callback, confirmation or approval action is allowed.
     content = _content(payload)
+    if not 1 <= len(content['blocks']) <= 12:
+        raise OutboxError('Quantidade de blocos fora do limite do aviso.')
+    preview_url = ('https://israelhudson.github.io/flutter_code_push_example/snapshots/'
+                   + identity['source_sha'] + '/')
+    actions_seen = 0
     for block in content['blocks']:
+        if block.get('type') == 'divider':
+            if set(block) != {'type'}:
+                raise OutboxError('Divisória contém campos não autorizados.')
+            continue
+        if block.get('type') == 'actions':
+            actions_seen += 1
+            expected = [('Preview', preview_url, 'Abrir o preview congelado desta candidata'),
+                        ('Changelog', identity['run_url'], 'Ler o changelog da mesma candidata no GitHub'),
+                        ('Revisar GitHub', identity['run_url'], 'Abrir a execução e suas decisões no GitHub')]
+            elements = block.get('elements')
+            if set(block) != {'type', 'elements'} or actions_seen > 1 or not isinstance(elements, list) or len(elements) != 3:
+                raise OutboxError('Ações do aviso devem ser os três links autorizados.')
+            for button, (label, url, accessibility) in zip(elements, expected):
+                if (not isinstance(button, dict) or set(button) != {'type', 'text', 'url', 'accessibility_label'}
+                        or button.get('type') != 'button' or button.get('url') != url
+                        or button.get('accessibility_label') != accessibility
+                        or button.get('text') != {'type': 'plain_text', 'text': label, 'emoji': False}):
+                    raise OutboxError('Botão precisa abrir apenas o link da mesma candidata.')
+            continue
         text = block.get('text')
         if (set(block) != {'type', 'text'} or block.get('type') != 'section'
                 or not isinstance(text, dict) or text.get('type') not in ('plain_text', 'mrkdwn')
@@ -161,8 +184,6 @@ def validate_notice(notice):
             match = re.fullmatch(r'<(https://[^<>|]+)\|([^<>|]+)>', text['text'])
             if match is None:
                 raise OutboxError('Link do aviso fora do GitHub autorizado.')
-            preview_url = ('https://israelhudson.github.io/flutter_code_push_example/snapshots/'
-                           + identity['source_sha'] + '/')
             if match[1] not in (identity['run_url'], preview_url):
                 raise OutboxError('Link do aviso diverge do preview/run congelado.')
         elif set(text) - {'type', 'text', 'emoji'}:

@@ -1,7 +1,7 @@
-name: LAB - Consolidar execução encerrada
+name: LAB · Conferir resultado
 on:
   workflow_run:
-    workflows: ['LAB - Preparar candidata', 'LAB - Avaliar entrega']
+    workflows: ['LAB · Criar candidata', 'LAB · Validar e publicar entrega', 'LAB - Preparar candidata', 'LAB - Avaliar entrega']
     types: [completed]
 permissions:
   contents: read

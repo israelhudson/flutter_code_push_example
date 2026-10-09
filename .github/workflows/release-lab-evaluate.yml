@@ -1,4 +1,4 @@
-name: LAB - Avaliar entrega
+name: LAB · Validar e publicar entrega
 run-name: Avaliar ${{ inputs.candidate_tag || github.ref_name }}
 on:
   workflow_call:
@@ -21,7 +21,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   preflight:
-    name: Conferir RC ativa, papéis e proteções
+    name: Conferir candidata e permissões
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
@@ -60,7 +60,7 @@ jobs:
           retention-days: 90
           overwrite: false
   build:
-    name: Verificar e compilar web sem permissões de publicação
+    name: Testar aplicativo e preparar preview
     needs: preflight
     runs-on: ubuntu-24.04
     timeout-minutes: 45
@@ -106,7 +106,7 @@ jobs:
           retention-days: 90
           overwrite: false
   changelog_context:
-    name: Preparar contexto do changelog — opcional, sem aguardar IA
+    name: Preparar resumo — opcional
     needs: preflight
     runs-on: ubuntu-24.04
     timeout-minutes: 2
@@ -142,7 +142,7 @@ jobs:
           retention-days: 90
           overwrite: false
   web:
-    name: Publicar bytes verificados, confirmar preview e changelog
+    name: Disponibilizar preview e changelog
     needs: [preflight, build]
     runs-on: ubuntu-24.04
     timeout-minutes: 20
@@ -239,7 +239,7 @@ jobs:
           retention-days: 90
           overwrite: false
   approve_first:
-    name: Registrar aprovação — ${{ needs.preflight.outputs.first_login }} / Gate first
+    name: Aprovação do Aprovador 1 / Gate first
     needs: [preflight, web]
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -272,7 +272,7 @@ jobs:
           retention-days: 90
           overwrite: false
   approve_second:
-    name: Registrar aprovação — ${{ needs.preflight.outputs.second_login }} / Gate second
+    name: Aprovação do Aprovador 2 / Gate second
     needs: [preflight, web]
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -305,7 +305,7 @@ jobs:
           retention-days: 90
           overwrite: false
   close_rejected_first:
-    name: Encerrar rejeição de Israel — sem aprovar ou publicar
+    name: Encerrar candidata rejeitada pelo Aprovador 1
     needs: [preflight, approve_first]
     # A rejection must close the run even when the other gate is still waiting.
     # Technical job failure alone never authorizes cancellation in the helper.
@@ -339,7 +339,7 @@ jobs:
           retention-days: 90
           overwrite: false
   close_rejected_second:
-    name: Encerrar rejeição de Fabrícia — sem aprovar ou publicar
+    name: Encerrar candidata rejeitada pelo Aprovador 2
     needs: [preflight, approve_second]
     # A rejection must close the run even when the other gate is still waiting.
     # Technical job failure alone never authorizes cancellation in the helper.
@@ -373,7 +373,7 @@ jobs:
           retention-days: 90
           overwrite: false
   authorize_publish:
-    name: AUTORIZAR PUBLICAR — Israel OU Fabrícia, após os dois avais
+    name: PUBLICAR — Aprovador 1 ou 2, após os dois avais
     needs: [preflight, web, approve_first, approve_second]
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -394,7 +394,7 @@ jobs:
               summary.write('Nenhum aplicativo ou patch mobile será distribuído.\n')
           PY
   publish:
-    name: PROMOVER — tag estável e Release no GitHub, sem distribuição mobile
+    name: Publicar tag estável e Release no GitHub
     needs: [preflight, web, approve_first, approve_second, authorize_publish]
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -477,7 +477,7 @@ jobs:
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
   slack_first:
-    name: Avisar aval de Israel — Slack opcional
+    name: Avisar aprovação 1 — Slack opcional
     needs: [preflight, web, approve_first]
     if: ${{ !cancelled() && needs.approve_first.result == 'success' }}
     permissions:
@@ -491,7 +491,7 @@ jobs:
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
   slack_second:
-    name: Avisar aval de Fabrícia — Slack opcional
+    name: Avisar aprovação 2 — Slack opcional
     needs: [preflight, web, approve_second]
     if: ${{ !cancelled() && needs.approve_second.result == 'success' }}
     permissions:

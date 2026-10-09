@@ -1,4 +1,4 @@
-name: LAB - Recuperar promoção
+name: LAB · Recuperar publicação
 run-name: Recuperar promoção de ${{ inputs.candidate_tag }}
 on:
   workflow_dispatch:
@@ -47,7 +47,7 @@ jobs:
           retention-days: 90
           overwrite: false
   authorize:
-    name: AUTORIZAR RECUPERAÇÃO — Israel OU Fabrícia
+    name: Autorizar recuperação — Aprovador 1 ou 2
     needs: inspect
     runs-on: ubuntu-24.04
     timeout-minutes: 10

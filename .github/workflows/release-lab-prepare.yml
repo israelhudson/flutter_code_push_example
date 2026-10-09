@@ -1,4 +1,4 @@
-name: LAB - Preparar candidata
+name: LAB · Criar candidata
 run-name: Preparar ${{ inputs.version }} — ${{ inputs.title }}
 on:
   workflow_dispatch:
@@ -15,7 +15,7 @@ permissions:
   contents: read
 jobs:
   prepare:
-    name: Congelar candidata revisada
+    name: Criar branch e tag da candidata
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     # The same short lock protects cutting, promoting and recovering a release.
@@ -55,7 +55,7 @@ jobs:
           retention-days: 90
           overwrite: false
   evaluate:
-    name: Avaliar a mesma candidata
+    name: Validar e revisar candidata
     needs: prepare
     permissions:
       contents: write

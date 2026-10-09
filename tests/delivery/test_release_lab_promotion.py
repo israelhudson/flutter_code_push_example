@@ -35,6 +35,38 @@ class PromotionFlowTests(unittest.TestCase):
         self.world.authorize()
         return tag
 
+    def test_new_cut_freezes_compact_presentation_before_reviews(self):
+        tag = self.prepared()
+        record = self.world.state['candidates'][tag]
+        self.assertEqual(record['presentation_schema'], 2)
+        self.assertEqual(record['report']['presentation_schema'], 2)
+        self.assertEqual(record['report_digest'], lab.digest(record['report']))
+        self.world.approve('first', tag)
+        self.world.approve('second', tag)
+        self.world.authorize()
+        self.world.finish(tag)
+        body = self.world.releases[0]['body']
+        self.assertIn('## O que mudou', body)
+        self.assertIn('Aprovador 1 e Aprovador 2', body)
+        self.assertIn('<details>', body)
+        self.assertIn('Não distribuído nesta etapa', body)
+        self.assertNotIn('Aprovações verificadas nas contas:', body)
+
+    def test_historical_release_keeps_legacy_payload_on_retry(self):
+        tag = self.authorized()
+        record = self.world.state['candidates'][tag]
+        record.pop('presentation_schema')
+        record['report'].pop('presentation_schema')
+        record['report_digest'] = lab.digest(record['report'])
+        decision = {'approvers': [{'reviewer': {'login': 'israelhudson'}},
+                                  {'reviewer': {'login': 'fahnassau30'}}],
+                    'publisher': {'reviewer': {'login': 'israelhudson'}}}
+        actual = lab.release_payload(record, decision, 'fixture-intent')
+        original = lab.legacy_release_payload(record, decision, 'fixture-intent')
+        self.assertEqual(actual, original)
+        self.assertIn('Aprovações verificadas nas contas:', actual['body'])
+        self.assertNotIn('## O que mudou', actual['body'])
+
     def test_zero_one_two_approvals_require_separate_command_before_github_promotion(self):
         rehearsal.scenario_happy(self.world)
 

@@ -81,41 +81,73 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Flutter Code Push Example'),
         actions: [
-          IconButton(
-            tooltip: isDark ? 'Ativar tema claro' : 'Ativar tema escuro',
-            onPressed: widget.onToggleTheme,
-            icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
+          Tooltip(
+            message: isDark ? 'Ativar tema claro' : 'Ativar tema escuro',
+            child: TextButton(
+              onPressed: widget.onToggleTheme,
+              child: Text(isDark ? 'Tema claro' : 'Tema escuro'),
+            ),
           ),
         ],
       ),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Laboratório de entregas',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              const SizedBox(height: 24),
-              Text(
-                _currentPatchNumber == null
-                    ? 'Patch: nenhum (release base)'
-                    : 'Patch: $_currentPatchNumber',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: 8),
-              Text(_status, textAlign: TextAlign.center),
-              const SizedBox(height: 24),
-              if (_isBusy)
-                const CircularProgressIndicator()
-              else
-                ElevatedButton(
-                  onPressed: _checkNow,
-                  child: const Text('Verificar atualização agora'),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Laboratório de entregas',
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
-            ],
+                const SizedBox(height: 16),
+                Container(
+                  constraints: const BoxConstraints(maxWidth: 420),
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF164E63),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: const Column(
+                    children: [
+                      Text(
+                        'AZUL · 01',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'Uma entrega visível para conferir no preview e no app.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Text(
+                  _currentPatchNumber == null
+                      ? 'Patch: nenhum (release base)'
+                      : 'Patch: $_currentPatchNumber',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 8),
+                Text(_status, textAlign: TextAlign.center),
+                const SizedBox(height: 24),
+                if (_isBusy)
+                  const CircularProgressIndicator()
+                else
+                  ElevatedButton(
+                    onPressed: _checkNow,
+                    child: const Text('Verificar atualização agora'),
+                  ),
+              ],
+            ),
           ),
         ),
       ),
