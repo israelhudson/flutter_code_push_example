@@ -1,0 +1,78 @@
+{
+  "collected_at": "2026-10-08T21:12:17.870481-03:00",
+  "commands": [
+    {
+      "name": "run",
+      "command": [
+        "gh",
+        "api",
+        "repos/israelhudson/flutter_code_push_example/actions/runs/37863070381"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "jobs",
+      "command": [
+        "gh",
+        "api",
+        "repos/israelhudson/flutter_code_push_example/actions/runs/37863070381/jobs"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "state-response",
+      "command": [
+        "gh",
+        "api",
+        "repos/israelhudson/flutter_code_push_example/contents/release-lab/state.json",
+        "-f",
+        "ref=codex/release-lab-state",
+        "-X",
+        "GET"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "candidate-tags",
+      "command": [
+        "gh",
+        "api",
+        "repos/israelhudson/flutter_code_push_example/git/matching-refs/tags/v1.6.0"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "release-branch",
+      "command": [
+        "gh",
+        "api",
+        "repos/israelhudson/flutter_code_push_example/git/matching-refs/heads/release/1.6.0"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "failed-log",
+      "command": [
+        "gh",
+        "run",
+        "view",
+        "37863070381",
+        "--repo",
+        "israelhudson/flutter_code_push_example",
+        "--log-failed"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "releases-160",
+      "command": [
+        "gh",
+        "api",
+        "repos/israelhudson/flutter_code_push_example/releases",
+        "--jq",
+        "[.[] | select(.tag_name | startswith(\"v1.6.0\")) | {tag_name,html_url,draft,prerelease}]"
+      ],
+      "exit_code": 0
+    }
+  ]
+}

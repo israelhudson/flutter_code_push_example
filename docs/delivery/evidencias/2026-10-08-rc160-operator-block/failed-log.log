@@ -1,0 +1,10 @@
+Congelar candidata revisada	Criar branch release e tag RC imutável com identidade interna	﻿2026-10-09T00:06:52.9494611Z ##[group]Run python3 trusted/tools/delivery/release_lab.py prepare --version "$RELEASE_VERSION" --title "$RELEASE_TITLE" --output "$RUNNER_TEMP/release-lab"
+Congelar candidata revisada	Criar branch release e tag RC imutável com identidade interna	2026-10-09T00:06:52.9498413Z ^[[36;1mpython3 trusted/tools/delivery/release_lab.py prepare --version "$RELEASE_VERSION" --title "$RELEASE_TITLE" --output "$RUNNER_TEMP/release-lab"^[[0m
+Congelar candidata revisada	Criar branch release e tag RC imutável com identidade interna	2026-10-09T00:06:52.9732226Z shell: /usr/bin/bash -e {0}
+Congelar candidata revisada	Criar branch release e tag RC imutável com identidade interna	2026-10-09T00:06:52.9733517Z env:
+Congelar candidata revisada	Criar branch release e tag RC imutável com identidade interna	2026-10-09T00:06:52.9741101Z   GH_TOKEN: ***
+Congelar candidata revisada	Criar branch release e tag RC imutável com identidade interna	2026-10-09T00:06:52.9741869Z   RELEASE_VERSION: 1.6.0
+Congelar candidata revisada	Criar branch release e tag RC imutável com identidade interna	2026-10-09T00:06:52.9742711Z   RELEASE_TITLE: Tema escuro manual
+Congelar candidata revisada	Criar branch release e tag RC imutável com identidade interna	2026-10-09T00:06:52.9743612Z ##[endgroup]
+Congelar candidata revisada	Criar branch release e tag RC imutável com identidade interna	2026-10-09T00:06:53.0269084Z LAB bloqueado: Iniciador/reexecutor não é operador autorizado; aprovação é outro papel.
+Congelar candidata revisada	Criar branch release e tag RC imutável com identidade interna	2026-10-09T00:06:53.0331237Z ##[error]Process completed with exit code 1.

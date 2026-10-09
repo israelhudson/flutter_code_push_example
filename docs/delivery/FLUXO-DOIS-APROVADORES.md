@@ -63,6 +63,11 @@ por duas pessoas.
 
 ## Preparar a candidata
 
+**Conta para iniciar no LAB atual: `israelhudson`.** A política `operators`
+autoriza somente Israel a preparar a RC. Fabrícia é aprovadora e pode dar o
+comando final depois dos dois avais, mas não inicia a preparação. Essa restrição
+é uma escolha da política do laboratório, não uma regra geral do GitHub.
+
 1. Integre os PRs de código revisados na `main`. Ela acumula mudanças; não existe
    branch beta neste fluxo.
 2. No Actions, abra **LAB - Preparar candidata** e selecione **Run workflow**
@@ -88,6 +93,13 @@ Existe uma candidata ativa de cada vez. Preparar outra candidata preserva a RC
 anterior e invalida sua possibilidade de publicação. Rejeição, cancelamento,
 falha técnica ou etapa ignorada nunca contam como aprovação. Uma promoção
 parcial já iniciada exige recuperação antes de permitir outro corte.
+
+Se a preparação for recusada por **iniciador não autorizado**, confira o diário
+e as refs antes de continuar. Quando nenhuma RC foi criada, mantenha a mesma
+versão/título e inicie uma **nova execução em Run workflow** com uma conta de
+`operators`. Preserve a execução recusada como evidência. Não use **Re-run jobs**:
+o helper também recusa tentativas posteriores do mesmo run e não troca seu
+iniciador original. Não é preciso apagar a entrega nem avançar para RC2 nesse caso.
 
 ## O que significa “Approve and deploy”
 
@@ -260,6 +272,12 @@ Migre a política por responsabilidades, e não copiando nomes de contas do LAB.
 O planejamento Amulets usa Samuel **E** Vinícius para a candidata e Samuel
 **OU** Vinícius para o comando final; confirme contas, acessos, preparador e
 revisores técnicos antes de habilitar.
+
+**Pergunta pendente para Samuel:** quem poderá gerar RCs, substituir o
+preparador e iniciar recuperação na Amulets? Registre a resposta no
+[plano de evolução](../plano-evolucao-esteira.md#decisão-com-samuel-quem-poderá-gerar-uma-rc-na-amulets)
+antes de configurar `operators` no projeto de destino. Não copiar a restrição
+a Israel sem uma decisão do time.
 
 Confira primeiro o plano GitHub e a disponibilidade de required reviewers no
 repositório privado. Os gates deste LAB público não comprovam disponibilidade

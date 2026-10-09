@@ -342,6 +342,27 @@ Cada etapa entrega algo demonstrável antes de começar a próxima. **Etapas 1 a
 4. Auditar CI, flavors, app IDs, segredos, permissões e proteções atuais do Amulets somente em leitura; aprovar as diferenças antes de implementar.
 5. Registrar validação humana do fluxo e autorização para a adaptação. Nenhum comando Shorebird será executado no Amulets como parte deste laboratório.
 
+### Decisão com Samuel: quem poderá gerar uma RC na Amulets?
+
+**Pendente de definição pelo time.** Perguntar ao Samuel: **quem será autorizado
+a preparar/gerar as RCs, quem poderá substituir essa pessoa e quem poderá
+iniciar uma recuperação de publicação parcial?** Definir pessoas ou grupo,
+contas autenticadas e regras para entregas normais e urgentes antes de adaptar
+a esteira. Ser aprovador ou poder iniciar um Action não concede automaticamente
+o papel de preparador.
+
+No LAB atual, `operators` permite somente `israelhudson` preparar a candidata.
+Israel e Fabrícia aprovam, e qualquer um dos dois pode dar o comando final
+depois dos dois avais. Essa matriz do laboratório não define a política da Amulets.
+
+Na rodada manual de 08/10/2026, a conta `fahnassau30` tentou preparar `1.6.0` e
+foi recusada antes de criar a candidata, branch ou tag. É um bloqueio esperado
+da política; a orientação anterior não tinha explicitado a conta necessária.
+As [evidências e o procedimento para continuar](delivery/evidencias/2026-10-08-rc160-operator-block/RELATORIO.md)
+preservam a execução e o motivo. Melhoria de experiência pendente: apresentar
+os preparadores autorizados antes da execução e explicar a ausência de efeitos
+na mensagem de bloqueio. Não ampliar permissões como contorno.
+
 ## Cenários de aceite
 
 Os resultados são critérios de aceite. As suítes `test_lab_engine.py`, `test_snapshots.py`, `test_github_candidate.py` e `test_policy.py` cobrem cenários sintéticos; `lab.py demo` fornece evidência executável de snapshots e falha parcial. APIs substituídas e papéis simulados não são validação real. Consultar a saída da suíte executada e os recibos da sessão, preservando os testes anteriores.
@@ -396,6 +417,7 @@ Os resultados são critérios de aceite. As suítes `test_lab_engine.py`, `test_
 | Antes de criar novas refs remotas | Proteções para tags neutras, branches de release e registros; estratégia para conservar a POC histórica. |
 | Antes de ensaio real | Apps e release-bases isoladas, dispositivos, rota iOS, destinos web e autorização para efeitos externos. |
 | Antes de comprovar segregação | Identidades reais, permissões e responsáveis por publicação e incidentes. |
+| Antes de adaptar à Amulets | Confirmar com Samuel quem pode gerar RCs, substituir o preparador e iniciar recuperação; separar esses acessos dos avais e do comando final. |
 | Na Etapa 7 | Validar procedimento de urgência e reconciliação com provedores reais e identidades distintas. |
 
 **Próxima ação:** executar o demo do [laboratório](delivery/LABORATORIO.md), abrir `report.json` e observar 0/2 → 1/2 → 2/2, RC2 no SHA de F′ e retomada parcial. Depois avaliar os critérios locais antes de ativar qualquer caminho remoto.
