@@ -41,6 +41,34 @@ class CandidateStateTests(unittest.TestCase):
                                  smoke_path=Path(self.temp.name) / 'fixture-smoke.json',
                                  metadata_path=Path(self.temp.name) / 'fixture-metadata.json', **kwargs)
 
+    def test_changed_presentation_schema_cannot_reuse_frozen_approvals(self):
+        for changed in (None, 1, True, '2'):
+            with self.subTest(changed=changed):
+                record = copy.deepcopy(self.record())
+                if changed is None:
+                    record.pop('presentation_schema')
+                else:
+                    record['presentation_schema'] = changed
+                with self.assertRaises(lab.LabError):
+                    lab.frozen_material(record)
+
+    def test_new_job_labels_are_observed_before_the_whole_run_finishes(self):
+        labels = ('Conferir candidata e permissões',
+                  'Testar aplicativo e preparar preview',
+                  'Disponibilizar preview e changelog',
+                  'PUBLICAR — Aprovador 1 ou 2, após os dois avais',
+                  'Publicar tag estável e Release no GitHub')
+        for label in labels:
+            with self.subTest(label=label):
+                self.record()['status'] = 'awaiting_approvals'
+                self.world.runs[self.world.run_id]['jobs'] = [
+                    {'name': 'Validar e revisar candidata / ' + label,
+                     'conclusion': 'failure', 'id': 123}]
+                self.reconcile()
+                self.assertEqual(self.record()['status'], 'evaluation_failed')
+                self.assertEqual(len(self.record()['status_observation']['required_jobs']), 1)
+                self.world.assert_no_publication()
+
     def test_zero_one_and_two_recorded_approvals_have_distinct_waiting_states(self):
         self.assertEqual(self.record()['status'], 'awaiting_approvals')
         self.reconcile()

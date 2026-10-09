@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "platform": "android",
+  "app_id": "bc6a30bd-0768-4326-8885-8be69c59aed2",
+  "release_version": "1.1.0+2",
+  "provider_release_id": 776887,
+  "flutter_version": "3.44.9",
+  "flutter_revision": "c2515c46c7fca511e39735a615f0f12f3dca6230",
+  "base_git_sha": null,
+  "execution": "authorized_local_lab_after_final_command",
+  "generation_track": "staging",
+  "promotion_track": "stable",
+  "device_validation_required": true,
+  "patch_number": null,
+  "note": "Alvo confirmado no provedor. Compatibilidade requer dry-run no SHA aprovado; número e instalação exigem recibo separado."
+}

@@ -18,6 +18,7 @@ import time
 from urllib.parse import quote
 
 import changelog_summary
+import release_notes
 import version_manifest
 
 REPOSITORY = 'israelhudson/flutter_code_push_example'
@@ -395,7 +396,9 @@ def validate_version_available(policy, state, version, owned_intent=False):
 
 def incomplete_publications(state):
     return [record for record in state.get('candidates', {}).values()
-            if record.get('publication') and record['publication'].get('status') != 'completed']
+            if ((record.get('publication') and record['publication'].get('status') != 'completed')
+                or (record.get('mobile_delivery', {}).get('intent')
+                    and record['mobile_delivery'].get('status') != 'completed'))]
 
 
 def verify_preparation(policy, preparation):
@@ -460,6 +463,8 @@ def prepare(policy, version, title, folder):
               'preparer': {'login': os.environ['GITHUB_ACTOR'], 'id': int(os.environ['GITHUB_ACTOR_ID'])},
               'status': 'prepared', 'evaluation_run_id': None,
               'notification_schema': 1, 'slack_events': []}
+    if pending is None or pending.get('presentation_schema') == 2:
+        record['presentation_schema'] = 2
     preparation = pending or {**record, 'intent_id': digest({'candidate': tag, 'source_sha': source_sha,
                                                            'policy_digest': digest(policy),
                                                            'run_id': os.environ['GITHUB_RUN_ID']})}
@@ -527,6 +532,27 @@ def same_run(record):
         raise LabError('Run diferente da avaliação congelada; sem transporte de avais.')
 
 
+def validate_mobile_plan(plan):
+    keys = {'schema', 'platform', 'app_id', 'release_version', 'provider_release_id',
+            'flutter_version', 'flutter_revision', 'base_git_sha', 'execution',
+            'generation_track', 'promotion_track', 'device_validation_required', 'patch_number', 'note'}
+    if (not isinstance(plan, dict) or set(plan) != keys
+            or type(plan.get('schema')) is not int or plan['schema'] != 1
+            or plan.get('platform') != 'android'
+            or plan.get('app_id') != 'bc6a30bd-0768-4326-8885-8be69c59aed2'
+            or type(plan.get('provider_release_id')) is not int or plan['provider_release_id'] <= 0
+            or not VERSION.fullmatch(str(plan.get('flutter_version', '')))
+            or not SHA.fullmatch(str(plan.get('flutter_revision', '')))
+            or plan.get('execution') != 'authorized_local_lab_after_final_command'
+            or plan.get('generation_track') != 'staging' or plan.get('promotion_track') != 'stable'
+            or plan.get('device_validation_required') is not True
+            or plan.get('patch_number') is not None or plan.get('base_git_sha') is not None
+            or not isinstance(plan.get('note'), str) or not 1 <= len(plan['note']) <= 500):
+        raise LabError('Plano Shorebird local inválido; destino e tracks precisam estar explícitos, sem bypass.')
+    version_manifest.split_app_version(plan.get('release_version'))
+    return plan
+
+
 def report(policy, tag, smoke_path, metadata_path, folder, context_artifact=None):
     smoke, metadata = (json.loads(Path(p).read_text()) for p in (smoke_path, metadata_path))
     context, context_observation = None, {'status': 'not_requested', 'waited_for_result': False}
@@ -559,6 +585,14 @@ def report(policy, tag, smoke_path, metadata_path, folder, context_artifact=None
                  'changes': changes, 'changed_paths': paths, 'platforms': platforms,
                  'publication_mode': publication_mode(policy), 'stable_tag': record.get('stable_tag', 'v' + record['version']),
                  'result_simulated': publication_mode(policy) == 'simulation', 'distribution_performed': False}
+        # Presentation is frozen before reviews. Historical payloads keep their
+        # renderer so a retry cannot change a sent notification or release body.
+        if record.get('presentation_schema') == 2:
+            value['presentation_schema'] = 2
+            mobile_plan_path = ROOT / 'delivery/shorebird-lab-target.json'
+            if mobile_plan_path.exists():
+                mobile_plan = validate_mobile_plan(json.loads(mobile_plan_path.read_text()))
+                value['mobile_execution_plan'] = mobile_plan
         if record.get('publication_mode', 'simulation') != publication_mode(policy):
             raise LabError('Modo do corte diverge do relatório; prepare outra RC sob a política atual.')
         if record.get('report_digest'):
@@ -640,6 +674,11 @@ def current_reviews(policy, record, run_id=None):
 def frozen_material(record):
     """Copy already approved optional fields; historical reports stay unchanged."""
     value = record.get('report', {})
+    schema = value.get('presentation_schema', 1)
+    record_schema = record.get('presentation_schema', 1)
+    if (type(schema) is not int or type(record_schema) is not int
+            or schema not in (1, 2) or schema != record_schema):
+        raise LabError('Apresentação diverge do relatório congelado; prepare nova RC.')
     fields = {}
     if 'version_manifest' in value or 'version_manifest_digest' in value:
         manifest = version_manifest.validate_manifest(value.get('version_manifest'))
@@ -744,7 +783,12 @@ def reconcile_run(policy, evaluation_run_id, folder):
                          'Publicar bytes verificados, confirmar preview e changelog',
                          'Gate first', 'Gate second',
                          'AUTORIZAR PUBLICAR — Israel OU Fabrícia, após os dois avais',
-                         'PROMOVER — tag estável e Release no GitHub, sem distribuição mobile')
+                         'PROMOVER — tag estável e Release no GitHub, sem distribuição mobile',
+                         'Conferir candidata e permissões',
+                         'Testar aplicativo e preparar preview',
+                         'Disponibilizar preview e changelog',
+                         'PUBLICAR — Aprovador 1 ou 2, após os dois avais',
+                         'Publicar tag estável e Release no GitHub')
     required_jobs = [j for j in jobs if any(j.get('name', '').endswith(s) for s in required_suffixes)]
     invalid_receipts = None
     try:
@@ -1005,6 +1049,53 @@ def publication_identity(record):
 
 
 def release_payload(record, decision, intent_id):
+    frozen_material(record)
+    if record['report'].get('presentation_schema', 1) == 2:
+        return readable_release_payload(record, decision, intent_id)
+    return legacy_release_payload(record, decision, intent_id)
+
+
+def readable_release_payload(record, decision, intent_id):
+    report = record['report']
+    notes = release_notes.brief_notes(report)
+    run_url = 'https://github.com/' + REPOSITORY + '/actions/runs/' + str(record['evaluation_run_id'])
+    lines = ['## O que mudou', '', *[html.escape(line) for line in notes['description']], '',
+             *['- ' + html.escape(line) for line in notes['changes']], '',
+             '## Confira a entrega', '',
+             '[Abrir preview](' + report['preview']['snapshot_url'] + ') · '
+             '[Changelog e aprovações](' + run_url + ')', '',
+             '**Aprovada por:** Aprovador 1 e Aprovador 2. **Publicada:** após o comando final separado.', '',
+             'A candidata `' + record['candidate_tag'] + '` foi preservada. A tag `' + record['stable_tag']
+             + '` aponta ao mesmo código aprovado.', '',
+             '## Versões e publicação', '',
+             '| Destino | Versão / identidade | Resultado |', '|---|---|---|',
+             '| GitHub | ' + record['stable_tag'] + ' | Release publicada |',
+             '| Web | ' + html.escape(report.get('pubspec_version', 'Não verificada'))
+             + ' | Preview validado; não comprova produção |',
+             '| Android | ' + html.escape(report.get('mobile_execution_plan', {}).get('release_version', 'Não configurada'))
+             + ' · patch a gerar | Não distribuído nesta etapa |',
+             '| iOS | Não verificada | Não distribuído nesta etapa |', '',
+             'Um patch Shorebird exige base, plataforma e número confirmado pelo provedor. '
+             'O registro no GitHub não comprova atualização instalada.', '',
+             '<details><summary>Histórico e evidências técnicas</summary>', '',
+             '**Código aprovado:** `' + record['source_sha'] + '`.', '',
+             '**Fonte do resumo:** ' + html.escape(notes['source_label']) + '.', '']
+    lines += ['- ' + html.escape(change) for change in report.get('changes', [])] or ['- Sem commits adicionais.']
+    material = frozen_material(record)
+    if material.get('communication'):
+        lines += ['', '### Texto original congelado', '',
+                  html.escape(material['communication']['selection']['text'])]
+    if material.get('version_manifest'):
+        lines += ['', *version_manifest.render_markdown(material['version_manifest']).splitlines()]
+    lines += ['', 'As contas foram verificadas; o ensaio operado pelo Codex não demonstra revisão humana independente.',
+              '', '</details>', '', '<!-- release-lab-intent:' + intent_id + ' -->',
+              '<!-- release-lab-report:' + record['report_digest'] + ' -->']
+    return {'tag_name': record['stable_tag'], 'target_commitish': record['source_sha'],
+            'name': record['version'] + ' — ' + record['title'], 'body': '\n'.join(lines) + '\n',
+            'draft': False, 'prerelease': False, 'generate_release_notes': False, 'make_latest': 'true'}
+
+
+def legacy_release_payload(record, decision, intent_id):
     report_url = 'https://github.com/' + REPOSITORY + '/actions/runs/' + str(record['evaluation_run_id'])
     lines = ['# ' + record['version'] + ' — ' + html.escape(record['title']), '',
              'Registro de versão do laboratório no GitHub. **Nenhum aplicativo ou patch foi distribuído.**', '',

@@ -43,6 +43,26 @@ def approvals():
             review(FABRICIA, 'aprovacao-fahnassau30')]
 
 
+class MobilePlanTests(unittest.TestCase):
+    def test_exact_lab_target_has_no_predicted_patch_or_inferred_base_sha(self):
+        target = json.loads((Path(__file__).resolve().parents[2] / 'delivery/shorebird-lab-target.json').read_text())
+        self.assertEqual(lab.validate_mobile_plan(target), target)
+        self.assertIsNone(target['patch_number'])
+        self.assertIsNone(target['base_git_sha'])
+
+    def test_ambiguous_targets_tracks_and_bypass_fields_are_rejected(self):
+        original = json.loads((Path(__file__).resolve().parents[2] / 'delivery/shorebird-lab-target.json').read_text())
+        changes = ({'provider_release_id': True}, {'provider_release_id': -1},
+                   {'flutter_version': 'unverified'}, {'generation_track': 'stable'},
+                   {'promotion_track': 'staging'}, {'device_validation_required': 1},
+                   {'allow_native_diffs': True}, {'patch_number': 2},
+                   {'app_id': '00000000-0000-0000-0000-000000000000'},
+                   {'release_version': 'latest'})
+        for changed in changes:
+            with self.subTest(changed=changed), self.assertRaises(ValueError):
+                lab.validate_mobile_plan({**original, **changed})
+
+
 class PolicyTests(unittest.TestCase):
     def test_policy_accepts_distinct_mandatory_approvers_and_either_publisher(self):
         result = lab.validate_policy(policy())

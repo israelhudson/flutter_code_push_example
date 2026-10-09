@@ -19,6 +19,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/delivery'))
 import release_lab
 import slack_notify
 import slack_outbox as outbox
+from slack_preview import readable_payload
 
 TOKEN = 'xoxb-offline-fixture-token'
 TS = '1760000000.000001'
@@ -35,6 +36,16 @@ def notice(event='candidate_available', **changes):
                                       identity['run_url'], idempotency_key=key)
     value.update(event=event, identity=identity)
     value.update(changes)
+    return value
+
+
+def readable_notice():
+    value = notice()
+    payload, _ = readable_payload('LAB · Candidata pronta', ['Descrição breve.', 'Preview congelado.', 'Revisão no GitHub.'],
+        ['Avisos mais fáceis de ler'], 'Aprovador 1 E Aprovador 2 revisam a mesma RC.',
+        'https://israelhudson.github.io/flutter_code_push_example/snapshots/' + value['identity']['source_sha'] + '/',
+        value['identity']['run_url'])
+    value['payload'].update(payload)
     return value
 
 
@@ -526,6 +537,49 @@ class DurableSlackTests(unittest.TestCase):
         with self.assertRaises(outbox.OutboxError):
             self.send(invalid)
         self.assertEqual(self.slack.posts(), 1)
+
+    def test_readable_url_buttons_send_once_and_fresh_runner_skips(self):
+        value = readable_notice()
+        first = self.send(value)
+        second = self.send(value)
+        self.assertEqual(first['state'], 'sent')
+        self.assertTrue(second['duplicate'])
+        self.assertEqual(self.slack.posts(), 1)
+
+    def test_url_buttons_cannot_become_callbacks_or_point_to_other_snapshots(self):
+        original = readable_notice()
+        for mutation in ({'value': 'approve'}, {'action_id': 'approve'}, {'confirm': {}},
+                         {'url': 'https://evil.invalid/approve'},
+                         {'url': 'https://israelhudson.github.io/flutter_code_push_example/snapshots/' + 'f' * 40 + '/'}):
+            value = copy.deepcopy(original)
+            actions = next(block for block in value['payload']['blocks'] if block['type'] == 'actions')
+            actions['elements'][0].update(mutation)
+            with self.subTest(mutation=mutation), self.assertRaises(outbox.OutboxError):
+                self.send(value)
+        self.assertEqual(self.slack.posts(), 0)
+        self.assertEqual(self.git.calls, [])
+
+    def test_readable_buttons_preserve_positive_history_reconciliation(self):
+        value = readable_notice()
+        self.reserve(value)
+        message = self.slack.message(value['payload'])
+        for position, block in enumerate(message['blocks']):
+            block['block_id'] = 'server-block-' + str(position)
+        self.slack.history.append(message)
+        result = self.send(value)
+        self.assertEqual(result['state'], 'sent')
+        self.assertTrue(result['receipt']['reconciled'])
+        self.assertEqual(self.slack.posts(), 0)
+
+    def test_readable_button_mismatch_cannot_reconcile_an_unknown_notice(self):
+        value = readable_notice()
+        self.reserve(value)
+        message = self.slack.message(value['payload'])
+        actions = next(block for block in message['blocks'] if block['type'] == 'actions')
+        actions['elements'][1]['url'] = 'https://github.com/' + outbox.REPOSITORY + '/actions/runs/999'
+        self.slack.history.append(message)
+        self.assertEqual(self.send(value)['state'], 'blocked')
+        self.assertEqual(self.slack.posts(), 0)
 
     def test_cli_invalid_frozen_notice_is_optional_and_no_raw_content_is_printed(self):
         path = Path(self.temporary.name) / 'invalid.json'

@@ -5,7 +5,6 @@ not a claim that an older 1/2 observation is still the current approval state.
 No app artifact, PR body, user input or later AI response is executed or rendered.
 """
 import argparse
-import html
 import json
 import os
 from pathlib import Path
@@ -16,13 +15,14 @@ from urllib.parse import quote
 import release_lab as lab
 import slack_notify
 import slack_outbox
-from changelog_summary import verify_communication
-from slack_preview import render_preview
+import slack_legacy
+from release_notes import approver_labels, brief_notes
+from slack_preview import readable_payload, render_preview
 
 LABELS = {
     'candidate_available': 'Candidata pronta para revisão',
-    'approval_first': 'Aval de Israel registrado',
-    'approval_second': 'Aval de Fabrícia registrado',
+    'approval_first': 'Aval do Aprovador 1 registrado',
+    'approval_second': 'Aval do Aprovador 2 registrado',
     'approvals_complete': 'Dois avais registrados',
     'candidate_rejected': 'Candidata rejeitada',
     'candidate_cancelled': 'Avaliação cancelada',
@@ -32,9 +32,9 @@ LABELS = {
     'publication_partial': 'Publicação requer recuperação',
 }
 DETAILS = {
-    'candidate_available': 'Preview e changelog congelados. Israel E Fabrícia precisam aprovar a mesma candidata.',
-    'approval_first': 'Este marco registra somente o aval de Israel. Um aval sozinho não habilita PUBLICAR.',
-    'approval_second': 'Este marco registra somente o aval de Fabrícia. Um aval sozinho não habilita PUBLICAR.',
+    'candidate_available': 'Preview e changelog congelados. Os dois aprovadores revisam a mesma candidata.',
+    'approval_first': 'Este marco registra somente o aval do Aprovador 1. Um aval sozinho não habilita o comando final.',
+    'approval_second': 'Este marco registra somente o aval do Aprovador 2. Um aval sozinho não habilita o comando final.',
     'approvals_complete': 'Marco 2/2: os dois avais foram registrados. Eles apenas habilitam o comando final separado; este aviso não publica.',
     'candidate_rejected': 'Esta avaliação foi recusada. Corrija por PR para a branch de release e prepare outra RC, com novos avais.',
     'candidate_cancelled': 'A avaliação foi cancelada. Nenhum aval desta tentativa autoriza outra RC.',
@@ -136,6 +136,14 @@ def validate_event(policy, record, item, evidence, api=lab.api):
 
 def render_event(policy, record, item):
     event, report = item['event'], record['report']
+    schema = report.get('presentation_schema', 1)
+    record_schema = record.get('presentation_schema', 1)
+    if type(schema) is not int or type(record_schema) is not int or schema != record_schema:
+        raise lab.LabError('Apresentação do aviso diverge do relatório congelado.')
+    if schema == 1:
+        return slack_legacy.render_event(policy, record, item)
+    if schema != 2:
+        raise lab.LabError('Schema de apresentação desconhecido.')
     run_url = 'https://github.com/' + lab.REPOSITORY + '/actions/runs/' + str(record['evaluation_run_id'])
     identity = {k: item[k] for k in ('candidate_tag', 'source_sha', 'snapshot_digest', 'run_id')}
     identity['run_url'] = run_url
@@ -143,27 +151,23 @@ def render_event(policy, record, item):
     notice = slack_notify.render_notice('candidate', DETAILS[event], record['candidate_tag'],
                                         record['source_sha'], run_url, simulation=report['result_simulated'],
                                         idempotency_key=key)
-    lines = ['LAB · ' + LABELS[event], record['candidate_tag'] + ' — ' + report['title'],
-             'Marco histórico desta candidata; consulte o estado atual no GitHub.', DETAILS[event]]
+    notes = brief_notes(report)
+    description = [DETAILS[event], 'Marco histórico. Consulte o estado atual no GitHub.']
+    changes, limitations = [], []
     if event == 'candidate_available':
-        selected = verify_communication(report)
-        labels = {'pr_sections': 'descrição das PRs, sem IA', 'commits_fallback': 'histórico de commits',
-                  'ai': 'resumo por IA congelado'}
-        lines += ['', 'O que muda — ' + labels[selected['source']] + ':', selected['text']]
+        description = notes['description']
+        changes, limitations = notes['changes'], notes['limitations']
     if event == 'publication_completed' and report['result_simulated']:
-        lines[-1] = 'O comando final gerou um resultado simulado. Nenhuma tag estável, Release ou distribuição mobile foi criada.'
-    lines += ['', 'Israel E Fabrícia aprovam. Depois, Israel OU Fabrícia dá PUBLICAR no gate separado.',
-              'Slack só notifica. Aplicativo e patch mobile não são distribuídos por este fluxo.']
-    body = '\n'.join(lines)
-    if len(body) > 2900:
-        raise lab.LabError('Aviso excede o limite; relatório original preservado.')
+        description[0] = 'O comando final gerou um resultado simulado. Nenhuma tag estável ou Release foi criada.'
+    aliases = approver_labels(policy)
+    footer = ('Decisões no GitHub: ' + ' E '.join(aliases) + ' aprovam a mesma RC.\n'
+              'Com 2/2, ' + ' OU '.join(aliases) + ' dá o comando final no gate separado.\n'
+              'Slack só informa. Mobile não distribuído. Marco histórico; confira o estado atual no GitHub.')
     preview_url = report['preview']['snapshot_url']
-    notice['payload'].update(text=html.escape(body, quote=False) + '\n' + run_url,
-        blocks=[{'type': 'section', 'text': {'type': 'plain_text', 'text': body, 'emoji': False}},
-                {'type': 'section', 'text': {'type': 'mrkdwn', 'verbatim': True,
-                    'text': '<' + preview_url + '|Abrir preview>'}},
-                {'type': 'section', 'text': {'type': 'mrkdwn', 'verbatim': True,
-                    'text': '<' + run_url + '|Changelog e decisões no GitHub>'}}])
+    payload, _ = readable_payload('LAB · ' + LABELS[event] + '\n' + record['candidate_tag'] + ' · ' + report['title'],
+        description, changes, footer, preview_url, run_url, source_label=notes['source_label'],
+        truncated=notes['truncated'], limitations=limitations)
+    notice['payload'].update(payload)
     notice.update(event=event, identity=identity)
     return notice
 

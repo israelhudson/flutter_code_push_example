@@ -1,5 +1,6 @@
 """Candidate transition/notification fixtures; no real Slack or approvals."""
 import copy
+import hashlib
 import json
 from pathlib import Path
 import sys
@@ -12,6 +13,8 @@ import release_lab as lab
 import rehearse_release_lab as rehearsal
 import slack_events as events
 import slack_outbox
+import changelog_summary
+from test_slack_preview import report as preview_report, policy as preview_policy
 
 
 class SlackEventsTests(unittest.TestCase):
@@ -22,6 +25,8 @@ class SlackEventsTests(unittest.TestCase):
         self.addCleanup(self.world.close)
         self.tag = self.world.prepare('1.7.0')
         self.world.freeze_report(self.tag)
+        self.assertEqual(self.record()['presentation_schema'], 2)
+        self.assertEqual(self.record()['report']['presentation_schema'], 2)
         self.world.runs[self.world.run_id].update(path='.github/workflows/release-lab-prepare.yml',
                                                   status='in_progress', conclusion=None)
 
@@ -138,6 +143,46 @@ class SlackEventsTests(unittest.TestCase):
         result = self.drain(render_only=False, sender=sender)
         self.assertEqual(seen, self.queued())
         self.assertEqual(len(result['results']), 4)
+
+    def test_schema_two_buttons_keep_same_frozen_links_and_aliases_only_in_presentation(self):
+        before = copy.deepcopy(self.record())
+        notice = events.render_event(self.world.policy, self.record(), self.record()['slack_events'][0])
+        slack_outbox.validate_notice(notice)
+        buttons = next(block['elements'] for block in notice['payload']['blocks'] if block['type'] == 'actions')
+        self.assertEqual([button['text']['text'] for button in buttons], ['Preview', 'Changelog', 'Revisar GitHub'])
+        self.assertEqual(buttons[0]['url'], self.record()['report']['preview']['snapshot_url'])
+        self.assertTrue(all(button['url'] == notice['identity']['run_url'] for button in buttons[1:]))
+        self.assertIn('Aprovador 1 E Aprovador 2', notice['payload']['text'])
+        self.assertNotIn('Fabrícia', notice['payload']['text'])
+        self.assertNotIn('Israel E', notice['payload']['text'])
+        self.assertEqual(self.record(), before)
+
+    def test_unversioned_legacy_event_keeps_exact_baseline_payload_hash(self):
+        report = preview_report()
+        report.pop('presentation_schema')
+        report['result_simulated'] = False
+        report['communication'] = changelog_summary.frozen_communication(report, selected_at='2026-10-09T03:00:00+00:00')
+        record = {'candidate_tag': report['candidate_tag'], 'source_sha': report['source_sha'],
+                  'evaluation_run_id': str(report['run_id']), 'report': report}
+        item = {'event': 'candidate_available', 'candidate_tag': report['candidate_tag'], 'source_sha': report['source_sha'],
+                'snapshot_digest': lab.digest(report), 'run_id': str(report['run_id'])}
+        notice = events.render_event(preview_policy(), record, item)
+        raw = json.dumps(notice['payload'], ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()
+        self.assertEqual(hashlib.sha256(raw).hexdigest(), '1cda24eac26e377f1fa325b88ba6b1c1ff03cae61a47a889f151a64a116b44a9')
+        slack_outbox.validate_notice(notice)
+        self.assertFalse(any(block['type'] == 'actions' for block in notice['payload']['blocks']))
+
+    def test_report_and_record_presentation_versions_cannot_diverge(self):
+        self.record()['report']['presentation_schema'] = 1
+        with self.assertRaises(lab.LabError):
+            events.render_event(self.world.policy, self.record(), self.record()['slack_events'][0])
+
+    def test_presentation_schema_cannot_coerce_other_json_types(self):
+        for schema in (True, 2.0, '2', 3):
+            value = copy.deepcopy(self.record())
+            value['presentation_schema'] = value['report']['presentation_schema'] = schema
+            with self.subTest(schema=schema), self.assertRaises(lab.LabError):
+                events.render_event(self.world.policy, value, value['slack_events'][0])
 
 
 if __name__ == '__main__':
