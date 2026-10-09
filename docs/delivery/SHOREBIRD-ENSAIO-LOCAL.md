@@ -1,0 +1,13 @@
+# Roteiro curto do ensaio Android
+
+O [manual completo](SHOREBIRD-PATCH-LOCAL-LAB.md) contém comandos, formato exato do recibo e exemplos. A execução é exclusiva da POC `flutter_code_push_example`, app `bc6a30bd-0768-4326-8885-8be69c59aed2`. Não executar no Amulets.
+
+1. **Aprovar a entrega:** a RC passa por preview/testes, dois avais e comando final separado. Confirme a Release GitHub concluída e faça checkout limpo do seu SHA. O plano Android congela a base `1.1.0+2`, release ID `776887`, Flutter `3.44.9`/`c2515c46c7fca511e39735a615f0f12f3dca6230`, geração em staging e validação antes de stable. O executor local precisa ser operador real confirmado por `gh api user`.
+2. **Gerar uma vez:** capture `release` e lista de patches com `capture-provider`; execute dry-run sem bypass, salve logs/AAB e gere `command-proof`. `plan` persiste intenção; `begin-upload` grava resposta desconhecida antes do CLI real. O operador executa `shorebird patch android --release-version 1.1.0+2 --track staging --json` uma única vez. Consulte list/info novamente: só um novo número é aceito, com hashes dos três `libapp.so` iguais aos do AAB da geração. Nunca prever número ou repetir upload após resposta perdida.
+3. **Comprovar e anexar:** `record-receipt` grava staging; execute preview em staging, cold restart e confira o número em execução no Android. Grave prova do dispositivo antes da promoção. O operador move o patch exato para stable, captura `info`, registra recibo stable e usa `append-release`. O changelog original é preservado e recebe uma seção com base/plataforma/patch/provas; nenhuma distribuição em loja é afirmada.
+
+O bridge não gera nem promove patches por conta própria. Upload, staging, execução no dispositivo, stable e publicação em loja são resultados distintos. O SHA Git original da base é desconhecido; o provedor não fornece SHA Git do patch, e os arquivos do bridge são atestados do operador/CLI, vinculados ao AAB por hashes. As consultas JSON de patch também não incluem app/release ID: o bridge captura os parâmetros da consulta exata.
+
+GitHub Release PATCH não oferece CAS: GET antes/depois confirma o body observado, mas não impede edição manual concorrente. Serialize operadores durante o anexo. Campos extras nos arquivos de prova são recusados para evitar publicar dados privados; logs brutos permanecem em `build/`. Nova RC é bloqueada enquanto uma intenção mobile estiver incompleta. Contas verificadas não demonstram independência das pessoas que as operaram.
+
+Antes de adotar no Amulets, decidir com Samuel quem prepara RC e executa mobile, como serializar operações por base, credenciais CI, dispositivos e recuperação de falhas ambíguas. Não expandir os papéis do laboratório por inferência.
