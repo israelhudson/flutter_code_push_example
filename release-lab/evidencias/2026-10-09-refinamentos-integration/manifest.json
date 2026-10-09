@@ -1,0 +1,160 @@
+{
+  "schema": 1,
+  "created_at": "2026-10-09T01:22:42.841606+00:00",
+  "repository": "israelhudson/flutter_code_push_example",
+  "target_branch": "codex/release-lab-state",
+  "evidence_root": "release-lab/evidencias/2026-10-09-refinamentos-integration",
+  "pr_number": 18,
+  "pr_head": "9a0f32b317df81b73f700b931adb3f06915a4e70",
+  "merged_commit": "31b0b8334d336ea68890c6db1edb6b034cbb43cd",
+  "ci_run_id": 37868764668,
+  "ci_temporary_merge_commit": "43cd93a67f27b936a8519c483d3e8866c7ac5fd7",
+  "scope": "integration_evidence_only",
+  "raw_bytes_preserved": true,
+  "local_delivery_tests": 351,
+  "ci_delivery_tests": 353,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 5625,
+      "sha256": "aee0e1540d824fe573a55f178aaaa2e4a7f43d5080c4e01b27e32db72510fcc8",
+      "git_blob_sha": "b871d7eaec7322a22ea30b1e827026ed2bba6a96"
+    },
+    {
+      "path": "coleta-ci-pr18/collection-summary.json",
+      "bytes": 2008,
+      "sha256": "928d17a05632801534783afe005785e29b0af3bf0ce32334ca64c4f7d62c4f40",
+      "git_blob_sha": "b6a28cbab4656146bdf3923a3f4e68f70812ef5f"
+    },
+    {
+      "path": "coleta-ci-pr18/job-113621690952.log",
+      "bytes": 121409,
+      "sha256": "971375ea9b42446b9effa3623e4dafb3bcb698529bde617c01ea81b3ecb67d92",
+      "git_blob_sha": "fce40831e9a685574712f3f7a35ebaa5a8c0c472"
+    },
+    {
+      "path": "coleta-ci-pr18/job-113621690952.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "coleta-ci-pr18/jobs-page-1.json",
+      "bytes": 2773,
+      "sha256": "f75fac01f0961421944e82592dd483f2e81dc6c771a98152b27deb4cfa2403b0",
+      "git_blob_sha": "36b5ea0b24c07b70b8542c2fb8e38e0a1d99d3b5"
+    },
+    {
+      "path": "coleta-ci-pr18/jobs-page-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "coleta-ci-pr18/reviews.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "git_blob_sha": "0637a088a01e8ddab3bf3fa98dbe804cbde1a0dc"
+    },
+    {
+      "path": "coleta-ci-pr18/reviews.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "coleta-ci-pr18/run.json",
+      "bytes": 14058,
+      "sha256": "9b46f910d9b67e7f6b28c562dfe04008b232f4ae0f7d1c5b98073db8112fc2dc",
+      "git_blob_sha": "f8f4757069311d59c4e76d526ee523baf80cedd9"
+    },
+    {
+      "path": "coleta-ci-pr18/run.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "local/delivery-suite-final.json",
+      "bytes": 164,
+      "sha256": "0b9d3416415415c8a9564ef40fa59e9e4f51eb30c04aff13f4983277c0d97f7b",
+      "git_blob_sha": "d047d4b88d4fec41336635658ad578fc0fc77a35"
+    },
+    {
+      "path": "local/delivery-suite-final.log",
+      "bytes": 61272,
+      "sha256": "93c69734add90035de68a542a8b5f2bda9f68a910bc8132270138eece9b23115",
+      "git_blob_sha": "3e8d9b7d973a6baa22c167c4e048d9533d1bac88"
+    },
+    {
+      "path": "pr18-checks.json",
+      "bytes": 419,
+      "sha256": "2a3c792464ac15d55153aa7a4005b5f205433e76c096fe84896ee6d2ad9234b4",
+      "git_blob_sha": "60efecf4ba22b58b7449dab89432754b0ae9a1c1"
+    },
+    {
+      "path": "pr18-created.json",
+      "bytes": 621,
+      "sha256": "a6578ce4a9ad13b8d881e1f6065615c7fcee591007b3306ab89967b36520b836",
+      "git_blob_sha": "23887ddb4e67ff439440e2045a71c215d3df5872"
+    },
+    {
+      "path": "pr18-merged.json",
+      "bytes": 505,
+      "sha256": "5605e7b13db4dffa9743e6fd40bed4c1ac7e491518449da2a34b55ad0bad6abb",
+      "git_blob_sha": "889967cdb188d89e208c822a6cb3830d93062bdd"
+    },
+    {
+      "path": "pr18-reviews.json",
+      "bytes": 2126,
+      "sha256": "061782207ecbe1add99b3bb48cdc8b088ac3ebefc17d76c1693dc3e2528f4e53",
+      "git_blob_sha": "2f80f0a4a981b6347e37a7f6911a395dd3b2fcb6"
+    },
+    {
+      "path": "verification/pr18-live.json",
+      "bytes": 21235,
+      "sha256": "73cf5920bf76c1475d3906c75615039620e7cfb930390a381de7d2dac68e40f6",
+      "git_blob_sha": "4145a9e065b021a337371a5b42c8b252b8bce35f"
+    },
+    {
+      "path": "verification/pr18-live.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "verification/reviews-live.json",
+      "bytes": 2126,
+      "sha256": "061782207ecbe1add99b3bb48cdc8b088ac3ebefc17d76c1693dc3e2528f4e53",
+      "git_blob_sha": "2f80f0a4a981b6347e37a7f6911a395dd3b2fcb6"
+    },
+    {
+      "path": "verification/reviews-live.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "verification/run-live.json",
+      "bytes": 14058,
+      "sha256": "9b46f910d9b67e7f6b28c562dfe04008b232f4ae0f7d1c5b98073db8112fc2dc",
+      "git_blob_sha": "f8f4757069311d59c4e76d526ee523baf80cedd9"
+    },
+    {
+      "path": "verification/run-live.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    }
+  ],
+  "related_educational_site": {
+    "url": "https://amulets-esteira-distribuicao-v5.israeldev.chatgpt.site",
+    "audience": "owner-only",
+    "source_id": "68138e9887c41218d39ba166c63666acef8bf8ff",
+    "deployment_id": "appgdep_6ac841add1bc8191b48c46d31f104bc3",
+    "reported_status": "succeeded",
+    "reported_at": "2026-10-09T01:22:06Z",
+    "provenance": "principal_executor_report_in_current_session",
+    "independently_queried_in_this_package": false
+  }
+}
