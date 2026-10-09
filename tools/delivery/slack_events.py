@@ -116,7 +116,7 @@ def validate_event(policy, record, item, evidence, api=lab.api):
             if stable.get('object', {}).get('sha') != record['source_sha']:
                 raise lab.LabError('Tag estável do aviso diverge do código aprovado.')
             release = api(lab.endpoint('releases/tags/' + quote(record['stable_tag'], safe='')))
-            if lab.verify_release(release, intent) != receipt.get('github_release'):
+            if lab.verify_release(release, intent, record=record, policy=policy) != receipt.get('github_release'):
                 raise lab.LabError('Release do aviso diverge do recibo.')
     if event == 'candidate_rejected' and not any(
         r.get('state') == 'rejected' and any(e.get('id') == ids.get(e.get('name')) for e in r.get('environments', []))

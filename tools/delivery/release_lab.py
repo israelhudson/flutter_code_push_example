@@ -1159,8 +1159,27 @@ def publication_checkpoint(policy, tag, intent_id, status, **details):
     return mutate(policy, tag, checkpoint, 'publication_' + status)
 
 
-def verify_release(release, intent):
+def verify_release(release, intent, *, record=None, policy=None):
     expected = intent['release_payload']
+    mobile = record.get('mobile_delivery') if isinstance(record, dict) else None
+    if mobile and mobile.get('release_extension'):
+        if (record.get('publication') != intent
+                or record.get('report_digest') != digest(record.get('report'))
+                or record.get('report_digest') != intent.get('report_digest')):
+            raise LabError('Anexo mobile não corresponde ao relatório e à intenção original.')
+        frozen_material(record)
+        policy = policy or load_policy()
+        if digest(policy) != record.get('policy_digest') or digest(policy) != intent.get('policy_digest'):
+            raise LabError('Operadores do anexo mobile divergem da política aprovada.')
+        import shorebird_delivery
+        proof = shorebird_delivery.verify_mobile_release_extension(
+            release, intent, mobile, record['report'].get('mobile_execution_plan'), policy['operators'])
+        # Preserve the original GitHub-stage receipt. The appended provider
+        # outcome has a separate digest; the entire extension is checked above.
+        original_proof = {k: proof[k] for k in ('id', 'url', 'tag_name', 'published_at', 'payload_digest')}
+        if original_proof != record.get('receipt', {}).get('github_release'):
+            raise LabError('Anexo aponta a outra Release ou publicação; preservar o ID e recibo originais.')
+        return original_proof
     expected_url = 'https://github.com/' + REPOSITORY + '/releases/tag/' + intent['stable_tag']
     if (not isinstance(release, dict) or any(release.get(k) != expected[k] for k in ('tag_name', 'target_commitish', 'name', 'body', 'draft', 'prerelease'))
             or not isinstance(release.get('id'), int) or release['id'] <= 0
@@ -1201,7 +1220,7 @@ def promote_effects(policy, tag, intent_id):
                 raise
     # Never declare completed from POST success alone or from an old receipt.
     release = api(release_path)
-    release_value = verify_release(release, intent)
+    release_value = verify_release(release, intent, record=record, policy=policy)
     if resolve_tag(intent['stable_tag']) != intent['source_sha'] or resolve_tag(tag) != intent['source_sha']:
         raise LabError('Tag estável/RC divergiu após a publicação; recibo bloqueado.')
     publication_checkpoint(policy, tag, intent_id, 'release_verified', github_release=release_value)
