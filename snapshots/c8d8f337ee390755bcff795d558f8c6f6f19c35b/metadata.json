@@ -1,0 +1,43 @@
+{
+  "schema": "pages-preview-v1",
+  "source_sha": "c8d8f337ee390755bcff795d558f8c6f6f19c35b",
+  "source_tree": "337e9cd9a1d6298b20ba60d939a9078eb81f7ca1",
+  "version": "1.1.0+2",
+  "source_fingerprint": "36264ae64a35a2bfb9db7b9418c20af3f2c4d9858b547a41677f7cc47d7400a2",
+  "source_build_inputs": {
+    "schema": 1,
+    "flutter_version": "3.44.1",
+    "runner": "ubuntu-24.04",
+    "command": [
+      "flutter",
+      "build",
+      "web",
+      "--release",
+      "--base-href=/"
+    ],
+    "dart_defines": {},
+    "retention_days": 30,
+    "network_assets": "Flutter web may fetch engine resources; preview is not an offline or mobile validation",
+    "flutter_revision": "924134a44c189315be2148659913dda1671cbe99"
+  },
+  "pages_build_inputs": {
+    "schema": 1,
+    "flutter_version": "3.44.1",
+    "runner": "ubuntu-24.04",
+    "command": [
+      "flutter",
+      "build",
+      "web",
+      "--release",
+      "--base-href=/flutter_code_push_example/snapshots/c8d8f337ee390755bcff795d558f8c6f6f19c35b/app/"
+    ],
+    "dart_defines": {},
+    "retention_days": 30,
+    "network_assets": "Flutter web may fetch engine resources; preview is not an offline or mobile validation",
+    "flutter_revision": "924134a44c189315be2148659913dda1671cbe99"
+  },
+  "fingerprint": "22a99c342be1c2df2079c7d859450785c1dfea252a23899b949e0cfade1a4c93",
+  "web_content_sha256": "00063b7f8fa10405f43fce2f458a42d4ff0d762898e11ef5a8725a4569675069",
+  "snapshot_path": "snapshots/c8d8f337ee390755bcff795d558f8c6f6f19c35b/",
+  "delivery_tag": "v1.8.0-rc.2"
+}
