@@ -1,8 +1,8 @@
 # Configuração Slack do laboratório
 
 **Use o bot `Flutter Deploy LAB` já instalado. A conexão real foi validada.**
-O secret `SLACK_BOT_TOKEN` já existe no GitHub. A próxima etapa é integrar os
-avisos da candidata e validar uma execução desse fluxo, seguindo o
+O secret `SLACK_BOT_TOKEN` já existe no GitHub. Os avisos da candidata foram
+integrados pela PR #19; a próxima etapa é validar uma execução real, seguindo o
 [manual de operação](SLACK-AUTOMATICO.md).
 
 ## O que está comprovado

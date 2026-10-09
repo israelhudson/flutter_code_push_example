@@ -1,6 +1,6 @@
 # Comunicação vinculada à mesma candidata
 
-Implementação integrada pela [PR #18](https://github.com/israelhudson/flutter_code_push_example/pull/18), em 09/10/2026 UTC (08/10 em Fortaleza). Provedor de IA e Plane permanecem inativos. A [conexão Slack real](CONFIGURAR-SLACK-LAB.md) tem prova isolada; os [avisos automáticos da candidata](SLACK-AUTOMATICO.md) estão preparados na branch, aguardando integração e ensaio próprio. Nenhuma dessas provas comprova distribuição do aplicativo.
+Implementação integrada pela [PR #18](https://github.com/israelhudson/flutter_code_push_example/pull/18), em 09/10/2026 UTC (08/10 em Fortaleza). Provedor de IA e Plane permanecem inativos. A [conexão Slack real](CONFIGURAR-SLACK-LAB.md) tem prova isolada; os [avisos automáticos da candidata](SLACK-AUTOMATICO.md) foram integrados pela PR #19 e aguardam prova própria do fluxo. Nenhuma dessas provas comprova distribuição do aplicativo.
 
 ## O que o código faz
 

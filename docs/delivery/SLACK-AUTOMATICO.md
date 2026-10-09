@@ -1,11 +1,17 @@
 # Avisos automáticos da candidata no Slack
 
-**Estado: implementação preparada na branch `codex/slack-candidate-notices`,
-aguardando integração e ensaio do fluxo da candidata.** A
+**Estado: implementação integrada pela [PR #19](https://github.com/israelhudson/flutter_code_push_example/pull/19),
+aguardando prova do fluxo real da candidata.** A
 [conexão real já foi validada](CONFIGURAR-SLACK-LAB.md); essa prova isolada
 não confirma os avisos automáticos descritos aqui. Copilot e Plane continuam
 inativos. O material usado vem da comunicação congelada, com contexto explícito
 de PR quando disponível e histórico de commits como fallback.
+
+A integração está na main `22b29663d85724ba619600766c78ff38cd3456ec`,
+desde 09/10/2026 01:39:53 UTC (08/10, 22:39:53 em Fortaleza). O
+[CI 37870620819](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37870620819)
+aprovou analyze, testes Flutter e 384 testes da esteira. Isso prova a validação
+do código; o primeiro envio automático de uma candidata exige seu recibo próprio.
 
 ## Como funciona
 
@@ -99,7 +105,7 @@ A inspeção pode consultar dados do GitHub; `--render-only` não envia ao Slack
 O gerador ilustrativo `slack_preview.py` continua separado e sem credenciais.
 
 Para recuperação operacional, usar o mesmo worker e a mesma RC para drenar a
-fila; ele recupera os recibos confirmados e reconcilia `unknown`. Após integrar,
+fila; ele recupera os recibos confirmados e reconcilia `unknown`. Na main integrada,
 abrir **Actions → LAB - Avisos automáticos no Slack → Run workflow**, selecionar
 `main` e informar a tag da candidata. A opção `render_only` permite inspecionar
 antes do envio. O workflow bloqueia dispatch manual fora da `main`.
@@ -144,7 +150,7 @@ São **três novas tags RC e duas novas versões estáveis**. As etapas ficam
 pendentes neste manual até a coleta dos runs, decisões, mensagens e recibos;
 o plano não comprova sua execução.
 
-1. Após integrar, preparar uma nova RC e guardar run, relatório congelado,
+1. Preparar uma nova RC e guardar run, relatório congelado,
    eventos, outbox, recibos e a mensagem visível no canal privado correto.
 2. Conferir 0/2, 1/2, 2/2 e comando final separado; confirmar que Slack lê
    as transições reais e não muda autorização nem publicação.

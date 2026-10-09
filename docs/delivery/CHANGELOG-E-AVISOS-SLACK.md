@@ -2,8 +2,8 @@
 
 Registro atualizado em 08/10/2026, Fortaleza, após a entrega do tema escuro.
 **Comunicação congelada e fallback já estão integrados; o bot Slack tem prova
-de conexão real. Os avisos automáticos da candidata estão preparados na branch,
-aguardando integração e ensaio próprio. O provedor de IA permanece inativo.**
+de conexão real. Os avisos automáticos da candidata foram integrados pela PR #19,
+aguardando prova do fluxo real. O provedor de IA permanece inativo.**
 
 A [PR #18](https://github.com/israelhudson/flutter_code_push_example/pull/18)
 integrou os ajustes de estados, versões e comunicação. O
