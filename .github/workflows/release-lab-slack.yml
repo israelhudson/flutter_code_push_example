@@ -1,0 +1,135 @@
+name: LAB - Avisos automáticos no Slack
+on:
+  workflow_call:
+    inputs:
+      candidate_tag:
+        type: string
+        required: false
+        default: ''
+      evaluation_run_id:
+        type: string
+        required: false
+        default: ''
+      tooling_sha:
+        type: string
+        required: false
+        default: refs/heads/main
+      notification_label:
+        type: string
+        required: false
+        default: manual
+      render_only:
+        type: boolean
+        required: false
+        default: false
+    secrets:
+      SLACK_BOT_TOKEN:
+        required: false
+  workflow_dispatch:
+    inputs:
+      candidate_tag:
+        description: RC já registrada; apenas drena avisos, nunca aprova/publica
+        type: string
+        required: true
+      render_only:
+        description: Gerar prova local no artefato, sem enviar ao Slack
+        type: boolean
+        required: false
+        default: false
+permissions:
+  contents: read
+jobs:
+  notify:
+    name: Avisos opcionais — fila congelada, sem decidir a entrega
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    continue-on-error: true
+    # This worker never owns release-lab-mutation. Short remote CAS claims,
+    # rather than a GitHub concurrency queue, preserve every logical event.
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - name: Bloquear execução manual fora da main
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_REF: ${{ github.ref }}
+        run: |
+          python3 - <<'PY'
+          import os
+          if os.environ['EVENT_NAME'] == 'workflow_dispatch' and os.environ['EVENT_REF'] != 'refs/heads/main':
+              raise SystemExit('Use a main para drenar avisos de uma candidata conhecida.')
+          PY
+      - name: Conferir origem das ferramentas antes de disponibilizar o token Slack
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TOOLING_REF: ${{ inputs.tooling_sha || 'refs/heads/main' }}
+          CANDIDATE_TAG: ${{ inputs.candidate_tag }}
+        run: |
+          python3 - <<'PY'
+          import base64, json, os, re, subprocess
+          ref = os.environ['TOOLING_REF']
+          if ref != 'refs/heads/main':
+              if not re.fullmatch(r'[0-9a-f]{40}', ref):
+                  raise SystemExit('Origem das ferramentas não autorizada.')
+              response = subprocess.run(['gh', 'api', '--hostname', 'github.com',
+                  'repos/israelhudson/flutter_code_push_example/contents/release-lab/state.json?ref=codex%2Frelease-lab-state'],
+                  capture_output=True, text=True, timeout=30)
+              if response.returncode:
+                  raise SystemExit('Não foi possível conferir ferramentas congeladas; nenhum envio.')
+              document = json.loads(response.stdout)
+              state = json.loads(base64.b64decode(document['content']))
+              record = state.get('candidates', {}).get(os.environ['CANDIDATE_TAG'], {})
+              if record.get('tooling_sha') != ref:
+                  raise SystemExit('Ferramentas divergem da candidata; nenhum envio.')
+          PY
+      - name: Checkout apenas das ferramentas confiáveis
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, Node 24
+        with:
+          ref: ${{ inputs.tooling_sha || 'refs/heads/main' }}
+          path: trusted
+          persist-credentials: false
+      - name: Conferir identidade e drenar avisos com checkpoint remoto
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          CANDIDATE_TAG: ${{ inputs.candidate_tag }}
+          EVALUATION_RUN_ID: ${{ inputs.evaluation_run_id }}
+          RENDER_ONLY: ${{ inputs.render_only }}
+        run: |
+          args=(--output "$RUNNER_TEMP/slack-notices")
+          if [ -n "$CANDIDATE_TAG" ]; then
+            args+=(--candidate-tag "$CANDIDATE_TAG")
+          else
+            args+=(--evaluation-run-id "$EVALUATION_RUN_ID")
+          fi
+          if [ "$RENDER_ONLY" = true ]; then
+            args+=(--render-only)
+          fi
+          python3 trusted/tools/delivery/slack_events.py "${args[@]}"
+      - name: Exibir resultado do aviso sem atribuir falha à entrega
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          source = Path(os.environ['RUNNER_TEMP'], 'slack-notices', 'notification-results.json')
+          value = json.loads(source.read_text()) if source.exists() else {'state': 'unavailable'}
+          states = [item['state'] for item in value.get('results', [])]
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as output:
+              output.write('# Slack opcional\n\n')
+              output.write('Estados de envio: ' + ', '.join(states or [value.get('state', 'no_eligible_events')]) + '.\n\n')
+              output.write('Recibos e identidade estão no artefato. Slack não aprova nem publica. ')
+              output.write('Unknown permanece bloqueado até reconciliação positiva; não há retry cego.\n')
+          if 'blocked' in states or value.get('state') in ('blocked', 'unavailable'):
+              print('::warning::Aviso Slack sem confirmação; conferir recibos. A entrega segue independente.')
+          PY
+      - name: Preservar avisos e recibos sem credenciais
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2, Node 24
+        with:
+          name: release-lab-slack-${{ inputs.notification_label || 'manual' }}
+          path: ${{ runner.temp }}/slack-notices/
+          if-no-files-found: ignore
+          retention-days: 90
+          overwrite: false

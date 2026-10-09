@@ -4,6 +4,11 @@
 Ele já permite operar papéis simulados e estados persistentes. Este guia explica
 o caminho GitHub com reviews reais; a contagem local não autoriza esse caminho.
 
+As seções de PR de versão e bootstrap abaixo preservam o ensaio de 06/10.
+Para o fluxo atual com dois gates e comando final separado, seguir
+[FLUXO-DOIS-APROVADORES.md](FLUXO-DOIS-APROVADORES.md); para a comunicação,
+seguir [SLACK-AUTOMATICO.md](SLACK-AUTOMATICO.md).
+
 ## Laboratório: nenhuma distribuição real
 
 Esta POC adiciona um fluxo de aprovação ao projeto pessoal. Não contém comandos
@@ -147,7 +152,8 @@ A implementação está em PR; o agente **não faz merge na main**.
 
 `pull_request_target` e o botão Run workflow dependem dos workflows
 na branch padrão. Antes do merge da implementação, o gate pode ser executado pela
-CLI. Não há loop de polling, Slack nem token extra.
+CLI. Não há loop de polling nesse gate. Os avisos Slack opcionais do fluxo
+atual são descritos separadamente em [SLACK-AUTOMATICO.md](SLACK-AUTOMATICO.md).
 
 O workflow de candidata roda o gate inicial explicitamente: eventos de `pull_request_target` causados pelo `GITHUB_TOKEN` não iniciam outros
 workflows automaticamente. Pela documentação atual, eventos `pull_request` de
@@ -159,19 +165,26 @@ integrado. O evento `closed` deixou de executar publicação.
 ## Persistência e avisos Slack
 
 A escolha é GitHub nativo para aprovar e publicar; Slack recebe apenas avisos e
-links no canal privado `app-deploy-test-isr` (`C0C8DUJB52L`). Os avisos opcionais
-dependem de `SLACK_BOT_TOKEN` configurado para a automação; sem esse segredo os
-workflows seguem sem enviar mensagens. O publicador mobile não existe nesta POC.
+links no canal privado `app-deploy-test-isr` (`C0C8DUJB52L`). O bot
+`Flutter Deploy LAB` e o secret `SLACK_BOT_TOKEN` já têm
+[prova de conexão real](CONFIGURAR-SLACK-LAB.md). Os avisos automáticos da
+candidata estão preparados na branch, aguardando integração e ensaio próprio;
+seu [manual de operação](SLACK-AUTOMATICO.md) explica eventos e recuperação.
+Secret ausente ou falha Slack produz aviso opcional e não bloqueia os gates
+nem a publicação. O publicador mobile não existe nesta POC.
 
-O registro GitHub preserva manifestos e reviews, mas os workflows manuais não
-implementam a fila SQLite, o seed de produção e a reconciliação por destino
-entre runs. `concurrency` serializa jobs; não substitui a fila de negócio.
-Esse comportamento está funcional na CLI local. Antes de torná-lo remoto, definir
-persistência confiável e a recuperação do estado, sem transformar fixtures em reviews.
+Os parágrafos de bootstrap acima descrevem a etapa anterior da POC. O fluxo
+atual mantém estado/diário em `release-lab/state.json`, na branch
+`codex/release-lab-state`. Manifestos e decisões reais pertencem à mesma RC;
+`concurrency` ajuda a serializar jobs e não substitui a comparação do estado
+antes de cada escrita nem a recuperação de efeitos parciais.
 
-O outbox de avisos guarda IDs e estados dentro da execução. Runner efêmero não
-garante deduplicação entre runs; repetição de aviso não é autorização de publicação.
-Uma falha ao enviar aviso não deve fazer repetir o publicador.
+A outbox preparada para avisos é separada: `release-lab/slack-outbox.json`,
+na mesma branch de estado. Persiste `unknown` antes do POST e `sent` somente
+após confirmação ou prova positiva no histórico; um runner novo recupera
+esses checkpoints. Resultado incerto não causa reenvio automático. Isso não
+é uma promessa de entrega exatamente uma vez. Uma falha de comunicação não
+deve fazer repetir o publicador; 2/2 habilita somente o comando final separado.
 
 ## Limites de confiança e recuperação
 

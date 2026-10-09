@@ -37,7 +37,8 @@ EVENTS = ('candidate', 'approval', 'publication', 'lab')
 DEFAULT_OUTBOX = Path('build/delivery/slack-outbox.sqlite3')
 _LABELS = {'candidate': 'Candidata preparada', 'approval': 'Estado de aprovação',
            'publication': 'Estado de publicação', 'lab': 'Ensaio do laboratório'}
-_METHODS = {'auth.test', 'conversations.info', 'conversations.members', 'chat.postMessage'}
+_METHODS = {'auth.test', 'conversations.info', 'conversations.members',
+            'conversations.history', 'chat.postMessage'}
 
 
 class NoticeError(ValueError):

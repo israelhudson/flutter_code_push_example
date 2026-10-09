@@ -7,6 +7,10 @@ on:
         description: RC já preparada e registrada internamente
         type: string
         required: true
+    secrets:
+      SLACK_BOT_TOKEN:
+        description: Bot de avisos do canal privado LAB; opcional
+        required: false
   push:
     tags:
       - 'v*-rc.*'
@@ -34,7 +38,7 @@ jobs:
       second_login: ${{ steps.identity.outputs.second_login }}
     steps:
       - name: Checkout das ferramentas confiáveis da main
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, Node 24
         with:
           ref: refs/heads/main
           path: trusted
@@ -48,7 +52,7 @@ jobs:
         run: python3 trusted/tools/delivery/release_lab.py preflight --candidate-tag "$CANDIDATE_TAG" --output "$RUNNER_TEMP/release-lab"
       - name: Preservar identidade verificada
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2, Node 24
         with:
           name: release-lab-preflight
           path: ${{ runner.temp }}/release-lab/
@@ -64,14 +68,14 @@ jobs:
       contents: read
     steps:
       - name: Checkout das ferramentas confiáveis congeladas
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, Node 24
         with:
           ref: ${{ needs.preflight.outputs.tooling_sha }}
           path: trusted
           fetch-depth: 0
           persist-credentials: false
       - name: Checkout exato do aplicativo aprovado para avaliação
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, Node 24
         with:
           ref: ${{ needs.preflight.outputs.source_sha }}
           path: app
@@ -94,7 +98,7 @@ jobs:
           CANDIDATE_TAG: ${{ needs.preflight.outputs.candidate_tag }}
         run: python3 trusted/deploy/pages_preview.py build --repo app --source-sha "$SOURCE_SHA" --delivery-tag "$CANDIDATE_TAG" --site "$RUNNER_TEMP/new-pages-site" > "$RUNNER_TEMP/pages-build-metadata.json"
       - name: Entregar somente bytes compilados para outro runner
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2, Node 24
         with:
           name: release-lab-built-web
           path: ${{ runner.temp }}/new-pages-site/
@@ -113,14 +117,14 @@ jobs:
       pull-requests: read
     steps:
       - name: Checkout das ferramentas confiáveis congeladas
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, Node 24
         with:
           ref: ${{ needs.preflight.outputs.tooling_sha }}
           path: trusted
           fetch-depth: 0
           persist-credentials: false
       - name: Ler a identidade da mesma candidata
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2, Node 24
         with:
           name: release-lab-preflight
           path: ${{ runner.temp }}/context-input
@@ -130,7 +134,7 @@ jobs:
         run: python3 trusted/tools/delivery/changelog_summary.py --collect-candidate "$RUNNER_TEMP/context-input/candidate.json" --repo trusted --output "$RUNNER_TEMP/changelog-context"
       - name: Preservar contexto auxiliar sem atrasar o caminho obrigatório
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2, Node 24
         with:
           name: release-lab-context
           path: ${{ runner.temp }}/changelog-context/
@@ -162,14 +166,14 @@ jobs:
       preview_url: ${{ steps.report.outputs.preview_url }}
     steps:
       - name: Checkout exclusivo das ferramentas confiáveis congeladas
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, Node 24
         with:
           ref: ${{ needs.preflight.outputs.tooling_sha }}
           path: trusted
           fetch-depth: 0
           persist-credentials: false
       - name: Receber artefato estático da mesma execução
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4, verified 2026-10-08
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2, Node 24
         with:
           name: release-lab-built-web
           path: ${{ runner.temp }}/incoming-site
@@ -225,48 +229,12 @@ jobs:
         run: python3 trusted/tools/delivery/release_lab.py report --candidate-tag "$CANDIDATE_TAG" --preview-report "$RUNNER_TEMP/pages-smoke.json" --preview-metadata "$RUNNER_TEMP/release-lab/preview-metadata.json" --context-artifact release-lab-context --output "$RUNNER_TEMP/release-lab"
       - name: Preservar relatório e confirmação HTTP
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2, Node 24
         with:
           name: release-lab-evaluation
           path: |
             ${{ runner.temp }}/release-lab/
             ${{ runner.temp }}/pages-smoke.json
-          if-no-files-found: ignore
-          retention-days: 90
-          overwrite: false
-  slack_preview:
-    name: ILUSTRAR AVISO SLACK — simulação, sem envio
-    needs: [preflight, web]
-    if: ${{ !cancelled() && needs.web.result == 'success' }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 3
-    # Optional illustration. No approval/publishing job depends on this job.
-    continue-on-error: true
-    permissions:
-      contents: read
-      actions: read
-    steps:
-      - name: Checkout das ferramentas congeladas, sem credenciais de envio
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-        with:
-          ref: ${{ needs.preflight.outputs.tooling_sha }}
-          path: trusted
-          persist-credentials: false
-      - name: Ler o relatório já congelado desta execução
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
-        with:
-          name: release-lab-evaluation
-          path: ${{ runner.temp }}/slack-input
-      - name: Simular o aviso e mostrar os links no resumo do job
-        run: |
-          python3 trusted/tools/delivery/slack_preview.py --report "$RUNNER_TEMP/slack-input/release-lab/report.json" --policy trusted/delivery/release-lab-policy.json --output "$RUNNER_TEMP/slack-preview"
-          cat "$RUNNER_TEMP/slack-preview/slack-preview.md" >> "$GITHUB_STEP_SUMMARY"
-      - name: Preservar payload ilustrativo e identidade, sem envio
-        if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        with:
-          name: release-lab-slack-preview
-          path: ${{ runner.temp }}/slack-preview/
           if-no-files-found: ignore
           retention-days: 90
           overwrite: false
@@ -283,7 +251,7 @@ jobs:
       url: ${{ needs.web.outputs.report_url }}
     steps:
       - name: Checkout das ferramentas congeladas
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, Node 24
         with:
           ref: ${{ needs.preflight.outputs.tooling_sha }}
           path: trusted
@@ -296,7 +264,7 @@ jobs:
         run: python3 trusted/tools/delivery/release_lab.py approval --candidate-tag "$CANDIDATE_TAG" --report-digest "$REPORT_DIGEST" --role first --output "$RUNNER_TEMP/release-lab"
       - name: Preservar evidência do primeiro aval
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2, Node 24
         with:
           name: release-lab-approval-first
           path: ${{ runner.temp }}/release-lab/
@@ -316,7 +284,7 @@ jobs:
       url: ${{ needs.web.outputs.report_url }}
     steps:
       - name: Checkout das ferramentas congeladas
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, Node 24
         with:
           ref: ${{ needs.preflight.outputs.tooling_sha }}
           path: trusted
@@ -329,7 +297,7 @@ jobs:
         run: python3 trusted/tools/delivery/release_lab.py approval --candidate-tag "$CANDIDATE_TAG" --report-digest "$REPORT_DIGEST" --role second --output "$RUNNER_TEMP/release-lab"
       - name: Preservar evidência do segundo aval
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2, Node 24
         with:
           name: release-lab-approval-second
           path: ${{ runner.temp }}/release-lab/
@@ -373,7 +341,7 @@ jobs:
       actions: read
     steps:
       - name: Checkout das ferramentas congeladas
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, Node 24
         with:
           ref: ${{ needs.preflight.outputs.tooling_sha }}
           path: trusted
@@ -386,7 +354,7 @@ jobs:
         run: python3 trusted/tools/delivery/release_lab.py finish --candidate-tag "$CANDIDATE_TAG" --report-digest "$REPORT_DIGEST" --output "$RUNNER_TEMP/release-lab"
       - name: Preservar intenção, recibo e logs da promoção
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2, Node 24
         with:
           name: release-lab-publication
           path: ${{ runner.temp }}/release-lab/
@@ -407,7 +375,7 @@ jobs:
       actions: read
     steps:
       - name: Checkout das ferramentas confiáveis congeladas
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, Node 24
         with:
           ref: ${{ needs.preflight.outputs.tooling_sha }}
           path: trusted
@@ -418,10 +386,95 @@ jobs:
         run: python3 trusted/tools/delivery/release_lab.py reconcile --evaluation-run-id "$GITHUB_RUN_ID" --output "$RUNNER_TEMP/release-lab-status"
       - name: Preservar estado observado e motivo do encerramento
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2, Node 24
         with:
           name: release-lab-final-status
           path: ${{ runner.temp }}/release-lab-status/
           if-no-files-found: ignore
           retention-days: 90
           overwrite: false
+
+  slack_candidate:
+    name: Avisar candidata pronta — Slack opcional
+    needs: [preflight, web]
+    if: ${{ !cancelled() && needs.web.result == 'success' }}
+    permissions:
+      contents: write
+      actions: read
+    uses: ./.github/workflows/release-lab-slack.yml
+    with:
+      candidate_tag: ${{ needs.preflight.outputs.candidate_tag }}
+      tooling_sha: ${{ needs.preflight.outputs.tooling_sha }}
+      notification_label: slack_candidate
+    secrets:
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  slack_first:
+    name: Avisar aval de Israel — Slack opcional
+    needs: [preflight, web, approve_first]
+    if: ${{ !cancelled() && needs.approve_first.result == 'success' }}
+    permissions:
+      contents: write
+      actions: read
+    uses: ./.github/workflows/release-lab-slack.yml
+    with:
+      candidate_tag: ${{ needs.preflight.outputs.candidate_tag }}
+      tooling_sha: ${{ needs.preflight.outputs.tooling_sha }}
+      notification_label: slack_first
+    secrets:
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  slack_second:
+    name: Avisar aval de Fabrícia — Slack opcional
+    needs: [preflight, web, approve_second]
+    if: ${{ !cancelled() && needs.approve_second.result == 'success' }}
+    permissions:
+      contents: write
+      actions: read
+    uses: ./.github/workflows/release-lab-slack.yml
+    with:
+      candidate_tag: ${{ needs.preflight.outputs.candidate_tag }}
+      tooling_sha: ${{ needs.preflight.outputs.tooling_sha }}
+      notification_label: slack_second
+    secrets:
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  slack_ready:
+    name: Avisar 2/2 e comando separado — Slack opcional
+    needs: [preflight, web, approve_first, approve_second]
+    if: ${{ !cancelled() && needs.approve_first.result == 'success' && needs.approve_second.result == 'success' }}
+    permissions:
+      contents: write
+      actions: read
+    uses: ./.github/workflows/release-lab-slack.yml
+    with:
+      candidate_tag: ${{ needs.preflight.outputs.candidate_tag }}
+      tooling_sha: ${{ needs.preflight.outputs.tooling_sha }}
+      notification_label: slack_ready
+    secrets:
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  slack_publication:
+    name: Avisar resultado de promoção — Slack opcional
+    needs: [preflight, publish]
+    if: ${{ always() && !cancelled() && needs.preflight.result == 'success' && (needs.publish.result == 'success' || needs.publish.result == 'failure') }}
+    permissions:
+      contents: write
+      actions: read
+    uses: ./.github/workflows/release-lab-slack.yml
+    with:
+      candidate_tag: ${{ needs.preflight.outputs.candidate_tag }}
+      tooling_sha: ${{ needs.preflight.outputs.tooling_sha }}
+      notification_label: slack_publication
+    secrets:
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  slack_final_status:
+    name: Avisar encerramento — Slack opcional
+    needs: [preflight, finalize_status]
+    if: ${{ always() && !cancelled() && needs.preflight.result == 'success' && needs.finalize_status.result == 'success' }}
+    permissions:
+      contents: write
+      actions: read
+    uses: ./.github/workflows/release-lab-slack.yml
+    with:
+      candidate_tag: ${{ needs.preflight.outputs.candidate_tag }}
+      tooling_sha: ${{ needs.preflight.outputs.tooling_sha }}
+      notification_label: slack_final_status
+    secrets:
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
