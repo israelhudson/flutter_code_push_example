@@ -46,6 +46,22 @@ def now():
     return datetime.now(timezone.utc).isoformat()
 
 
+def queue_slack_event(record, event):
+    """Persist a small pointer with the transition; no Slack/network/rendering.
+
+    Only new cuts opt in. Old frozen records are never retroactively enrolled.
+    Workers render from the immutable report and verify official evidence.
+    """
+    if record.get('notification_schema') != 1 or not record.get('report_digest'):
+        return
+    item = {'event': event, 'candidate_tag': record['candidate_tag'],
+            'source_sha': record['source_sha'], 'snapshot_digest': record['report_digest'],
+            'run_id': str(record['evaluation_run_id'])}
+    queued = record.setdefault('slack_events', [])
+    if item not in queued:
+        queued.append(item)
+
+
 def api(path, data=None, method='GET', missing=False):
     if not (path == 'repos/' + REPOSITORY or path.startswith('repos/' + REPOSITORY + '/')):
         raise LabError('Endpoint fora do laboratório autorizado.')
@@ -442,7 +458,8 @@ def prepare(policy, version, title, folder):
               'publication_mode': publication_mode(policy), 'stable_tag': 'v' + version,
               'changelog_base_sha': baseline, 'created_at': now(),
               'preparer': {'login': os.environ['GITHUB_ACTOR'], 'id': int(os.environ['GITHUB_ACTOR_ID'])},
-              'status': 'prepared', 'evaluation_run_id': None}
+              'status': 'prepared', 'evaluation_run_id': None,
+              'notification_schema': 1, 'slack_events': []}
     preparation = pending or {**record, 'intent_id': digest({'candidate': tag, 'source_sha': source_sha,
                                                            'policy_digest': digest(policy),
                                                            'run_id': os.environ['GITHUB_RUN_ID']})}
@@ -473,6 +490,8 @@ def prepare(policy, version, title, folder):
             old = current['candidates'][current['active']]
             if old.get('status') != 'completed':
                 old['status'] = 'superseded'
+                queue_slack_event(old, 'candidate_superseded')
+                record['supersedes'] = old['candidate_tag']
         current['active'] = tag
         current['candidates'][tag] = record
         del current['preparation']
@@ -568,6 +587,7 @@ def report(policy, tag, smoke_path, metadata_path, folder, context_artifact=None
             value['preview_original_delivery_tag'] = metadata['delivery_tag']
         record.update(report=value, report_digest=digest(value), status='awaiting_approvals',
                       approval_progress={'recorded': 0, 'required': 2, 'final_command_required': True})
+        queue_slack_event(record, 'candidate_available')
         return value
     value = mutate(policy, tag, register, 'report_frozen')
     output(folder, 'report.json', value)
@@ -652,6 +672,9 @@ def approval(policy, tag, role, report_digest, folder):
         count = approval_count(policy, record, reviews, ids)
         record['status'] = 'awaiting_publish_authorization' if count == 2 else 'awaiting_approvals'
         record['approval_progress'] = {'recorded': count, 'required': 2, 'final_command_required': True}
+        queue_slack_event(record, 'approval_' + role)
+        if count == 2:
+            queue_slack_event(record, 'approvals_complete')
         return value
     value = mutate(policy, tag, record_decision, 'approval_' + role)
     output(folder, 'approval.json', value)
@@ -781,6 +804,10 @@ def reconcile_run(policy, evaluation_run_id, folder):
         record['status_observation'] = {**observation, 'recorded_approvals': current_count,
                                         'invalid_receipts': current_invalid_receipts, 'projected_status': projected}
         record['approval_progress'] = {'recorded': current_count, 'required': 2, 'final_command_required': True}
+        event = {'rejected': 'candidate_rejected', 'cancelled': 'candidate_cancelled',
+                 'evaluation_failed': 'candidate_failed'}.get(projected)
+        if event:
+            queue_slack_event(record, event)
         return {'schema': 1, 'candidate_tag': tag, 'run_id': run_id,
                 'status': projected, 'updated': True, 'observation': record['status_observation']}
 
@@ -906,6 +933,8 @@ def publication_checkpoint(policy, tag, intent_id, status, **details):
         if intent.get('status') != 'completed':
             intent.update(status=status, updated_at=now(), **details)
             record['status'] = 'publishing' if status != 'failed' else 'publication_failed'
+            if status == 'failed':
+                queue_slack_event(record, 'publication_partial')
         return dict(intent)
     return mutate(policy, tag, checkpoint, 'publication_' + status)
 
@@ -977,6 +1006,7 @@ def promote_effects(policy, tag, intent_id):
                  'github_release': release_value, 'release_url': release_value['url'], **frozen_material(record)}
         active.update(status='completed', receipt=value, updated_at=now())
         record.update(receipt=value, status='completed')
+        queue_slack_event(record, 'publication_completed')
         state['last_completed_source_sha'] = record['source_sha']
         state['last_stable_version'] = record['version']
         state['last_stable_tag'] = intent['stable_tag']
@@ -1130,6 +1160,7 @@ def finish(policy, tag, report_digest, folder):
                  'human_decision_real': True, 'result_simulated': True,
                  'distribution_performed': False, 'patch_generated': False, **frozen_material(record)}
         record.update(receipt=value, status='completed')
+        queue_slack_event(record, 'publication_completed')
         state['last_completed_source_sha'] = record['source_sha']
         return value
     value = mutate(policy, tag, final_decision, 'human_command_simulated_result')

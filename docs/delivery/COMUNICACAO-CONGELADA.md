@@ -1,6 +1,6 @@
 # Comunicação vinculada à mesma candidata
 
-Implementação de 09/10/2026 UTC, ainda na branch de ajustes do laboratório. Não constitui prova de execução remota, consumo de IA, envio ao Slack ou distribuição do aplicativo.
+Implementação integrada pela [PR #18](https://github.com/israelhudson/flutter_code_push_example/pull/18), em 09/10/2026 UTC (08/10 em Fortaleza). Provedor de IA e Plane permanecem inativos. A [conexão Slack real](CONFIGURAR-SLACK-LAB.md) tem prova isolada; os [avisos automáticos da candidata](SLACK-AUTOMATICO.md) estão preparados na branch, aguardando integração e ensaio próprio. Nenhuma dessas provas comprova distribuição do aplicativo.
 
 ## O que o código faz
 
@@ -8,7 +8,7 @@ Implementação de 09/10/2026 UTC, ainda na branch de ajustes do laboratório. N
 
 1. **Coletar:** copiar o histórico do intervalo `base..source_sha` e descrições das PRs mescladas desse intervalo. A consulta só lê dados; não executa o código da candidata. Coleta até 12 commits com orçamento total de 20 segundos e até 3 segundos por consulta de PR. Erro/timeout preserva os commits e registra o motivo. O Plane não está conectado a esse coletor.
 2. **Selecionar sem espera:** o caminho da entrega consulta uma única vez um artefato opcional já disponível na mesma execução, com orçamento compartilhado de até 3 segundos e sem polling. Artefato ausente, lento, inválido ou de outra candidata leva ao histórico de commits. Os gates não dependem do job coletor.
-3. **Congelar:** guardar o texto selecionado, o texto das fontes, a base, a RC, o SHA, os instantes e os hashes no relatório antes dos avais. Alterar uma PR depois não altera esse material. O Slack ilustrativo lê a seleção congelada; não recompõe o conteúdo com fontes mais recentes.
+3. **Congelar:** guardar o texto selecionado, o texto das fontes, a base, a RC, o SHA, os instantes e os hashes no relatório antes dos avais. Alterar uma PR depois não altera esse material. A ilustração e o remetente Slack leem a seleção congelada; não recompõem o conteúdo com fontes mais recentes.
 
 Quando existe uma PR com as seções **O que muda para o usuário**, **Como validar** e **Limitações**, o texto é copiado para a comunicação e identificado como **descrição das PRs — sem IA**. Não há tradução automática dos títulos técnicos em funcionalidades. Uma descrição vazia, apenas técnica ou sem essas seções usa commits. O [template de PR](../../.github/pull_request_template.md) facilita a escrita desse conteúdo antes do merge.
 
@@ -51,4 +51,4 @@ Essa operação consulta PRs no GitHub pela identidade do commit. A [API oficial
 
 ## Próxima validação
 
-Os testes locais cobrem PR editada depois da coleta, seções ausentes, outra RC/SHA/base, hash alterado, IA tardia/sem crédito/falha, orçamento da coleta, artefato ausente/timeout/expirado, ZIP inválido e histórico longo. Resultados de IA nos testes são fixtures, não respostas de um provedor. A prova no GitHub ainda deve confirmar coleta paralela, ausência de espera por ela, fallback e preservação do material após os dois avais. Os avisos permanecem ilustrativos até configurar e integrar o [Slack real](CONFIGURAR-SLACK-LAB.md).
+Os testes locais cobrem PR editada depois da coleta, seções ausentes, outra RC/SHA/base, hash alterado, IA tardia/sem crédito/falha, orçamento da coleta, artefato ausente/timeout/expirado, ZIP inválido e histórico longo. Resultados de IA nos testes são fixtures, não respostas de um provedor. A integração passou pelo CI da PR #18; o próximo ensaio de candidata ainda deve confirmar coleta paralela, ausência de espera por ela, fallback e preservação do material após os dois avais. O bot e secret existentes já enviaram no [teste isolado](CONFIGURAR-SLACK-LAB.md); seguir o [aceite do fluxo automático](SLACK-AUTOMATICO.md) para comprovar os avisos da candidata.

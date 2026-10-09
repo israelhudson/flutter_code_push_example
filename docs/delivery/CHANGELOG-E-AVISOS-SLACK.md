@@ -1,6 +1,17 @@
 # Changelog semitécnico e avisos da candidata no Slack
 
-Proposta registrada em 08/10/2026, Fortaleza, após a entrega do tema escuro. **Estado: planejamento; o resumo por IA e os avisos descritos aqui não foram ativados.**
+Registro atualizado em 08/10/2026, Fortaleza, após a entrega do tema escuro.
+**Comunicação congelada e fallback já estão integrados; o bot Slack tem prova
+de conexão real. Os avisos automáticos da candidata estão preparados na branch,
+aguardando integração e ensaio próprio. O provedor de IA permanece inativo.**
+
+A [PR #18](https://github.com/israelhudson/flutter_code_push_example/pull/18)
+integrou os ajustes de estados, versões e comunicação. O
+[teste isolado do Slack](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37869235129)
+comprova credencial, destino e envio real; o
+[manual de operação](SLACK-AUTOMATICO.md) distingue essa prova da automação da
+candidata. As seções sobre Copilot e Plane abaixo continuam como proposta de
+adaptação, sem consumo de IA ou ativação de acesso ao Plane.
 
 ## Tags: preservar a candidata após a promoção
 
@@ -66,7 +77,7 @@ Contrato proposto:
 - Usar timeout e entradas limitadas; ausência de crédito, política desabilitada, erro, contexto insuficiente ou resultado indisponível na abertura da revisão usa **histórico de commits**. Registrar o motivo do fallback.
 - Ao abrir a revisão, escolher o resumo disponível e validado ou os commits. Congelar a versão escolhida com seu hash no pacote que os dois revisores leem. A IA não pode alterar SHA, testes, classificação mobile, destinos ou decisões de autorização.
 - Resultado que chega depois fica no log como `late_result`; não substitui silenciosamente o texto em revisão ou aprovado. Uma mudança material no conteúdo aprovado segue a regra de nova candidata e novos avais.
-- Disparar o aviso do Slack de modo independente. Falha ou demora do Slack não segura testes, abertura de gates ou promoção; manter outbox/ID da mensagem para retry e atualização sem duplicações. Um envio não confirmado permanece pendente no registro de comunicação.
+- Disparar o aviso do Slack de modo independente. Falha ou demora do Slack não segura testes, abertura de gates ou promoção; registrar aviso opcional, preservar a outbox e o recibo. Um envio confirmado é reaproveitado. Resultado incerto fica `unknown`: consultar o histórico e só marcá-lo `sent` com prova positiva, sem reenviar automaticamente. Não prometer entrega exatamente uma vez.
 
 O disparo do workflow auxiliar deve usar um evento explícito após o registro da candidata, sem depender apenas do push de uma tag criada por `GITHUB_TOKEN`. Esse token não dispara a maioria dos outros eventos de workflow; `workflow_dispatch` e `repository_dispatch` são exceções documentadas. Usar apenas as permissões necessárias para o disparo auxiliar. [Documentação oficial](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow).
 
@@ -100,7 +111,13 @@ Cada mensagem informa candidata/versão, estado atual, conteúdo semitécnico ou
 | Publicada | Resultado confirmado e links da versão/recibo | Consultar versão e evidências |
 | Rejeitada ou substituída | Candidata encerrada; seu link não autoriza outra RC | Seguir a nova candidata, se houver |
 
-Os estados vêm do journal e das decisões reais, nunca da IA. No LAB, manter o canal privado `app-deploy-test-isr`; o canal e o app de avisos da Amulets devem ser acordados com o time. A credencial do Slack e o acesso do resumidor são dependências distintas e precisam de validação própria.
+Os estados vêm do journal e das decisões reais, nunca da IA. A tabela define o
+contrato de comunicação; a cobertura efetivamente automatizada e seus ensaios
+estão no [manual de operação](SLACK-AUTOMATICO.md). No LAB, o bot
+`Flutter Deploy LAB` já foi validado no canal privado `app-deploy-test-isr`;
+usar o [app e secret existentes](CONFIGURAR-SLACK-LAB.md). O canal e o app da
+Amulets devem ser acordados com o time. A credencial do Slack e o acesso do
+resumidor são dependências distintas e precisam de validação própria.
 
 ## Cenários para a próxima rodada
 
@@ -115,9 +132,13 @@ Os estados vêm do journal e das decisões reais, nunca da IA. No LAB, manter o 
 | Resumo tardio depois da primeira aprovação | Não substituir o material apresentado nem modificar seu hash |
 | Resultado de RC1 chega após criação de RC2 | Não anexar à RC2; verificar candidata, SHA e hashes antes de selecionar |
 | Uma aprovação, depois duas | Slack mostra 1/2 bloqueado; 2/2 habilita somente o comando final |
-| Slack falha ou demora | Gates/publicação seguem; aviso pendente pode ser retomado sem duplicar |
+| Slack falha ou demora | Gates/publicação seguem; outbox registra o estado e `unknown` exige prova positiva antes de marcar enviado |
 | Backport já presente na versão anterior | Resumo não anuncia a mesma correção como mudança nova |
 
 Guardar RC/SHA/base, hash das entradas e do material selecionado, fontes, prompt/modelo/provedor, início/fim, duração, estado do resumo, motivo do fallback, IDs dos avisos e confirmação de envio. Separar falha opcional de comunicação de falha real da publicação.
 
-Antes de implementar: definir com Samuel acesso/créditos do Copilot, canal/app Slack, fontes permitidas do Plane, orçamento/timeout e quem pode preparar a RC. Preservar a regra de dois avais mais comando final separado.
+Antes de adaptar à Amulets: definir com Samuel acesso/créditos do Copilot,
+canal/app Slack, fontes permitidas do Plane, orçamento/timeout e quem pode
+preparar a RC. O LAB usa contexto explícito de PR quando disponível e commits
+como fallback; não tem provedor de IA ativo. Preservar a regra de dois avais
+mais comando final separado.
