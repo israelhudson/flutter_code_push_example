@@ -10,7 +10,7 @@ void main() {
     await tester.pumpWidget(const App());
 
     expect(find.text('Flutter Code Push Example'), findsOneWidget);
-    expect(find.text('Laboratório de atualizações'), findsOneWidget);
+    expect(find.text('Laboratório de entregas'), findsOneWidget);
   });
 
   testWidgets('inicia claro e ignora mudanças do tema do sistema', (
