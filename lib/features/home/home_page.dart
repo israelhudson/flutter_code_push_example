@@ -84,6 +84,9 @@ class _HomePageState extends State<HomePage> {
           Tooltip(
             message: isDark ? 'Ativar tema claro' : 'Ativar tema escuro',
             child: TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Theme.of(context).appBarTheme.foregroundColor,
+              ),
               onPressed: widget.onToggleTheme,
               child: Text(isDark ? 'Tema claro' : 'Tema escuro'),
             ),

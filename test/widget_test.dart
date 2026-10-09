@@ -111,6 +111,27 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('texto do botão de tema tem contraste nos dois temas', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const App());
+    await tester.pumpAndSettle();
+
+    for (final label in ['Tema escuro', 'Tema claro']) {
+      final context = tester.element(find.text(label));
+      final foreground = DefaultTextStyle.of(context).style.color!;
+      final background = Theme.of(context).appBarTheme.backgroundColor!;
+      final first = foreground.computeLuminance();
+      final second = background.computeLuminance();
+      final lighter = first > second ? first : second;
+      final darker = first < second ? first : second;
+      expect((lighter + 0.05) / (darker + 0.05), greaterThanOrEqualTo(4.5));
+
+      await tester.tap(find.text(label));
+      await tester.pumpAndSettle();
+    }
+  });
+
   testWidgets(
     'entrega visível pode ser lida com texto ampliado em tela baixa',
     (WidgetTester tester) async {
