@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "checked_at": "2026-10-09T02:36:46.140593+00:00",
+  "source_sha256": "34ab5cc70c5c398f9da5a5d6e67cd0c5a88a0b63e48ec10a031331d41e87ebc8",
+  "previous_evidence_commit": "d2a945850095d32a9cf02939e28ac5eb9055dba0",
+  "correction_reason": "Root corrected the record timestamp after previous evidence CAS completed. Previous immutable package preserved.",
+  "removed_manual_field": "created_at",
+  "actual_recorded_at": "2026-10-09T02:34:55.802344+00:00",
+  "added_local_source_verification_matches_existing_archive_proof": true,
+  "all_publications_and_privacy_records_identical": true,
+  "authenticated_hosted_content_inspection": false,
+  "archives_included": false
+}

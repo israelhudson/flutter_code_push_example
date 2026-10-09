@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "created_at": "2026-10-09T02:36:46.141853+00:00",
+  "remote_root": "release-lab/evidencias/2026-10-09-slack-rondas/followup-sites-private/record-correction",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1964,
+      "sha256": "1d54bcd80bb0519962fea5c6277ee04f1ef9bf5b7d51de45b51bc92b46984690",
+      "git_blob_sha": "017868a150878c4edb2446e1f573629d19550295"
+    },
+    {
+      "path": "credential-scan.json",
+      "bytes": 187,
+      "sha256": "f88f38d93376cc43c1c5a203aafacee37783e884f40c055c2f9d4c4ebe270885",
+      "git_blob_sha": "7e39a5bc57f65912499dada18fa2f5bc241acad4"
+    },
+    {
+      "path": "publication-final.json",
+      "bytes": 5571,
+      "sha256": "34ab5cc70c5c398f9da5a5d6e67cd0c5a88a0b63e48ec10a031331d41e87ebc8",
+      "git_blob_sha": "5f936ea3a61f8c2c1915592a4006a58cbad24b63"
+    },
+    {
+      "path": "verification.json",
+      "bytes": 684,
+      "sha256": "176f18c81a1e5206552192dd44352e32754fdfa50277aa10c649248d0807c1d1",
+      "git_blob_sha": "d218c03dcd08dde841cd9c2c25ec9b344eb2cdcc"
+    }
+  ],
+  "files_count": 4,
+  "bytes_total": 8406,
+  "actual_credential_signatures_detected": 0,
+  "archives_included": false,
+  "excluded": [
+    "manifest.json(self)",
+    "SHA256SUMS(self)"
+  ]
+}

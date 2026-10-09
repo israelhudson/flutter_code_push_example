@@ -1,0 +1,9 @@
+# Correção do horário do registro dos Sites privados
+
+Este registro acrescenta a fonte final corrigida dos Sites V5 e V5-2: [publication-final.json](publication-final.json). O horário manual `created_at` da cópia anterior foi removido pelo agente principal; o campo correto é **recorded_at=2026-10-09T02:34:55.802344+00:00**. Também foi incorporada `local_source_verification`, idêntica à prova local de comparação já preservada. Use esta fonte para o horário do registro.
+
+O [complemento anterior](https://github.com/israelhudson/flutter_code_push_example/blob/d2a945850095d32a9cf02939e28ac5eb9055dba0/release-lab/evidencias/2026-10-09-slack-rondas/followup-sites-private/README.md) havia concluído o CAS e o readback antes de receber essa correção. Seus arquivos permanecem intactos. Todos os dados das duas publicações — source, deployment, status succeeded, versão, acesso owner-only e arquivo — são idênticos: [verification.json](verification.json). Os horários de atualização dos deployments não foram alterados.
+
+V5: source `cedeb0bf586d8e225970f6b261aeb8da74e174f7`, deployment `appgdep_6ac851c91b048191beb339dbc1603ed9`, versão 3. V5-2: source `622332030f7a20c6ae2d58b0bfa2b07bccad17dc`, deployment `appgdep_6ac851fc21688191925bc0c7d6ecc74c`, versão 1. Ambos permaneceram privados e com succeeded confirmado pelo serviço. O browser mostrou login ChatGPT; o conteúdo foi validado localmente, **sem leitura autenticada hospedada**.
+
+As provas de QA, captura 19 e comparação dos 21 arquivos reais por Site estão no complemento anterior. A comparação corresponde a 20 arquivos de conteúdo byte a byte e manifesto relocado comparado como JSON. Hash do tar local não foi equiparado ao arquivo normalizado pelo serviço. Nenhum tar ou credencial foi incluído. Este append preserva todos os pacotes anteriores, state e outbox. [manifest.json](manifest.json) e [SHA256SUMS](SHA256SUMS) registram os bytes desta correção.
