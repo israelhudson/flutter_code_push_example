@@ -11,7 +11,7 @@ void main() {
 
     expect(find.text('Flutter Code Push Example'), findsOneWidget);
     expect(find.text('Laboratório de entregas'), findsOneWidget);
-    expect(find.text('AZUL · 01'), findsOneWidget);
+    expect(find.text('AZUL · 02'), findsOneWidget);
   });
 
   testWidgets('inicia claro e ignora mudanças do tema do sistema', (
@@ -126,7 +126,7 @@ void main() {
       expect(tester.takeException(), isNull);
       await tester.tap(find.byTooltip('Ativar tema escuro'));
       await tester.pumpAndSettle();
-      expect(find.text('AZUL · 01'), findsOneWidget);
+      expect(find.text('AZUL · 02'), findsOneWidget);
       expect(_brightness(tester), Brightness.dark);
     },
   );
