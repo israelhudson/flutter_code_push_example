@@ -1,7 +1,8 @@
 # Avisos automáticos da candidata no Slack
 
 **Estado: fluxo real comprovado na jornada B, entrega 1.7.0.
-A jornada A, entrega 1.8.0, teve RC1 rejeitada e está em correção; RC2 pendente.**
+A jornada A, entrega 1.8.0, concluiu rejeição, correção, RC2, novos avais,
+publicação e retorno à main. Treze avisos reais confirmados.**
 A implementação foi integrada pela [PR #19](https://github.com/israelhudson/flutter_code_push_example/pull/19). A
 [conexão real já foi validada](CONFIGURAR-SLACK-LAB.md); essa prova isolada
 não confirma os avisos automáticos descritos aqui. Copilot e Plane continuam
@@ -41,7 +42,7 @@ esperado; os links permitem conferir conteúdo, autor e timestamp:
 | 2/2, aguardando PUBLICAR | `1791510321.511589` | [Comando final separado](https://app.slack.com/archives/C0C8DUJB52L/p1791510321511589) |
 | Publicação concluída | `1791510418.960699` | [Publicação](https://app.slack.com/archives/C0C8DUJB52L/p1791510418960699) |
 
-**A — 1.8.0 RC1 rejeitada, RC2 pendente.** A
+**A — 1.8.0 concluída, com incidente preservado.** A
 [execução 37871436136](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37871436136)
 preparou RC1 em 0/2, reutilizando o snapshot do mesmo código, com novo relatório
 da candidata. Base e fonte eram iguais; o fallback informou “Sem commits
@@ -59,25 +60,74 @@ estável 1.8.0 na captura. O
 foi confirmado em `1791510851.085829`. O clique da Fabrícia sozinho **não**
 encerrou as esperas nesse run.
 
-Correção por PR, RC2 com novos avais, promoção 1.8.0 e retorno da correção à main
-continuam pendentes. São três RCs e duas estáveis no plano total; este registro
-não acrescenta uma RC negativa extra.
+A [PR #21](https://github.com/israelhudson/flutter_code_push_example/pull/21)
+integrou o guard e os pins Pages à main `fbcf01271e9a03834f7f54bfd92b0ae21745cf0f`.
+A [PR #20](https://github.com/israelhudson/flutter_code_push_example/pull/20)
+integrou a correção à release em `c8d8f337ee390755bcff795d558f8c6f6f19c35b`.
+Seus CIs [37872583739](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37872583739)
+e [37872899430](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37872899430)
+aprovaram 404 testes da esteira, analyze e testes Flutter. Os quatro roots
+confiáveis, com 36 blobs, foram conferidos iguais entre release e main corrigida.
 
-## Correções em preparação após a rejeição
+A RC2 tem código, relatório e recibos próprios, sem herdar avais. O
+[preview corrigido](https://israelhudson.github.io/flutter_code_push_example/snapshots/c8d8f337ee390755bcff795d558f8c6f6f19c35b/)
+foi confirmado pelo workflow e na UI: “Laboratório de entregas”, escuro manual e
+reload claro. Snapshots registraram 0/2 → 1/2 → 2/2 aguardando PUBLICAR, ainda
+sem campos `publication`/`receipt` registrados na candidata. Depois, Fabrícia deu o comando final
+separado, operada por Codex via CUA com autorização explícita de Israel.
 
-O encerramento automático das esperas está em preparação: reconhecer somente
+A [execução RC2 37873174277](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37873174277)
+terminou `completed/success`. GET confirmou a
+[Release v1.8.0](https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.8.0)
+às 23:17:15 de 08/10/2026, Fortaleza, com `draft=false` e `prerelease=false`,
+no mesmo código `c8d8f337...` da RC2. O recibo confirma dois avais, publicadora
+`fahnassau30`, `result_simulated=false`, `distribution_performed=false` e
+`review_independence_verified=false`: efeito real no GitHub, sem distribuição
+mobile ou comprovação de dois revisores humanos independentes.
+O [observer 37873895168](https://github.com/israelhudson/flutter_code_push_example/actions/runs/37873895168)
+também terminou com sucesso.
+
+| Aviso posterior à rejeição | `ts` confirmado | Prova no Slack |
+| --- | --- | --- |
+| RC1 substituída | `1791511959.743739` | [História da RC1 preservada](https://app.slack.com/archives/C0C8DUJB52L/p1791511959743739) |
+| RC2 pronta, 0/2 | `1791511965.619999` | [Nova candidata](https://app.slack.com/archives/C0C8DUJB52L/p1791511965619999) |
+| Novo aval Israel | `1791512050.620989` | [Aval RC2](https://app.slack.com/archives/C0C8DUJB52L/p1791512050620989) |
+| Novo aval Fabrícia | `1791512135.408919` | [Aval RC2](https://app.slack.com/archives/C0C8DUJB52L/p1791512135408919) |
+| 2/2, aguardando PUBLICAR | `1791512139.599129` | [Comando final separado](https://app.slack.com/archives/C0C8DUJB52L/p1791512139599129) |
+| Publicação 1.8.0 concluída | `1791512253.460609` | [Publicação](https://app.slack.com/archives/C0C8DUJB52L/p1791512253460609) |
+
+A [PR #22](https://github.com/israelhudson/flutter_code_push_example/pull/22)
+retornou a correção à main em 08/10, às 23:19:08 de Fortaleza, commit
+`cf6d6fa90e228ec10cc6d0d7a204da756d784514`. Seu tree completo foi conferido
+igual ao da release `c8d8f337...`; a volta à main não mudou as tags aprovadas.
+
+Resultado: **três novas RCs, duas Releases estáveis e 13/13 avisos reais**,
+corroborados pela outbox e por leitura independente: cinco na 1.7.0, três da
+RC1 rejeitada/substituída e cinco da RC2. O teste isolado de conexão permanece
+uma prova separada. Não houve RC negativa extra após o novo guard.
+
+Na RC2, PR #20 e #21 tinham contexto literal disponível, mas a soma
+744 + 1 + 741 = 1486 excedeu `SUMMARY_LIMIT=1400`. O relatório escolheu
+`commits_fallback`; não houve IA, e o material congelado permaneceu intacto.
+Próximo refinamento: descrições mais curtas ou limite agregado ajustado antes
+dos avais; eventual IA exige decisão própria. Não reescrever a comunicação
+já revisada para alterar o resultado deste ensaio.
+
+## Correções integradas e limite do aceite
+
+O encerramento automático das esperas foi integrado pela PR #21: reconhecer somente
 rejeição nas reviews oficiais, cancelar as esperas sem registrar avais e
 conciliar o resultado. Treze testes locais do encerramento, 70 testes Slack e actionlint passaram.
-O CI da correção ainda está pendente; o novo encerramento **ainda não tem prova
-negativa real**. A recuperação operacional
+O CI da correção passou com 404 testes da esteira; o novo encerramento
+**ainda não tem prova negativa real**. A recuperação operacional
 observada acima permanece registrada.
 
-Há também refinamento da disputa entre workers na outbox: até três leituras,
+A PR #21 também integrou o refinamento da disputa entre workers na outbox:
+até três leituras,
 dentro de três segundos, para reaproveitar um checkpoint `sent` que outro writer
 acabou de confirmar. Essa espera consulta somente a outbox do GitHub, sem novo
 POST Slack. Se continuar `unknown`, a reconciliação ainda exige prova positiva
-no histórico; ausência/timeout não autoriza reenviar. Esse refinamento está em
-preparação e não muda os gates, relatórios ou autorização da entrega.
+no histórico; ausência/timeout não autoriza reenviar. O refinamento foi integrado e não muda os gates, relatórios ou autorização da entrega.
 
 Uma descrição histórica de PR pode falar de uma limitação já corrigida. Não
 editar a comunicação congelada para escondê-la: separar o texto histórico do
@@ -210,29 +260,28 @@ ou executar `chat.postMessage` como contorno.
 
 As jornadas autorizadas usam decisões nas contas do LAB e avisos reais no Slack:
 
-| Jornada | Percurso a comprovar |
+| Jornada | Percurso comprovado |
 | --- | --- |
-| A — 1.8.0, rejeição e correção | RC1 rejeitada e conciliada após cancelamento operacional → correção por PR para release, RC2 com novos avais, comando final, estável e retorno à main ainda pendentes |
+| A — 1.8.0, rejeição e correção | Concluída: rejeição e cancelamento operacional → correções PR #21/#20 → RC2 → dois novos avais → comando final → estável → retorno à main PR #22 |
 | B — 1.7.0, aprovação direta | Concluída: RC1 → dois avais → comando final separado → estável; cinco mensagens reais confirmadas |
 
-O plano total preserva **três novas tags RC e duas novas versões estáveis**.
-Duas RC1 e a estável 1.7.0 já têm prova. RC2/estável 1.8.0 e backmerge ficam
-pendentes até a coleta de seus próprios runs, decisões, mensagens e recibos.
+O plano cumpriu **três novas tags RC e duas novas versões estáveis**.
+As duas jornadas, seus 13 avisos e o retorno da correção à main têm provas
+próprias. As verificações adicionais abaixo continuam com seu limite específico.
 
-1. Preparar uma nova RC e guardar run, relatório congelado,
-   eventos, outbox, recibos e a mensagem visível no canal privado correto.
-2. Conferir 0/2, 1/2, 2/2 e comando final separado; confirmar que Slack lê
-   as transições reais e não muda autorização nem publicação.
-3. Reexecutar a mesma RC/evento em outro runner: recibo `sent` deve ser
-   reaproveitado, com `duplicate=true`, sem mensagem adicional.
-4. Ensaiar checkpoint falho antes do POST e queda/resposta perdida após o POST.
-   Provar ausência de POST no primeiro caso e reconciliação positiva no segundo.
-5. Ensaiar secret ausente, destino/membros alterados, histórico sem permissão
-   e Slack indisponível: aviso opcional, sem impedir os gates/publicação.
-6. Criar RC2 e conferir que suas fontes, links, chaves e decisões não reutilizam
-   os da RC1; registros antigos permanecem sem backfill.
+As próximas verificações de recuperação não foram declaradas como prova remota
+nesta rodada. Os testes offline não substituem estes aceites:
 
-A prova do caminho feliz 1.7.0 confirma o fluxo Slack nesse escopo.
+1. Reexecutar o mesmo evento em outro runner: reaproveitar `sent`, com
+   `duplicate=true`, sem mensagem adicional.
+2. Ensaiar checkpoint falho antes do POST e queda/resposta perdida após o POST;
+   confirmar ausência de POST no primeiro caso e prova positiva no segundo.
+3. Ensaiar secret ausente, identidade/destino divergentes, histórico sem permissão
+   e Slack indisponível: aviso opcional, sem impedir gates/publicação.
+4. Provocar uma rejeição oficial com o novo guard, em outra rodada autorizada,
+   e comprovar o fecho automático. O ensaio atual teve cancelamento operacional.
+
+As duas jornadas confirmam o fluxo Slack nos estados observados neste LAB.
 Os cinco subcasos remotos adversariais da entrega e a validação mobile
 continuam pendentes; o ensaio Slack não os substitui.
 
@@ -283,9 +332,9 @@ As versões abaixo foram conferidas pela API oficial. As Actions JavaScript usam
 | upload-pages-artifact | [v5.0.0](https://github.com/actions/upload-pages-artifact/releases/tag/v5.0.0) | [`fc324d3547104276b827a68afc52ff2a11cc49c9`](https://github.com/actions/upload-pages-artifact/blob/fc324d3547104276b827a68afc52ff2a11cc49c9/action.yml) |
 | deploy-pages | [v5.0.1](https://github.com/actions/deploy-pages/releases/tag/v5.0.1) | [`368f82528645a54fb793d4d04e342629a3f51346`](https://github.com/actions/deploy-pages/blob/368f82528645a54fb793d4d04e342629a3f51346/action.yml) |
 
-Checkout/upload/download foram integrados no PR #19. Os pins Pages estão no
-refinamento em preparação; seu novo preview precisa de validação no fluxo real
-da RC2. Não declarar o aviso Node 20 resolvido antes dessa prova.
+Checkout/upload/download foram integrados no PR #19. Os pins Pages foram
+integrados na PR #21 e usados no preview real da RC2, confirmado pelo workflow
+e na UI. O aviso histórico do teste isolado permanece nos seus logs originais.
 
 Manter os pins completos e validar os inputs utilizados na migração. Checkout
 v7 restringe código de forks em `pull_request_target`/`workflow_run`; não usar

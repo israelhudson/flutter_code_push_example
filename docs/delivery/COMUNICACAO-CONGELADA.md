@@ -1,13 +1,13 @@
 # Comunicação vinculada à mesma candidata
 
-Implementação integrada pela [PR #18](https://github.com/israelhudson/flutter_code_push_example/pull/18), em 09/10/2026 UTC (08/10 em Fortaleza). Provedor de IA e Plane permanecem inativos. A [conexão Slack real](CONFIGURAR-SLACK-LAB.md) tem prova isolada; os [avisos automáticos da candidata](SLACK-AUTOMATICO.md) foram integrados pela PR #19 e comprovados na 1.7.0, com cinco mensagens reais. A RC1 da 1.8.0 foi rejeitada e conciliada após cancelamento operacional; RC2 pendente. Nenhuma dessas provas comprova distribuição do aplicativo.
+Implementação integrada pela [PR #18](https://github.com/israelhudson/flutter_code_push_example/pull/18), em 09/10/2026 UTC (08/10 em Fortaleza). Provedor de IA e Plane permanecem inativos. A [conexão Slack real](CONFIGURAR-SLACK-LAB.md) tem prova isolada; os [avisos automáticos da candidata](SLACK-AUTOMATICO.md) foram integrados pela PR #19 e comprovados na 1.7.0, com cinco mensagens reais. A 1.8.0 concluiu rejeição/cancelamento operacional, correção, RC2 com dois novos avais, promoção e retorno à main. Ao todo, 13 avisos reais nas duas jornadas. Nenhuma dessas provas comprova distribuição do aplicativo.
 
 A descrição histórica de um PR não confirma o estado atual. A 1.8.0 RC1
 confirmou o fallback sem commits adicionais quando base e fonte eram iguais;
 não reutilizou contexto de PR antigo. Preservar o relatório aprovado e seus
 recibos, e mostrar a observação atual com fonte própria. O novo encerramento
-automático após rejeição e a leitura curta de `sent` concorrente estão em
-preparação, sem novo negativo remoto.
+automático após rejeição e a leitura curta de `sent` concorrente foram
+integrados no PR #21, com CI aprovado em 404 testes; sem novo negativo remoto.
 
 ## O que o código faz
 
@@ -17,9 +17,17 @@ preparação, sem novo negativo remoto.
 2. **Selecionar sem espera:** o caminho da entrega consulta uma única vez um artefato opcional já disponível na mesma execução, com orçamento compartilhado de até 3 segundos e sem polling. Artefato ausente, lento, inválido ou de outra candidata leva ao histórico de commits. Os gates não dependem do job coletor.
 3. **Congelar:** guardar o texto selecionado, o texto das fontes, a base, a RC, o SHA, os instantes e os hashes no relatório antes dos avais. Alterar uma PR depois não altera esse material. A ilustração e o remetente Slack leem a seleção congelada; não recompõem o conteúdo com fontes mais recentes.
 
-Quando existe uma PR com as seções **O que muda para o usuário**, **Como validar** e **Limitações**, o texto é copiado para a comunicação e identificado como **descrição das PRs — sem IA**. Não há tradução automática dos títulos técnicos em funcionalidades. Uma descrição vazia, apenas técnica ou sem essas seções usa commits. O [template de PR](../../.github/pull_request_template.md) facilita a escrita desse conteúdo antes do merge.
+Quando existe contexto válido de PR com as seções **O que muda para o usuário**, **Como validar** e **Limitações** e o total cabe no limite agregado de 1400 caracteres, o texto é copiado para a comunicação e identificado como **descrição das PRs — sem IA**. Não há tradução automática dos títulos técnicos em funcionalidades. Uma descrição vazia, apenas técnica ou sem essas seções usa commits. O [template de PR](../../.github/pull_request_template.md) facilita a escrita desse conteúdo antes do merge.
 
 O histórico técnico completo permanece em `report.changes`. A cópia destinada ao aviso é limitada e remove caracteres de controle; inclui `source_history_sha256`, quantidade original e indicação de truncamento. Isso evita que um subject longo ou mais de mil commits faça uma comunicação opcional bloquear a preparação. O aviso aponta para o registro completo.
+
+## Limite agregado comprovado na RC2
+
+Na 1.8.0 RC2, os contextos dos PRs #20/#21 estavam disponíveis. As seções
+literais tinham 744 e 741 caracteres; com a quebra de linha, somaram 1486 e
+excederam `SUMMARY_LIMIT=1400`. A seleção usou `commits_fallback`, sem IA.
+O digest congelado foi preservado até a publicação. Usar descrições menores
+ou mudar o limite antes de uma nova candidata; não reescrever texto aprovado.
 
 ## IA: contrato preparado, provedor inativo
 

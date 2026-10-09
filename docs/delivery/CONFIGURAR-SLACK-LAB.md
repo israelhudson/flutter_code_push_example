@@ -3,7 +3,8 @@
 **Use o bot `Flutter Deploy LAB` já instalado. A conexão real foi validada.**
 O secret `SLACK_BOT_TOKEN` já existe no GitHub. Os avisos da candidata foram
 integrados pela PR #19 e comprovados na jornada 1.7.0, com cinco avisos reais.
-A jornada 1.8.0 está em correção após rejeição da RC1; seguir o
+A jornada 1.8.0 concluiu rejeição, correção, RC2 e retorno à main. Foram
+confirmados 13 avisos reais nas duas jornadas; seguir o
 [manual de operação](SLACK-AUTOMATICO.md).
 
 ## O que está comprovado
@@ -84,8 +85,8 @@ autenticados no GitHub: **2/2 habilita somente o comando final separado.**
 
 ## Verificações restantes
 
-1. Concluir a jornada 1.8.0 com correção, RC2 e novas decisões, sem herdar avais.
-2. Confirmar mensagem, identidade, texto congelado, links e recibo no canal fixo.
+1. Preservar as provas das duas jornadas; novo negativo real do autofecho e recuperação adversarial continuam com aceite próprio.
+2. Em cada próxima rodada, confirmar mensagem, identidade, texto congelado, links e recibo no canal fixo.
 3. Confirmar que secret ausente, erro ou demora do Slack produz aviso opcional
    e permite que os gates e a publicação sigam.
 4. Reexecutar o mesmo evento com o estado persistente; conferir que um envio

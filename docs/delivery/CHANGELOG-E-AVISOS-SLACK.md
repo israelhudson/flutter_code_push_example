@@ -3,8 +3,9 @@
 Registro atualizado em 08/10/2026, Fortaleza, após a entrega do tema escuro.
 **Comunicação congelada e fallback já estão integrados; o bot Slack tem prova
 de conexão real. Os avisos automáticos integrados no PR #19 foram comprovados
-na 1.7.0, com cinco mensagens reais; RC1 da 1.8.0 foi rejeitada e conciliada
-após cancelamento operacional. RC2 continua pendente. O provedor de IA permanece inativo.**
+nas jornadas 1.7.0 e 1.8.0: três RCs, duas estáveis e 13 avisos reais.
+A rejeição da RC1 de 1.8.0 precisou de cancelamento operacional; sua história
+permanece. O provedor de IA permanece inativo.**
 
 A [PR #18](https://github.com/israelhudson/flutter_code_push_example/pull/18)
 integrou os ajustes de estados, versões e comunicação. O
@@ -16,9 +17,15 @@ adaptação, sem consumo de IA ou ativação de acesso ao Plane.
 
 O [manual](SLACK-AUTOMATICO.md) registra os runs, cinco avisos da 1.7.0,
 rejeição real da 1.8.0 e o incidente do outro gate ainda esperando. Encerramento
-automático e leitura curta de `sent` concorrente estão em preparação; não têm
-prova nova de rejeição real. Preservar texto/recibos históricos e mostrar o
+automático e leitura curta de `sent` concorrente foram integrados pela PR #21;
+o novo fecho não tem prova negativa real. A RC2 foi promovida e a correção
+voltou à main pela PR #22. Preservar texto/recibos históricos e mostrar o
 estado atual observado separadamente.
+
+Na RC2, as seções dos PRs #20/#21 somaram 1486 caracteres, acima do limite
+agregado de 1400. O relatório escolheu `commits_fallback`, sem IA, e foi
+preservado. Uma alteração do limite ou da forma de resumo vale para próximas
+candidatas, antes dos avais; não substitui a comunicação já revisada.
 
 ## Tags: preservar a candidata após a promoção
 
