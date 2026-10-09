@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Laboratório de atualizações',
+                'Laboratório de entregas',
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: 24),

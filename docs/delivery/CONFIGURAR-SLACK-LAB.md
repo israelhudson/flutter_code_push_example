@@ -1,8 +1,9 @@
 # Configuração Slack do laboratório
 
 **Use o bot `Flutter Deploy LAB` já instalado. A conexão real foi validada.**
-O secret `SLACK_BOT_TOKEN` já existe no GitHub. A próxima etapa é integrar os
-avisos da candidata e validar uma execução desse fluxo, seguindo o
+O secret `SLACK_BOT_TOKEN` já existe no GitHub. Os avisos da candidata foram
+integrados pela PR #19 e comprovados na jornada 1.7.0, com cinco avisos reais.
+A jornada 1.8.0 está em correção após rejeição da RC1; seguir o
 [manual de operação](SLACK-AUTOMATICO.md).
 
 ## O que está comprovado
@@ -81,9 +82,9 @@ O conteúdo informa a candidata, as mudanças ou o fallback identificado, o
 preview e a execução correta no GitHub. Aprovações e comando final continuam
 autenticados no GitHub: **2/2 habilita somente o comando final separado.**
 
-## Próxima validação
+## Verificações restantes
 
-1. Integrar a implementação de avisos da candidata e executar um ensaio próprio.
+1. Concluir a jornada 1.8.0 com correção, RC2 e novas decisões, sem herdar avais.
 2. Confirmar mensagem, identidade, texto congelado, links e recibo no canal fixo.
 3. Confirmar que secret ausente, erro ou demora do Slack produz aviso opcional
    e permite que os gates e a publicação sigam.

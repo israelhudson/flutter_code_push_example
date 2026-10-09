@@ -20,7 +20,9 @@ import os
 from pathlib import Path
 import re
 import sqlite3
+import subprocess
 import sys
+import time
 import uuid
 from urllib.parse import quote
 
@@ -37,6 +39,8 @@ SCHEMA = 1
 MAX_BYTES = 2 * 1024 * 1024
 MAX_EVENTS = 10000
 MAX_HISTORY_PAGES = 3
+CONFIRMATION_WAIT_SECONDS = 3
+CONFIRMATION_MAX_READS = 3
 EVENTS = {'candidate_available', 'approval_first', 'approval_second', 'approvals_complete',
           'candidate_rejected', 'candidate_cancelled', 'candidate_failed', 'candidate_superseded',
           'publication_completed', 'publication_partial'}
@@ -50,6 +54,34 @@ _CHECKPOINT_FIELDS = {'at', 'state', 'event_key', 'payload_hash', 'client_msg_id
 
 class OutboxError(slack_notify.NoticeError):
     pass
+
+
+class OutboxBusy(OutboxError):
+    """The exact event is already reserved by another durable writer."""
+
+
+class ConfirmationUnavailable(OutboxError):
+    """The short optional observation budget did not produce a response."""
+
+
+def _bounded_read_api(path, *, missing=False, timeout):
+    """Read through gh with a short deadline; no writes or raw error output."""
+    if not path.startswith(release_lab.endpoint('')):
+        raise OutboxError('Endpoint fora do laboratório autorizado.')
+    try:
+        result = subprocess.run(['gh', 'api', '--hostname', 'github.com', path, '--method', 'GET',
+                                 '-H', 'Accept: application/vnd.github+json'],
+                                text=True, capture_output=True, timeout=timeout)
+    except (OSError, subprocess.TimeoutExpired):
+        raise ConfirmationUnavailable('Confirmação remota ainda indisponível.') from None
+    if result.returncode:
+        if missing and '(HTTP 404)' in result.stderr:
+            return None
+        raise ConfirmationUnavailable('Confirmação remota ainda indisponível.')
+    try:
+        return json.loads(result.stdout)
+    except ValueError:
+        raise OutboxError('Resposta de confirmação remota inválida.') from None
 
 
 def canonical(value):
@@ -208,13 +240,23 @@ class SlackJournalStore:
     def __init__(self, api=release_lab.api):
         self.api = api
 
-    def read(self):
+    def read(self, *, timeout=None):
+        api = self.api
+        if timeout is not None and api is release_lab.api:
+            deadline = time.monotonic() + timeout
+
+            def api(path, *, missing=False):
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    raise ConfirmationUnavailable('Prazo da confirmação remota esgotado.')
+                return _bounded_read_api(path, missing=missing, timeout=remaining)
+
         path = release_lab.endpoint('contents/' + STATE_PATH)
-        response = self.api(path + '?ref=' + quote(STATE_BRANCH, safe=''), missing=True)
+        response = api(path + '?ref=' + quote(STATE_BRANCH, safe=''), missing=True)
         if response is None:
             # Verify the expected branch exists. Missing file may bootstrap;
             # missing branch/authentication must never look like empty state.
-            branch = self.api(release_lab.endpoint('git/ref/heads/' + STATE_BRANCH))
+            branch = api(release_lab.endpoint('git/ref/heads/' + STATE_BRANCH))
             if (not isinstance(branch, dict) or branch.get('ref') != 'refs/heads/' + STATE_BRANCH
                     or not _SHA40.fullmatch(str(branch.get('object', {}).get('sha', '')))):
                 raise OutboxError('Branch durável ausente; envio bloqueado.')
@@ -233,8 +275,8 @@ class SlackJournalStore:
         _project(document)
         return document, response['sha']
 
-    def get(self, descriptor):
-        document, _ = self.read()
+    def get(self, descriptor, *, timeout=None):
+        document, _ = self.read(timeout=timeout)
         prior = _project(document).get(descriptor['event_key'])
         if prior is not None and not _same(prior, descriptor):
             raise OutboxError('Chave já usada com outro conteúdo; envio bloqueado.')
@@ -247,7 +289,7 @@ class SlackJournalStore:
             if prior is not None and not _same(prior, descriptor):
                 raise OutboxError('Chave já usada com outro conteúdo; envio bloqueado.')
             if state == 'unknown' and prior is not None:
-                raise OutboxError('Evento já reservado; resultado unknown/sent precisa ser reconciliado.')
+                raise OutboxBusy('Evento já reservado; resultado unknown/sent precisa ser reconciliado.')
             if state == 'sent':
                 _receipt(receipt)
                 if prior is None or prior['attempt_id'] != attempt_id:
@@ -279,10 +321,32 @@ class SlackJournalStore:
                 if current == checkpoint:
                     return current
                 if current is not None:
+                    if state == 'unknown' and current['attempt_id'] != attempt_id:
+                        raise OutboxBusy('Outro writer reservou o mesmo evento.') from None
                     raise OutboxError('Checkpoint concorrente/incerto; envio bloqueado.') from None
                 # Different events may race the CAS. Re-read and append only
                 # this journal entry; chat.postMessage has not run here.
         raise OutboxError('Checkpoint durável não confirmado; envio bloqueado.')
+
+
+def _await_remote_sent(store, descriptor):
+    """Observe another writer briefly; unknown never permits another POST."""
+    deadline = time.monotonic() + CONFIRMATION_WAIT_SECONDS
+    for attempt in range(CONFIRMATION_MAX_READS):
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            break
+        try:
+            prior = store.get(descriptor, timeout=min(1.5, remaining))
+        except ConfirmationUnavailable:
+            break
+        # Collision or changed provenance is not a transient lookup failure.
+        # Propagate all other errors; optional caller will remain blocked.
+        if prior is not None and prior['state'] == 'sent':
+            return prior
+        if attempt + 1 < CONFIRMATION_MAX_READS:
+            time.sleep(min(.35, max(0, deadline - time.monotonic())))
+    return None
 
 
 def _restore_sqlite(path, checkpoint):
@@ -386,6 +450,10 @@ def send_frozen_notice(notice, output_dir, *, store=None, slack_api=slack_notify
         try:
             prior = store.get(descriptor)
             if prior is not None:
+                if prior['state'] == 'unknown':
+                    confirmed = _await_remote_sent(store, descriptor)
+                    if confirmed is not None:
+                        prior = confirmed
                 _restore_sqlite(sqlite_path, prior)
                 if prior['state'] == 'sent':
                     result.update(state='sent', duplicate=True, receipt=prior['receipt'])
@@ -415,6 +483,16 @@ def send_frozen_notice(notice, output_dir, *, store=None, slack_api=slack_notify
                     raise OutboxError('Cache local sem confirmação remota; reconciliação necessária.')
                 result.update(state='sent', receipt={'channel': sent['channel'], 'ts': sent['ts'],
                               'bot_user_id': BOT_USER_ID, 'app_id': APP_ID, 'reconciled': False})
+        except OutboxBusy:
+            try:
+                confirmed = _await_remote_sent(store, descriptor)
+                if confirmed is not None:
+                    _restore_sqlite(sqlite_path, confirmed)
+                    result.update(state='sent', duplicate=True, receipt=confirmed['receipt'])
+                else:
+                    result.update(state='blocked', reason='notification_unconfirmed_or_unsafe')
+            except (slack_notify.NoticeError, release_lab.LabError, sqlite3.Error, OSError, ValueError):
+                result.update(state='blocked', reason='notification_unconfirmed_or_unsafe')
         except (slack_notify.NoticeError, release_lab.LabError, sqlite3.Error, OSError, ValueError):
             # API responses/exception strings never enter artifacts or stdout.
             result.update(state='blocked', reason='notification_unconfirmed_or_unsafe')

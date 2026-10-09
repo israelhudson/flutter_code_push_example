@@ -147,6 +147,9 @@ class DurableSlackTests(unittest.TestCase):
         self.env = patch.dict(os.environ, {'SLACK_BOT_TOKEN': TOKEN}, clear=True)
         self.env.start()
         self.addCleanup(self.env.stop)
+        self.sleeper = patch.object(outbox.time, 'sleep', return_value=None)
+        self.sleeper.start()
+        self.addCleanup(self.sleeper.stop)
         self.git = FakeGit()
         self.store = outbox.SlackJournalStore(self.git)
         self.slack = FakeSlack(self.git)
@@ -387,6 +390,104 @@ class DurableSlackTests(unittest.TestCase):
         projection = outbox._project(self.git.document)
         self.assertEqual(set(projection), {notice()['event_key'], first['event_key'], second['event_key']})
         self.assertEqual(self.slack.posts(), 0)
+
+    def test_claim_race_observes_owner_confirmation_without_a_second_post(self):
+        value = notice()
+        owner = self.reserve(value)
+        self.slack('chat.postMessage', value['payload'], TOKEN)
+        original_get, reads = self.store.get, []
+
+        def get(descriptor, **kwargs):
+            reads.append(kwargs)
+            return None if len(reads) == 1 else original_get(descriptor, **kwargs)
+
+        def owner_finishes(_):
+            self.store.append(outbox.validate_notice(value), 'sent', owner['attempt_id'],
+                {'channel': slack_notify.CHANNEL_ID, 'ts': TS, 'bot_user_id': outbox.BOT_USER_ID,
+                 'app_id': outbox.APP_ID, 'reconciled': False})
+
+        with patch.object(self.store, 'get', side_effect=get), patch.object(outbox.time, 'sleep', side_effect=owner_finishes):
+            result = self.send(value)
+        self.assertEqual(result['state'], 'sent')
+        self.assertTrue(result['duplicate'])
+        self.assertEqual(self.slack.posts(), 1)
+        self.assertFalse(any(method == 'conversations.history' for method, _ in self.slack.calls))
+        self.assertEqual([e['state'] for e in self.git.document['events']], ['unknown', 'sent'])
+        self.assertTrue(all(0 < item['timeout'] <= 1.5 for item in reads[1:]))
+
+    def test_unknown_initial_read_observes_owner_sent_without_slack_history_or_post(self):
+        value = notice()
+        owner = self.reserve(value)
+        self.slack('chat.postMessage', value['payload'], TOKEN)
+        previous_calls = len(self.slack.calls)
+
+        def owner_finishes(_):
+            self.store.append(outbox.validate_notice(value), 'sent', owner['attempt_id'],
+                {'channel': slack_notify.CHANNEL_ID, 'ts': TS, 'bot_user_id': outbox.BOT_USER_ID,
+                 'app_id': outbox.APP_ID, 'reconciled': False})
+
+        with patch.object(outbox.time, 'sleep', side_effect=owner_finishes):
+            result = self.send(value)
+        self.assertEqual(result['state'], 'sent')
+        self.assertTrue(result['duplicate'])
+        self.assertEqual(len(self.slack.calls), previous_calls)
+        self.assertEqual(self.slack.posts(), 1)
+
+    def test_claim_race_persistent_unknown_stops_after_bounded_reads_without_post(self):
+        value = notice()
+        self.reserve(value)
+        original_get, reads = self.store.get, []
+
+        def get(descriptor, **kwargs):
+            reads.append(kwargs)
+            return None if len(reads) == 1 else original_get(descriptor, **kwargs)
+
+        with patch.object(self.store, 'get', side_effect=get):
+            result = self.send(value)
+        self.assertEqual(result['state'], 'blocked')
+        self.assertEqual(self.slack.posts(), 0)
+        self.assertEqual(len(reads), 1 + outbox.CONFIRMATION_MAX_READS)
+        self.assertEqual([e['state'] for e in self.git.document['events']], ['unknown'])
+
+    def test_confirmation_poll_does_not_adopt_different_source_identity(self):
+        self.reserve()
+        descriptor = outbox.validate_notice(notice())
+        descriptor['identity'] = {**descriptor['identity'], 'source_sha': 'f' * 40}
+        with self.assertRaises(outbox.OutboxError):
+            outbox._await_remote_sent(self.store, descriptor)
+        self.assertEqual(self.slack.posts(), 0)
+
+    def test_short_poll_timeout_preserves_positive_history_reconciliation_for_unknown(self):
+        value = notice()
+        self.reserve(value)
+        self.slack.history.append(self.slack.message(value['payload']))
+        original_get = self.store.get
+
+        def get(descriptor, **kwargs):
+            if kwargs.get('timeout') is not None:
+                raise outbox.ConfirmationUnavailable('Synthetic short observation timeout')
+            return original_get(descriptor, **kwargs)
+
+        with patch.object(self.store, 'get', side_effect=get):
+            result = self.send(value)
+        self.assertEqual(result['state'], 'sent')
+        self.assertTrue(result['receipt']['reconciled'])
+        self.assertEqual(self.slack.posts(), 0)
+
+    def test_poll_deadline_stops_before_network_when_budget_has_expired(self):
+        with patch.object(outbox.time, 'monotonic', side_effect=[0, 3.1]), patch.object(self.store, 'get') as get:
+            self.assertIsNone(outbox._await_remote_sent(self.store, outbox.validate_notice(notice())))
+            get.assert_not_called()
+
+    def test_poll_transport_is_get_only_and_timeout_error_is_sanitized(self):
+        path = release_lab.endpoint('contents/' + outbox.STATE_PATH)
+        timeout = outbox.subprocess.TimeoutExpired(['gh', 'api', path], 1.5, output=TOKEN)
+        with patch.object(outbox.subprocess, 'run', side_effect=timeout) as run:
+            with self.assertRaises(outbox.OutboxError) as raised:
+                outbox._bounded_read_api(path, timeout=1.5)
+            self.assertNotIn(TOKEN, str(raised.exception))
+            self.assertEqual(run.call_args.kwargs['timeout'], 1.5)
+            self.assertEqual(run.call_args.args[0][run.call_args.args[0].index('--method') + 1], 'GET')
 
     def test_receipts_logs_and_remote_checkpoints_exclude_secrets_and_full_payload(self):
         result = self.send()
