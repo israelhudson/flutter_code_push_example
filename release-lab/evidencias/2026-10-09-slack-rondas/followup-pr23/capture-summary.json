@@ -1,0 +1,147 @@
+{
+  "schema": 1,
+  "captured_at": "2026-10-09T02:28:44.384206+00:00",
+  "read_only": true,
+  "PR23_merged_at": "2026-10-09T02:27:20Z",
+  "merge_sha": "be2bff221bc498b4be66602d912fb2cae1f9ce2a",
+  "review_head": "fa2859c655521080c45e320337dccaeae5cd3f90",
+  "reviews": [
+    {
+      "id": 5465042794,
+      "state": "APPROVED",
+      "submitted_at": "2026-10-09T02:26:57Z",
+      "commit_id": "fa2859c655521080c45e320337dccaeae5cd3f90",
+      "html_url": "https://github.com/israelhudson/flutter_code_push_example/pull/23#pullrequestreview-5465042794"
+    }
+  ],
+  "docs_only_paths": [
+    "docs/delivery/AJUSTES-E-PRIORIDADES.md",
+    "docs/delivery/CHANGELOG-E-AVISOS-SLACK.md",
+    "docs/delivery/COMUNICACAO-CONGELADA.md",
+    "docs/delivery/CONFIGURAR-SLACK-LAB.md",
+    "docs/delivery/README.md",
+    "docs/delivery/SLACK-AUTOMATICO.md"
+  ],
+  "changed_files_since_backmerge": [
+    "docs/delivery/AJUSTES-E-PRIORIDADES.md",
+    "docs/delivery/CHANGELOG-E-AVISOS-SLACK.md",
+    "docs/delivery/COMUNICACAO-CONGELADA.md",
+    "docs/delivery/CONFIGURAR-SLACK-LAB.md",
+    "docs/delivery/README.md",
+    "docs/delivery/SLACK-AUTOMATICO.md"
+  ],
+  "application_runtime_unchanged_by_followup": true,
+  "original_evidence_commit": "d162f208535d9b75d8172fe0c8dbc8ce5ac6273d",
+  "requests": [
+    {
+      "name": "pr23",
+      "method": "GET",
+      "endpoint": "pulls/23",
+      "exit_code": 0,
+      "stdout_bytes": 20651,
+      "stderr_bytes": 0,
+      "stdout_sha256": "03e250399a7496dcf0970d2d36b47f3a888e9150e3497d8c0e6c5fc89fd0e63d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "pr23-reviews",
+      "method": "GET",
+      "endpoint": "pulls/23/reviews",
+      "exit_code": 0,
+      "stdout_bytes": 2207,
+      "stderr_bytes": 0,
+      "stdout_sha256": "d1a07589009cbcc05cbec37f491128b0a0209ceaee6f4319939b1bf56242e97d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "pr23-files",
+      "method": "GET",
+      "endpoint": "pulls/23/files?per_page=100",
+      "exit_code": 0,
+      "stdout_bytes": 31778,
+      "stderr_bytes": 0,
+      "stdout_sha256": "9db1ef91a4764aede6162fca43aa7cfe488b565c27a0987d4dbaf01bec329329",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "docs-merge-commit",
+      "method": "GET",
+      "endpoint": "git/commits/be2bff221bc498b4be66602d912fb2cae1f9ce2a",
+      "exit_code": 0,
+      "stdout_bytes": 2843,
+      "stderr_bytes": 0,
+      "stdout_sha256": "5bb4d014689a37c235bdc541b2182f2e8cc84965a3e180891f5193c7167174d3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "docs-change-compare",
+      "method": "GET",
+      "endpoint": "compare/cf6d6fa90e228ec10cc6d0d7a204da756d784514...be2bff221bc498b4be66602d912fb2cae1f9ce2a",
+      "exit_code": 0,
+      "stdout_bytes": 51341,
+      "stderr_bytes": 0,
+      "stdout_sha256": "d320cd237ad2bf3e99866baff3cc80379439f5868a8b82ba094210c41abaca4e",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "docs-source-1",
+      "method": "GET",
+      "endpoint": "contents/docs/delivery/AJUSTES-E-PRIORIDADES.md?ref=be2bff221bc498b4be66602d912fb2cae1f9ce2a",
+      "exit_code": 0,
+      "stdout_bytes": 12757,
+      "stderr_bytes": 0,
+      "stdout_sha256": "29a7a615974614fd9ebb8012989585bea330a2803f2b522417d841cbe4bdd8b6",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "docs-source-2",
+      "method": "GET",
+      "endpoint": "contents/docs/delivery/CHANGELOG-E-AVISOS-SLACK.md?ref=be2bff221bc498b4be66602d912fb2cae1f9ce2a",
+      "exit_code": 0,
+      "stdout_bytes": 21197,
+      "stderr_bytes": 0,
+      "stdout_sha256": "d74b63794865be5e4b834f702f5de15494c5d05bc7085bcc69cd843735d06e74",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "docs-source-3",
+      "method": "GET",
+      "endpoint": "contents/docs/delivery/COMUNICACAO-CONGELADA.md?ref=be2bff221bc498b4be66602d912fb2cae1f9ce2a",
+      "exit_code": 0,
+      "stdout_bytes": 12049,
+      "stderr_bytes": 0,
+      "stdout_sha256": "b8138d7904530fcfee97cd4d866ed62e7b498c4fb331d2f177af0724f8aa1b3b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "docs-source-4",
+      "method": "GET",
+      "endpoint": "contents/docs/delivery/CONFIGURAR-SLACK-LAB.md?ref=be2bff221bc498b4be66602d912fb2cae1f9ce2a",
+      "exit_code": 0,
+      "stdout_bytes": 9512,
+      "stderr_bytes": 0,
+      "stdout_sha256": "23e3a4b2d9bdda944cf0f0fcc855eee55e83054900864011158576f7c5401e6a",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "docs-source-5",
+      "method": "GET",
+      "endpoint": "contents/docs/delivery/README.md?ref=be2bff221bc498b4be66602d912fb2cae1f9ce2a",
+      "exit_code": 0,
+      "stdout_bytes": 19903,
+      "stderr_bytes": 0,
+      "stdout_sha256": "b090bb1c0349a1c995c5fdee6101abfcec55d7f1812a73994cf8e6915464ca62",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "docs-source-6",
+      "method": "GET",
+      "endpoint": "contents/docs/delivery/SLACK-AUTOMATICO.md?ref=be2bff221bc498b4be66602d912fb2cae1f9ce2a",
+      "exit_code": 0,
+      "stdout_bytes": 32363,
+      "stderr_bytes": 0,
+      "stdout_sha256": "5cef37e59903d16da80abb72f3e3ef876321d0fcd959f68fa3bf61f4249927bf",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}
