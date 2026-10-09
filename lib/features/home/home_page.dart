@@ -110,13 +110,13 @@ class _HomePageState extends State<HomePage> {
                   constraints: const BoxConstraints(maxWidth: 420),
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF164E63),
+                    color: const Color(0xFFB8432C),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: const Column(
                     children: [
                       Text(
-                        'AZUL · 02',
+                        'CORAL · 02',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        'Escolha o tema pelo botão no topo. Ao reiniciar, o app volta ao claro.',
+                        'Coral com tema manual. Ao reiniciar, o app volta ao claro.',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white),
                       ),
