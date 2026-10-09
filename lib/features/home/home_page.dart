@@ -84,6 +84,9 @@ class _HomePageState extends State<HomePage> {
           Tooltip(
             message: isDark ? 'Ativar tema claro' : 'Ativar tema escuro',
             child: TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Theme.of(context).appBarTheme.foregroundColor,
+              ),
               onPressed: widget.onToggleTheme,
               child: Text(isDark ? 'Tema claro' : 'Tema escuro'),
             ),
@@ -113,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                   child: const Column(
                     children: [
                       Text(
-                        'AZUL · 01',
+                        'AZUL · 02',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -122,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        'Uma entrega visível para conferir no preview e no app.',
+                        'Escolha o tema pelo botão no topo. Ao reiniciar, o app volta ao claro.',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white),
                       ),
