@@ -1,0 +1,57 @@
+[
+  {
+    "name": "baseline-pubspec",
+    "command": [
+      "git",
+      "show",
+      "b8763ec5adc5e24ce34f474a66a079b48a9ffa0f:pubspec.yaml"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "source-pubspec",
+    "command": [
+      "git",
+      "show",
+      "1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935:pubspec.yaml"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "history",
+    "command": [
+      "git",
+      "log",
+      "--format=%h %s",
+      "b8763ec5adc5e24ce34f474a66a079b48a9ffa0f..1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "app-diff",
+    "command": [
+      "git",
+      "diff",
+      "--stat",
+      "b8763ec5adc5e24ce34f474a66a079b48a9ffa0f",
+      "1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935",
+      "--",
+      "lib",
+      "test",
+      "pubspec.yaml"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "app-diff-detail",
+    "command": [
+      "git",
+      "diff",
+      "b8763ec5adc5e24ce34f474a66a079b48a9ffa0f",
+      "1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935",
+      "--",
+      "lib"
+    ],
+    "exit_code": 0
+  }
+]

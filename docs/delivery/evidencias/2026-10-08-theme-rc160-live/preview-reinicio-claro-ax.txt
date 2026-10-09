@@ -1,0 +1,23 @@
+Browser tab: 3, Title: "Preview 1.1.0+2 · 1cb8f3ef72a0", URL: "https://israelhudson.github.io/flutter_code_push_example/snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/".
+1 AXWebArea Preview 1.1.0+2 · 1cb8f3ef72a0, URL: israelhudson.github.io/flutter_code_push_example/snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/
+	2 container
+		3 text Preview web · versão 1.1.0+2
+		4 text Snapshot 
+		5 link Description: 1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935, Value: github.com/israelhudson/flutter_code_push_example/commit/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935
+		6 text  · 
+		7 link Description: identidade, Value: israelhudson.github.io/flutter_code_push_example/snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/metadata.json
+		8 text  · Android/iOS não validados por este preview.
+	9 container Aplicativo Flutter web
+		10 AXWebArea Flutter Code Push Example, URL: israelhudson.github.io/flutter_code_push_example/snapshots/1cb8f3ef72a0d21c11cfa3b2c0d51f7c8c769935/app/
+			11 container
+				12 container flt-semantic-node-3
+					13 container flt-semantic-node-8
+						14 heading Flutter Code Push Example, Value: 2, ID: flt-semantic-node-9
+							15 text Flutter Code Push Example
+						16 button Ativar tema escuro, ID: flt-semantic-node-10
+					17 text Laboratório de atualizações
+					18 text Patch: nenhum (release base)
+					19 text Shorebird indisponível neste build — instale um build gerado por "shorebird release".
+					20 button Verificar atualização agora, ID: flt-semantic-node-7
+
+The focused UI element is 14 heading Flutter Code Push Example, Value: 2, ID: flt-semantic-node-9

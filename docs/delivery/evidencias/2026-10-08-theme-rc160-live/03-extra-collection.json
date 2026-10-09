@@ -1,0 +1,27 @@
+{
+  "captured_at": "2026-10-09T00:21:59.023750+00:00",
+  "commands": [
+    {
+      "command": [
+        "gh",
+        "api",
+        "repos/israelhudson/flutter_code_push_example/contents/release-lab/state.json",
+        "-f",
+        "ref=codex/release-lab-state",
+        "-X",
+        "GET"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "gh",
+        "api",
+        "--allow-escape-sequences",
+        "repos/israelhudson/flutter_code_push_example/actions/jobs/113605983575/logs"
+      ],
+      "exit_code": 0,
+      "bytes": 16253
+    }
+  ]
+}
