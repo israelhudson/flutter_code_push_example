@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        'Coral com tema manual. Ao reiniciar, o app volta ao claro.',
+                        'Coral com tema manual. Ao reiniciar, o app volta ao claro. Validando...',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white),
                       ),
