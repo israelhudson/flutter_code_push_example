@@ -70,6 +70,27 @@ def protect():
                 raise lab.LabError('A integração solo exige zero reviews humanos apenas nas branches Slack.')
 
 
+def checked_source(source_sha, output, release_branch):
+    """Require real post-merge CI on the exact integration commit before refs."""
+    runs = lab.api(lab.endpoint('actions/workflows/poc-slack-tests.yml/runs?'
+                               'head_sha=' + source_sha + '&event=push&status=success&per_page=100'))
+    for run in runs.get('workflow_runs', []):
+        if (run.get('head_sha') != source_sha or run.get('head_branch') not in ('slack-main', release_branch)
+                or run.get('event') != 'push' or run.get('status') != 'completed'
+                or run.get('conclusion') != 'success'):
+            continue
+        jobs = lab.api(lab.endpoint('actions/runs/' + str(run['id']) + '/jobs?per_page=100'))
+        if any(j.get('name') == 'Slack / Verificar contratos' and j.get('status') == 'completed'
+               and j.get('conclusion') == 'success' for j in jobs.get('jobs', [])):
+            lab.output(output, 'source-check.json', {'source_sha': source_sha, 'run_id': run['id'],
+                                                    'success': True})
+            return
+    lab.output(output, 'source-check.json', {'source_sha': source_sha, 'success': False})
+    raise lab.LabError('Aguarde Slack - Verificar contratos concluir com sucesso após o merge '
+                       'na slack-main ou na branch de correção da RC. O check do PR não substitui o check do commit integrado; '
+                       'nenhuma branch ou tag foi criada nesta tentativa.')
+
+
 def prepare(version, title, scope, output):
     if not lab.VERSION.fullmatch(version or '') or not title.strip() or len(title) > 120 or any(ord(c) < 32 for c in title):
         raise lab.LabError('Informe versão major.minor.patch e título curto em uma linha.')
@@ -82,6 +103,7 @@ def prepare(version, title, scope, output):
             or p.get('creator') != 'israelhudson' or p.get('publication_scope') != scope):
         raise lab.LabError('Plano remoto fora da identidade da POC.')
     lab.trusted_source(p['source_sha'])
+    checked_source(p['source_sha'], output, p['branch'])
     if lab.git('rev-parse', p['source_sha'] + ':supabase') != lab.git('rev-parse', 'HEAD:supabase'):
         raise lab.LabError('Código do backend difere das ferramentas confiáveis.')
     latest = lab.api(lab.endpoint('releases/latest'))

@@ -34,6 +34,7 @@ jobs:
       cancel-in-progress: false
     permissions:
       contents: write
+      actions: read
     outputs:
       tag: ${{ steps.prepare.outputs.candidate_tag }}
       source: ${{ steps.prepare.outputs.source_sha }}
