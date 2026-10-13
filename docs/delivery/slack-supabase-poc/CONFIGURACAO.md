@@ -38,37 +38,30 @@ Slack HMAC. Por isso o verificador JWT do gateway está desligado, não a autent
 Nenhuma tabela permite acesso de `anon`/`authenticated`. As RPCs são exclusivas
 da credencial de servidor. Não colocar service role no GitHub nem no navegador.
 
-## 3. Reutilizar Flutter Deploy LAB com encaminhamento
+## 3. App exclusivo da POC — configuração atual
 
-**Esta é a opção escolhida por Israel. Não precisa criar outro app.**
-Israel decidiu manter a Request URL antiga por enquanto: o router novo está
-publicado/testado, mas não recebe os cliques do app. Não ativar a POC antes dessa troca. O canal é
-`app-deploy-test-isr`, app `A0C750DS05D`, bot `U0C750FTCS3`. Token e assinatura
-foram verificados e configurados somente no projeto exclusivo. Scopes existentes
-`chat:write`/`groups:read` bastam: a DM/App Home usa `chat.postMessage` com ID do
-usuário e guarda o ID D retornado. [Documentação oficial](https://docs.slack.dev/reference/methods/chat.postMessage/).
+Israel escolheu isolamento em 13/10/2026. O app **Flutter Deploy POC Slack**
+(`A0C8J5ZC9JT`, bot `U0C8XJ5S0Q6`) foi criado e instalado no workspace Amulets,
+e adicionado somente ao `app-deploy-test-isr` (`C0C8DUJB52L`). Scopes `chat:write`
+e `groups:read`; nenhum acesso a histórico de mensagens foi solicitado.
 
-O bot possui uma Request URL. O novo `poc-slack-router` valida a assinatura,
-workspace e App ID, separa botões/modais `poc_*` e preserva os cartões antigos
-encaminhando seus bytes e headers originais ao receptor atual.
-Não faz migration, deploy ou alteração de secrets no projeto Mobile.
+Sua Request URL é direta:
+`https://xtvueqciogzkyjkkqxcx.supabase.co/functions/v1/poc-slack-approvals`.
+As credenciais novas ficam somente no projeto exclusivo.
+`POC_SHARED_APP_ROUTING=false`: o router preparado anteriormente não é usado.
 
-A URL antiga para rollback é:
+O app antigo Flutter Deploy LAB (`A0C750DS05D`) permanece com a URL original:
 `https://uvfwvplcziehxrkidrxh.supabase.co/functions/v1/slack-approvals`.
-A URL nova, **somente após validar o encaminhamento**, será:
-`https://xtvueqciogzkyjkkqxcx.supabase.co/functions/v1/poc-slack-router`.
+Não substituir essa URL nem usar suas credenciais na POC.
 
-1. Publicar as três funções da POC e configurar `POC_SHARED_APP_ROUTING=true`.
-2. Testar roteamento, assinatura, ACK e recusa de payload inválido; preservar logs.
-3. Em [Interactivity & Shortcuts](https://api.slack.com/apps/A0C750DS05D/interactive-messages),
-   trocar só a Request URL para a nova, deixando a interatividade ligada.
-4. Testar um cartão antigo com o responsável pelo ensaio Mobile e um cartão POC.
-   Fixtures/probe inválido não comprovam aprovação humana antiga.
-5. Se falhar o caminho antigo, restaurar imediatamente a URL antiga.
-   Desligar `POC_ENABLED` sozinho não remove o router, para preservar os cartões antigos.
+Um clique real no cartão diagnóstico da POC recebeu resposta privada recusando
+uma candidata inexistente. Não registrou aceite. Um cartão antigo concluído,
+sem publicação, respondeu normalmente a um clique repetido, mantendo dois votos.
+Essas provas de ativação não substituem o primeiro ensaio de RC real e suas DMs.
 
-Criar outro app permanece uma alternativa futura; o manifest é apenas referência.
-Não é requisito desta configuração escolhida.
+Os links Preview/Changelog possuem action IDs próprios e recebem ACK sem RPC,
+voto ou aviso: o Slack também envia callbacks para botões com URL.
+[Regra oficial](https://docs.slack.dev/reference/block-kit/block-elements/button-element/).
 
 | Secret no Supabase | Origem |
 |---|---|
@@ -79,7 +72,7 @@ Não é requisito desta configuração escolhida.
 | `POC_REGISTRATION_SECRET` | Aleatório próprio, igual ao secret novo do GitHub |
 | `POC_PUBLICATION_SECRET` | Outro aleatório próprio, igual ao secret novo do GitHub |
 | `POC_GITHUB_DISPATCH_TOKEN` | Opcional; fine-grained PAT restrito a este repo, Actions write e Contents read, para disparo após 2/2 e consultas autenticadas |
-| `POC_SHARED_APP_ROUTING` | `true`, apenas para o app existente via router |
+| `POC_SHARED_APP_ROUTING` | `false`, app exclusivo com URL direta |
 | `POC_SOURCE_BRANCH` | `slack-main` |
 | `POC_ENABLED` | `false` durante configuração; `true` para ensaio |
 | `POC_PUBLICATION_ENABLED` | `false` até autorizar prerelease de teste |
@@ -88,7 +81,7 @@ Os dois secrets de máquina e os flags desligados já foram instalados nesta exe
 Para coletar os dados do app sem colocá-los no chat, usar o terminal local:
 
 ```bash
-python3 tools/delivery/configure_poc_slack_app.py --shared-app
+python3 tools/delivery/configure_poc_slack_app.py
 ```
 
 O script verifica workspace, scopes e membros do canal antes de gravar os secrets;
@@ -106,8 +99,7 @@ Não configurar PAT de Amulets ou credencial Shorebird nesta etapa.
 |---|---|---|
 | Secret | `POC_REGISTRATION_SECRET` | Mesmo aleatório do backend |
 | Secret | `POC_PUBLICATION_SECRET` | Mesmo segundo aleatório do backend |
-| Variable | `POC_SHARED_APP_ROUTING` | `true`, apenas para o app existente via router |
-| `POC_SOURCE_BRANCH` | `slack-main` |
+| Variable | `POC_SOURCE_BRANCH` | `slack-main` |
 | Variable | `POC_SUPABASE_URL` | URL do projeto exclusivo |
 | Variable | `POC_SLACK_ENABLED` | `false` inicialmente |
 | Variable | `POC_PR_PREVIEW_ENABLED` | `false` inicialmente |
@@ -148,7 +140,8 @@ sem criar tag/Release de novo. Falha no aviso posterior não desfaz um aceite sa
 Para parar: desligar flags GitHub, backend e `poc_config.enabled`. Preservar
 histórico, tags, cartões e recibos. Não apagar o projeto como rollback de entrega.
 
-**Limite do ensaio:** se o projeto Free pausar por inatividade, o router deixa de
-responder, inclusive para cartões antigos. Restaurar a URL antiga nesse caso.
+**Limite do ensaio:** se o projeto Free pausar por inatividade, os botões da POC
+param de responder. O app antigo continua usando seu próprio receptor; não
+depende do projeto desta POC.
 Não usar esta dependência Free como receptor de produção da Amulets; definir
 com Samuel disponibilidade, monitoramento e hospedagem antes da adoção.

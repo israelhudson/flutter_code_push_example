@@ -166,10 +166,14 @@ export function card(c: any, now = Date.now()) {
     : "Dois revisores independentes.";
   const elements: any[] = [{
     type: "button",
+    action_id: "poc_preview",
+    value: c.id,
     text: { type: "plain_text", text: "Preview da RC" },
     url: report.preview_url,
   }, {
     type: "button",
+    action_id: "poc_changelog",
+    value: c.id,
     text: { type: "plain_text", text: "Changelog e execução" },
     url: report.run_url,
   }];
@@ -488,12 +492,24 @@ export function slackHandler(io: IO) {
       const a = p.actions?.[0];
       if (
         p.type !== "block_actions" || p.actions.length !== 1 ||
-        !["poc_technical", "poc_business", "poc_adjust"].includes(
+        ![
+          "poc_technical",
+          "poc_business",
+          "poc_adjust",
+          "poc_preview",
+          "poc_changelog",
+          "poc_workflow_link",
+        ].includes(
           a?.action_id,
         ) || !ID.test(a?.value ?? "") || p.channel?.id !== CHANNEL ||
         (p.container?.channel_id && p.container.channel_id !== CHANNEL) ||
         !/^\d+\.\d+$/.test(p.container?.message_ts ?? "")
       ) throw Error("Invalid interaction");
+      // URL buttons still produce callbacks. ACK navigation without voting,
+      // creating notices, or granting any publication capability.
+      if (["poc_preview", "poc_changelog", "poc_workflow_link"].includes(a.action_id)) {
+        return new Response("");
+      }
       const input = {
         p_id: a.value,
         p_user: p.user.id,

@@ -334,3 +334,27 @@ Deno.test("Slack lê membros por GET e envia mensagens por POST JSON", async () 
   assert(post.method === "POST" && (await post.json()).text === "fixture");
   assert(post.redirect === "error" && read.redirect === "error");
 });
+
+Deno.test("Botões de URL confirmam navegação sem RPC, voto ou aviso", async () => {
+  for (const action of ["poc_preview", "poc_changelog", "poc_workflow_link"]) {
+    const f = fixture();
+    const p = payload();
+    p.actions[0].action_id = action;
+    const r = await slackHandler(f.io)((await signed(p)).request);
+    assert(r.status === 200 && f.calls.length === 0 && f.tasks.length === 0);
+  }
+  const rendered = card(candidate());
+  const buttons = rendered.blocks.at(-1)!.elements ?? [];
+  assert(buttons[0].action_id === "poc_preview" && buttons[1].action_id === "poc_changelog");
+  assert(buttons[0].value === id && buttons[1].value === id);
+});
+Deno.test("Botão de URL não aceita outro canal ou assinatura inválida", async () => {
+  const p = payload();
+  p.actions[0].action_id = "poc_preview";
+  p.channel.id = "COTHER";
+  const f = fixture();
+  assert((await slackHandler(f.io)((await signed(p)).request)).status === 403);
+  p.channel.id = CHANNEL;
+  assert((await slackHandler(f.io)((await signed(p, 0, "wrong-secret")).request)).status === 401);
+  assert(f.calls.length === 0 && f.tasks.length === 0);
+});
