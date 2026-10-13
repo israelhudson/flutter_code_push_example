@@ -48,6 +48,8 @@ problema de feature flag, entrar pela camada certa:
 |---|--------|------|-------|--------|
 | [004](docs/004-shorebird-patch-e-elegibilidade.md) | Shorebird e elegibilidade de patches | Release-base exata, compatibilidade, autorização e limites do ensaio | 🟢 consultada em 07/10/2026 | ✅ fonte oficial lida; execução pendente |
 
+| [005](docs/005-slack-supabase-aprovacoes.md) | Interações Slack e estado privado no Supabase | HMAC, ACK, RLS e isolamento da POC | 🟢 consultada em 13/10/2026 | ✅ fontes oficiais; interação real pendente |
+
 ## Regras de uso
 
 1. **Antes de implementar** qualquer coisa que toque um tema listado no índice,

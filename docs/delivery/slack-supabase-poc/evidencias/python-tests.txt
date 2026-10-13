@@ -1,0 +1,12 @@
+test_disabled_cli_has_no_network_effect (test_poc_slack.POCContracts.test_disabled_cli_has_no_network_effect) ... ok
+test_exclusive_origin (test_poc_slack.POCContracts.test_exclusive_origin) ... ok
+test_existing_publication_returns_exact_receipt_without_git_effects (test_poc_slack.POCContracts.test_existing_publication_returns_exact_receipt_without_git_effects) ... ok
+test_lab_channel_and_publication_roles_are_not_shell_interpolated (test_poc_slack.POCContracts.test_lab_channel_and_publication_roles_are_not_shell_interpolated) ... ok
+test_preview_identity_blocks_before_registration (test_poc_slack.POCContracts.test_preview_identity_blocks_before_registration) ... ok
+test_release_notes_keep_platform_bases_and_actual_patches_separate (test_poc_slack.POCContracts.test_release_notes_keep_platform_bases_and_actual_patches_separate) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.013s
+
+OK
+Execute somente o workflow manual habilitado na branch de integração configurada da POC.

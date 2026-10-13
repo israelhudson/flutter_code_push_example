@@ -43,3 +43,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Local Supabase linking/cache metadata; never part of the source handoff.
+supabase/.temp/

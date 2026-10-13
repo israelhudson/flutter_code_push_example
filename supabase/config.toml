@@ -1,0 +1,11 @@
+project_id = "flutter-code-push-approval-poc"
+
+[functions.poc-slack-approvals]
+verify_jwt = false
+
+[functions.poc-control]
+verify_jwt = false
+
+
+[functions.poc-slack-router]
+verify_jwt = false

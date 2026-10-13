@@ -1,0 +1,190 @@
+{
+  "project_ref": "xtvueqciogzkyjkkqxcx",
+  "organization": "iHud Tecnologia",
+  "plan": "free",
+  "region": "sa-east-1",
+  "flags": {
+    "protocol": 1,
+    "repository": "israelhudson/flutter_code_push_example",
+    "channel": "C0C8DUJB52L",
+    "enabled": false,
+    "publication_enabled": false
+  },
+  "rulesets": [
+    {
+      "id": 24751515,
+      "name": "LAB - main e release revisadas",
+      "target": "branch",
+      "source_type": "Repository",
+      "source": "israelhudson/flutter_code_push_example",
+      "enforcement": "active",
+      "conditions": {
+        "ref_name": {
+          "exclude": [],
+          "include": [
+            "refs/heads/main",
+            "refs/heads/release/**"
+          ]
+        }
+      },
+      "rules": [
+        {
+          "type": "deletion"
+        },
+        {
+          "type": "non_fast_forward"
+        },
+        {
+          "type": "pull_request",
+          "parameters": {
+            "required_approving_review_count": 1,
+            "dismiss_stale_reviews_on_push": true,
+            "required_reviewers": [],
+            "require_code_owner_review": false,
+            "require_last_push_approval": false,
+            "required_review_thread_resolution": true,
+            "require_extra_approval_for_unattributed_changes": true,
+            "allowed_merge_methods": [
+              "merge",
+              "squash",
+              "rebase"
+            ]
+          }
+        },
+        {
+          "type": "required_status_checks",
+          "parameters": {
+            "strict_required_status_checks_policy": true,
+            "do_not_enforce_on_create": true,
+            "required_status_checks": [
+              {
+                "context": "Flutter analyze e test"
+              }
+            ]
+          }
+        }
+      ],
+      "node_id": "RRS_lACqUmVwb3NpdG9yec5PGchjzgF5rZs",
+      "created_at": "2026-10-08T18:14:09.777-03:00",
+      "updated_at": "2026-10-08T18:14:09.859-03:00",
+      "bypass_actors": [],
+      "current_user_can_bypass": "never",
+      "_links": {
+        "self": {
+          "href": "https://api.github.com/repos/israelhudson/flutter_code_push_example/rulesets/24751515"
+        },
+        "html": {
+          "href": "https://github.com/israelhudson/flutter_code_push_example/rules/24751515"
+        }
+      }
+    },
+    {
+      "id": 25029008,
+      "name": "Slack - PRs solo",
+      "target": "branch",
+      "source_type": "Repository",
+      "source": "israelhudson/flutter_code_push_example",
+      "enforcement": "active",
+      "conditions": {
+        "ref_name": {
+          "exclude": [],
+          "include": [
+            "refs/heads/slack-main",
+            "refs/heads/poc-release/**"
+          ]
+        }
+      },
+      "rules": [
+        {
+          "type": "deletion"
+        },
+        {
+          "type": "non_fast_forward"
+        },
+        {
+          "type": "pull_request",
+          "parameters": {
+            "required_approving_review_count": 0,
+            "dismiss_stale_reviews_on_push": true,
+            "required_reviewers": [],
+            "require_code_owner_review": false,
+            "require_last_push_approval": false,
+            "required_review_thread_resolution": true,
+            "require_extra_approval_for_unattributed_changes": true,
+            "allowed_merge_methods": [
+              "merge",
+              "squash",
+              "rebase"
+            ]
+          }
+        },
+        {
+          "type": "required_status_checks",
+          "parameters": {
+            "strict_required_status_checks_policy": true,
+            "do_not_enforce_on_create": false,
+            "required_status_checks": [
+              {
+                "context": "Slack / Verificar contratos"
+              }
+            ]
+          }
+        }
+      ],
+      "node_id": "RRS_lACqUmVwb3NpdG9yec5PGchjzgF96ZA",
+      "created_at": "2026-10-13T17:16:31.923-03:00",
+      "updated_at": "2026-10-13T17:16:31.966-03:00",
+      "bypass_actors": [],
+      "current_user_can_bypass": "never",
+      "_links": {
+        "self": {
+          "href": "https://api.github.com/repos/israelhudson/flutter_code_push_example/rulesets/25029008"
+        },
+        "html": {
+          "href": "https://github.com/israelhudson/flutter_code_push_example/rules/25029008"
+        }
+      }
+    },
+    {
+      "id": 25029003,
+      "name": "Slack - tags imutaveis",
+      "target": "tag",
+      "source_type": "Repository",
+      "source": "israelhudson/flutter_code_push_example",
+      "enforcement": "active",
+      "conditions": {
+        "ref_name": {
+          "exclude": [],
+          "include": [
+            "refs/tags/poc-*"
+          ]
+        }
+      },
+      "rules": [
+        {
+          "type": "deletion"
+        },
+        {
+          "type": "update"
+        }
+      ],
+      "node_id": "RRS_lACqUmVwb3NpdG9yec5PGchjzgF96Ys",
+      "created_at": "2026-10-13T17:16:30.517-03:00",
+      "updated_at": "2026-10-13T17:16:30.561-03:00",
+      "bypass_actors": [],
+      "current_user_can_bypass": "never",
+      "_links": {
+        "self": {
+          "href": "https://api.github.com/repos/israelhudson/flutter_code_push_example/rulesets/25029003"
+        },
+        "html": {
+          "href": "https://github.com/israelhudson/flutter_code_push_example/rules/25029003"
+        }
+      }
+    }
+  ],
+  "candidate_count": 0,
+  "anonymous_read": false,
+  "authenticated_read": false,
+  "private_tables_rls": 8
+}
