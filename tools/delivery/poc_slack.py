@@ -1,0 +1,210 @@
+"""Isolated Slack/Supabase POC. No Shorebird calls or legacy journal writes."""
+import argparse
+import json
+import os
+from pathlib import Path
+import re
+import time
+from urllib.parse import urlparse
+from urllib.request import HTTPRedirectHandler, Request, build_opener
+
+import release_lab as lab
+
+PROJECT_FORBIDDEN = 'uvfwvplcziehxrkidrxh'
+GUARDS = {
+    'Slack - tags imutaveis': ('tag', ['refs/tags/poc-*'], {'update', 'deletion'}),
+    'Slack - PRs solo': ('branch', ['refs/heads/slack-main', 'refs/heads/poc-release/**'], {'pull_request', 'required_status_checks', 'non_fast_forward', 'deletion'}),
+}
+
+
+class NoRedirect(HTTPRedirectHandler):
+    def redirect_request(self, request, response, code, message, headers, newurl):
+        return None
+
+
+def backend_origin(value):
+    p = urlparse(value or '')
+    if (p.scheme != 'https' or not re.fullmatch(r'[a-z]{20}\.supabase\.co', p.hostname or '')
+            or p.hostname.startswith(PROJECT_FORBIDDEN + '.') or p.username or p.password
+            or p.port or p.query or p.fragment or p.path not in ('', '/')):
+        raise lab.LabError('Informe projeto Supabase exclusivo; o projeto compartilhado está bloqueado.')
+    return 'https://' + p.hostname
+
+
+def control(operation, **data):
+    base = backend_origin(os.environ.get('POC_SUPABASE_URL'))
+    secret_name = 'POC_PUBLICATION_SECRET' if operation in ('state', 'claim', 'complete') else 'POC_REGISTRATION_SECRET'
+    secret = os.environ.get(secret_name)
+    if not secret:
+        raise lab.LabError('Credencial exclusiva da POC ausente: ' + secret_name)
+    body = {'operation': operation, 'run_id': os.environ['GITHUB_RUN_ID'], **data}
+    request = Request(base + '/functions/v1/poc-control', method='POST',
+                      data=lab.canonical(body).encode(),
+                      headers={'Content-Type': 'application/json', 'Authorization': 'Bearer ' + secret})
+    try:
+        with build_opener(NoRedirect()).open(request, timeout=40) as r:
+            content = r.read(65537)
+            if len(content) > 65536:
+                raise ValueError('Response too large')
+            return json.loads(content)
+    except Exception as error:
+        raise lab.LabError('Backend não confirmou a operação. Confira destino, habilitação e recibos; não repetir envio incerto.') from error
+
+
+def protect():
+    rules = {r['name']: r for r in lab.api(lab.endpoint('rulesets'))}
+    for name, (target, patterns, required) in GUARDS.items():
+        if name not in rules:
+            raise lab.LabError('Proteção POC ausente. Aplicar configure_poc_slack.py antes do corte.')
+        r = lab.api(lab.endpoint('rulesets/' + str(rules[name]['id'])))
+        if (r.get('enforcement') != 'active' or r.get('target') != target or r.get('bypass_actors')
+                or r.get('conditions', {}).get('ref_name') != {'include': patterns, 'exclude': []}
+                or not required <= {rule['type'] for rule in r.get('rules', [])}):
+            raise lab.LabError('Proteção POC divergente; manter bloqueado.')
+        if 'required_status_checks' in required:
+            c = next(rule for rule in r['rules'] if rule['type'] == 'required_status_checks')
+            if not c['parameters'].get('strict_required_status_checks_policy') or 'Slack / Verificar contratos' not in {x['context'] for x in c['parameters']['required_status_checks']}:
+                raise lab.LabError('Check de correções POC ausente.')
+            pr = next(rule for rule in r['rules'] if rule['type'] == 'pull_request')
+            if pr['parameters'].get('required_approving_review_count') != 0:
+                raise lab.LabError('A integração solo exige zero reviews humanos apenas nas branches Slack.')
+
+
+def prepare(version, title, scope, output):
+    if not lab.VERSION.fullmatch(version or '') or not title.strip() or len(title) > 120 or any(ord(c) < 32 for c in title):
+        raise lab.LabError('Informe versão major.minor.patch e título curto em uma linha.')
+    protect()
+    p = control('plan', version=version, title=title, publication_scope=scope)
+    if (p.get('version') != version or p.get('rc_tag') != f'poc-v{version}-rc.{p.get("rc_number")}'
+            or type(p.get('rc_number')) is not int or p['rc_number'] < 1
+            or not re.fullmatch(r'poc-[a-f0-9]{32}', p.get('id', ''))
+            or not lab.SHA.fullmatch(p.get('source_sha', '')) or p.get('branch') != 'poc-release/' + version
+            or p.get('creator') != 'israelhudson' or p.get('publication_scope') != scope):
+        raise lab.LabError('Plano remoto fora da identidade da POC.')
+    lab.trusted_source(p['source_sha'])
+    if lab.git('rev-parse', p['source_sha'] + ':supabase') != lab.git('rev-parse', 'HEAD:supabase'):
+        raise lab.LabError('Código do backend difere das ferramentas confiáveis.')
+    latest = lab.api(lab.endpoint('releases/latest'))
+    base_tag = latest['tag_name']
+    if not re.fullmatch(r'v\d+\.\d+\.\d+', base_tag):
+        raise lab.LabError('Base de changelog nativa não identificada.')
+    base_ref = lab.api(lab.endpoint('git/ref/tags/' + base_tag))
+    if base_ref['object']['type'] != 'commit':
+        raise lab.LabError('Base anotada precisa de resolução explícita; não usar ponta de branch.')
+    p['changelog_base_sha'] = base_ref['object']['sha']
+    p['changelog_base_tag'] = base_tag
+    p['title'] = title
+    p['tooling_sha'] = lab.git('rev-parse', 'HEAD')
+    p['run_url'] = f'https://github.com/{lab.REPOSITORY}/actions/runs/{os.environ["GITHUB_RUN_ID"]}'
+    lab.output(output, 'candidate-plan.json', p)  # Intent recorded before GitHub effects.
+    lab.create_ref_verified('heads/' + p['branch'], p['source_sha'])
+    lab.create_ref_verified('tags/' + p['rc_tag'], p['source_sha'])
+    lab.outputs({'candidate_tag': p['rc_tag'], 'source_sha': p['source_sha'], 'tooling_sha': p['tooling_sha']})
+    return p
+
+
+def register(plan, metadata, smoke, output):
+    if (metadata.get('source_sha') != plan['source_sha'] or smoke.get('success') is not True
+            or smoke.get('source_sha') != plan['source_sha']
+            or any(metadata.get(k) != smoke.get(k) for k in ('web_content_sha256', 'snapshot_manifest_sha256'))):
+        raise lab.LabError('Preview sem prova de SHA e bytes do build.')
+    source = plan['source_sha']
+    if smoke.get('snapshot_url') != f'https://israelhudson.github.io/flutter_code_push_example/snapshots/{source}/':
+        raise lab.LabError('Preview fora da identidade da candidata.')
+    base = plan['changelog_base_sha']
+    compare = lab.api(lab.endpoint('compare/' + base + '...' + source))
+    if compare.get('status') not in ('ahead', 'identical') or compare.get('total_commits') != len(compare.get('commits', [])):
+        raise lab.LabError('Histórico não ancestral ou truncado.')
+    commits = [{'sha': c['sha'], 'title': c['commit']['message'].splitlines()[0]} for c in compare['commits']]
+    r = {**plan, 'repository': lab.REPOSITORY, 'preview_url': smoke['snapshot_url'], 'preview_sha': source,
+         'web_content_sha256': metadata['web_content_sha256'], 'snapshot_manifest_sha256': metadata['snapshot_manifest_sha256'],
+         'changelog_base_sha': base, 'commits': commits, 'changelog': '\n'.join('- ' + c['title'] for c in commits),
+         'platforms': {'android': {'base_release_version': None, 'effective_patch': None},
+                       'ios': {'base_release_version': None, 'effective_patch': None}}}
+    lab.output(output, 'frozen-report.json', r)
+    result = control('register', report_text=lab.canonical(r), report_digest=lab.digest(r))
+    if result.get('id') != plan['id']:
+        raise lab.LabError('Registro remoto divergente.')
+    lab.output(output, 'registration.json', result)
+    for _ in range(12):
+        status = control('delivery', candidate=plan['id'])
+        lab.output(output, 'card-receipt.json', status)
+        if status.get('delivery') == 'sent' and status.get('message_ts'):
+            return status
+        if status.get('delivery') in ('uncertain', 'skipped'):
+            raise lab.LabError('Envio de cartão incerto; reconciliar sem reenviar.')
+        time.sleep(2)
+    raise lab.LabError('Registro preservado, mas cartão ainda sem recibo; inspecionar o backend.')
+
+
+def release_body(c):
+    return 'Release de TESTE da POC Slack.\n\nCódigo aprovado: ' + c['source_sha'] + '\n\nRelatório: ' + c['report_digest'] + '\n\n' + c['report_text']
+
+
+def publish(candidate, output):
+    if not re.fullmatch(r'poc-[a-f0-9]{32}', candidate or ''):
+        raise lab.LabError('ID de candidata inválido.')
+    protect()
+    c = control('state', candidate=candidate)
+    if not lab.SHA.fullmatch(c.get('source_sha', '')) or c.get('publication_scope') != 'github_test':
+        raise lab.LabError('Candidata sem escopo GitHub TESTE.')
+    authorization = control('claim', candidate=candidate)
+    lab.output(output, 'publication-intent.json', authorization)
+    if authorization.get('already_published'):
+        lab.output(output, 'receipt.json', authorization['receipt'])
+        return authorization['receipt']
+    tag = 'poc-v' + c['version']
+    if not re.fullmatch(r'poc-v\d+\.\d+\.\d+', tag):
+        raise lab.LabError('Tag final fora do namespace POC.')
+    control('claim', candidate=candidate)  # Live recheck immediately before each external effect.
+    lab.create_ref_verified('tags/' + tag, c['source_sha'])
+    control('claim', candidate=candidate)
+    existing = lab.api(lab.endpoint('releases/tags/' + tag), missing=True)
+    expected = {'tag_name': tag, 'target_commitish': c['source_sha'], 'name': 'POC Slack — ' + c['version'],
+                'body': release_body(c), 'draft': False, 'prerelease': True, 'make_latest': 'false'}
+    if existing is None:
+        existing = lab.api(lab.endpoint('releases'), expected, 'POST')
+    if any(existing.get(k) != expected[k] for k in ('tag_name', 'body', 'name', 'draft', 'prerelease')):
+        raise lab.LabError('Release existente diverge; não sobrescrever.')
+    receipt = {'tag': tag, 'source_sha': c['source_sha'], 'report_digest': c['report_digest'],
+               'release_id': existing['id'], 'release_url': existing['html_url'],
+               'published_at': existing['published_at'], 'distribution_performed': False,
+               'platforms': json.loads(c['report_text'])['platforms']}
+    lab.output(output, 'receipt.json', receipt)  # Preserve actual effect even if completion API response is lost.
+    control('complete', candidate=candidate, receipt=receipt)
+    return receipt
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    commands = parser.add_subparsers(dest='operation', required=True)
+    p = commands.add_parser('prepare'); p.add_argument('--version', required=True); p.add_argument('--title', required=True); p.add_argument('--scope', choices=['none','github_test'], default='none')
+    p = commands.add_parser('register'); p.add_argument('--plan', required=True); p.add_argument('--metadata', required=True); p.add_argument('--smoke', required=True)
+    p = commands.add_parser('publish'); p.add_argument('--candidate', required=True)
+    for p in commands.choices.values():
+        p.add_argument('--output', required=True)
+    a = parser.parse_args()
+    try:
+        if (os.environ.get('POC_SLACK_ENABLED') != 'true' or os.environ.get('GITHUB_REPOSITORY') != lab.REPOSITORY
+                or os.environ.get('POC_SOURCE_BRANCH', 'slack-main') not in ('main', 'slack-main') or os.environ.get('GITHUB_REF') != 'refs/heads/' + os.environ.get('POC_SOURCE_BRANCH', 'slack-main') or os.environ.get('GITHUB_EVENT_NAME') != 'workflow_dispatch'
+                or not re.fullmatch(r'\d+', os.environ.get('GITHUB_RUN_ID', ''))):
+            raise lab.LabError('Execute somente o workflow manual habilitado na branch de integração configurada da POC.')
+        if a.operation == 'prepare':
+            result = prepare(a.version, a.title, a.scope, a.output)
+        elif a.operation == 'register':
+            result = register(*(json.loads(Path(p).read_text()) for p in (a.plan, a.metadata, a.smoke)), a.output)
+        else:
+            if os.environ.get('POC_SLACK_PUBLISH_ENABLED') != 'true':
+                raise lab.LabError('Publicação GitHub de teste ainda desativada.')
+            result = publish(a.candidate, a.output)
+        print(lab.canonical(result))
+        return 0
+    except (lab.LabError, ValueError, OSError, KeyError) as error:
+        reason = str(error) if isinstance(error, lab.LabError) else 'Dados inválidos; manter bloqueado.'
+        lab.output(a.output, 'blocked.json', {'reason': reason, 'distribution_performed': False})
+        print(reason)
+        return 1
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

@@ -1,0 +1,16 @@
+{
+  "version": "5",
+  "specifiers": {
+    "npm:@electric-sql/pglite@0.5.9": "0.5.9"
+  },
+  "npm": {
+    "@electric-sql/pglite@0.5.9": {
+      "integrity": "sha512-GoQTRMZ/o4J3sMW4mLDtDFGNOm1xy5oH+iHDALWll3uERY6OF4BSnL1t7FZH2Mlw+RPceDBlFJgSaecO73c4EA=="
+    }
+  },
+  "workspace": {
+    "dependencies": [
+      "npm:@electric-sql/pglite@0.5.9"
+    ]
+  }
+}

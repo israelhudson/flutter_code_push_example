@@ -1,0 +1,29 @@
+{
+  "display_information": {
+    "name": "Flutter Deploy POC Slack",
+    "description": "Aceites isolados do laborat\u00f3rio pessoal"
+  },
+  "features": {
+    "bot_user": {
+      "display_name": "Flutter Deploy POC Slack",
+      "always_online": false
+    }
+  },
+  "oauth_config": {
+    "scopes": {
+      "bot": [
+        "chat:write",
+        "groups:read"
+      ]
+    }
+  },
+  "settings": {
+    "interactivity": {
+      "is_enabled": true,
+      "request_url": "https://xtvueqciogzkyjkkqxcx.supabase.co/functions/v1/poc-slack-approvals"
+    },
+    "org_deploy_enabled": false,
+    "socket_mode_enabled": false,
+    "token_rotation_enabled": false
+  }
+}

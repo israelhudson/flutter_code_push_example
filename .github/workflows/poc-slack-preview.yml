@@ -1,0 +1,105 @@
+name: Slack - Preview do PR
+on:
+  pull_request_target:
+    branches: [main, slack-main]
+    types: [opened, synchronize, reopened]
+permissions:
+  contents: read
+concurrency:
+  group: poc-preview-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+jobs:
+  build:
+    if: vars.POC_PR_PREVIEW_ENABLED == 'true' && github.base_ref == (vars.POC_SOURCE_BRANCH || 'slack-main') && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          path: trusted
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: app
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./trusted/.github/actions/setup-flutter
+        with:
+          build-inputs: app/delivery/build-inputs.json
+      - name: Testar aplicativo sem token de escrita
+        working-directory: app
+        run: |
+          flutter pub get --enforce-lockfile
+          flutter analyze
+          flutter test
+      - name: Compilar preview do código congelado
+        env:
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python3 trusted/deploy/pages_preview.py build --repo app --source-sha "$SOURCE_SHA" --site "$RUNNER_TEMP/poc-new-site" > "$RUNNER_TEMP/poc-build.json"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: poc-built-preview
+          path: ${{ runner.temp }}/poc-new-site/
+          retention-days: 90
+  web:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    # Same Pages lock as the original flow. No shared delivery-state lock.
+    concurrency:
+      group: pages-preview
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      actions: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          path: trusted
+          persist-credentials: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: poc-built-preview
+          path: ${{ runner.temp }}/poc-incoming
+      - name: Recuperar e importar histórico estático sem sobrescrever
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python3 trusted/deploy/pages_preview.py history --site "$RUNNER_TEMP/poc-site"
+          python3 trusted/tools/delivery/issue_preview.py --incoming "$RUNNER_TEMP/poc-incoming" --site "$RUNNER_TEMP/poc-site" --source-sha "$SOURCE_SHA" > "$RUNNER_TEMP/poc-metadata.json"
+          python3 trusted/deploy/pages_preview.py persist --site "$RUNNER_TEMP/poc-site"
+          python3 trusted/deploy/pages_preview.py export --site "$RUNNER_TEMP/poc-site" --output "$RUNNER_TEMP/poc-public"
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9
+        with:
+          path: ${{ runner.temp }}/poc-public
+      - uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346
+      - name: Confirmar arquivos e identidade pelo link publicado
+        env:
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python3 - <<'PY'
+          import json, os, sys
+          from pathlib import Path
+          sys.path.insert(0, 'trusted/deploy')
+          import pages_smoke
+          metadata = json.loads(Path(os.environ['RUNNER_TEMP'], 'poc-metadata.json').read_text())
+          report = pages_smoke.verify(os.environ['SOURCE_SHA'], metadata['web_content_sha256'], metadata['snapshot_manifest_sha256'])
+          Path(os.environ['RUNNER_TEMP'], 'poc-smoke.json').write_text(json.dumps(report))
+          PY
+      - if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: poc-web-proof
+          path: |
+            ${{ runner.temp }}/poc-metadata.json
+            ${{ runner.temp }}/poc-smoke.json
+          retention-days: 90
+          if-no-files-found: ignore

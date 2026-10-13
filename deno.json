@@ -1,0 +1,8 @@
+{
+  "tasks": {
+    "check:poc": "deno fmt --check supabase/functions tests/slack_supabase && deno lint supabase/functions tests/slack_supabase && deno check supabase/functions/*/index.ts && deno test -A tests/slack_supabase"
+  },
+  "imports": { "@electric-sql/pglite": "npm:@electric-sql/pglite@0.5.9" },
+  "fmt": { "lineWidth": 100 },
+  "lint": { "rules": { "exclude": ["no-explicit-any"] } }
+}

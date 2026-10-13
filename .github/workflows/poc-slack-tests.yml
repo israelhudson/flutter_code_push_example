@@ -1,0 +1,32 @@
+name: Slack - Verificar contratos
+on:
+  pull_request:
+    branches: [main, slack-main, 'poc-release/**']
+permissions:
+  contents: read
+jobs:
+  contracts:
+    name: Slack / Verificar contratos
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2
+        with:
+          deno-version: 2.9.5
+      - name: Assinatura, roteamento, Postgres local e deduplicação
+        run: deno task check:poc
+      - name: Contratos da integração GitHub
+        run: python3 -m unittest discover -s tests/delivery -p 'test_poc*.py' -v
+      - uses: ./.github/actions/setup-flutter
+        if: github.base_ref != 'main'
+        with:
+          build-inputs: delivery/build-inputs.json
+      - name: Verificar correção do app antes de cortar RC2
+        if: github.base_ref != 'main'
+        run: |
+          flutter pub get --enforce-lockfile
+          flutter analyze
+          flutter test

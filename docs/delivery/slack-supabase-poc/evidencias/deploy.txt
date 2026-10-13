@@ -1,0 +1,14 @@
+Deploying Function: poc-control
+Uploading asset (poc-control): supabase/functions/poc-control/index.ts
+Uploading asset (poc-control): supabase/functions/_shared/poc.ts
+Uploading asset (poc-control): supabase/functions/_shared/preview.ts
+Deploying Function: poc-slack-approvals
+Uploading asset (poc-slack-approvals): supabase/functions/poc-slack-approvals/index.ts
+Uploading asset (poc-slack-approvals): supabase/functions/_shared/poc.ts
+Uploading asset (poc-slack-approvals): supabase/functions/_shared/preview.ts
+Deploying Function: poc-slack-router
+Uploading asset (poc-slack-router): supabase/functions/poc-slack-router/index.ts
+Uploading asset (poc-slack-router): supabase/functions/_shared/router.ts
+Uploading asset (poc-slack-router): supabase/functions/_shared/poc.ts
+Uploading asset (poc-slack-router): supabase/functions/_shared/preview.ts
+{"project_ref":"xtvueqciogzkyjkkqxcx","functions":["poc-control","poc-slack-approvals","poc-slack-router"],"dashboard_url":"https://supabase.com/dashboard/project/xtvueqciogzkyjkkqxcx/functions","message":"Deployed Functions."}

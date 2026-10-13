@@ -1,0 +1,13 @@
+{
+  "bot_user_id": "U0C750FTCS3",
+  "team_id": "T09CYB7AS77",
+  "channel_id": "C0C8DUJB52L",
+  "app_id": "A0C750DS05D",
+  "required_scopes": [
+    "chat:write",
+    "groups:read"
+  ],
+  "source_credentials_copied_to_dedicated_project": true,
+  "shared_project_secrets_changed": false,
+  "new_poc_flags_enabled": false
+}
