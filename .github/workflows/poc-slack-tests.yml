@@ -1,5 +1,7 @@
 name: Slack - Verificar contratos
 on:
+  push:
+    branches: [slack-main, 'poc-release/**']
   pull_request:
     branches: [main, slack-main, 'poc-release/**']
 permissions:

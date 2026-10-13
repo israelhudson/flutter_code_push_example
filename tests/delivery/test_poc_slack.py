@@ -12,6 +12,42 @@ import release_lab as lab
 
 
 class POCContracts(unittest.TestCase):
+    def test_cut_requires_successful_post_merge_run_and_job(self):
+        valid = {'id': 42, 'head_sha': 'a'*40, 'head_branch': 'slack-main',
+                 'event': 'push', 'status': 'completed', 'conclusion': 'success'}
+        job = {'name': 'Slack / Verificar contratos', 'status': 'completed', 'conclusion': 'success'}
+        for changes in ({'event': 'pull_request'}, {'head_sha': 'b'*40},
+                        {'head_branch': 'main'}, {'conclusion': 'failure'}, {'status': 'in_progress'}):
+            with self.subTest(changes=changes), tempfile.TemporaryDirectory() as out, \
+                    patch.object(lab, 'api', return_value={'workflow_runs': [{**valid, **changes}]}) as api:
+                with self.assertRaisesRegex(lab.LabError, 'check do PR'):
+                    poc.checked_source('a'*40, out, 'poc-release/1.14.0')
+                self.assertEqual(api.call_count, 1)
+        for conclusion in ('failure', 'skipped', 'success'):
+            with self.subTest(job=conclusion), tempfile.TemporaryDirectory() as out, \
+                    patch.object(lab, 'api', side_effect=[{'workflow_runs': [valid]},
+                               {'jobs': [{**job, 'conclusion': conclusion}]}]):
+                if conclusion == 'success':
+                    poc.checked_source('a'*40, out, 'poc-release/1.14.0')
+                    self.assertTrue(json.loads(Path(out, 'source-check.json').read_text())['success'])
+                else:
+                    with self.assertRaises(lab.LabError): poc.checked_source('a'*40, out, 'poc-release/1.14.0')
+        with tempfile.TemporaryDirectory() as out, patch.object(lab, 'api', side_effect=[
+                {'workflow_runs': [{**valid, 'head_branch': 'poc-release/1.14.0'}]}, {'jobs': [job]}]):
+            poc.checked_source('a'*40, out, 'poc-release/1.14.0')
+            self.assertTrue(json.loads(Path(out, 'source-check.json').read_text())['success'])
+
+    def test_missing_post_merge_check_stops_before_git_effects(self):
+        plan = {'version': '1.14.0', 'rc_tag': 'poc-v1.14.0-rc.1', 'rc_number': 1,
+                'id': 'poc-'+'a'*32, 'source_sha': 'a'*40, 'branch': 'poc-release/1.14.0',
+                'creator': 'israelhudson', 'publication_scope': 'none'}
+        with tempfile.TemporaryDirectory() as out, patch.object(poc, 'protect'), \
+                patch.object(poc, 'control', return_value=plan), patch.object(lab, 'trusted_source'), \
+                patch.object(lab, 'api', return_value={'workflow_runs': []}), \
+                patch.object(lab, 'create_ref_verified') as refs:
+            with self.assertRaises(lab.LabError): poc.prepare('1.14.0', 'login', 'none', out)
+            refs.assert_not_called()
+
     def test_exclusive_origin(self):
         self.assertEqual(poc.backend_origin('https://'+'a'*20+'.supabase.co/'),'https://'+'a'*20+'.supabase.co')
         for url in ('https://uvfwvplcziehxrkidrxh.supabase.co','http://'+'a'*20+'.supabase.co','https://'+'a'*20+'.supabase.co?x=1','https://token@'+'a'*20+'.supabase.co'):
