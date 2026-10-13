@@ -44,3 +44,11 @@ Teste negativo verde significa que o bloqueio esperado ocorreu.
   `bc6a30bd-0768-4326-8885-8be69c59aed2`, release-base por Android/iOS,
   track e dispositivo instalado. Patch efetivo começa nulo até recibo real.
 - Não há publicação em stores nem patch mobile neste PR.
+
+## Diferença entre máquina local e runner
+
+A regressão local passou em 512 testes, mas o primeiro CI falhou num teste
+antigo do GitHub CLI. A fixture usava ambiente mínimo e removia HOME. A correção
+preserva o home do sistema no processo filho, com GH_CONFIG_DIR/XDG isolados e
+token falso. Não suaviza assertions nem muda upload de publicação. Conferir o
+novo CI antes de atribuir causa confirmada ou encerrar essa ocorrência.

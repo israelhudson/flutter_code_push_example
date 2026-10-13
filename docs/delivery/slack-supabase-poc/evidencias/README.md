@@ -32,3 +32,15 @@ do checkout, com acesso restrito; nenhum secret está nestes registros.
 Reutilização: auth.test e membros do canal confirmados com token existente; scopes
 chat:write/groups:read suficientes, sem ampliar permissões. Router testado localmente
 e com probes HTTP inválidos reais. Isso não comprova cliques humanos de cartão antigo.
+
+Decisão final desta rodada: Israel escolheu manter a Request URL antiga.
+O novo receptor foi preparado e publicado, mas a integração interativa continua
+com o laboratório/Mobile. As flags da POC permanecem false.
+
+CI inicial: Slack e Issue passaram; o check Flutter parou em um teste legado
+de HTTP/CLI (antes de analyze/test Flutter). O runner usa gh 2.102.0, local gh
+2.101.0. A fixture não herdava HOME: preserve-se a referência de home do sistema,
+sem substituir seu valor. GH_CONFIG_DIR/XDG continuam vazios/isolados e o token
+continua sintético. Contrato 411, Content-Length e bytes permanece obrigatório.
+O teste específico local passou depois do ajuste; validar novamente no GitHub.
+Nenhum workflow antigo ou função de publicação foi alterado por esta correção.

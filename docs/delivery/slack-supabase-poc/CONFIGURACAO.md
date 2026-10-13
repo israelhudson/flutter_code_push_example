@@ -40,7 +40,9 @@ da credencial de servidor. Não colocar service role no GitHub nem no navegador.
 
 ## 3. Reutilizar Flutter Deploy LAB com encaminhamento
 
-**Esta é a opção escolhida por Israel. Não precisa criar outro app.** O canal é
+**Esta é a opção escolhida por Israel. Não precisa criar outro app.**
+Israel decidiu manter a Request URL antiga por enquanto: o router novo está
+publicado/testado, mas não recebe os cliques do app. Não ativar a POC antes dessa troca. O canal é
 `app-deploy-test-isr`, app `A0C750DS05D`, bot `U0C750FTCS3`. Token e assinatura
 foram verificados e configurados somente no projeto exclusivo. Scopes existentes
 `chat:write`/`groups:read` bastam: a DM/App Home usa `chat.postMessage` com ID do

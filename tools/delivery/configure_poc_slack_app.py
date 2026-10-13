@@ -1,4 +1,4 @@
-"""Collect credentials locally; validate the separate bot before installing disabled settings."""
+"""Collect credentials locally; validate the selected bot before installing disabled settings."""
 import argparse
 import getpass
 import json
@@ -36,11 +36,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--shared-app', action='store_true', help='Existing LAB app through the verified router; never edit its old backend.')
     args = parser.parse_args()
-    app = input('App ID do novo app exclusivo: ').strip()
+    app = input('App ID do app escolhido: ').strip()
     if not re.fullmatch(r'A[A-Z0-9]+', app):
         raise ValueError('App ID inválido.')
-    token = getpass.getpass('Bot User OAuth Token do novo app (oculto): ').strip()
-    signing = getpass.getpass('Signing Secret do novo app (oculto): ').strip()
+    token = getpass.getpass('Bot User OAuth Token do app escolhido (oculto): ').strip()
+    signing = getpass.getpass('Signing Secret do app escolhido (oculto): ').strip()
     if not token.startswith('xoxb-') or len(signing) < 16 or '\n' in signing:
         raise ValueError('Credenciais inválidas.')
     bot, scopes = slack(token, 'auth.test', {})
@@ -49,7 +49,7 @@ def main():
     if args.shared_app and (bot.get('user_id') != OLD_BOT or app != 'A0C750DS05D'):
         raise ValueError('O modo compartilhado exige o app LAB confirmado.')
     if not {'chat:write', 'groups:read'} <= scopes:
-        raise ValueError('Scopes insuficientes; conferir manifest e reinstalar o novo app.')
+        raise ValueError('Scopes insuficientes; conferir manifest e reinstalar o app escolhido.')
     members, cursor = [], ''
     for _ in range(20):
         data, _ = slack(token, 'conversations.members', {'channel': CHANNEL, 'limit': 200, **({'cursor': cursor} if cursor else {})})
@@ -58,8 +58,8 @@ def main():
         if not cursor:
             break
     if cursor or bot.get('user_id') not in members or USER not in members:
-        raise ValueError('Adicione o novo bot no app-deploy-test-isr antes de configurar.')
-    print('Bot exclusivo e Israel confirmados no canal de teste; nenhuma mensagem enviada.')
+        raise ValueError('Adicione o bot escolhido no app-deploy-test-isr antes de configurar.')
+    print('Bot escolhido e Israel confirmados no canal de teste; nenhuma mensagem enviada.')
     print('Será configurado somente o projeto ' + PROJECT + ', com flags desligadas.')
     if input('Digite CONFIGURAR para instalar as credenciais: ').strip() != 'CONFIGURAR':
         print('Cancelado sem alterações.')

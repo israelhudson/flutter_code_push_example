@@ -82,3 +82,7 @@ encaminhamento. As credenciais foram verificadas e copiadas somente para o
 projeto exclusivo. Scopes chat:write/groups:read existentes são suficientes;
 nenhuma permissão nova foi solicitada. A URL atual foi observada no navegador
 e segue apontando ao receptor antigo enquanto se conclui o ensaio do router.
+
+Israel escolheu **manter a Request URL antiga por enquanto**. O router está
+publicado e passou nos probes; ainda não recebe cliques do app Slack.
+Preparação, preview e publicação da nova POC permanecem desativados.

@@ -1,0 +1,7 @@
+Run https://github.com/israelhudson/flutter_code_push_example/actions/runs/38462944222
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-13T20:28:49.7297643Z FAIL: test_real_gh_stdin_upload_requires_explicit_byte_length_and_preserves_bytes (test_github_lab_release.GitHubLabReleaseTests.test_real_gh_stdin_upload_requires_explicit_byte_length_and_preserves_bytes)
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-13T20:28:49.7299578Z   File "/home/runner/work/flutter_code_push_example/flutter_code_push_example/app/tests/delivery/test_github_lab_release.py", line 373, in test_real_gh_stdin_upload_requires_explicit_byte_length_and_preserves_bytes
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-13T20:28:49.7300171Z     self.assertIn(b'411', old.stdout)
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-13T20:28:49.7300406Z AssertionError: b'411' not found in b''
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-13T20:28:49.7301062Z Ran 512 tests in 31.204s
+Flutter analyze e test	Verificar contratos e bloqueios da esteira	2026-10-13T20:28:49.7301259Z FAILED (failures=1)

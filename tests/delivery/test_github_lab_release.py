@@ -363,6 +363,10 @@ class GitHubLabReleaseTests(unittest.TestCase):
                        'XDG_DATA_HOME': str(self.folder / 'gh-data'),
                        'XDG_CACHE_HOME': str(self.folder / 'gh-cache'),
                        'NO_PROXY': '127.0.0.1'}
+        # Preserve the OS home lookup needed by the Linux CLI; credential/config
+        # isolation still comes from the empty GH_CONFIG_DIR, XDG paths and fake token.
+        if os.environ.get('HOME'):
+            environment['HOME'] = os.environ['HOME']
         endpoint = '/repos/' + release.REPO + '/releases/500/assets?name=candidate.json'
         local_url = 'http://127.0.0.1:' + str(server.server_port) + endpoint
         native_run = subprocess.run
@@ -370,7 +374,9 @@ class GitHubLabReleaseTests(unittest.TestCase):
                           '--input', '-', '--include', '-H', 'Content-Type: application/octet-stream'],
                          input=data, capture_output=True, env=environment, timeout=10, check=False)
         self.assertNotEqual(old.returncode, 0)
-        self.assertIn(b'411', old.stdout)
+        self.assertIn(b'411', old.stdout,
+                      'Offline CLI failed before expected HTTP response: ' +
+                      old.stderr.decode('utf-8', errors='replace'))
         self.assertIsNone(received[0]['length'])
 
         def localhost_only(args, **kwargs):

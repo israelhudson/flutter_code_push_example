@@ -1,0 +1,6 @@
+test_real_gh_stdin_upload_requires_explicit_byte_length_and_preserves_bytes (test_github_lab_release.GitHubLabReleaseTests.test_real_gh_stdin_upload_requires_explicit_byte_length_and_preserves_bytes) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 2.343s
+
+OK
