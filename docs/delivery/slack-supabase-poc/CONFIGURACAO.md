@@ -134,6 +134,26 @@ criada com escopo `github_test`; uma candidata `none` nunca recebe upgrade.
 
 ## 6. Recuperação e rollback
 
+### Retenção dos previews de PR
+
+Os workflows Slack arquivam os snapshots sem vínculo com entrega, preservando:
+todas as tags (inclusive anotadas, em qualquer namespace), metadados de candidata,
+destino da página inicial, snapshot que está entrando e dois previews de PR
+anteriores mais recentes pela data do commit. Arquivar retira esses previews
+antigos do Pages, mas seus arquivos ficam no commit anterior de
+`codex/pages-previews`; não há force-push nem remoção de tags.
+
+O artefato `poc-web-proof` inclui `preview-retention.json`, com lista de snapshots,
+bytes liberados e commit de recuperação. A retenção usa o lock `pages-preview`.
+Falha ao consultar tags, nova tag protegendo um arquivo planejado, checkout sujo
+ou orçamento insuficiente bloqueiam a operação. Se as próprias entregas
+preservadas consumirem os 800 MiB, migrar o armazenamento; não apagar RCs.
+
+Para recuperar um preview arquivado, buscar o `history_commit` do recibo e
+extrair `snapshots/<SHA>` desse commit para revisão/restauração por commit comum.
+Na manutenção inicial, o arquivo no Git antecede a atualização no Pages:
+os links antigos deixam de estar online na próxima publicação do site.
+
 Se o corte parar por falta de check no commit integrado, ele não deve criar refs.
 Conferir artefatos, refs e banco antes de repetir. Sem RC registrada, a próxima
 tentativa usa a mesma versão e continua RC1; não excluir a entrega nem inventar RC2.
