@@ -48,6 +48,31 @@ class POCContracts(unittest.TestCase):
             with self.assertRaises(lab.LabError): poc.prepare('1.14.0', 'login', 'none', out)
             refs.assert_not_called()
 
+    def test_recovery_requires_exact_reviewed_source_tools_tag_and_scope(self):
+        plan = {'source_sha': 'a'*40, 'rc_tag': 'poc-v1.14.0-rc.2', 'publication_scope': 'github_test'}
+        record = {**plan, 'schema': 'poc-preview-recovery-v1',
+                  'source_objects': {p: 'b'*40 for p in poc.RECOVERY_PATHS},
+                  'tooling_objects': {p: 'b'*40 for p in poc.RECOVERY_PATHS}}
+        for change in ('none', 'rc_tag', 'source_sha', 'publication_scope', 'tooling', 'missing', 'backend'):
+            with self.subTest(change=change), tempfile.TemporaryDirectory() as out:
+                edited = json.loads(json.dumps(record))
+                if change in plan: edited[change] = 'different'
+                if change == 'missing': del edited['source_objects']['deploy']
+                if change == 'backend': edited['tooling_objects']['supabase'] = 'c'*40
+                def git(*args):
+                    if args[0] == 'show': return json.dumps(edited)
+                    if args == ('rev-parse', 'HEAD'): return 'd'*40
+                    if change == 'tooling' and args[1] == 'HEAD:tools/delivery': return 'c'*40
+                    if change == 'backend' and args[1] == 'HEAD:supabase': return 'c'*40
+                    return 'b'*40
+                with patch.object(lab, 'trusted_source', side_effect=lab.LabError('mismatch')), patch.object(lab, 'git', side_effect=git):
+                    if change == 'none':
+                        self.assertEqual(poc.trusted_poc_source(plan, out), 'd'*40)
+                        self.assertTrue(Path(out, 'tooling-recovery.json').exists())
+                    else:
+                        with self.assertRaises(lab.LabError): poc.trusted_poc_source(plan, out)
+                        self.assertFalse(Path(out, 'tooling-recovery.json').exists())
+
     def test_exclusive_origin(self):
         self.assertEqual(poc.backend_origin('https://'+'a'*20+'.supabase.co/'),'https://'+'a'*20+'.supabase.co')
         for url in ('https://uvfwvplcziehxrkidrxh.supabase.co','http://'+'a'*20+'.supabase.co','https://'+'a'*20+'.supabase.co?x=1','https://token@'+'a'*20+'.supabase.co'):

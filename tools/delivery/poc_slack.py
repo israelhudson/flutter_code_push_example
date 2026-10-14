@@ -91,6 +91,35 @@ def checked_source(source_sha, output, release_branch):
                        'nenhuma branch ou tag foi criada nesta tentativa.')
 
 
+RECOVERY_PATHS = ('.github', 'deploy', 'tools/delivery', 'delivery/release-lab-policy.json', 'supabase')
+
+
+def trusted_poc_source(plan, output):
+    try:
+        return lab.trusted_source(plan['source_sha'])
+    except lab.LabError:
+        # Explicit reviewed compatibility record; no generic divergence fallback.
+        try:
+            recovery = json.loads(lab.git('show', 'HEAD:delivery/poc-preview-recovery.json'))
+            if (recovery['source_sha'] != plan['source_sha'] or recovery['rc_tag'] != plan['rc_tag']
+                    or recovery['publication_scope'] != plan['publication_scope']
+                    or recovery['schema'] != 'poc-preview-recovery-v1'):
+                raise ValueError('Recovery identity differs')
+            for ref, key in ((plan['source_sha'], 'source_objects'), ('HEAD', 'tooling_objects')):
+                if set(recovery[key]) != set(RECOVERY_PATHS):
+                    raise ValueError('Incomplete recovery binding')
+                for path in RECOVERY_PATHS:
+                    if lab.git('rev-parse', ref + ':' + path) != recovery[key][path]:
+                        raise ValueError('Recovery tooling/source differs')
+            # Even a recovery cannot alter the app backend contract.
+            if recovery['source_objects']['supabase'] != recovery['tooling_objects']['supabase']:
+                raise ValueError('Backend recovery is not authorized')
+        except (lab.LabError, ValueError, KeyError, TypeError):
+            raise lab.LabError('Recuperação exige RC, fonte e ferramentas exatamente revisadas.') from None
+        lab.output(output, 'tooling-recovery.json', recovery)
+        return lab.git('rev-parse', 'HEAD')
+
+
 def prepare(version, title, scope, output):
     if not lab.VERSION.fullmatch(version or '') or not title.strip() or len(title) > 120 or any(ord(c) < 32 for c in title):
         raise lab.LabError('Informe versão major.minor.patch e título curto em uma linha.')
@@ -102,7 +131,7 @@ def prepare(version, title, scope, output):
             or not lab.SHA.fullmatch(p.get('source_sha', '')) or p.get('branch') != 'poc-release/' + version
             or p.get('creator') != 'israelhudson' or p.get('publication_scope') != scope):
         raise lab.LabError('Plano remoto fora da identidade da POC.')
-    lab.trusted_source(p['source_sha'])
+    trusted_poc_source(p, output)
     checked_source(p['source_sha'], output, p['branch'])
     if lab.git('rev-parse', p['source_sha'] + ':supabase') != lab.git('rev-parse', 'HEAD:supabase'):
         raise lab.LabError('Código do backend difere das ferramentas confiáveis.')
