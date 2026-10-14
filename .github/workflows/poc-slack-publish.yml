@@ -1,4 +1,4 @@
-name: Slack - Publicar versão aprovada
+name: Entrega · Publicar versão aprovada
 on:
   workflow_dispatch:
     inputs:

@@ -1,4 +1,4 @@
-name: Slack - Verificar contratos
+name: Entrega · Verificar contratos
 on:
   push:
     branches: [slack-main, 'poc-release/**']
