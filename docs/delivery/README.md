@@ -180,18 +180,15 @@ integrado. O evento `closed` deixou de executar publicação.
 
 ## Persistência e avisos Slack
 
-Para novos cortes LAB/Issue, seguir [Bots por projeto](BOTS-POR-PROJETO.md):
-perfil `poc-v1`, Flutter POC Deploy e `POC_SLACK_BOT_TOKEN`. Registros anteriores
-continuam com sua identidade original durante a transição.
+LAB e Issue usam Flutter POC Deploy, perfil `poc-v1` e secret
+`POC_SLACK_BOT_TOKEN`. Seus cartões são avisos com links; as decisões continuam
+no GitHub. A alternativa **Slack -** registra aceites no seu próprio receptor.
+Consultar [Bots por projeto](BOTS-POR-PROJETO.md) para identificar cada fluxo.
 
-A escolha é GitHub nativo para aprovar e publicar; Slack recebe apenas avisos e
-links no canal privado `app-deploy-test-isr` (`C0C8DUJB52L`). O bot
-histórico `Flutter Deploy LAB` e o secret `SLACK_BOT_TOKEN` têm
-[prova de conexão real](CONFIGURAR-SLACK-LAB.md). Os avisos automáticos da
-candidata estão preparados na branch, aguardando integração e ensaio próprio;
-seu [manual de operação](SLACK-AUTOMATICO.md) explica eventos e recuperação.
-Secret ausente ou falha Slack produz aviso opcional e não bloqueia os gates
-nem a publicação. O publicador mobile não existe nesta POC.
+A migração foi validada e o bot Amulets removido do canal POC. Registros antigos
+mantêm identidade e recibos, como histórico; o secret legado `SLACK_BOT_TOKEN`
+foi retirado deste repositório. O [manual antigo](CONFIGURAR-SLACK-LAB.md)
+registra a conexão original, não é instrução para restaurar o bot compartilhado.
 
 Os parágrafos de bootstrap acima descrevem a etapa anterior da POC. O fluxo
 atual mantém estado/diário em `release-lab/state.json`, na branch
@@ -224,3 +221,10 @@ RC reservada sem PR; a próxima tentativa usa outro número, sem reutilizar a ta
 O branch de estudos e seus documentos anteriores foram consultados e preservados.
 As recomendações históricas de publicar primeiro em uma track Shorebird não são
 usadas aqui: a decisão atual é **aprovar antes de gerar qualquer patch**.
+
+### Inventário operacional dos bots
+
+[Manual dos bots Slack](BOTS-POR-PROJETO.md): identidades, canais, receptores,
+credenciais, decisões por fluxo, retirada do bot antigo, evidências e recuperação.
+A separação foi concluída em 13/10/2026; instruções históricas de transição não
+representam a configuração atual.

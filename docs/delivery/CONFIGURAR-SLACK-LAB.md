@@ -1,3 +1,8 @@
+> **Registro histórico:** a configuração compartilhada descrita abaixo foi
+> substituída. Use o [manual atual dos bots](BOTS-POR-PROJETO.md).
+> LAB/Issue usam `POC_SLACK_BOT_TOKEN`; o bot Amulets e o secret legado foram
+> retirados da POC após a validação da migração.
+
 # Configuração Slack do laboratório
 
 **Configuração atual: [um bot por projeto](BOTS-POR-PROJETO.md).** Novas
