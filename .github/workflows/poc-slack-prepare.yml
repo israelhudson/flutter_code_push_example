@@ -128,7 +128,7 @@ jobs:
         run: |
           python3 trusted/deploy/pages_preview.py history --site "$RUNNER_TEMP/poc-site"
           python3 trusted/tools/delivery/preview_retention.py --site "$RUNNER_TEMP/poc-site" --incoming "$RUNNER_TEMP/poc-incoming" --output "$RUNNER_TEMP/poc-retention" --apply
-          python3 trusted/tools/delivery/issue_preview.py --incoming "$RUNNER_TEMP/poc-incoming" --site "$RUNNER_TEMP/poc-site" --source-sha "$SOURCE_SHA" > "$RUNNER_TEMP/poc-metadata.json"
+          python3 trusted/tools/delivery/issue_preview.py --incoming "$RUNNER_TEMP/poc-incoming" --site "$RUNNER_TEMP/poc-site" --source-sha "$SOURCE_SHA" --allow-flutter-cache-version > "$RUNNER_TEMP/poc-metadata.json"
           python3 trusted/deploy/pages_preview.py persist --site "$RUNNER_TEMP/poc-site"
           python3 trusted/deploy/pages_preview.py export --site "$RUNNER_TEMP/poc-site" --output "$RUNNER_TEMP/poc-public"
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9
