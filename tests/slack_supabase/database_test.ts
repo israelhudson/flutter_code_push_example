@@ -14,6 +14,9 @@ Deno.test("Postgres local: roles, duas ordens, repetição, ajuste/RC2, expiraç
     await db.exec(
       await Deno.readTextFile("supabase/migrations/20261013203000_poc_slack_indexes.sql"),
     );
+    await db.exec(
+      await Deno.readTextFile("supabase/migrations/20261014211744_poc_controls_only_rejection.sql"),
+    );
     await db.exec("update public.poc_config set enabled=true,publication_enabled=true;");
     const sha = "a".repeat(40), ts = "1000.1001", user = "U0BMFQKC001";
     const scalar = async (sql: string, args: unknown[] = []) =>

@@ -348,6 +348,39 @@ Deno.test("Botões de URL confirmam navegação sem RPC, voto ou aviso", async (
   assert(buttons[0].action_id === "poc_preview" && buttons[1].action_id === "poc_changelog");
   assert(buttons[0].value === id && buttons[1].value === id);
 });
+
+Deno.test("Negar versão registra ação assinada sem modal, justificativa ou dispatch", async () => {
+  const f = fixture(), p = payload();
+  p.actions[0].action_id = "poc_reject";
+  const r = await slackHandler(f.io)((await signed(p)).request);
+  assert(r.status === 200);
+  await Promise.all(f.tasks);
+  const actions = f.calls.filter(([path]) => path === "rpc/poc_action");
+  assert(actions.length === 1 && actions[0][1].p_action === "reject");
+  assert(actions[0][1].p_user === user && actions[0][1].p_reason === undefined);
+  assert(!f.calls.some(([path]) => path === "views.open" || path === "rpc/poc_notice"));
+  assert(!f.logs.includes("poc_action_not_confirmed"));
+});
+
+Deno.test("Cartão de controles explica limites, permite negar e não inventa preview", () => {
+  const c: any = candidate();
+  c.report_text = JSON.stringify({
+    ...JSON.parse(c.report_text),
+    validation_mode: "controls_only",
+    preview_url: null,
+  });
+  let rendered = JSON.stringify(card(c));
+  assert(rendered.includes("ENSAIO SOMENTE DE CONTROLES") && rendered.includes("Negar versão"));
+  assert(!rendered.includes('"action_id":"poc_preview"'));
+  c.status = "adjustment_requested";
+  c.adjustment_reason = null;
+  rendered = JSON.stringify(card(c));
+  assert(rendered.includes("Versão negada") && rendered.includes("sem justificativa"));
+  assert(
+    !rendered.includes('"action_id":"poc_reject"') &&
+      !rendered.includes('"action_id":"poc_technical"'),
+  );
+});
 Deno.test("Botão de URL não aceita outro canal ou assinatura inválida", async () => {
   const p = payload();
   p.actions[0].action_id = "poc_preview";
