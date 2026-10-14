@@ -1,9 +1,9 @@
 {
   "schema": "pages-preview-v1",
-  "source_sha": "4772fdac82b6e11d147eb5417299187758eafda2",
-  "source_tree": "ef9c602d1ce76a412c2259a67563532ec17a61f6",
+  "source_sha": "cd876089cdf8338047f5ad431094c0331eb540bf",
+  "source_tree": "6dc2e25cf2981189b7604b1020f191a665975e7c",
   "version": "1.1.0+2",
-  "source_fingerprint": "9c7002f9e6b2c20dec270b419259fe20dcd3869f58b07dec4a3d0dc2d99937c9",
+  "source_fingerprint": "e3c4a8f91a1976981ca59a254532dbdb032033bb292d20cb9c2e15b970937a7d",
   "source_build_inputs": {
     "schema": 1,
     "flutter_version": "3.44.1",
@@ -29,14 +29,14 @@
       "build",
       "web",
       "--release",
-      "--base-href=/flutter_code_push_example/snapshots/4772fdac82b6e11d147eb5417299187758eafda2/app/"
+      "--base-href=/flutter_code_push_example/snapshots/cd876089cdf8338047f5ad431094c0331eb540bf/app/"
     ],
     "dart_defines": {},
     "retention_days": 30,
     "network_assets": "Flutter web may fetch engine resources; preview is not an offline or mobile validation",
     "flutter_revision": "924134a44c189315be2148659913dda1671cbe99"
   },
-  "fingerprint": "120acd85e46b30ff0dca382c114c3dc7108dbbf7c4909ee7f73eafa461df18e3",
-  "web_content_sha256": "8747c8d9ae800e7162a2436613b11a9dce9f7c24a99dcaaa10a6b9750ad3843d",
-  "snapshot_path": "snapshots/4772fdac82b6e11d147eb5417299187758eafda2/"
+  "fingerprint": "893ee10694a0380bc8103b78dd7693ba1d0f8ab4dd67289a05241c28aa4b58c4",
+  "web_content_sha256": "016fb2c2f22ce9a323467399ee6d8a783c7838b9d941e969cbb081caf1ec0344",
+  "snapshot_path": "snapshots/cd876089cdf8338047f5ad431094c0331eb540bf/"
 }
