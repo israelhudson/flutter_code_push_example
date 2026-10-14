@@ -1,4 +1,4 @@
-name: Slack - Publicar teste aprovado
+name: Slack - Publicar versão aprovada
 on:
   workflow_dispatch:
     inputs:
@@ -18,7 +18,7 @@ env:
   POC_SLACK_PUBLISH_ENABLED: ${{ vars.POC_SLACK_PUBLISH_ENABLED }}
 jobs:
   publish:
-    name: Publicar GitHub TESTE e salvar recibo
+    name: Publicar Release e salvar recibo
     if: vars.POC_SLACK_ENABLED == 'true' && vars.POC_SLACK_PUBLISH_ENABLED == 'true' && github.ref == format('refs/heads/{0}', vars.POC_SOURCE_BRANCH || 'slack-main')
     runs-on: ubuntu-24.04
     timeout-minutes: 8

@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       scope:
-        description: Escopo congelado; GitHub TESTE exige habilitação própria
+        description: Escopo congelado; publicação GitHub exige habilitação própria
         type: choice
         options: [none, github_test]
         default: none
@@ -14,7 +14,7 @@ on:
         options: [full, controls_only]
         default: full
       version:
-        description: Versão experimental, sem prefixo nem RC
+        description: Versão da entrega, sem prefixo nem RC
         type: string
         required: true
       title:

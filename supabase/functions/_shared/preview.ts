@@ -1,6 +1,6 @@
 import type { IO } from "./poc.ts";
 
-function canonical(value: any): string {
+export function canonical(value: any): string {
   if (Array.isArray(value)) return "[" + value.map(canonical).join(",") + "]";
   if (value && typeof value === "object") {
     const ordered = Object.keys(value).sort((a, b) => {

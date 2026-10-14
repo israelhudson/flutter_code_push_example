@@ -106,7 +106,7 @@ class POCContracts(unittest.TestCase):
             self.assertFalse(report['distribution_performed'])
             self.assertIsNone(report['preview_url'])
             self.assertIsNone(report['web_content_sha256'])
-            self.assertIn('sem preview', poc.release_body({'source_sha': plan['source_sha'], 'report_digest': 'c'*64, 'report_text': lab.canonical(report)}))
+            self.assertIn('sem preview', poc.release_body({'version':'1.15.1','source_sha': plan['source_sha'], 'report_digest': 'c'*64, 'report_text': lab.canonical(report)}))
             self.assertEqual(remote.call_args_list[0].args[0], 'register')
         for mode in ('full', 'unknown', None):
             with self.subTest(mode=mode), tempfile.TemporaryDirectory() as out, patch.object(poc, 'control') as remote:
@@ -136,7 +136,7 @@ class POCContracts(unittest.TestCase):
 
     def test_release_notes_keep_platform_bases_and_actual_patches_separate(self):
         report={'platforms':{'android':{'base_release_version':'1.0.0+1','effective_patch':None},'ios':{'base_release_version':None,'effective_patch':None}}}
-        text=poc.release_body({'source_sha':'a'*40,'report_digest':'b'*64,'report_text':lab.canonical(report)})
+        text=poc.release_body({'version':'1.15.1','source_sha':'a'*40,'report_digest':'b'*64,'report_text':lab.canonical(report)})
         self.assertIn('effective_patch',text)
         self.assertIn('base_release_version',text)
 
