@@ -1,4 +1,4 @@
-name: Slack - Preview do PR
+name: Entrega · Preview do PR
 on:
   pull_request_target:
     branches: [main, slack-main]
