@@ -1,5 +1,7 @@
 > **Estado validado em 13/10/2026:** o token exclusivo foi instalado e a 1.14.1
 > publicou automaticamente após 2/2. Os valores desligados abaixo são o roteiro
+> Regra atual: a versão promovida é uma Release final no GitHub, mantendo o escopo de teste e sem promoção mobile. Consulte [Release final e correção do histórico](RELEASE-FINAL.md). As menções a pré-release abaixo descrevem a configuração inicial.
+
 > de instalação inicial, não o estado da rodada validada.
 > Consulte [a prova e as lições](VALIDACAO-1.14.1-E-LICOES.md).
 

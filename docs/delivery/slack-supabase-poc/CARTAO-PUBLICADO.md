@@ -1,5 +1,7 @@
 # Cartão após a publicação
 
+> Regra atual: a versão promovida é uma Release final no GitHub, mantendo o escopo de teste e sem promoção mobile. Consulte [Release final e correção do histórico](RELEASE-FINAL.md). As menções a pré-release abaixo descrevem a configuração inicial.
+
 A POC atualiza a mesma mensagem: título “Versão X publicada · GitHub TESTE”,
 tag final, “Promovida de: <tag RC>”, os dois aceites e links Abrir Release,
 Preview aprovado e Changelog e execução. A conversa e a tag RC são preservadas.

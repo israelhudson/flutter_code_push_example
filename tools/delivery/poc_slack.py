@@ -1,5 +1,6 @@
 """Isolated Slack/Supabase POC. No Shorebird calls or legacy journal writes."""
 import argparse
+import html
 import json
 import os
 from pathlib import Path
@@ -204,21 +205,105 @@ def register(plan, metadata, smoke, output):
     raise lab.LabError('Registro preservado, mas cartão ainda sem recibo; inspecionar o backend.')
 
 
-def release_body(c):
+def legacy_release_body(c):
     report = json.loads(c['report_text'])
     limit = '\n\nEnsaio somente de controles: sem preview, build web ou patches. Não comprova distribuição do aplicativo.' if report.get('validation_mode') == 'controls_only' else ''
     return 'Release de TESTE da POC Slack.' + limit + '\n\nCódigo aprovado: ' + c['source_sha'] + '\n\nRelatório: ' + c['report_digest'] + '\n\n' + c['report_text']
 
 
-def publish(candidate, output):
+def release_body(c):
+    report = json.loads(c['report_text'])
+    # Plain text from the frozen report must not become links, mentions or HTML.
+    def plain(value):
+        value = html.escape(str(value)).replace('@', '&#64;')
+        return re.sub(r'([\\`*_{}\[\]()#+.!|~-])', r'\\\1', value)
+    title = plain(report.get('title', 'Entrega aprovada'))
+    rc = plain(report.get('rc_tag', c.get('rc_tag', 'Candidata aprovada')))
+    body = ['## Release final no GitHub', title,
+            '**Ambiente de testes da POC.** A classificação final desta Release não promove patches Shorebird nem publica em lojas.',
+            'Candidata de origem: ' + rc + '. A tag candidata permanece no histórico.',
+            'Código aprovado: `' + c['source_sha'] + '`.', '## O que mudou']
+    body.append('\n'.join('- ' + plain(line.removeprefix('- ')) for line in report.get('changelog', '').splitlines())
+                or 'Consulte o relatório aprovado abaixo.')
+    if report.get('validation_mode') == 'controls_only':
+        body.append('Ensaio somente de controles: sem preview, build web ou patches.')
+    elif report.get('preview_url') == f'https://israelhudson.github.io/flutter_code_push_example/snapshots/{c["source_sha"]}/':
+        body.append('[Abrir preview aprovado](' + report['preview_url'] + ')')
+    body.append('## Distribuição do aplicativo\nEsta automação publica somente no GitHub. Evidências de Android/iOS executadas separadamente ficam nos anexos, quando disponíveis.')
+    # A fenced JSON block preserves the exact original text without broken autolinks.
+    fence = '`' * max(3, max((len(m[0]) + 1 for m in re.finditer(r'`+', c['report_text'])), default=3))
+    body.append('<details>\n<summary>Relatório técnico aprovado</summary>\n\n'
+                + 'Digest: `' + c['report_digest'] + '`\n\n'
+                + fence + 'json\n' + c['report_text'] + '\n' + fence + '\n\n</details>')
+    return '\n\n'.join(body)
+
+
+def finalize_existing(c, authorization, output):
+    """Explicit metadata repair. Never republishes, moves tags or replaces evidence."""
+    receipt = authorization.get('receipt', {})
+    tag = 'poc-v' + c['version']
+    expected_receipt = {'tag': tag, 'source_sha': c['source_sha'], 'report_digest': c['report_digest'],
+                        'release_url': f'https://github.com/{lab.REPOSITORY}/releases/tag/{tag}'}
+    if (c.get('status') != 'published' or authorization.get('already_published') is not True
+            or not re.fullmatch(r'poc-v\d+\.\d+\.\d+', tag)
+            or c.get('rc_tag') != f'poc-v{c["version"]}-rc.{c.get("rc_number")}'
+            or any(receipt.get(k) != v for k, v in expected_receipt.items())):
+        raise lab.LabError('Correção exige publicação concluída e recibo da mesma candidata.')
+    def verify_refs():
+        for ref in (c['rc_tag'], tag):
+            value = lab.api(lab.endpoint('git/ref/tags/' + ref))
+            if value.get('object', {}).get('type') != 'commit' or value.get('object', {}).get('sha') != c['source_sha']:
+                raise lab.LabError('Tag divergente; correção de apresentação bloqueada.')
+    verify_refs()
+    existing = lab.api(lab.endpoint('releases/tags/' + tag))
+    body = release_body(c)
+    expected = {'id': receipt.get('release_id'), 'tag_name': tag, 'name': 'POC Slack — ' + c['version'],
+                'html_url': expected_receipt['release_url'], 'draft': False}
+    if (type(expected['id']) is not int or expected['id'] <= 0
+            or any(existing.get(k) != v for k, v in expected.items())
+            or type(existing.get('prerelease')) is not bool
+            or existing.get('body') not in (legacy_release_body(c), body)):
+        raise lab.LabError('Release alterada ou fora do recibo; não sobrescrever.')
+    lab.output(output, 'release-before.json', existing)
+    assets = lambda r: sorted((a['id'], a['name'], a.get('digest'), a['size']) for a in r.get('assets', []))
+    changed = existing['prerelease'] or existing['body'] != body
+    if changed:
+        control('claim', candidate=c['id'])
+        # Do not overwrite a concurrent edit made during validation.
+        current = lab.api(lab.endpoint('releases/' + str(existing['id'])))
+        if (any(current.get(k) != existing.get(k) for k in (*expected, 'body', 'prerelease', 'updated_at'))
+                or assets(current) != assets(existing)):
+            raise lab.LabError('Release mudou durante a conferência; reconciliar antes de corrigir.')
+        update = {'prerelease': False, 'body': body, 'make_latest': 'false'}
+        lab.output(output, 'release-correction-intent.json', {'release_id': existing['id'], 'update': update})
+        lab.api(lab.endpoint('releases/' + str(existing['id'])), update, 'PATCH')
+    actual = lab.api(lab.endpoint('releases/' + str(existing['id'])))
+    lab.output(output, 'release-after.json', actual)
+    verify_refs()
+    if (any(actual.get(k) != v for k, v in expected.items()) or actual.get('prerelease') is not False
+            or actual.get('body') != body or assets(existing) != assets(actual)):
+        raise lab.LabError('Correção sem confirmação completa; não repetir sem reconciliar.')
+    result = {'release_id': actual['id'], 'release_url': actual['html_url'], 'tag': tag,
+              'source_sha': c['source_sha'], 'prerelease': False, 'changed': changed,
+              'assets_preserved': True, 'publication_receipt_unchanged': True,
+              'distribution_performed': False}
+    lab.output(output, 'release-correction-receipt.json', result)
+    return result
+
+
+def publish(candidate, output, finalize=False):
     if not re.fullmatch(r'poc-[a-f0-9]{32}', candidate or ''):
         raise lab.LabError('ID de candidata inválido.')
     protect()
     c = control('state', candidate=candidate)
     if not lab.SHA.fullmatch(c.get('source_sha', '')) or c.get('publication_scope') != 'github_test':
         raise lab.LabError('Candidata sem escopo GitHub TESTE.')
+    if finalize and c.get('status') != 'published':
+        raise lab.LabError('Correção de apresentação aceita apenas candidata já publicada.')
     authorization = control('claim', candidate=candidate)
     lab.output(output, 'publication-intent.json', authorization)
+    if finalize:
+        return finalize_existing(c, authorization, output)
     if authorization.get('already_published'):
         lab.output(output, 'receipt.json', authorization['receipt'])
         return authorization['receipt']
@@ -230,14 +315,14 @@ def publish(candidate, output):
     control('claim', candidate=candidate)
     existing = lab.api(lab.endpoint('releases/tags/' + tag), missing=True)
     expected = {'tag_name': tag, 'target_commitish': c['source_sha'], 'name': 'POC Slack — ' + c['version'],
-                'body': release_body(c), 'draft': False, 'prerelease': True, 'make_latest': 'false'}
+                'body': release_body(c), 'draft': False, 'prerelease': False, 'make_latest': 'false'}
     if existing is None:
         existing = lab.api(lab.endpoint('releases'), expected, 'POST')
     if any(existing.get(k) != expected[k] for k in ('tag_name', 'body', 'name', 'draft', 'prerelease')):
         raise lab.LabError('Release existente diverge; não sobrescrever.')
     receipt = {'tag': tag, 'source_sha': c['source_sha'], 'report_digest': c['report_digest'],
                'release_id': existing['id'], 'release_url': existing['html_url'],
-               'published_at': existing['published_at'], 'distribution_performed': False,
+               'published_at': existing['published_at'], 'prerelease': False, 'distribution_performed': False,
                'platforms': json.loads(c['report_text'])['platforms']}
     lab.output(output, 'receipt.json', receipt)  # Preserve actual effect even if completion API response is lost.
     control('complete', candidate=candidate, receipt=receipt)
@@ -251,6 +336,7 @@ def main():
     p.add_argument('--validation-mode', choices=['full', 'controls_only'], default='full')
     p = commands.add_parser('register'); p.add_argument('--plan', required=True); p.add_argument('--metadata'); p.add_argument('--smoke')
     p = commands.add_parser('publish'); p.add_argument('--candidate', required=True)
+    p.add_argument('--finalize-existing', action='store_true', help='Corrigir apenas apresentação de Release já publicada; não republicar.')
     for p in commands.choices.values():
         p.add_argument('--output', required=True)
     a = parser.parse_args()
@@ -266,7 +352,7 @@ def main():
         else:
             if os.environ.get('POC_SLACK_PUBLISH_ENABLED') != 'true':
                 raise lab.LabError('Publicação GitHub de teste ainda desativada.')
-            result = publish(a.candidate, a.output)
+            result = publish(a.candidate, a.output, a.finalize_existing)
         print(lab.canonical(result))
         return 0
     except (lab.LabError, ValueError, OSError, KeyError) as error:

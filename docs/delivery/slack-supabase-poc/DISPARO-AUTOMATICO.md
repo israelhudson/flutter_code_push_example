@@ -1,5 +1,7 @@
 # Disparo automático da POC após dois aceites
 
+> Regra atual: a versão promovida é uma Release final no GitHub, mantendo o escopo de teste e sem promoção mobile. Consulte [Release final e correção do histórico](RELEASE-FINAL.md). As menções a pré-release abaixo descrevem a configuração inicial.
+
 ## Configuração em 13/10/2026
 
 O backend exclusivo `xtvueqciogzkyjkkqxcx` recebeu o secret
