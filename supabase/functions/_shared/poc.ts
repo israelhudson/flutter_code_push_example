@@ -883,8 +883,10 @@ export function controlHandler(io: IO) {
             `git/ref/tags/${encodeURIComponent("poc-v" + c.version)}`,
           );
           if (
-            release?.id !== input.receipt?.release_id || release?.draft ||
-            release?.prerelease !== true || final?.object?.type !== "commit" ||
+            release?.id !== input.receipt?.release_id || release?.draft !== false ||
+            release?.tag_name !== "poc-v" + c.version ||
+            release?.prerelease !== false || input.receipt?.prerelease !== false ||
+            final?.object?.type !== "commit" ||
             final.object.sha !== c.source_sha
           ) throw Error("Publication receipt not independently verified");
         }

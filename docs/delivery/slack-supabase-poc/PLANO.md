@@ -1,5 +1,7 @@
 # POC: aceites no Slack e estado no Supabase
 
+> Regra atual: a versão promovida é uma Release final no GitHub, mantendo o escopo de teste e sem promoção mobile. Consulte [Release final e correção do histórico](RELEASE-FINAL.md). As menções a pré-release abaixo descrevem a configuração inicial.
+
 Plano registrado em 13/10/2026, antes da implementação. Esta alternativa convive
 com LAB e Issue; começa desativada. Não exige GitHub Enterprise.
 

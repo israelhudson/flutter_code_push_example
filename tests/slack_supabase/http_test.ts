@@ -303,6 +303,70 @@ Deno.test("Controle aceita operador verificado somente na branch configurada", a
   const plan = await r.json();
   assert(plan.source_sha === "a".repeat(40) && plan.rc_tag === "poc-v1.0.0-rc.1");
 });
+
+Deno.test("Conclusão exige Release final real; pré-lançamento, draft e recibo falso bloqueiam", async () => {
+  for (const failure of ["none", "prerelease", "missing_flag", "draft", "tag", "sha", "receipt"]) {
+    const writes: string[] = [];
+    const c: any = { ...candidate(), version: "0.1.0", publication_scope: "github_test" };
+    const release: any = { id: 42, draft: false, prerelease: false, tag_name: "poc-v0.1.0" };
+    if (failure === "prerelease") release.prerelease = true;
+    if (failure === "missing_flag") delete release.prerelease;
+    if (failure === "draft") release.draft = true;
+    if (failure === "tag") release.tag_name = "poc-v9.0.0";
+    const f = fixture({
+      db: async (path) => {
+        if (path.startsWith("poc_config")) {
+          return [{ enabled: true, operator_github: "israelhudson" }];
+        }
+        if (path.startsWith("poc_user_directory")) return [{ github_id: 18661493 }];
+        if (path === "rpc/poc_state") return c;
+        if (path === "rpc/poc_publish") {
+          writes.push(path);
+          return { published: true };
+        }
+        throw Error("Unexpected DB");
+      },
+      fetch: (async (url) => {
+        const path = String(url);
+        if (path.includes("actions/runs/")) {
+          return Response.json({
+            head_branch: "slack-main",
+            event: "workflow_dispatch",
+            path: ".github/workflows/poc-slack-publish.yml",
+            actor: { id: 18661493 },
+            triggering_actor: { id: 18661493 },
+          });
+        }
+        if (path.includes("releases/tags/")) return Response.json(release);
+        if (path.includes("git/ref/tags/")) {
+          return Response.json({
+            object: { type: "commit", sha: failure === "sha" ? "b".repeat(40) : c.source_sha },
+          });
+        }
+        throw Error("Unexpected HTTP");
+      }) as typeof fetch,
+    });
+    f.env.POC_PUBLICATION_ENABLED = "true";
+    const r = await controlHandler(f.io)(
+      new Request("https://fixture.invalid", {
+        method: "POST",
+        headers: { Authorization: "Bearer fixture-pub" },
+        body: JSON.stringify({
+          operation: "complete",
+          run_id: "1",
+          candidate: id,
+          receipt: { release_id: 42, prerelease: failure === "receipt" ? true : false },
+        }),
+      }),
+    );
+    await Promise.all(f.tasks);
+    assert(r.status === (failure === "none" ? 200 : 409), failure);
+    assert(
+      writes.length === (failure === "none" ? 1 : 0),
+      failure + " must not finish publication",
+    );
+  }
+});
 Deno.test("Aceite salvo não recebe mensagem de falha quando aviso posterior falha", async () => {
   const f = fixture({
     db: async (path) => {
