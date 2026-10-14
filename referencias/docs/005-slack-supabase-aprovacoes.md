@@ -57,6 +57,8 @@ solo não comprova duas pessoas independentes.
 ## Pendências
 
 - [x] Clique real em diagnóstico negativo do app exclusivo; nenhum aceite criado.
-- [ ] Aceites e DMs de uma RC real desta POC.
+- [x] Aceites reais e recibos de avisos da RC 1.14.1; dispatch e publicação GitHub TESTE confirmados.
+  [Evidência local do projeto](../../docs/delivery/slack-supabase-poc/VALIDACAO-1.14.1-E-LICOES.md);
+  não é afirmação da fonte oficial nem comprovação de leitura das DMs.
 - [ ] Recuperação de publicação parcial em um Run GitHub real.
 - [ ] Base, plataforma, track e instalação antes de qualquer patch Shorebird.

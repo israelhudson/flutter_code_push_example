@@ -1,0 +1,93 @@
+{
+  "candidate": {
+    "id": "poc-d90c43ec138544479b44d6c8fda1a1c0",
+    "rc_tag": "poc-v1.14.1-rc.1",
+    "source_sha": "17c8fcb181e2069320217df73f83746c1975eaba",
+    "status": "published",
+    "publication_scope": "github_test",
+    "mode": "solo_test"
+  },
+  "approvals": [
+    {
+      "role": "technical",
+      "slack_user_id": "U0BMFQKC001",
+      "approved_at": "2026-10-14T01:44:26.552271+00:00"
+    },
+    {
+      "role": "business",
+      "slack_user_id": "U0BMFQKC001",
+      "approved_at": "2026-10-14T01:44:27.809939+00:00"
+    }
+  ],
+  "notices": [
+    {
+      "event": "card",
+      "state": "sent",
+      "created_at": "2026-10-14T01:43:17.204429+00:00",
+      "finished_at": "2026-10-14T01:43:18.506533+00:00",
+      "delivery_receipt": null
+    },
+    {
+      "event": "approved",
+      "state": "sent",
+      "created_at": "2026-10-14T01:44:28.036067+00:00",
+      "finished_at": "2026-10-14T01:44:28.84385+00:00",
+      "delivery_receipt": null
+    },
+    {
+      "event": "dispatch",
+      "state": "sent",
+      "created_at": "2026-10-14T01:44:29.01577+00:00",
+      "finished_at": "2026-10-14T01:44:30.73783+00:00",
+      "delivery_receipt": {
+        "workflow": "poc-slack-publish.yml",
+        "acknowledged": true
+      }
+    },
+    {
+      "event": "published",
+      "state": "sent",
+      "created_at": "2026-10-14T01:44:55.993307+00:00",
+      "finished_at": "2026-10-14T01:44:57.613053+00:00",
+      "delivery_receipt": null
+    }
+  ],
+  "run": {
+    "id": 38497337584,
+    "html_url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38497337584",
+    "event": "workflow_dispatch",
+    "head_branch": "slack-main",
+    "head_sha": "17c8fcb181e2069320217df73f83746c1975eaba",
+    "run_attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-10-14T01:44:30Z",
+    "updated_at": "2026-10-14T01:44:59Z"
+  },
+  "release": {
+    "tagName": "poc-v1.14.1",
+    "isDraft": false,
+    "isPrerelease": true,
+    "url": "https://github.com/israelhudson/flutter_code_push_example/releases/tag/poc-v1.14.1",
+    "publishedAt": "2026-10-14T01:44:51Z",
+    "targetCommitish": "17c8fcb181e2069320217df73f83746c1975eaba"
+  },
+  "tags": [
+    {
+      "ref": "refs/tags/poc-v1.14.1",
+      "object": {
+        "sha": "17c8fcb181e2069320217df73f83746c1975eaba",
+        "type": "commit",
+        "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/git/commits/17c8fcb181e2069320217df73f83746c1975eaba"
+      }
+    },
+    {
+      "ref": "refs/tags/poc-v1.14.1-rc.1",
+      "object": {
+        "sha": "17c8fcb181e2069320217df73f83746c1975eaba",
+        "type": "commit",
+        "url": "https://api.github.com/repos/israelhudson/flutter_code_push_example/git/commits/17c8fcb181e2069320217df73f83746c1975eaba"
+      }
+    }
+  ]
+}
