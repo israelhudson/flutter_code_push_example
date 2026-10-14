@@ -1,5 +1,5 @@
-name: Slack - Preparar candidata
-run-name: Slack - ${{ inputs.version }} / ${{ inputs.title }}
+name: Entrega · Preparar candidata
+run-name: Entrega · ${{ inputs.version }} / ${{ inputs.title }}
 on:
   workflow_dispatch:
     inputs:
