@@ -148,6 +148,7 @@ Deno.test("Postgres local: roles, duas ordens, repetição, ajuste/RC2, expiraç
     assert(fresh.approvals.length === 0);
     assert((await action(c2.id, "business")).approvals.length === 1);
     assert((await notice(c2.id, "review_pending:technical")).recipient === user);
+    assert((await notice(c2.id, "dispatch")).send === false, "1/2 cannot dispatch");
     await action(c2.id, "technical");
     assert((await notice(c2.id, "dispatch")).send === true);
     await db.query(
