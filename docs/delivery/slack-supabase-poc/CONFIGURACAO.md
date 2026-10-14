@@ -1,3 +1,8 @@
+> **Estado validado em 13/10/2026:** o token exclusivo foi instalado e a 1.14.1
+> publicou automaticamente após 2/2. Os valores desligados abaixo são o roteiro
+> de instalação inicial, não o estado da rodada validada.
+> Consulte [a prova e as lições](VALIDACAO-1.14.1-E-LICOES.md).
+
 # Ativar a POC Slack — guia de Israel
 
 O código começa desligado. LAB e Issue continuam com suas regras. Fabrícia não

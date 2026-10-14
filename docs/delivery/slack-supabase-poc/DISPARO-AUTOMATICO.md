@@ -33,8 +33,11 @@ Uma candidata `none` não ganha publicação ao instalar o token.
 
 A configuração não dispara retroativamente entregas já publicadas, nem substitui
 os aceites. A versão 1.14.0 foi publicada por dispatch manual e deve continuar
-identificada assim nos registros. A 1.14.1 foi preparada para validar a ativação;
-o resultado real deve ser confirmado nos logs antes de declarar essa prova concluída.
+identificada assim nos registros. A **1.14.1 comprovou o disparo automático**:
+o segundo aceite foi seguido por reserva/recibo de dispatch, Run bem-sucedido,
+Release criada e aviso final. Nenhum Run manual foi iniciado nessa rodada.
+
+[Relatório, evidências e lições para Amulets](VALIDACAO-1.14.1-E-LICOES.md).
 
 ## Testes e operação
 
