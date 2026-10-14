@@ -152,9 +152,13 @@ export function card(c: any, now = Date.now()) {
   const report = JSON.parse(c.report_text);
   const roles = new Set(c.approvals?.map((a: any) => a.role) ?? []);
   const expired = Date.parse(c.expires_at) <= now;
-  const blocked = expired ||
-    ["adjustment_requested", "cancelled", "expired"].includes(c.status);
-  const title = blocked
+  const published = c.status === "published";
+  const finalTag = published ? "poc-v" + c.version : null;
+  const blocked = !published && (expired ||
+    ["adjustment_requested", "cancelled", "expired"].includes(c.status));
+  const title = published
+    ? `✅ Versão ${c.version} publicada · GitHub TESTE`
+    : blocked
     ? "Ajuste ou prazo encerrado · candidata bloqueada"
     : `Flutter POC · ${roles.size}/2 aceites`;
   const section = (text: string) => ({
@@ -168,7 +172,7 @@ export function card(c: any, now = Date.now()) {
     type: "button",
     action_id: "poc_preview",
     value: c.id,
-    text: { type: "plain_text", text: "Preview da RC" },
+    text: { type: "plain_text", text: published ? "Preview aprovado" : "Preview da RC" },
     url: report.preview_url,
   }, {
     type: "button",
@@ -177,6 +181,15 @@ export function card(c: any, now = Date.now()) {
     text: { type: "plain_text", text: "Changelog e execução" },
     url: report.run_url,
   }];
+  if (published) {
+    elements.unshift({
+      type: "button",
+      action_id: "poc_release",
+      value: c.id,
+      text: { type: "plain_text", text: "Abrir Release" },
+      url: `https://github.com/israelhudson/flutter_code_push_example/releases/tag/${finalTag}`,
+    });
+  }
   if (!blocked && c.status === "pending") {
     for (
       const [role, label] of [["technical", "Aceite técnico"], [
@@ -204,7 +217,7 @@ export function card(c: any, now = Date.now()) {
   }
   return {
     channel: CHANNEL,
-    text: `${c.rc_tag} · ${title}`,
+    text: published ? `${title} · ${finalTag}` : `${c.rc_tag} · ${title}`,
     parse: "none",
     link_names: false,
     unfurl_links: false,
@@ -212,7 +225,7 @@ export function card(c: any, now = Date.now()) {
     blocks: [
       { type: "header", text: { type: "plain_text", text: title } },
       section(
-        `${c.rc_tag}\n${report.title}\n${
+        `${published ? finalTag + "\nPromovida de: " + c.rc_tag : c.rc_tag}\n${report.title}\n${
           (report.changelog || "Consulte o changelog completo na execução.")
             .slice(0, 1400)
         }`,
@@ -222,17 +235,19 @@ export function card(c: any, now = Date.now()) {
           roles.has("technical") ? "aceito" : "pendente"
         } (${c.technical_reviewer})\nNegócio: ${
           roles.has("business") ? "aceito" : "pendente"
-        } (${c.business_reviewer})\n${solo}\nEstado: ${c.status}\n${
-          c.adjustment_reason ? "Motivo: " + c.adjustment_reason : ""
-        }`,
+        } (${c.business_reviewer})\n${solo}\nEstado: ${
+          published ? "Publicada no GitHub (teste)" : c.status
+        }\n${c.adjustment_reason ? "Motivo: " + c.adjustment_reason : ""}`,
       ),
       {
         type: "context",
         elements: [{
           type: "plain_text",
-          text: `SHA ${
-            c.source_sha.slice(0, 12)
-          } · validade 36h · encerra ${c.expires_at}\nPublicação: ${
+          text: `SHA ${c.source_sha.slice(0, 12)} · ${
+            published
+              ? "Aprovações concluídas; RC preservada como histórico"
+              : "validade 36h · encerra " + c.expires_at
+          }\nPublicação: ${
             c.publication_scope === "none" ? "desligada" : "somente GitHub TESTE"
           }. A thread fica livre para conversa.`,
         }],
@@ -498,6 +513,7 @@ export function slackHandler(io: IO) {
           "poc_adjust",
           "poc_preview",
           "poc_changelog",
+          "poc_release",
           "poc_workflow_link",
         ].includes(
           a?.action_id,
@@ -507,7 +523,9 @@ export function slackHandler(io: IO) {
       ) throw Error("Invalid interaction");
       // URL buttons still produce callbacks. ACK navigation without voting,
       // creating notices, or granting any publication capability.
-      if (["poc_preview", "poc_changelog", "poc_workflow_link"].includes(a.action_id)) {
+      if (
+        ["poc_preview", "poc_changelog", "poc_release", "poc_workflow_link"].includes(a.action_id)
+      ) {
         return new Response("");
       }
       const input = {
