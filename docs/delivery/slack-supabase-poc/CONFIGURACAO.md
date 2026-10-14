@@ -59,9 +59,8 @@ O app POC já está instalado com `chat:write` e `groups:read`. A DM/App Home us
 Não presumir leitura de histórico: `groups:history` não foi adicionado.
 
 LAB e Issue também migram os **novos** avisos para o app exclusivo, via secret
-`POC_SLACK_BOT_TOKEN` no GitHub. Registros antigos mantêm o perfil original até
-concluir sua transição. Seguir o [mapa e roteiro de ativação](../BOTS-POR-PROJETO.md)
-para não retirar o bot legado enquanto houver trabalho histórico dependente.
+`POC_SLACK_BOT_TOKEN` no GitHub. A migração foi concluída: o bot Amulets saiu do canal POC e os cartões antigos
+ficaram como histórico. Consultar o [inventário e manual dos bots](../BOTS-POR-PROJETO.md).
 
 | Secret no Supabase | Origem |
 |---|---|
@@ -109,7 +108,8 @@ Não configurar PAT de Amulets ou credencial Shorebird nesta etapa.
 | Variable | `POC_PR_PREVIEW_ENABLED` | `false` inicialmente |
 | Variable | `POC_SLACK_PUBLISH_ENABLED` | `false` inicialmente |
 
-Não substituir `SLACK_BOT_TOKEN`: ele preserva o histórico. O novo secret de
+`SLACK_BOT_TOKEN` legado foi removido da POC após encerrar as dependências históricas.
+Não recriá-lo nem usar credencial Amulets como fallback. O novo secret de
 Actions `POC_SLACK_BOT_TOKEN` atende os avisos LAB/Issue com perfil `poc-v1`.
 Secrets de publicação, gates e variáveis dos fluxos existentes permanecem separados.
 Primeiro ativar backend `POC_ENABLED`, tabela `poc_config.enabled` e os dois
