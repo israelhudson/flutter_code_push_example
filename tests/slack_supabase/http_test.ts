@@ -336,7 +336,7 @@ Deno.test("Slack lê membros por GET e envia mensagens por POST JSON", async () 
 });
 
 Deno.test("Botões de URL confirmam navegação sem RPC, voto ou aviso", async () => {
-  for (const action of ["poc_preview", "poc_changelog", "poc_workflow_link"]) {
+  for (const action of ["poc_preview", "poc_changelog", "poc_release", "poc_workflow_link"]) {
     const f = fixture();
     const p = payload();
     p.actions[0].action_id = action;
@@ -357,4 +357,47 @@ Deno.test("Botão de URL não aceita outro canal ou assinatura inválida", async
   p.channel.id = CHANNEL;
   assert((await slackHandler(f.io)((await signed(p, 0, "wrong-secret")).request)).status === 401);
   assert(f.calls.length === 0 && f.tasks.length === 0);
+});
+
+Deno.test("published card highlights final release and preserves candidate evidence after expiry", () => {
+  const c = {
+    ...candidate(),
+    version: "0.1.0",
+    status: "published",
+    publication_scope: "github_test",
+    approvals: [{ role: "technical" }, { role: "business" }],
+    expires_at: "2020-01-01T00:00:00Z",
+  };
+  const rendered = card(c);
+  const text = JSON.stringify(rendered);
+  assert(rendered.text.startsWith("✅ Versão 0.1.0 publicada"));
+  assert(text.includes("Promovida de: poc-v0.1.0-rc.1"));
+  assert(text.includes("GitHub TESTE"));
+  assert(!text.includes("candidata bloqueada"));
+  const buttons = rendered.blocks.at(-1)!.elements!;
+  assert(
+    buttons[0].url ===
+      "https://github.com/israelhudson/flutter_code_push_example/releases/tag/poc-v0.1.0",
+  );
+  assert(buttons.every((b: any) => b.url));
+  assert(buttons.some((b: any) => b.text.text === "Preview aprovado"));
+});
+
+Deno.test("unpublished cards never claim a final release", () => {
+  for (
+    const status of [
+      "pending",
+      "approved",
+      "publishing",
+      "adjustment_requested",
+      "cancelled",
+      "expired",
+    ]
+  ) {
+    const rendered = card({ ...candidate(), version: "0.1.0", status });
+    const text = JSON.stringify(rendered);
+    assert(!text.includes("poc_release"));
+    assert(!text.includes("Versão 0.1.0 publicada"));
+    assert(text.includes("poc-v0.1.0-rc.1"));
+  }
 });
