@@ -44,3 +44,14 @@ Logs privados: diretório `rc2-38493768059` dentro de
 `/Users/israelhudson/Documents/Codex/2026-10-13/slack-supabase-poc/`.
 O resultado da nova execução deve ser registrado ali após concluir.
 Essa recuperação não aprova nem publica automaticamente a candidata.
+
+## Compatibilidade explícita das ferramentas
+
+A retomada 38494853447 encontrou também a proteção que compara as ferramentas
+atuais às congeladas na fonte. Uma recuperação aprovada usa
+`delivery/poc-preview-recovery.json`: vincula exclusivamente RC2, escopo, SHA e
+objetos Git exatos de fonte/ferramentas (.github, deploy, tools/delivery, política
+e supabase). Qualquer nova alteração nesses objetos invalida o registro; outras
+RCs não recebem exceção. O backend deve ser idêntico nos dois lados. O registro
+é lido do HEAD confiável e copiado para `tooling-recovery.json` no artefato.
+Não editar a fonte ou mover tags para satisfazer essa comparação.
