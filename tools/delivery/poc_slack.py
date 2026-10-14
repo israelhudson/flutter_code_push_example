@@ -34,7 +34,7 @@ def backend_origin(value):
 
 def control(operation, **data):
     base = backend_origin(os.environ.get('POC_SUPABASE_URL'))
-    secret_name = 'POC_PUBLICATION_SECRET' if operation in ('state', 'claim', 'complete') else 'POC_REGISTRATION_SECRET'
+    secret_name = 'POC_PUBLICATION_SECRET' if operation in ('state', 'claim', 'complete', 'presentation', 'refresh_card') else 'POC_REGISTRATION_SECRET'
     secret = os.environ.get(secret_name)
     if not secret:
         raise lab.LabError('Credencial exclusiva da POC ausente: ' + secret_name)
@@ -211,7 +211,7 @@ def legacy_release_body(c):
     return 'Release de TESTE da POC Slack.' + limit + '\n\nCódigo aprovado: ' + c['source_sha'] + '\n\nRelatório: ' + c['report_digest'] + '\n\n' + c['report_text']
 
 
-def release_body(c):
+def previous_release_body(c):
     report = json.loads(c['report_text'])
     # Plain text from the frozen report must not become links, mentions or HTML.
     def plain(value):
@@ -238,6 +238,28 @@ def release_body(c):
     return '\n\n'.join(body)
 
 
+def release_body(c, presentation=None):
+    # Presentation never rewrites the frozen report or grants mobile permission.
+    report = json.loads(c['report_text'])
+    if presentation is None:
+        rows = [['GitHub', 'poc-v' + c['version'], 'Release publicada'],
+                ['Web', 'Não verificada', 'Não gerado nesta rodada' if report.get('validation_mode') == 'controls_only' else 'Versão do preview não conferida'],
+                ['Android', 'Não validada', 'Sem publicação comprovada nesta entrega'],
+                ['iOS', 'Não validada', 'Sem publicação comprovada nesta entrega']]
+    else:
+        rows = presentation['rows']
+        if (not isinstance(rows, list) or len(rows) != 4 or [r[0] for r in rows] != ['GitHub', 'Web', 'Android', 'iOS']
+                or any(len(r) != 3 or any(not isinstance(v, str) or len(v) > 400 or '\n' in v for v in r) for r in rows)):
+            raise lab.LabError('Tabela de versões inválida.')
+        rows = [['GitHub', 'poc-v' + c['version'], 'Release publicada'], *rows[1:]]
+    cell = lambda v: html.escape(v).replace('|', '&#124;').replace('`', '&#96;').replace('@', '&#64;')
+    table = '## Versões e publicação\n\n| Destino | Versão / identidade | Resultado |\n|---|---|---|\n'
+    table += '\n'.join('| ' + ' | '.join(cell(v) for v in row) + ' |' for row in rows)
+    body = previous_release_body(c).replace('**Ambiente de testes da POC.** A classificação final desta Release não promove patches Shorebird nem publica em lojas.',
+        'Entrega do Flutter Code Push Example. Os resultados por plataforma distinguem preview, staging e publicação; a Release GitHub não publica o aplicativo nas lojas.')
+    return body.replace('## O que mudou', table + '\n\n## O que mudou', 1)
+
+
 def finalize_existing(c, authorization, output):
     """Explicit metadata repair. Never republishes, moves tags or replaces evidence."""
     receipt = authorization.get('receipt', {})
@@ -256,17 +278,20 @@ def finalize_existing(c, authorization, output):
                 raise lab.LabError('Tag divergente; correção de apresentação bloqueada.')
     verify_refs()
     existing = lab.api(lab.endpoint('releases/tags/' + tag))
-    body = release_body(c)
-    expected = {'id': receipt.get('release_id'), 'tag_name': tag, 'name': 'POC Slack — ' + c['version'],
+    presentation = control('presentation', candidate=c['id'])
+    lab.output(output, 'version-presentation.json', presentation)
+    body = release_body(c, presentation)
+    expected = {'id': receipt.get('release_id'), 'tag_name': tag, 'name': 'Versão ' + c['version'],
                 'html_url': expected_receipt['release_url'], 'draft': False}
     if (type(expected['id']) is not int or expected['id'] <= 0
-            or any(existing.get(k) != v for k, v in expected.items())
+            or any(existing.get(k) != v for k, v in expected.items() if k != 'name')
+            or existing.get('name') not in ('POC Slack — ' + c['version'], expected['name'])
             or type(existing.get('prerelease')) is not bool
-            or existing.get('body') not in (legacy_release_body(c), body)):
+            or existing.get('body') not in (legacy_release_body(c), previous_release_body(c), body)):
         raise lab.LabError('Release alterada ou fora do recibo; não sobrescrever.')
     lab.output(output, 'release-before.json', existing)
     assets = lambda r: sorted((a['id'], a['name'], a.get('digest'), a['size']) for a in r.get('assets', []))
-    changed = existing['prerelease'] or existing['body'] != body
+    changed = existing['prerelease'] or existing['body'] != body or existing['name'] != expected['name']
     if changed:
         control('claim', candidate=c['id'])
         # Do not overwrite a concurrent edit made during validation.
@@ -274,7 +299,7 @@ def finalize_existing(c, authorization, output):
         if (any(current.get(k) != existing.get(k) for k in (*expected, 'body', 'prerelease', 'updated_at'))
                 or assets(current) != assets(existing)):
             raise lab.LabError('Release mudou durante a conferência; reconciliar antes de corrigir.')
-        update = {'prerelease': False, 'body': body, 'make_latest': 'false'}
+        update = {'prerelease': False, 'body': body, 'name': expected['name'], 'make_latest': 'false'}
         lab.output(output, 'release-correction-intent.json', {'release_id': existing['id'], 'update': update})
         lab.api(lab.endpoint('releases/' + str(existing['id'])), update, 'PATCH')
     actual = lab.api(lab.endpoint('releases/' + str(existing['id'])))
@@ -288,6 +313,8 @@ def finalize_existing(c, authorization, output):
               'assets_preserved': True, 'publication_receipt_unchanged': True,
               'distribution_performed': False}
     lab.output(output, 'release-correction-receipt.json', result)
+    card = control('refresh_card', candidate=c['id'])
+    lab.output(output, 'card-refresh-receipt.json', card)
     return result
 
 
@@ -314,8 +341,10 @@ def publish(candidate, output, finalize=False):
     lab.create_ref_verified('tags/' + tag, c['source_sha'])
     control('claim', candidate=candidate)
     existing = lab.api(lab.endpoint('releases/tags/' + tag), missing=True)
-    expected = {'tag_name': tag, 'target_commitish': c['source_sha'], 'name': 'POC Slack — ' + c['version'],
-                'body': release_body(c), 'draft': False, 'prerelease': False, 'make_latest': 'false'}
+    presentation = control('presentation', candidate=c['id'])
+    lab.output(output, 'version-presentation.json', presentation)
+    expected = {'tag_name': tag, 'target_commitish': c['source_sha'], 'name': 'Versão ' + c['version'],
+                'body': release_body(c, presentation), 'draft': False, 'prerelease': False, 'make_latest': 'false'}
     if existing is None:
         existing = lab.api(lab.endpoint('releases'), expected, 'POST')
     if any(existing.get(k) != expected[k] for k in ('tag_name', 'body', 'name', 'draft', 'prerelease')):

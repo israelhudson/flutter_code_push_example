@@ -20,7 +20,7 @@ Esta correção não cria uma segunda GitHub Release para a RC: no fluxo atual, 
 
 ## Corrigir uma Release antiga
 
-No workflow **Slack - Publicar teste aprovado**, use o ID da candidata já publicada e marque `finalize_existing=true`. O padrão continua `false`.
+No workflow **Slack - Publicar versão aprovada**, use o ID da candidata já publicada e marque `finalize_existing=true`. O padrão continua `false`.
 
 ```bash
 gh workflow run poc-slack-publish.yml \
@@ -31,7 +31,7 @@ gh workflow run poc-slack-publish.yml \
 
 A operação exige estado `published`, recibo original e tags RC/final no SHA aprovado. Só aceita a descrição original conhecida ou a nova descrição esperada. Se houver edição divergente, bloqueia para não sobrescrever trabalho manual.
 
-Ela altera apenas descrição e `prerelease`, com `make_latest=false`; mantém ID, nome, tags e anexos. Salva intenção, antes/depois e recibo de correção. Não altera o recibo original no banco e não gera novo aviso, aceite, tag ou patch.
+Ela atualiza o título para `Versão X.Y.Z`, a descrição e `prerelease`, com `make_latest=false`; mantém ID, tags e anexos. A tabela usa metadados e recibos verificados conforme [Versões e publicação](VERSOES-E-PUBLICACAO.md). Salva intenção, antes/depois e recibo de correção. Não altera o recibo original no banco nem os aceites. Atualiza a mesma mensagem do Slack, sem novo aviso, tag, preview ou patch.
 
 Repetir a correção de uma Release já corrigida apenas confere e retorna `changed=false`. Se a resposta do PATCH se perder, a próxima execução consulta o efeito e não envia outro PATCH quando a correção já estiver aplicada. O botão normal de publicação mantém seu comportamento idempotente e não corrige Releases antigas silenciosamente.
 

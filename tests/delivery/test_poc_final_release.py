@@ -28,6 +28,12 @@ class FinalReleaseTests(unittest.TestCase):
                         'body': poc.legacy_release_body(self.c), 'published_at': '2026-10-14T00:00:00Z',
                         'assets': [{'id': 456, 'name': 'mobile-receipt.json', 'digest': 'sha256:proof', 'size': 42}]}
         self.writes = []
+        self.presentation = {'rows': [['GitHub', 'poc-v1.15.1', 'Release publicada'],
+            ['Web', '1.1.0+2', 'Preview validado; não comprova produção'],
+            ['Android', '1.1.0+2 (patch 4)', 'Patch em staging; execução confirmada no emulador'],
+            ['iOS', 'Não validada', 'Sem publicação comprovada nesta entrega']]}
+        control_mock = patch.object(poc, 'control', return_value=self.presentation)
+        control_mock.start(); self.addCleanup(control_mock.stop)
 
     def api(self, path, data=None, method='GET', missing=False):
         if '/git/ref/' in path:
@@ -46,17 +52,36 @@ class FinalReleaseTests(unittest.TestCase):
     def test_explicit_repair_preserves_assets_tags_receipt_and_second_call_is_read_only(self):
         before = copy.deepcopy(self.receipt)
         with tempfile.TemporaryDirectory() as out, patch.object(lab, 'api', side_effect=self.api), \
-                patch.object(poc, 'control'), patch.object(lab, 'create_ref_verified') as refs:
+                patch.object(poc, 'control', return_value=self.presentation), patch.object(lab, 'create_ref_verified') as refs:
             result = poc.finalize_existing(self.c, self.authorization(), out)
             self.assertTrue(result['changed']); self.assertFalse(result['prerelease'])
             self.assertEqual(len(self.writes), 1)
-            self.assertEqual(set(self.writes[0][1]), {'body', 'prerelease', 'make_latest'})
+            self.assertEqual(set(self.writes[0][1]), {'body', 'name', 'prerelease', 'make_latest'})
             self.assertEqual(self.writes[0][1]['make_latest'], 'false')
             self.assertEqual(self.release['assets'][0]['id'], 456)
             self.assertEqual(self.receipt, before)
             self.assertFalse(poc.finalize_existing(self.c, self.authorization(), out)['changed'])
             self.assertEqual(len(self.writes), 1); refs.assert_not_called()
             self.assertTrue(Path(out, 'release-correction-intent.json').is_file())
+
+    def test_table_keeps_real_versions_and_unknown_ios_without_altering_frozen_report(self):
+        body = poc.release_body(self.c, self.presentation)
+        self.assertIn('| Android | 1.1.0+2 (patch 4) |', body)
+        self.assertIn('| iOS | Não validada |', body)
+        self.assertIn(self.c['report_text'], body)
+        self.assertNotIn('POC Slack', body)
+
+    def test_slack_failure_can_retry_without_repeating_github_patch(self):
+        def control(operation, **kwargs):
+            if operation == 'refresh_card': raise lab.LabError('Slack unavailable')
+            return self.presentation
+        with tempfile.TemporaryDirectory() as out, patch.object(lab, 'api', side_effect=self.api):
+            with patch.object(poc, 'control', side_effect=control), self.assertRaises(lab.LabError):
+                poc.finalize_existing(self.c, self.authorization(), out)
+            self.assertEqual(len(self.writes), 1)
+            result = poc.finalize_existing(self.c, self.authorization(), out)
+            self.assertFalse(result['changed']); self.assertEqual(len(self.writes), 1)
+            self.assertEqual(self.release['name'], 'Versão 1.15.1')
 
     def test_repair_blocks_unpublished_candidate_before_claim(self):
         for state in ('pending', 'approved', 'publishing', 'adjustment_requested'):
@@ -85,7 +110,7 @@ class FinalReleaseTests(unittest.TestCase):
         def api(path, *args, **kwargs):
             if path.endswith('/releases/123'): self.release['body'] = 'Concurrent edit'
             return self.api(path, *args, **kwargs)
-        with tempfile.TemporaryDirectory() as out, patch.object(lab, 'api', side_effect=api), patch.object(poc, 'control'):
+        with tempfile.TemporaryDirectory() as out, patch.object(lab, 'api', side_effect=api), patch.object(poc, 'control', return_value=self.presentation):
             with self.assertRaises(lab.LabError): poc.finalize_existing(self.c, self.authorization(), out)
             self.assertFalse(self.writes)
 
@@ -94,7 +119,7 @@ class FinalReleaseTests(unittest.TestCase):
             result = self.api(path, data, method, **kwargs)
             if method == 'PATCH': raise lab.LabError('response lost')
             return result
-        with tempfile.TemporaryDirectory() as out, patch.object(poc, 'control'):
+        with tempfile.TemporaryDirectory() as out, patch.object(poc, 'control', return_value=self.presentation):
             with patch.object(lab, 'api', side_effect=api), self.assertRaises(lab.LabError):
                 poc.finalize_existing(self.c, self.authorization(), out)
             with patch.object(lab, 'api', side_effect=self.api):
@@ -106,7 +131,7 @@ class FinalReleaseTests(unittest.TestCase):
             if method == 'GET': return None
             return self.api(path, data, method, **kwargs)
         with tempfile.TemporaryDirectory() as out, patch.object(poc, 'protect'), \
-                patch.object(poc, 'control', side_effect=[self.c, {}, {}, {}, {}]) as control, \
+                patch.object(poc, 'control', side_effect=[self.c, {}, {}, {}, self.presentation, {}]) as control, \
                 patch.object(lab, 'create_ref_verified') as refs, patch.object(lab, 'api', side_effect=api):
             result = poc.publish(self.c['id'], out)
             self.assertFalse(result['prerelease']); self.assertFalse(result['distribution_performed'])
@@ -117,7 +142,7 @@ class FinalReleaseTests(unittest.TestCase):
 
     def test_new_publication_does_not_silently_accept_old_prerelease(self):
         with tempfile.TemporaryDirectory() as out, patch.object(poc, 'protect'), \
-                patch.object(poc, 'control', side_effect=[self.c, {}, {}, {}]) as control, \
+                patch.object(poc, 'control', side_effect=[self.c, {}, {}, {}, self.presentation]) as control, \
                 patch.object(lab, 'create_ref_verified'), patch.object(lab, 'api', side_effect=self.api):
             with self.assertRaises(lab.LabError): poc.publish(self.c['id'], out)
             self.assertFalse(self.writes)
@@ -133,7 +158,7 @@ class FinalReleaseTests(unittest.TestCase):
         self.assertIn('````json\n' + self.c['report_text'] + '\n````', body)
         self.assertNotIn('<img', body.split('<details>')[0])
         self.assertNotIn('@everyone', body.split('<details>')[0])
-        self.assertIn('não promove patches', body)
+        self.assertIn('não publica o aplicativo nas lojas', body)
 
 
 if __name__ == '__main__': unittest.main()

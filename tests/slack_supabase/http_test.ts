@@ -469,7 +469,9 @@ Deno.test("published card highlights final release and preserves candidate evide
   const text = JSON.stringify(rendered);
   assert(rendered.text.startsWith("✅ Versão 0.1.0 publicada"));
   assert(text.includes("Promovida de: poc-v0.1.0-rc.1"));
-  assert(text.includes("GitHub TESTE"));
+  assert(text.includes("publicada · GitHub"));
+  assert(!text.includes("Flutter POC"));
+  assert(rendered.blocks.some((b) => b.type === "table"));
   assert(!text.includes("candidata bloqueada"));
   const buttons = rendered.blocks.at(-1)!.elements!;
   assert(
@@ -497,4 +499,71 @@ Deno.test("unpublished cards never claim a final release", () => {
     assert(!text.includes("Versão 0.1.0 publicada"));
     assert(text.includes("poc-v0.1.0-rc.1"));
   }
+});
+
+Deno.test("Refreshing published versions only edits the original card and never writes approvals or publication", async () => {
+  const c = {
+    ...candidate(),
+    version: "0.1.0",
+    status: "published",
+    publication_scope: "github_test",
+    report_text: JSON.stringify({ validation_mode: "controls_only", title: "Existing release" }),
+  };
+  const mutations: string[] = [];
+  const f = fixture({
+    db: async (path) => {
+      if (path.startsWith("poc_config")) {
+        return [{ enabled: true, operator_github: "israelhudson" }];
+      }
+      if (path.startsWith("poc_user_directory")) return [{ github_id: 18661493 }];
+      if (path === "rpc/poc_state") return c;
+      mutations.push(path);
+      throw Error("No database write allowed");
+    },
+    fetch: (async (url) => {
+      const path = String(url);
+      if (path.includes("actions/runs/")) {
+        return Response.json({
+          head_branch: "slack-main",
+          event: "workflow_dispatch",
+          path: ".github/workflows/poc-slack-publish.yml",
+          actor: { id: 18661493 },
+          triggering_actor: { id: 18661493 },
+        });
+      }
+      if (path.includes("releases/tags/")) {
+        return Response.json({
+          tag_name: "poc-v0.1.0",
+          draft: false,
+          prerelease: false,
+          assets: [],
+        });
+      }
+      if (path.includes("git/ref/tags/")) {
+        return Response.json({ object: { type: "commit", sha: c.source_sha } });
+      }
+      throw Error("No preview or upload allowed");
+    }) as typeof fetch,
+  });
+  f.env.POC_PUBLICATION_ENABLED = "true";
+  const request = (operation: string, secret = "fixture-pub") =>
+    new Request("https://fixture.invalid", {
+      method: "POST",
+      headers: { Authorization: "Bearer " + secret },
+      body: JSON.stringify({ operation, run_id: "1", candidate: id }),
+    });
+  assert((await controlHandler(f.io)(request("refresh_card", "fixture-reg"))).status === 401);
+  assert((await controlHandler(f.io)(request("presentation"))).status === 200);
+  assert(f.calls.length === 0);
+  for (let i = 0; i < 2; i++) {
+    assert((await controlHandler(f.io)(request("refresh_card"))).status === 200);
+  }
+  assert(mutations.length === 0);
+  assert(
+    f.calls.length === 2 &&
+      f.calls.every(([method, data]) => method === "chat.update" && data.ts === c.message_ts),
+  );
+  c.status = "pending";
+  assert((await controlHandler(f.io)(request("refresh_card"))).status === 409);
+  assert(f.calls.length === 2);
 });

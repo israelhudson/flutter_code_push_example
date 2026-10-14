@@ -1,4 +1,5 @@
 import { verifyCandidateEvidence } from "./preview.ts";
+import { defaultRows, versionPresentation, type VersionRow } from "./versions.ts";
 
 export const REPOSITORY = "israelhudson/flutter_code_push_example";
 export const CHANNEL = "C0C8DUJB52L";
@@ -148,7 +149,7 @@ export async function state(io: IO, id: string) {
   ) throw Error("Candidate scope rejected");
   return c;
 }
-export function card(c: any, now = Date.now()) {
+export function card(c: any, now = Date.now(), rows: VersionRow[] = defaultRows(c)) {
   const report = JSON.parse(c.report_text);
   const roles = new Set(c.approvals?.map((a: any) => a.role) ?? []);
   const expired = Date.parse(c.expires_at) <= now;
@@ -159,12 +160,12 @@ export function card(c: any, now = Date.now()) {
   const blocked = !published && (expired ||
     ["adjustment_requested", "cancelled", "expired"].includes(c.status));
   const title = published
-    ? `✅ Versão ${c.version} publicada · GitHub TESTE`
+    ? `✅ Versão ${c.version} publicada · GitHub`
     : rejected
     ? "⛔ Versão negada · candidata bloqueada"
     : blocked
     ? "Ajuste ou prazo encerrado · candidata bloqueada"
-    : `Flutter POC · ${roles.size}/2 aceites`;
+    : `Flutter Code Push · ${roles.size}/2 aceites`;
   const section = (text: string) => ({
     type: "section",
     text: { type: "plain_text", text },
@@ -239,6 +240,14 @@ export function card(c: any, now = Date.now()) {
             .slice(0, 1400)
         }`,
       ),
+      section("Versões e publicação"),
+      {
+        type: "table",
+        column_settings: [{ is_wrapped: true }, { is_wrapped: true }, { is_wrapped: true }],
+        rows: [["Destino", "Versão / identidade", "Resultado"], ...rows].map((row) =>
+          row.map((text) => ({ type: "raw_text", text }))
+        ),
+      },
       section(
         `Técnico: ${
           roles.has("technical") ? "aceito" : "pendente"
@@ -246,7 +255,7 @@ export function card(c: any, now = Date.now()) {
           roles.has("business") ? "aceito" : "pendente"
         } (${c.business_reviewer})\n${solo}\nEstado: ${
           published
-            ? "Publicada no GitHub (teste)"
+            ? "Publicada no GitHub"
             : rejected
             ? "Negada; preparar uma nova candidata"
             : c.status
@@ -269,7 +278,9 @@ export function card(c: any, now = Date.now()) {
               ? "Aprovações concluídas; RC preservada como histórico"
               : "validade 36h · encerra " + c.expires_at
           }\nPublicação: ${
-            c.publication_scope === "none" ? "desligada" : "somente GitHub TESTE"
+            c.publication_scope === "none"
+              ? "desligada"
+              : "GitHub; distribuição mobile exige autorização própria"
           }. A thread fica livre para conversa.`,
         }],
       },
@@ -281,10 +292,17 @@ export async function updateCard(io: IO, id: string) {
   let c = await state(io, id);
   if (!c.message_ts) return;
   for (let i = 0; i < 4; i++) {
-    const message = card(c);
+    const presentation = await versionPresentation(
+      io,
+      c,
+      c.status === "published" ? await github(io, `releases/tags/poc-v${c.version}`) : null,
+    );
+    const message = card(c, Date.now(), presentation.rows);
     await io.slack("chat.update", { ...message, ts: c.message_ts });
     const next = await state(io, id);
-    if (JSON.stringify(message) === JSON.stringify(card(next))) return;
+    if (JSON.stringify(message) === JSON.stringify(card(next, Date.now(), presentation.rows))) {
+      return;
+    }
     c = next;
   }
   throw Error("Card requires reconciliation");
@@ -315,12 +333,13 @@ export async function sendNotice(io: IO, id: string, event: string) {
     }
     const c = await state(io, id);
     let message: Data;
-    if (event === "card") message = card(c);
-    else if (event === "published") {
+    if (event === "card") {
+      message = card(c, Date.now(), (await versionPresentation(io, c, null)).rows);
+    } else if (event === "published") {
       message = {
         channel: CHANNEL,
         text:
-          `${c.rc_tag}: Release de TESTE publicada no GitHub. SHA ${c.source_sha}. Nenhum patch distribuído.`,
+          `poc-v${c.version}: Release publicada no GitHub. Origem: ${c.rc_tag}. SHA ${c.source_sha}. Consulte os resultados por plataforma no cartão.`,
         unfurl_links: false,
       };
     } else {
@@ -671,7 +690,7 @@ export function controlHandler(io: IO) {
       const raw = await request.text();
       if (raw.length > 65536) return new Response("Too large", { status: 413 });
       const input = JSON.parse(raw);
-      const publication = ["claim", "complete", "state"].includes(
+      const publication = ["claim", "complete", "state", "presentation", "refresh_card"].includes(
         input.operation,
       );
       const secret = io.env(
@@ -869,6 +888,28 @@ export function controlHandler(io: IO) {
         );
         if (ref?.object?.type !== "commit" || ref.object.sha !== c.source_sha) {
           throw Error("Frozen tag changed");
+        }
+        if (["presentation", "refresh_card"].includes(input.operation)) {
+          const release = c.status === "published"
+            ? await github(io, `releases/tags/poc-v${c.version}`)
+            : null;
+          const presentation = await versionPresentation(io, c, release);
+          if (input.operation === "presentation") return Response.json(presentation);
+          if (
+            c.status !== "published" || !c.message_ts || !release || release.prerelease !== false ||
+            release.draft !== false
+          ) throw Error("Published card required");
+          const final = await github(io, `git/ref/tags/poc-v${c.version}`);
+          if (final?.object?.type !== "commit" || final.object.sha !== c.source_sha) {
+            throw Error("Final tag changed");
+          }
+          await updateCard(io, c.id);
+          return Response.json({
+            candidate: c.id,
+            message_ts: c.message_ts,
+            refreshed: true,
+            ...presentation,
+          });
         }
         if (input.operation === "claim") {
           await verifyCandidateEvidence(io, JSON.parse(c.report_text));
