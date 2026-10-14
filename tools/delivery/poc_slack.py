@@ -120,16 +120,19 @@ def trusted_poc_source(plan, output):
         return lab.git('rev-parse', 'HEAD')
 
 
-def prepare(version, title, scope, output):
+def prepare(version, title, scope, output, validation_mode='full'):
     if not lab.VERSION.fullmatch(version or '') or not title.strip() or len(title) > 120 or any(ord(c) < 32 for c in title):
         raise lab.LabError('Informe versão major.minor.patch e título curto em uma linha.')
+    if validation_mode not in ('full', 'controls_only'):
+        raise lab.LabError('Modo de validação desconhecido.')
     protect()
-    p = control('plan', version=version, title=title, publication_scope=scope)
+    p = control('plan', version=version, title=title, publication_scope=scope, validation_mode=validation_mode)
     if (p.get('version') != version or p.get('rc_tag') != f'poc-v{version}-rc.{p.get("rc_number")}'
             or type(p.get('rc_number')) is not int or p['rc_number'] < 1
             or not re.fullmatch(r'poc-[a-f0-9]{32}', p.get('id', ''))
             or not lab.SHA.fullmatch(p.get('source_sha', '')) or p.get('branch') != 'poc-release/' + version
-            or p.get('creator') != 'israelhudson' or p.get('publication_scope') != scope):
+            or p.get('creator') != 'israelhudson' or p.get('publication_scope') != scope
+            or p.get('validation_mode', 'full') != validation_mode):
         raise lab.LabError('Plano remoto fora da identidade da POC.')
     trusted_poc_source(p, output)
     checked_source(p['source_sha'], output, p['branch'])
@@ -155,20 +158,33 @@ def prepare(version, title, scope, output):
 
 
 def register(plan, metadata, smoke, output):
-    if (metadata.get('source_sha') != plan['source_sha'] or smoke.get('success') is not True
+    mode = plan.get('validation_mode', 'full')
+    if mode not in ('full', 'controls_only'):
+        raise lab.LabError('Modo de validação desconhecido.')
+    if mode == 'controls_only':
+        if metadata is not None or smoke is not None:
+            raise lab.LabError('Ensaio somente de controles não aceita prova de preview.')
+        preview = {'preview_url': None, 'preview_sha': None, 'web_content_sha256': None,
+                   'snapshot_manifest_sha256': None, 'preview_performed': False}
+    else:
+        if not isinstance(metadata, dict) or not isinstance(smoke, dict):
+            raise lab.LabError('Modo completo exige as provas do preview.')
+        if (metadata.get('source_sha') != plan['source_sha'] or smoke.get('success') is not True
             or smoke.get('source_sha') != plan['source_sha']
             or any(metadata.get(k) != smoke.get(k) for k in ('web_content_sha256', 'snapshot_manifest_sha256'))):
-        raise lab.LabError('Preview sem prova de SHA e bytes do build.')
+            raise lab.LabError('Preview sem prova de SHA e bytes do build.')
+        if smoke.get('snapshot_url') != f'https://israelhudson.github.io/flutter_code_push_example/snapshots/{plan["source_sha"]}/':
+            raise lab.LabError('Preview fora da identidade da candidata.')
+        preview = {'preview_url': smoke['snapshot_url'], 'preview_sha': plan['source_sha'],
+                   'web_content_sha256': metadata['web_content_sha256'],
+                   'snapshot_manifest_sha256': metadata['snapshot_manifest_sha256'], 'preview_performed': True}
     source = plan['source_sha']
-    if smoke.get('snapshot_url') != f'https://israelhudson.github.io/flutter_code_push_example/snapshots/{source}/':
-        raise lab.LabError('Preview fora da identidade da candidata.')
     base = plan['changelog_base_sha']
     compare = lab.api(lab.endpoint('compare/' + base + '...' + source))
     if compare.get('status') not in ('ahead', 'identical') or compare.get('total_commits') != len(compare.get('commits', [])):
         raise lab.LabError('Histórico não ancestral ou truncado.')
     commits = [{'sha': c['sha'], 'title': c['commit']['message'].splitlines()[0]} for c in compare['commits']]
-    r = {**plan, 'repository': lab.REPOSITORY, 'preview_url': smoke['snapshot_url'], 'preview_sha': source,
-         'web_content_sha256': metadata['web_content_sha256'], 'snapshot_manifest_sha256': metadata['snapshot_manifest_sha256'],
+    r = {**plan, 'repository': lab.REPOSITORY, **preview, 'validation_mode': mode, 'distribution_performed': False,
          'changelog_base_sha': base, 'commits': commits, 'changelog': '\n'.join('- ' + c['title'] for c in commits),
          'platforms': {'android': {'base_release_version': None, 'effective_patch': None},
                        'ios': {'base_release_version': None, 'effective_patch': None}}}
@@ -189,7 +205,9 @@ def register(plan, metadata, smoke, output):
 
 
 def release_body(c):
-    return 'Release de TESTE da POC Slack.\n\nCódigo aprovado: ' + c['source_sha'] + '\n\nRelatório: ' + c['report_digest'] + '\n\n' + c['report_text']
+    report = json.loads(c['report_text'])
+    limit = '\n\nEnsaio somente de controles: sem preview, build web ou patches. Não comprova distribuição do aplicativo.' if report.get('validation_mode') == 'controls_only' else ''
+    return 'Release de TESTE da POC Slack.' + limit + '\n\nCódigo aprovado: ' + c['source_sha'] + '\n\nRelatório: ' + c['report_digest'] + '\n\n' + c['report_text']
 
 
 def publish(candidate, output):
@@ -230,7 +248,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest='operation', required=True)
     p = commands.add_parser('prepare'); p.add_argument('--version', required=True); p.add_argument('--title', required=True); p.add_argument('--scope', choices=['none','github_test'], default='none')
-    p = commands.add_parser('register'); p.add_argument('--plan', required=True); p.add_argument('--metadata', required=True); p.add_argument('--smoke', required=True)
+    p.add_argument('--validation-mode', choices=['full', 'controls_only'], default='full')
+    p = commands.add_parser('register'); p.add_argument('--plan', required=True); p.add_argument('--metadata'); p.add_argument('--smoke')
     p = commands.add_parser('publish'); p.add_argument('--candidate', required=True)
     for p in commands.choices.values():
         p.add_argument('--output', required=True)
@@ -241,9 +260,9 @@ def main():
                 or not re.fullmatch(r'\d+', os.environ.get('GITHUB_RUN_ID', ''))):
             raise lab.LabError('Execute somente o workflow manual habilitado na branch de integração configurada da POC.')
         if a.operation == 'prepare':
-            result = prepare(a.version, a.title, a.scope, a.output)
+            result = prepare(a.version, a.title, a.scope, a.output, a.validation_mode)
         elif a.operation == 'register':
-            result = register(*(json.loads(Path(p).read_text()) for p in (a.plan, a.metadata, a.smoke)), a.output)
+            result = register(*(json.loads(Path(p).read_text()) if p else None for p in (a.plan, a.metadata, a.smoke)), a.output)
         else:
             if os.environ.get('POC_SLACK_PUBLISH_ENABLED') != 'true':
                 raise lab.LabError('Publicação GitHub de teste ainda desativada.')

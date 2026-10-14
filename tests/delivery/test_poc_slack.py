@@ -95,6 +95,30 @@ class POCContracts(unittest.TestCase):
             self.assertEqual(poc.publish('poc-'+'a'*32,out),receipt)
             tag.assert_not_called();api.assert_not_called()
 
+    def test_controls_only_registers_explicit_absence_and_keeps_default_strict(self):
+        plan = {'id': 'poc-'+'a'*32, 'source_sha': 'a'*40, 'validation_mode': 'controls_only',
+                'changelog_base_sha': 'b'*40, 'publication_scope': 'github_test'}
+        with tempfile.TemporaryDirectory() as out, patch.object(lab, 'api', return_value={'status': 'ahead', 'total_commits': 0, 'commits': []}), \
+                patch.object(poc, 'control', side_effect=[{'id': plan['id']}, {'delivery': 'sent', 'message_ts': '1.1'}]) as remote:
+            poc.register(plan, None, None, out)
+            report = json.loads(Path(out, 'frozen-report.json').read_text())
+            self.assertFalse(report['preview_performed'])
+            self.assertFalse(report['distribution_performed'])
+            self.assertIsNone(report['preview_url'])
+            self.assertIsNone(report['web_content_sha256'])
+            self.assertIn('sem preview', poc.release_body({'source_sha': plan['source_sha'], 'report_digest': 'c'*64, 'report_text': lab.canonical(report)}))
+            self.assertEqual(remote.call_args_list[0].args[0], 'register')
+        for mode in ('full', 'unknown', None):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as out, patch.object(poc, 'control') as remote:
+                edited = dict(plan)
+                if mode is None: edited.pop('validation_mode')
+                else: edited['validation_mode'] = mode
+                with self.assertRaises(lab.LabError): poc.register(edited, None, None, out)
+                remote.assert_not_called()
+        with tempfile.TemporaryDirectory() as out, patch.object(poc, 'control') as remote:
+            with self.assertRaises(lab.LabError): poc.register(plan, {}, {}, out)
+            remote.assert_not_called()
+
     def test_lab_channel_and_publication_roles_are_not_shell_interpolated(self):
         root=Path(__file__).resolve().parents[2]
         prepare=(root/'.github/workflows/poc-slack-prepare.yml').read_text()
