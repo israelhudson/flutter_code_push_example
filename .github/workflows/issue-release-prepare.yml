@@ -114,6 +114,7 @@ jobs:
           SOURCE_SHA: ${{ needs.prepare.outputs.source }}
         run: |
           python3 trusted/deploy/pages_preview.py history --site "$RUNNER_TEMP/issue-site"
+          python3 trusted/tools/delivery/preview_retention.py --site "$RUNNER_TEMP/issue-site" --incoming "$RUNNER_TEMP/issue-incoming" --output "$RUNNER_TEMP/issue-retention" --apply
           python3 trusted/tools/delivery/issue_preview.py --incoming "$RUNNER_TEMP/issue-incoming" --site "$RUNNER_TEMP/issue-site" --source-sha "$SOURCE_SHA" > "$RUNNER_TEMP/issue-metadata.json"
           python3 trusted/deploy/pages_preview.py persist --site "$RUNNER_TEMP/issue-site"
           python3 trusted/deploy/pages_preview.py export --site "$RUNNER_TEMP/issue-site" --output "$RUNNER_TEMP/issue-public"
@@ -141,6 +142,7 @@ jobs:
           path: |
             ${{ runner.temp }}/issue-metadata.json
             ${{ runner.temp }}/issue-smoke.json
+            ${{ runner.temp }}/issue-retention/preview-retention.json
           retention-days: 90
           if-no-files-found: ignore
   open:
