@@ -70,3 +70,4 @@ jobs:
       candidate_tag: ${{ needs.prepare.outputs.candidate_tag }}
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      POC_SLACK_BOT_TOKEN: ${{ secrets.POC_SLACK_BOT_TOKEN }}

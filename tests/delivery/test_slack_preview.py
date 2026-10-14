@@ -86,6 +86,16 @@ class SlackPreviewTests(unittest.TestCase):
         self.assertTrue(all(block['text']['type'] == 'plain_text' for block in payload['blocks']
                             if block['type'] == 'section'))
 
+    def test_poc_illustration_matches_noninteractive_links_used_for_actual_notice(self):
+        value = report()
+        value['notification_profile'] = 'poc-v1'
+        payload, _, _ = slack.render_preview(value, policy())
+        self.assertFalse(any(block['type'] == 'actions' for block in payload['blocks']))
+        links = [block['text']['text'] for block in payload['blocks']
+                 if block.get('text', {}).get('type') == 'mrkdwn']
+        self.assertEqual(len(links), 3)
+        self.assertEqual(links[0], '<' + value['preview']['snapshot_url'] + '|Preview>')
+
     def test_frozen_pr_sections_are_labelled_without_claiming_ai_generated_them(self):
         value = report()
         context = summary.freeze_context(value, [{'kind': 'pr', 'id': '17',

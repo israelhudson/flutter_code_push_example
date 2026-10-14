@@ -9,6 +9,9 @@ on:
         type: string
         required: true
     secrets:
+      POC_SLACK_BOT_TOKEN:
+        description: Bot exclusivo Flutter POC Deploy; somente candidatas com perfil poc-v1
+        required: false
       SLACK_BOT_TOKEN:
         required: false
   workflow_dispatch:
@@ -75,6 +78,7 @@ jobs:
       - env:
           GH_TOKEN: ${{ github.token }}
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          POC_SLACK_BOT_TOKEN: ${{ secrets.POC_SLACK_BOT_TOKEN }}
           TAG: ${{ needs.publish.outputs.tag }}
         run: python3 tools/delivery/issue_release.py notify --tag "$TAG" --output "$RUNNER_TEMP/issue-slack"
       - if: always()

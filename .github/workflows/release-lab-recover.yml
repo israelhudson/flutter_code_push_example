@@ -116,3 +116,4 @@ jobs:
       notification_label: recovery
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      POC_SLACK_BOT_TOKEN: ${{ secrets.POC_SLACK_BOT_TOKEN }}

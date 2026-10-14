@@ -8,6 +8,9 @@ on:
         type: string
         required: true
     secrets:
+      POC_SLACK_BOT_TOKEN:
+        description: Bot exclusivo Flutter POC Deploy; somente candidatas com perfil poc-v1
+        required: false
       SLACK_BOT_TOKEN:
         description: Bot de avisos do canal privado LAB; opcional
         required: false
@@ -476,6 +479,7 @@ jobs:
       notification_label: slack_candidate
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      POC_SLACK_BOT_TOKEN: ${{ secrets.POC_SLACK_BOT_TOKEN }}
   slack_first:
     name: Avisar aprovação 1 — Slack opcional
     needs: [preflight, web, approve_first]
@@ -490,6 +494,7 @@ jobs:
       notification_label: slack_first
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      POC_SLACK_BOT_TOKEN: ${{ secrets.POC_SLACK_BOT_TOKEN }}
   slack_second:
     name: Avisar aprovação 2 — Slack opcional
     needs: [preflight, web, approve_second]
@@ -504,6 +509,7 @@ jobs:
       notification_label: slack_second
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      POC_SLACK_BOT_TOKEN: ${{ secrets.POC_SLACK_BOT_TOKEN }}
   slack_ready:
     name: Avisar 2/2 e comando separado — Slack opcional
     needs: [preflight, web, approve_first, approve_second]
@@ -518,6 +524,7 @@ jobs:
       notification_label: slack_ready
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      POC_SLACK_BOT_TOKEN: ${{ secrets.POC_SLACK_BOT_TOKEN }}
   slack_publication:
     name: Avisar resultado de promoção — Slack opcional
     needs: [preflight, publish]
@@ -532,6 +539,7 @@ jobs:
       notification_label: slack_publication
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      POC_SLACK_BOT_TOKEN: ${{ secrets.POC_SLACK_BOT_TOKEN }}
   slack_final_status:
     name: Avisar encerramento — Slack opcional
     needs: [preflight, finalize_status]
@@ -546,3 +554,4 @@ jobs:
       notification_label: slack_final_status
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      POC_SLACK_BOT_TOKEN: ${{ secrets.POC_SLACK_BOT_TOKEN }}

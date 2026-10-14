@@ -180,9 +180,13 @@ integrado. O evento `closed` deixou de executar publicação.
 
 ## Persistência e avisos Slack
 
+Para novos cortes LAB/Issue, seguir [Bots por projeto](BOTS-POR-PROJETO.md):
+perfil `poc-v1`, Flutter POC Deploy e `POC_SLACK_BOT_TOKEN`. Registros anteriores
+continuam com sua identidade original durante a transição.
+
 A escolha é GitHub nativo para aprovar e publicar; Slack recebe apenas avisos e
 links no canal privado `app-deploy-test-isr` (`C0C8DUJB52L`). O bot
-`Flutter Deploy LAB` e o secret `SLACK_BOT_TOKEN` já têm
+histórico `Flutter Deploy LAB` e o secret `SLACK_BOT_TOKEN` têm
 [prova de conexão real](CONFIGURAR-SLACK-LAB.md). Os avisos automáticos da
 candidata estão preparados na branch, aguardando integração e ensaio próprio;
 seu [manual de operação](SLACK-AUTOMATICO.md) explica eventos e recuperação.

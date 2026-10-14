@@ -23,6 +23,9 @@ on:
         required: false
         default: false
     secrets:
+      POC_SLACK_BOT_TOKEN:
+        description: Bot exclusivo Flutter POC Deploy; somente candidatas com perfil poc-v1
+        required: false
       SLACK_BOT_TOKEN:
         required: false
   workflow_dispatch:
@@ -93,6 +96,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          POC_SLACK_BOT_TOKEN: ${{ secrets.POC_SLACK_BOT_TOKEN }}
           CANDIDATE_TAG: ${{ inputs.candidate_tag }}
           EVALUATION_RUN_ID: ${{ inputs.evaluation_run_id }}
           RENDER_ONLY: ${{ inputs.render_only }}

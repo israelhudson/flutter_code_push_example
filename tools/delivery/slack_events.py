@@ -136,11 +136,14 @@ def validate_event(policy, record, item, evidence, api=lab.api):
 
 def render_event(policy, record, item):
     event, report = item['event'], record['report']
+    profile = slack_notify.notification_profile(record)
     schema = report.get('presentation_schema', 1)
     record_schema = record.get('presentation_schema', 1)
     if type(schema) is not int or type(record_schema) is not int or schema != record_schema:
         raise lab.LabError('Apresentação do aviso diverge do relatório congelado.')
     if schema == 1:
+        if profile != slack_notify.LEGACY_PROFILE:
+            raise lab.LabError('Apresentação antiga não pode mudar de remetente.')
         return slack_legacy.render_event(policy, record, item)
     if schema != 2:
         raise lab.LabError('Schema de apresentação desconhecido.')
@@ -166,9 +169,12 @@ def render_event(policy, record, item):
     preview_url = report['preview']['snapshot_url']
     payload, _ = readable_payload('LAB · ' + LABELS[event] + '\n' + record['candidate_tag'] + ' · ' + report['title'],
         description, changes, footer, preview_url, run_url, source_label=notes['source_label'],
-        truncated=notes['truncated'], limitations=limitations)
+        truncated=notes['truncated'], limitations=limitations,
+        link_buttons=profile == slack_notify.LEGACY_PROFILE)
     notice['payload'].update(payload)
     notice.update(event=event, identity=identity)
+    if profile != slack_notify.LEGACY_PROFILE:
+        notice['notification_profile'] = profile
     return notice
 
 
