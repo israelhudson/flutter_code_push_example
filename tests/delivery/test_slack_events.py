@@ -145,6 +145,8 @@ class SlackEventsTests(unittest.TestCase):
         self.assertEqual(len(result['results']), 4)
 
     def test_schema_two_buttons_keep_same_frozen_links_and_aliases_only_in_presentation(self):
+        self.record().pop('notification_profile', None)
+        self.record()['report'].pop('notification_profile', None)
         before = copy.deepcopy(self.record())
         notice = events.render_event(self.world.policy, self.record(), self.record()['slack_events'][0])
         slack_outbox.validate_notice(notice)
@@ -155,6 +157,20 @@ class SlackEventsTests(unittest.TestCase):
         self.assertIn('Aprovador 1 E Aprovador 2', notice['payload']['text'])
         self.assertNotIn('Fabrícia', notice['payload']['text'])
         self.assertNotIn('Israel E', notice['payload']['text'])
+        self.assertEqual(self.record(), before)
+
+    def test_exclusive_profile_uses_hyperlinks_without_interaction_callbacks(self):
+        self.record()['notification_profile'] = 'poc-v1'
+        before = copy.deepcopy(self.record())
+        notice = events.render_event(self.world.policy, self.record(), self.record()['slack_events'][0])
+        slack_outbox.validate_notice(notice)
+        self.assertEqual(notice['notification_profile'], 'poc-v1')
+        self.assertFalse(any(block['type'] == 'actions' for block in notice['payload']['blocks']))
+        links = [b['text']['text'] for b in notice['payload']['blocks']
+                 if b.get('text', {}).get('type') == 'mrkdwn']
+        self.assertEqual(len(links), 3)
+        self.assertIn(self.record()['report']['preview']['snapshot_url'], links[0])
+        self.assertTrue(all(notice['identity']['run_url'] in link for link in links[1:]))
         self.assertEqual(self.record(), before)
 
     def test_unversioned_legacy_event_keeps_exact_baseline_payload_hash(self):

@@ -32,6 +32,14 @@ import uuid
 CHANNEL_ID = 'C0C8DUJB52L'
 CHANNEL_NAME = 'app-deploy-test-isr'
 ISRAEL_ID = 'U0BMFQKC001'
+LEGACY_PROFILE = 'legacy'
+POC_PROFILE = 'poc-v1'
+_NOTIFICATION_IDENTITIES = {
+    LEGACY_PROFILE: {'bot_user_id': 'U0C750FTCS3', 'app_id': 'A0C750DS05D',
+                     'secret_name': 'SLACK_BOT_TOKEN'},
+    POC_PROFILE: {'bot_user_id': 'U0C8XJ5S0Q6', 'app_id': 'A0C8J5ZC9JT',
+                  'secret_name': 'POC_SLACK_BOT_TOKEN'},
+}
 GITHUB_REPOSITORY = 'israelhudson/flutter_code_push_example'
 EVENTS = ('candidate', 'approval', 'publication', 'lab')
 DEFAULT_OUTBOX = Path('build/delivery/slack-outbox.sqlite3')
@@ -47,6 +55,25 @@ class NoticeError(ValueError):
 
 class SlackAPIError(NoticeError):
     pass
+
+
+def notification_identity(profile):
+    if not isinstance(profile, str) or profile not in _NOTIFICATION_IDENTITIES:
+        raise NoticeError('Perfil de aviso desconhecido; envio bloqueado.')
+    return dict(_NOTIFICATION_IDENTITIES[profile])
+
+
+def notification_profile(record):
+    if not isinstance(record, dict):
+        raise NoticeError('Registro de aviso inválido; envio bloqueado.')
+    profile = record.get('notification_profile', LEGACY_PROFILE)
+    notification_identity(profile)
+    return profile
+
+
+def notification_token(profile):
+    # Never substitute the shared app credential when the POC secret is absent.
+    return os.environ.get(notification_identity(profile)['secret_name'])
 
 
 class NoRedirect(HTTPRedirectHandler):
@@ -138,12 +165,16 @@ def slack_api(method, data, token):
     return result
 
 
-def verify_destination(token, api=slack_api):
+def verify_destination(token, api=slack_api, *, profile=None):
+    expected = notification_identity(LEGACY_PROFILE if profile is None else profile)
     auth = api('auth.test', {}, token)
     bot_user = auth.get('user_id')
     if (not auth.get('bot_id') or not isinstance(bot_user, str)
             or not re.fullmatch(r'[UW][A-Z0-9]+', bot_user) or bot_user == ISRAEL_ID):
         raise NoticeError('O token precisa identificar o próprio bot, sem representar Israel.')
+    if (bot_user != expected['bot_user_id']
+            or auth.get('app_id', expected['app_id']) != expected['app_id']):
+        raise NoticeError('Token não identifica o bot autorizado para este perfil.')
     channel = api('conversations.info', {'channel': CHANNEL_ID}, token).get('channel', {})
     if (not isinstance(channel, dict) or channel.get('id') != CHANNEL_ID or channel.get('name') != CHANNEL_NAME
             or channel.get('is_private') is not True or channel.get('is_archived') is not False
@@ -162,7 +193,8 @@ def verify_destination(token, api=slack_api):
         if not isinstance(batch, list) or not all(isinstance(m, str) for m in batch):
             raise NoticeError('Lista de membros inválida; envio bloqueado.')
         members.update(batch)
-        if members - {ISRAEL_ID, bot_user}:
+        allowed = {ISRAEL_ID} | {v['bot_user_id'] for v in _NOTIFICATION_IDENTITIES.values()}
+        if members - allowed:
             raise NoticeError('Canal contém outros membros; envio bloqueado.')
         metadata = response.get('response_metadata', {})
         next_cursor = metadata.get('next_cursor', '') if isinstance(metadata, dict) else None
@@ -176,8 +208,8 @@ def verify_destination(token, api=slack_api):
         seen_cursors.add(cursor)
     else:
         raise NoticeError('Paginação incompleta; envio bloqueado.')
-    if members != {ISRAEL_ID, bot_user}:
-        raise NoticeError('O canal precisa conter somente Israel e o próprio bot.')
+    if not {ISRAEL_ID, bot_user} <= members:
+        raise NoticeError('O canal precisa conter Israel e o próprio bot; somente os dois bots conhecidos são permitidos.')
     return bot_user
 
 
@@ -217,10 +249,11 @@ def send_notice(notice, outbox=DEFAULT_OUTBOX, api=slack_api, checkpoint=None):
         prior = _prior(db, key, payload_hash)
         if prior:
             return prior
-        token = os.environ.get('SLACK_BOT_TOKEN')
+        profile = notification_profile(notice)
+        token = notification_token(profile)
         if not token or any(c.isspace() for c in token):
-            raise NoticeError('SLACK_BOT_TOKEN ausente ou inválido; nenhuma mensagem enviada.')
-        verify_destination(token, api)
+            raise NoticeError(notification_identity(profile)['secret_name'] + ' ausente ou inválido; nenhuma mensagem enviada.')
+        verify_destination(token, api, profile=profile)
         # Commit uncertainty before the write. A concurrent invocation/crash
         # cannot automatically send this key again, even if the reply is lost.
         db.execute('BEGIN IMMEDIATE')

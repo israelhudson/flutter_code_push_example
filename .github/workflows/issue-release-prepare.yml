@@ -193,6 +193,7 @@ jobs:
       - env:
           GH_TOKEN: ${{ github.token }}
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          POC_SLACK_BOT_TOKEN: ${{ secrets.POC_SLACK_BOT_TOKEN }}
           TAG: ${{ needs.prepare.outputs.tag }}
         run: python3 tools/delivery/issue_release.py notify --tag "$TAG" --output "$RUNNER_TEMP/issue-slack"
       - if: always()

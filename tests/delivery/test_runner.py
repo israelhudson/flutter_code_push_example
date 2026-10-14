@@ -27,13 +27,13 @@ class FakeSlack:
 
     def __call__(self, method, data, token):
         if method == "auth.test":
-            return {"ok": True, "bot_id": "B99", "user_id": "U99BOT"}
+            return {"ok": True, "bot_id": "B99", "user_id": "U0C750FTCS3"}
         if method == "conversations.info":
             return {"ok": True, "channel": {
                 "id": slack_notify.CHANNEL_ID, "name": slack_notify.CHANNEL_NAME,
                 "is_private": True, "is_archived": False}}
         if method == "conversations.members":
-            return {"ok": True, "members": [slack_notify.ISRAEL_ID, "U99BOT"]}
+            return {"ok": True, "members": [slack_notify.ISRAEL_ID, "U0C750FTCS3"]}
         if method == "chat.postMessage":
             self.posts.append(data)
             return {"ok": True, "channel": slack_notify.CHANNEL_ID, "ts": "12345.123456"}

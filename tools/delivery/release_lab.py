@@ -29,6 +29,7 @@ SHA = re.compile(r'[0-9a-f]{40}\Z')
 VERSION = re.compile(r'(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\Z')
 TAG = re.compile(r'v((?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*))-rc\.([1-9][0-9]*)\Z')
 STABLE_TAG = re.compile(r'v((?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*))\Z')
+NOTIFICATION_PROFILE = 'poc-v1'
 
 
 class LabError(ValueError):
@@ -45,6 +46,14 @@ def digest(value):
 
 def now():
     return datetime.now(timezone.utc).isoformat()
+
+
+def notification_profile(record):
+    """The absent historical field keeps the original bot and payload contract."""
+    profile = record.get('notification_profile', 'legacy')
+    if profile not in ('legacy', NOTIFICATION_PROFILE):
+        raise LabError('Perfil de avisos desconhecido; não trocar o bot da candidata.')
+    return profile
 
 
 def queue_slack_event(record, event):
@@ -439,6 +448,8 @@ def prepare(policy, version, title, folder):
     if pending and (pending.get('version') != version or pending.get('title') != title
                     or pending.get('policy_digest') != digest(policy)):
         raise LabError('Corte parcial preservado. Repita a preparação com a mesma versão, título e política para reconciliar.')
+    if pending:
+        notification_profile(pending)
     validate_version_available(policy, state, version)
     branch = 'release/' + version
     ref = api(endpoint('git/ref/heads/' + quote(branch, safe='')), missing=True)
@@ -463,6 +474,12 @@ def prepare(policy, version, title, folder):
               'preparer': {'login': os.environ['GITHUB_ACTOR'], 'id': int(os.environ['GITHUB_ACTOR_ID'])},
               'status': 'prepared', 'evaluation_run_id': None,
               'notification_schema': 1, 'slack_events': []}
+    # Enrol only a fresh cut. A partial cut keeps its original notification
+    # identity, including absence of the field in historical intentions.
+    if pending is None:
+        record['notification_profile'] = NOTIFICATION_PROFILE
+    elif 'notification_profile' in pending:
+        record['notification_profile'] = pending['notification_profile']
     if pending is None or pending.get('presentation_schema') == 2:
         record['presentation_schema'] = 2
     preparation = pending or {**record, 'intent_id': digest({'candidate': tag, 'source_sha': source_sha,
@@ -585,6 +602,9 @@ def report(policy, tag, smoke_path, metadata_path, folder, context_artifact=None
                  'changes': changes, 'changed_paths': paths, 'platforms': platforms,
                  'publication_mode': publication_mode(policy), 'stable_tag': record.get('stable_tag', 'v' + record['version']),
                  'result_simulated': publication_mode(policy) == 'simulation', 'distribution_performed': False}
+        notification_profile(record)
+        if 'notification_profile' in record:
+            value['notification_profile'] = record['notification_profile']
         # Presentation is frozen before reviews. Historical payloads keep their
         # renderer so a retry cannot change a sent notification or release body.
         if record.get('presentation_schema') == 2:
@@ -674,6 +694,8 @@ def current_reviews(policy, record, run_id=None):
 def frozen_material(record):
     """Copy already approved optional fields; historical reports stay unchanged."""
     value = record.get('report', {})
+    if notification_profile(record) != notification_profile(value):
+        raise LabError('Perfil de avisos diverge do relatório congelado; prepare nova RC.')
     schema = value.get('presentation_schema', 1)
     record_schema = record.get('presentation_schema', 1)
     if (type(schema) is not int or type(record_schema) is not int

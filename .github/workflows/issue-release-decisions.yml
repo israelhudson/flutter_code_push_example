@@ -54,6 +54,7 @@ jobs:
       comment_id: ${{ needs.decide.outputs.comment }}
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      POC_SLACK_BOT_TOKEN: ${{ secrets.POC_SLACK_BOT_TOKEN }}
   notify:
     needs: decide
     if: needs.decide.outputs.tag != '' && needs.decide.outputs.publish != 'true'
@@ -73,6 +74,7 @@ jobs:
       - env:
           GH_TOKEN: ${{ github.token }}
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          POC_SLACK_BOT_TOKEN: ${{ secrets.POC_SLACK_BOT_TOKEN }}
           TAG: ${{ needs.decide.outputs.tag }}
         run: python3 tools/delivery/issue_release.py notify --tag "$TAG" --output "$RUNNER_TEMP/issue-slack"
       - if: always()

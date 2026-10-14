@@ -15,10 +15,11 @@ from urllib.parse import urlsplit
 from changelog_summary import verify_communication
 from release_notes import approver_labels, brief_notes
 import slack_legacy
+import slack_notify
 
 
 def readable_payload(heading, description, changes, footer, preview_url, run_url,
-                     *, source_label=None, truncated=False, limitations=None):
+                     *, source_label=None, truncated=False, limitations=None, link_buttons=True):
     """URL buttons navigate only; fallback includes every readable section/link.
 
     Official Block Kit docs checked 2026-10-09:
@@ -51,7 +52,15 @@ def readable_payload(heading, description, changes, footer, preview_url, run_url
         if position in (2, len(texts) - 1):
             blocks.append({'type': 'divider'})
         blocks.append({'type': 'section', 'text': {'type': 'plain_text', 'text': text, 'emoji': False}})
-    blocks += [{'type': 'divider'}, {'type': 'actions', 'elements': buttons}]
+    blocks.append({'type': 'divider'})
+    if link_buttons:
+        blocks.append({'type': 'actions', 'elements': buttons})
+    else:
+        # Plain hyperlinks do not emit Slack interaction callbacks. LAB/Issue
+        # decisions remain on GitHub; only the POC cards need interactive ACKs.
+        blocks.extend({'type': 'section', 'text': {'type': 'mrkdwn',
+                      'text': '<' + button['url'] + '|' + button['text']['text'] + '>',
+                      'verbatim': True}} for button in buttons)
     fallback = '\n\n'.join(texts) + '\n\n' + '\n'.join(button['text']['text'] + ': ' + button['url'] for button in buttons)
     escaped = html.escape(fallback, quote=False)
     if len(escaped) > 4000:
@@ -67,10 +76,13 @@ def required_text(value, field, maximum=200):
 
 
 def render_preview(report, policy):
+    profile = slack_notify.notification_profile(report)
     schema = report.get('presentation_schema', 1)
     if type(schema) is not int:
         raise ValueError('Schema de apresentação desconhecido.')
     if schema == 1:
+        if profile != slack_notify.LEGACY_PROFILE:
+            raise ValueError('Apresentação antiga não pode mudar de remetente.')
         return slack_legacy.render_preview(report, policy)
     if schema != 2:
         raise ValueError('Schema de apresentação desconhecido.')
@@ -126,7 +138,8 @@ def render_preview(report, policy):
               'Este aviso não aprova nem publica. Mobile não distribuído.')
     payload, body = readable_payload('SIMULAÇÃO DE AVISO SLACK — nenhum envio\n' + tag + ' · ' + title,
         notes['description'], notes['changes'], footer, preview_url, run_url,
-        source_label=notes['source_label'], truncated=notes['truncated'], limitations=notes['limitations'])
+        source_label=notes['source_label'], truncated=notes['truncated'], limitations=notes['limitations'],
+        link_buttons=profile == slack_notify.LEGACY_PROFILE)
     canonical = json.dumps(report, ensure_ascii=False, sort_keys=True, separators=(',', ':'))
     metadata = {'notification_simulated': True, 'message_sent': False,
                 'candidate_tag': tag, 'source_sha': source, 'run_id': run_id,

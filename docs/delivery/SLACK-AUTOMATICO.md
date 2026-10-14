@@ -1,5 +1,9 @@
 # Avisos automáticos da candidata no Slack
 
+A organização atual usa [um bot por projeto](BOTS-POR-PROJETO.md). Novos cortes
+`poc-v1` enviam pelo Flutter POC Deploy; os recibos abaixo permanecem atribuídos
+ao bot histórico. Não reusar essas provas como validação do novo remetente.
+
 **Estado: fluxo real comprovado na jornada B, entrega 1.7.0.
 A jornada A, entrega 1.8.0, concluiu rejeição, correção, RC2, novos avais,
 publicação e retorno à main. Treze avisos reais confirmados.**
@@ -287,7 +291,7 @@ continuam pendentes; o ensaio Slack não os substitui.
 
 ## O que este LAB ensina para a Amulets
 
-A política atual fixa `app-deploy-test-isr` (`C0C8DUJB52L`), bot
+O perfil histórico fixa `app-deploy-test-isr` (`C0C8DUJB52L`), bot
 `U0C750FTCS3`, app `A0C750DS05D` e somente Israel + bot. A identidade e os
 membros são conferidos antes do envio; a recuperação também confere o autor
 e o app da mensagem. Adicionar pessoas ou usar outro canal exige uma política

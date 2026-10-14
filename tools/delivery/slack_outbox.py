@@ -1,6 +1,7 @@
 """Durable, optional LAB Slack notices across ephemeral GitHub runners.
 
-Only release-lab/slack-outbox.json in codex/release-lab-state is writable.
+Each frozen sender profile has its own outbox in codex/release-lab-state.
+Legacy tooling keeps reading slack-outbox.json; POC notices use slack-outbox-poc.json.
 Append-only Contents-SHA checkpoints reserve an event before chat.postMessage;
 the candidate/approval journal is never modified. An uncertain send is only
 reconciled by positive read-only Slack evidence, never by absence or retry.
@@ -33,6 +34,7 @@ from remote_state import _check_secrets, StateError
 REPOSITORY = slack_notify.GITHUB_REPOSITORY
 STATE_BRANCH = 'codex/release-lab-state'
 STATE_PATH = 'release-lab/slack-outbox.json'
+POC_STATE_PATH = 'release-lab/slack-outbox-poc.json'
 BOT_USER_ID = 'U0C750FTCS3'
 APP_ID = 'A0C750DS05D'
 SCHEMA = 1
@@ -126,6 +128,7 @@ def _content(value):
 
 
 def validate_notice(notice):
+    profile = slack_notify.notification_profile(notice)
     if (not isinstance(notice, dict) or notice.get('dry_run') is not True
             or not isinstance(notice.get('simulation'), bool)
             or notice.get('event') not in EVENTS):
@@ -159,6 +162,8 @@ def validate_notice(notice):
                 raise OutboxError('Divisória contém campos não autorizados.')
             continue
         if block.get('type') == 'actions':
+            if profile == slack_notify.POC_PROFILE:
+                raise OutboxError('Avisos POC usam links de texto, sem callbacks interativos.')
             actions_seen += 1
             expected = [('Preview', preview_url, 'Abrir o preview congelado desta candidata'),
                         ('Changelog', identity['run_url'], 'Ler o changelog da mesma candidata no GitHub'),
@@ -205,17 +210,18 @@ def _same(first, second):
             and first['identity'] == second['identity'])
 
 
-def _receipt(value):
+def _receipt(value, profile=slack_notify.LEGACY_PROFILE):
+    bot = slack_notify.notification_identity(profile)
     if (not isinstance(value, dict) or set(value) != {'channel', 'ts', 'bot_user_id', 'app_id', 'reconciled'}
             or value.get('channel') != slack_notify.CHANNEL_ID
             or not isinstance(value.get('ts'), str) or not _TS.fullmatch(value['ts'])
-            or value.get('bot_user_id') != BOT_USER_ID or value.get('app_id') != APP_ID
+            or value.get('bot_user_id') != bot['bot_user_id'] or value.get('app_id') != bot['app_id']
             or not isinstance(value.get('reconciled'), bool)):
         raise OutboxError('Recibo remoto Slack inválido; reenvio bloqueado.')
     return value
 
 
-def _project(document):
+def _project(document, profile=slack_notify.LEGACY_PROFILE):
     if (not isinstance(document, dict) or set(document) != {'schema', 'repository', 'branch', 'events'}
             or document.get('schema') != SCHEMA or document.get('repository') != REPOSITORY
             or document.get('branch') != STATE_BRANCH or not isinstance(document.get('events'), list)
@@ -248,7 +254,7 @@ def _project(document):
             if previous is not None or 'receipt' in checkpoint:
                 raise OutboxError('Reserva Slack duplicada; journal bloqueado.')
         else:
-            _receipt(checkpoint.get('receipt'))
+            _receipt(checkpoint.get('receipt'), profile)
             if (previous is None or previous['state'] != 'unknown' or not _same(previous, checkpoint)
                     or previous['attempt_id'] != checkpoint['attempt_id']):
                 raise OutboxError('Transição Slack não é append-only; journal bloqueado.')
@@ -258,8 +264,11 @@ def _project(document):
 
 class SlackJournalStore:
     """Contents-SHA CAS in a separate file preserves release-lab/state.json."""
-    def __init__(self, api=release_lab.api):
+    def __init__(self, api=release_lab.api, *, profile=slack_notify.LEGACY_PROFILE):
         self.api = api
+        slack_notify.notification_identity(profile)
+        self.profile = profile
+        self.state_path = POC_STATE_PATH if profile == slack_notify.POC_PROFILE else STATE_PATH
 
     def read(self, *, timeout=None):
         api = self.api
@@ -272,7 +281,7 @@ class SlackJournalStore:
                     raise ConfirmationUnavailable('Prazo da confirmação remota esgotado.')
                 return _bounded_read_api(path, missing=missing, timeout=remaining)
 
-        path = release_lab.endpoint('contents/' + STATE_PATH)
+        path = release_lab.endpoint('contents/' + self.state_path)
         response = api(path + '?ref=' + quote(STATE_BRANCH, safe=''), missing=True)
         if response is None:
             # Verify the expected branch exists. Missing file may bootstrap;
@@ -293,12 +302,12 @@ class SlackJournalStore:
             document = json.loads(raw)
         except (KeyError, TypeError, ValueError, UnicodeDecodeError):
             raise OutboxError('Bytes do journal Slack inválidos; envio bloqueado.') from None
-        _project(document)
+        _project(document, self.profile)
         return document, response['sha']
 
     def get(self, descriptor, *, timeout=None):
         document, _ = self.read(timeout=timeout)
-        prior = _project(document).get(descriptor['event_key'])
+        prior = _project(document, self.profile).get(descriptor['event_key'])
         if prior is not None and not _same(prior, descriptor):
             raise OutboxError('Chave já usada com outro conteúdo; envio bloqueado.')
         return prior
@@ -306,13 +315,13 @@ class SlackJournalStore:
     def append(self, descriptor, state, attempt_id, receipt=None):
         for _ in range(3):
             document, old_sha = self.read()
-            prior = _project(document).get(descriptor['event_key'])
+            prior = _project(document, self.profile).get(descriptor['event_key'])
             if prior is not None and not _same(prior, descriptor):
                 raise OutboxError('Chave já usada com outro conteúdo; envio bloqueado.')
             if state == 'unknown' and prior is not None:
                 raise OutboxBusy('Evento já reservado; resultado unknown/sent precisa ser reconciliado.')
             if state == 'sent':
-                _receipt(receipt)
+                _receipt(receipt, self.profile)
                 if prior is None or prior['attempt_id'] != attempt_id:
                     raise OutboxError('Confirmação sem reserva remota própria; envio bloqueado.')
                 if prior['state'] == 'sent':
@@ -323,7 +332,7 @@ class SlackJournalStore:
             if receipt is not None:
                 checkpoint['receipt'] = receipt
             document['events'].append(checkpoint)
-            _project(document)
+            _project(document, self.profile)
             content = (canonical(document) + '\n').encode()
             if len(content) > MAX_BYTES:
                 raise OutboxError('Journal Slack excede limite; envio bloqueado.')
@@ -332,7 +341,7 @@ class SlackJournalStore:
             if old_sha:
                 data['sha'] = old_sha
             try:
-                self.api(release_lab.endpoint('contents/' + STATE_PATH), data, 'PUT')
+                self.api(release_lab.endpoint('contents/' + self.state_path), data, 'PUT')
                 return checkpoint
             except release_lab.LabError:
                 # A failed HTTP reply could hide a successful commit. Never
@@ -390,8 +399,9 @@ def _restore_sqlite(path, checkpoint):
         db.commit()
 
 
-def _exact_bot_api(api):
+def _exact_bot_api(api, profile=slack_notify.LEGACY_PROFILE):
     member_pages = 0
+    bot = slack_notify.notification_identity(profile)
 
     def checked(method, data, token):
         nonlocal member_pages
@@ -402,8 +412,8 @@ def _exact_bot_api(api):
         response = api(method, data, token)
         if not isinstance(response, dict) or response.get('ok') is not True:
             raise OutboxError('Resposta Slack inválida; nenhuma confirmação segura.')
-        if method == 'auth.test' and (response.get('user_id') != BOT_USER_ID
-                    or response.get('app_id', APP_ID) != APP_ID):
+        if method == 'auth.test' and (response.get('user_id') != bot['bot_user_id']
+                    or response.get('app_id', bot['app_id']) != bot['app_id']):
             raise OutboxError('Token não identifica o bot LAB autorizado; nenhuma mensagem enviada.')
         return response
     return checked
@@ -452,6 +462,8 @@ def _history_receipt(notice, checkpoint, token, api):
 def send_frozen_notice(notice, output_dir, *, store=None, slack_api=slack_notify.slack_api):
     """Return only selected safe metadata; failures never block the LAB gates."""
     descriptor = validate_notice(notice)
+    profile = slack_notify.notification_profile(notice)
+    bot = slack_notify.notification_identity(profile)
     folder = Path(output_dir)
     if folder.is_symlink():
         raise OutboxError('Diretório de saída inválido; envio bloqueado.')
@@ -461,15 +473,24 @@ def send_frozen_notice(notice, output_dir, *, store=None, slack_api=slack_notify
         raise OutboxError('Arquivo de saída inválido; envio bloqueado.')
     result = {**descriptor, 'state': 'blocked', 'duplicate': False,
               'notification_optional': True, 'distribution_performed': False}
-    token = os.environ.get('SLACK_BOT_TOKEN')
+    token = slack_notify.notification_token(profile)
     if (not token or not re.fullmatch(r'xoxb-[A-Za-z0-9-]+', token)
             or len(token) > 1000):
         result.update(state='skipped', reason='slack_secret_absent_or_invalid')
     else:
-        store = SlackJournalStore() if store is None else store
-        api = _exact_bot_api(slack_api)
+        store = SlackJournalStore(profile=profile) if store is None else store
+        if store.profile != profile:
+            raise OutboxError('Journal não corresponde ao perfil congelado do aviso.')
+        api = _exact_bot_api(slack_api, profile)
         try:
             prior = store.get(descriptor)
+            if profile == slack_notify.POC_PROFILE and prior is None:
+                # A new journal must never become a way to replay an old event.
+                # Reading the legacy journal keeps its original identity rules;
+                # a changed payload or any prior reservation fails closed.
+                legacy = SlackJournalStore(store.api).get(descriptor)
+                if legacy is not None:
+                    raise OutboxError('Evento já pertence ao journal legado; não migrar nem reenviar.')
             if prior is not None:
                 if prior['state'] == 'unknown':
                     confirmed = _await_remote_sent(store, descriptor)
@@ -478,6 +499,11 @@ def send_frozen_notice(notice, output_dir, *, store=None, slack_api=slack_notify
                 _restore_sqlite(sqlite_path, prior)
                 if prior['state'] == 'sent':
                     result.update(state='sent', duplicate=True, receipt=prior['receipt'])
+                elif profile == slack_notify.POC_PROFILE:
+                    # No groups:history scope is needed by the exclusive app.
+                    # A lost reply never authorizes a second message. Keep the
+                    # reservation for manual positive-evidence reconciliation.
+                    result.update(reason='manual_reconciliation_required')
                 else:
                     slack_notify.verify_destination(token, api)
                     receipt = _history_receipt(notice, prior, token, api)
@@ -496,14 +522,14 @@ def send_frozen_notice(notice, output_dir, *, store=None, slack_api=slack_notify
                         if not row or row[0] != 'sent' or not _TS.fullmatch(str(row[1])):
                             raise OutboxError('Recibo SQLite incompleto; checkpoint sent bloqueado.')
                         receipt = {'channel': slack_notify.CHANNEL_ID, 'ts': row[1],
-                                   'bot_user_id': BOT_USER_ID, 'app_id': APP_ID, 'reconciled': False}
+                                   'bot_user_id': bot['bot_user_id'], 'app_id': bot['app_id'], 'reconciled': False}
                     store.append(descriptor, state, attempt_id, receipt)
 
                 sent = slack_notify.send_notice(notice, sqlite_path, api, checkpoint)
                 if sent.get('duplicate'):
                     raise OutboxError('Cache local sem confirmação remota; reconciliação necessária.')
                 result.update(state='sent', receipt={'channel': sent['channel'], 'ts': sent['ts'],
-                              'bot_user_id': BOT_USER_ID, 'app_id': APP_ID, 'reconciled': False})
+                              'bot_user_id': bot['bot_user_id'], 'app_id': bot['app_id'], 'reconciled': False})
         except OutboxBusy:
             try:
                 confirmed = _await_remote_sent(store, descriptor)

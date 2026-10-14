@@ -41,7 +41,11 @@ tabelas negam acesso anônimo/autenticado e somente o backend usa credencial de 
 
 ## Aplicação neste projeto
 
-Projeto Supabase exclusivo e bot existente com encaminhamento; tabelas poc_* e funções poc-*.
+Projeto Supabase e app Slack exclusivos da POC; tabelas poc_* e funções poc-*.
+O encaminhamento pelo app compartilhado foi estudado, mas a decisão final foi
+isolar os apps por projeto. A Request URL da Amulets permanece no seu receptor.
+O [mapa de bots](../../docs/delivery/BOTS-POR-PROJETO.md) descreve a migração
+dos avisos LAB/Issue e o tratamento dos registros antigos.
 HMAC antes de parsing; workspace/canal/app/candidata/papel/prazo conferidos;
 transação e chave única para voto; reserva antes de enviar avisos. Essas últimas
 escolhas são regras locais, não exigências declaradas pelas fontes oficiais.

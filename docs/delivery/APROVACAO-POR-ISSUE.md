@@ -32,7 +32,9 @@ do LAB e não distribui aplicativo ou patch Shorebird.
 3. Em Settings > Secrets and variables > Actions > Variables, crie a variável de
    repositório **`ISSUE_RELEASE_ENABLED`** com o valor literal **`true`**.
    A ausência ou `false` desativa apenas esta alternativa. Não é um secret.
-4. O secret de Slack já existente, **`SLACK_BOT_TOKEN`**, atende também a este
+4. Novas candidatas usam **`POC_SLACK_BOT_TOKEN`** e Flutter POC Deploy;
+   registros anteriores sem perfil mantêm **`SLACK_BOT_TOKEN`**. Conferir o
+   [mapa e a transição dos bots](BOTS-POR-PROJETO.md). O Slack atende este
    ensaio no canal privado `app-deploy-test-isr`. Sua ausência não bloqueia a entrega.
    O código não precisa de PAT adicional nem instala a Action manual-approval.
 
