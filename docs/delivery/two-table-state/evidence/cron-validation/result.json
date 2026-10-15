@@ -1,0 +1,18 @@
+{
+  "active_controls": 0,
+  "pending_operations": 0,
+  "dispatch_operations": 0,
+  "public_tables": [
+    "delivery_control",
+    "delivery_outbox"
+  ],
+  "cron_observed": false,
+  "fixture": "delivery-a375a1446bcd440bbf3042ff9fec1fc1",
+  "scope": "none",
+  "publication_run": null,
+  "final_status": "cancelled",
+  "worker_flag_after": false,
+  "manual_cleanup_run": 38670154933,
+  "pr58_merged": true,
+  "cron_mitigation_pr59_merged": true
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "file": "01-schedule-sem-execucoes.png",
+    "sha256": "b9ba1768f2bf36b9c32de680537afd6f4be6c73e42631dede1f586e3e268fe42"
+  },
+  {
+    "file": "02-pr58-integrado.png",
+    "sha256": "8fa6b7e6ec0f3d9c74866e13d1e047c1a9253124b00c7b2c22681f74d6d1904d"
+  },
+  {
+    "file": "03-cron-main.png",
+    "sha256": "b74199319fac11f51c1781a68c9e17e764272792700dda1f480ff243e9d3426b"
+  },
+  {
+    "file": "04-schedule-apos-ajuste.png",
+    "sha256": "b6e67030616db8cc2f541281eb65c587c1d3a9347b92b38d7a53a2266091fea7"
+  },
+  {
+    "file": "05-fallback-manual-confirmado.png",
+    "sha256": "7dc0e6353ab71f1adfa1fbea6abe652c3a1bd59de43f10fc7e7bd31c757dd7fb"
+  }
+]
