@@ -107,6 +107,8 @@ O legado conserva seu arquivo/inputs e seu bloqueio, sem redirecionar chamadas.
 Publicação em produção, gatilho por tag, skill para IA e patch automático em CI
 ficam fora desta mudança. Não houve migração de banco.
 Ver a [base preservada e orientação de retorno](BASE-VALIDADA-FORMULARIO.md).
+Os [prints reais e resultados da validação](evidence/scenario-form/README.md)
+mostram o formulário na branch do PR, sem disparar uma execução.
 
 Fontes: [inputs de workflow_dispatch](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#onworkflow_dispatchinputs),
 [GitHub CLI workflow run](https://cli.github.com/manual/gh_workflow_run).
