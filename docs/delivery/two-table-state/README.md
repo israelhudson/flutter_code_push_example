@@ -1,5 +1,10 @@
 # Entrega: controle, fila e cadastro de aprovadores
 
+**Preparar uma nova rodada:** usar [o formulário por cenário e a CLI com simulação](FORMULARIO-E-CLI.md).
+O fluxo oficial é **Entrega · Preparar candidata**, pela `main`.
+A [base anterior preservada](BASE-VALIDADA-FORMULARIO.md) registra as provas das
+rodadas 1.15.5 e 1.15.6 antes da simplificação da interface.
+
 Fluxo oficial opt-in, validado na **`main`**. A rodada **1.15.5** concluiu
 preview Web, dois aceites manuais nas DMs, publicação GitHub automática e
 **Android `1.1.0+2`, patch `5` em staging**, com atualização da tabela e do cartão
@@ -94,13 +99,14 @@ avaliação encerrada com dois aceites nesse escopo pode ser cancelada pelo oper
 
 1. `delivery-prepare.yml` usa a integração configurada (`main`) e as mesmas
    verificações de código, proteção de tags e build/preview do fluxo atual.
-2. `controls_only` dispensa build/preview/patch. `full` valida preview, **sem patch**.
-   O escopo `github` é convertido para `github_test` e permite só GitHub Release.
+2. O cenário selecionado resolve os parâmetros internos uma única vez.
+   `controls_only` dispensa build/preview/patch. `full` valida preview, **sem patch**.
+   Cenários com Release final usam `github_test` e permitem só GitHub Release.
    O preparo normal cria tag RC e prerelease mesmo em `controls_only`/`none`;
    `none` bloqueia a promoção final, não esses registros de candidata.
    Para uma versão nova, cria `release/X.Y.Z` e `vX.Y.Z-rc.1`; a numeração RC
-   pertence à tag, não ao nome da branch. A opção separada
-   `patch_mode=android_staging` exige `full` e escopo `github`:
+   pertence à tag, não ao nome da branch. O cenário `android_staging` resolve
+   `patch_mode=android_staging`, `full` e escopo interno `github_test`:
    congela um plano para execução local após a publicação GitHub. O job de
    preparo continua sem executar `shorebird patch`.
 3. O script grava um manifesto imutável no GitHub e cria a Release Candidate com
