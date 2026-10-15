@@ -1,8 +1,60 @@
 import { CHANNEL, digest, type IO, REPOSITORY, requireReady, TEAM, validSignature } from "./poc.ts";
-import { verifyCandidateEvidence } from "./preview.ts";
+import { canonical, verifyCandidateEvidence } from "./preview.ts";
 import { versionPresentation } from "./versions.ts";
 const ID = /^delivery-[a-f0-9]{32}$/;
 const SHA = /^[a-f0-9]{40}$/;
+const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
+// This is a frozen selection, never a request-supplied grant of a role. The
+// database resolves defaults for plan and compares them again while registering.
+function reviewerSnapshot(value: any, solo: boolean) {
+  if (
+    !value || value.schema !== "delivery-reviewers-v1" || value.repository !== REPOSITORY ||
+    value.team_id !== TEAM || typeof solo !== "boolean" || value.solo !== solo
+  ) throw Error("Reviewer snapshot rejected");
+  for (const role of ["technical", "business"]) {
+    const person = value[role];
+    if (
+      !person || !UUID.test(person.id ?? "") || !Number.isSafeInteger(person.revision) ||
+      person.revision < 1 || typeof person.name !== "string" || !person.name.trim() ||
+      person.name.length > 120 ||
+      [...person.name].some((character: string) =>
+        character.charCodeAt(0) < 32 || character.charCodeAt(0) === 127
+      ) ||
+      !/^U[A-Z0-9]+$/.test(person.slack_user ?? "") ||
+      (person.github_user_id != null &&
+        (!Number.isSafeInteger(person.github_user_id) || person.github_user_id < 1)) ||
+      (person.github_login != null &&
+        (typeof person.github_login !== "string" ||
+          !/^[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,37}[a-zA-Z0-9])?$/.test(person.github_login)))
+    ) throw Error("Reviewer identity rejected");
+  }
+  const { technical, business } = value;
+  if (
+    !solo && (technical.id === business.id || technical.slack_user === business.slack_user ||
+      (technical.github_user_id != null && technical.github_user_id === business.github_user_id))
+  ) throw Error("Independent reviewers required");
+  return value;
+}
+function verifyFrozenReviewers(candidate: any, manifest: any) {
+  const hasSnapshot = candidate.reviewer_snapshot != null || manifest.reviewers != null ||
+    candidate.technical_reviewer_id != null || candidate.business_reviewer_id != null;
+  // Historical candidates predate the registry; never retroactively elect their reviewers.
+  if (!hasSnapshot) return;
+  const snapshot = reviewerSnapshot(candidate.reviewer_snapshot, candidate.solo);
+  if (
+    canonical(snapshot) !== canonical(manifest.reviewers) ||
+    candidate.technical_reviewer_id !== snapshot.technical.id ||
+    candidate.business_reviewer_id !== snapshot.business.id ||
+    candidate.technical_user !== snapshot.technical.slack_user ||
+    candidate.business_user !== snapshot.business.slack_user
+  ) throw Error("Frozen reviewers differ");
+}
+function databaseReviewersRequired(policy: any) {
+  if (
+    policy.reviewer_source !== "database-v1" || typeof policy.solo !== "boolean" ||
+    "technical" in policy || "business" in policy
+  ) throw Error("Database reviewer policy required");
+}
 export function ready(io: IO) {
   requireReady(io);
   if (io.env("DELIVERY_V2_ENABLED") !== "true") throw Error("Delivery v2 disabled");
@@ -38,6 +90,7 @@ async function state(io: IO, id: string) {
   if (report.id !== c.id || report.source_sha !== c.source_sha || report.rc_tag !== c.rc_tag) {
     throw Error("Manifest identity differs");
   }
+  verifyFrozenReviewers(c, report);
   return {
     ...c,
     report_text: text,
@@ -221,6 +274,7 @@ export function deliveryControlHandler(io: IO) {
         cfg.history_branch !== "codex/delivery-history" || cfg.source_branch !== sourceBranch ||
         cfg.schema !== "delivery-policy-v2"
       ) throw Error("Policy rejected");
+      if (p.operation === "plan") databaseReviewersRequired(cfg);
       if (
         run.event !== "schedule" &&
         (run.actor?.id !== cfg.operator_github_id ||
@@ -308,11 +362,7 @@ export function deliveryControlHandler(io: IO) {
         const saved = JSON.parse(
           await file(io, `candidates/${task.candidate_id}/event-${task.revision}.json`, p.receipt),
         );
-        const keys = Object.keys(task.event).sort();
-        if (
-          JSON.stringify(Object.keys(saved).sort()) !== JSON.stringify(keys) ||
-          keys.some((k) => saved[k] !== task.event[k])
-        ) throw Error("GitHub evidence differs");
+        if (canonical(saved) !== canonical(task.event)) throw Error("GitHub evidence differs");
         return Response.json(
           await io.db("rpc/delivery_finish", {
             p_id: p.task_id,
@@ -330,6 +380,14 @@ export function deliveryControlHandler(io: IO) {
         if (p.publication_scope === "github_test" && io.env("POC_PUBLICATION_ENABLED") !== "true") {
           throw Error("Publication disabled");
         }
+        const reviewers = reviewerSnapshot(
+          await io.db("rpc/delivery_resolve_reviewers", {
+            p_repository: REPOSITORY,
+            p_team: TEAM,
+            p_solo: cfg.solo,
+          }),
+          cfg.solo,
+        );
         const tags = await github(io, "git/matching-refs/tags/poc-v");
         const requested = p.version.split(".").map(Number);
         const atLeast = (v: number[]) =>
@@ -368,6 +426,7 @@ export function deliveryControlHandler(io: IO) {
           publication_scope: p.publication_scope,
           validation_mode: p.validation_mode,
           previous_candidate: previous?.id ?? null,
+          reviewers,
         });
       }
       if (p.operation === "register") {
@@ -383,37 +442,53 @@ export function deliveryControlHandler(io: IO) {
           r.run_url !== `https://github.com/${REPOSITORY}/actions/runs/${p.run_id}` ||
           r.tooling_sha !== run.head_sha
         ) throw Error("Manifest provenance differs");
+        const existing = await io.db("rpc/delivery_state", { p_id: r.id });
+        if (existing) {
+          // Retry an already-frozen manifest without electing anyone again. Old
+          // manifests are allowed only here, never to create a new candidate.
+          if (
+            existing.id !== r.id || existing.manifest_commit !== p.manifest_commit ||
+            existing.manifest_digest !== p.manifest_digest ||
+            existing.source_sha !== r.source_sha ||
+            existing.rc_tag !== r.rc_tag
+          ) throw Error("Existing registration differs");
+          verifyFrozenReviewers(existing, r);
+        } else databaseReviewersRequired(cfg);
+        const reviewers = r.reviewers != null
+          ? reviewerSnapshot(r.reviewers, existing ? existing.solo : cfg.solo)
+          : null;
+        if (!existing && !reviewers) throw Error("Reviewer snapshot required");
         const tag = await github(io, `git/ref/tags/${r.rc_tag}`);
         if (tag?.object?.type !== "commit" || tag.object.sha !== r.source_sha) {
           throw Error("Tag differs");
         }
+        if (existing) return Response.json(existing);
         await verifyCandidateEvidence(io, r);
         const auth = await io.slack("auth.test", {});
         if (
           auth.team_id !== TEAM || auth.user_id !== io.env("POC_SLACK_BOT_USER_ID") ||
           auth.user_id === "U0C750FTCS3"
         ) throw Error("Dedicated bot required");
-        return Response.json(
-          await io.db("rpc/delivery_register", {
-            p_candidate: {
-              id: r.id,
-              repository: REPOSITORY,
-              version: r.version,
-              rc_number: r.rc_number,
-              rc_tag: r.rc_tag,
-              source_sha: r.source_sha,
-              manifest_commit: p.manifest_commit,
-              manifest_digest: p.manifest_digest,
-              team_id: TEAM,
-              channel_id: CHANNEL,
-              technical_user: cfg.technical.slack_user,
-              business_user: cfg.business.slack_user,
-              solo: cfg.solo,
-              scope: r.publication_scope,
-              previous_id: r.previous_candidate,
-            },
-          }),
-        );
+        const registered = await io.db("rpc/delivery_register", {
+          p_candidate: {
+            id: r.id,
+            repository: REPOSITORY,
+            version: r.version,
+            rc_number: r.rc_number,
+            rc_tag: r.rc_tag,
+            source_sha: r.source_sha,
+            manifest_commit: p.manifest_commit,
+            manifest_digest: p.manifest_digest,
+            team_id: TEAM,
+            channel_id: CHANNEL,
+            reviewers,
+            solo: cfg.solo,
+            scope: r.publication_scope,
+            previous_id: r.previous_candidate,
+          },
+        });
+        verifyFrozenReviewers(registered, r);
+        return Response.json(registered);
       }
       const c = await state(io, p.candidate);
       if (p.operation === "delivery") {
