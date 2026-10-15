@@ -125,7 +125,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        'Coral com tema manual. Ao reiniciar, o app volta ao claro. Samuel Demonstracao',
+                        'Rodada 1.15.5: preview e teste Android em staging. '
+                        'Tema manual; ao reiniciar, o app volta ao claro.',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white),
                       ),

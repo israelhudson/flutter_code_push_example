@@ -11,14 +11,35 @@ import os
 from pathlib import Path
 import re
 import uuid
+import copy
 from urllib.request import Request, build_opener
 
 import poc_slack as legacy
 import release_lab as lab
+import shorebird_delivery as mobile
 
 HISTORY = 'codex/delivery-history'
 ID = re.compile(r'delivery-[a-f0-9]{32}')
 LEGACY_BODY = legacy.release_body
+
+
+def mobile_plan(mode, scope, validation_mode):
+    """Freeze a staging-only operator plan; never turn a GitHub job into an uploader."""
+    if mode == 'none':
+        return None
+    if mode != 'android_staging' or scope != 'github_test' or validation_mode != 'full':
+        raise lab.LabError('Android staging exige preview completo e escopo GitHub.')
+    target = mobile.validate_target(json.loads(Path('delivery/shorebird-lab-target.json').read_text()))
+    return {'schema': 'delivery-android-staging-v1',
+            'execution': 'local_operator_after_github_publication',
+            'track': 'staging', 'stable_authorized': False, 'target': target}
+
+
+def require_mobile_plan(report):
+    plan = report.get('mobile_execution_plan')
+    if plan is not None and plan != mobile_plan('android_staging', report.get('publication_scope'), report.get('validation_mode')):
+        raise lab.LabError('Plano Android difere do alvo confiável; manter bloqueado.')
+    return plan
 
 
 def require_reviewers(snapshot):
@@ -139,14 +160,61 @@ def final_body(c, presentation=None):
     report=json.loads(c['report_text'])
     validated=LEGACY_BODY(c,presentation)
     table='## Versões e publicação'+validated.split('## Versões e publicação',1)[1].split('## O que mudou',1)[0]
-    return table.strip()+'\n\n## Mudanças\n\n'+changes(report)+f"\n\n[Publicação](https://github.com/{lab.REPOSITORY}/actions/runs/{os.environ['GITHUB_RUN_ID']}) · [Histórico e evidências](https://github.com/{lab.REPOSITORY}/tree/{HISTORY}/candidates/{c['id']})\n\nCandidata preservada: `{c['rc_tag']}`. Esta Release GitHub não comprova publicação em lojas."
+    run = c.get('publication_run') or os.environ['GITHUB_RUN_ID']
+    return table.strip()+'\n\n## Mudanças\n\n'+changes(report)+f"\n\n[Publicação](https://github.com/{lab.REPOSITORY}/actions/runs/{run}) · [Histórico e evidências](https://github.com/{lab.REPOSITORY}/tree/{HISTORY}/candidates/{c['id']})\n\nCandidata preservada: `{c['rc_tag']}`. Esta Release GitHub não comprova publicação em lojas."
+
+
+def refresh_presentation(candidate, output):
+    """Refresh only a known generated body, using backend-verified receipt data.
+
+    The worker's ephemeral Contents-write token edits GitHub. The receiver PAT
+    remains read-only for Contents. GitHub PATCH has no atomic compare-and-swap;
+    the checks below detect observed concurrent edits and preserve their evidence.
+    """
+    result = api_control('refresh', candidate=candidate)
+    c, presentation = result['candidate'], result['presentation']
+    if c.get('id') != candidate or c.get('status') != 'published' or not c.get('publication_run'):
+        raise lab.LabError('Atualização exige a Release publicada da mesma candidata.')
+    require_mobile_plan(json.loads(c['report_text']))
+    for tag in (c['rc_tag'], 'poc-v' + c['version']):
+        ref = lab.api(lab.endpoint('git/ref/tags/' + tag))
+        if ref.get('object', {}).get('type') != 'commit' or ref['object'].get('sha') != c['source_sha']:
+            raise lab.LabError('Tag mudou; atualização de tabela bloqueada.')
+    release = lab.api(lab.endpoint('releases/tags/poc-v' + c['version']))
+    name = 'Release ' + c['version'] + ' — ' + json.loads(c['report_text'])['title']
+    if release.get('prerelease') is not False or release.get('draft') is not False or release.get('name') != name:
+        raise lab.LabError('Release mudou; não sobrescrever edição manual.')
+    expected = final_body(c, presentation)
+    prior = copy.deepcopy(presentation)
+    plan = json.loads(c['report_text']).get('mobile_execution_plan')
+    prior['rows'][2] = ['Android', plan['target']['release_version'],
+                        'Patch staging pendente; execução local após os aceites e a Release GitHub'] if plan else ['Android', 'Não validada', 'Sem publicação comprovada nesta entrega']
+    if release['body'] not in (expected, final_body(c, prior)):
+        raise lab.LabError('Corpo da Release foi editado; preservar e reconciliar manualmente.')
+    assets = lambda r: sorted((a['id'], a['name'], a.get('digest'), a['size']) for a in r.get('assets', []))
+    before = lab.api(lab.endpoint('releases/' + str(release['id'])))
+    if any(before.get(k) != release.get(k) for k in ('body','name','updated_at','tag_name','draft','prerelease')) or assets(before) != assets(release):
+        raise lab.LabError('Release mudou durante a leitura; não atualizar.')
+    lab.output(output, 'presentation-refresh-intent.json', {'candidate': candidate, 'release_id': release['id'], 'presentation': presentation, 'body_before': release['body'], 'body_after': expected})
+    changed = release['body'] != expected
+    if changed:
+        lab.api(lab.endpoint('releases/' + str(release['id'])), {'body': expected}, 'PATCH')
+    after = lab.api(lab.endpoint('releases/' + str(release['id'])))
+    if after.get('body') != expected or assets(after) != assets(release) or any(after.get(k) != release.get(k) for k in ('id','tag_name','name','draft','prerelease')):
+        raise lab.LabError('Atualização sem confirmação; não repetir sem reconciliar.')
+    lab.output(output, 'presentation-refresh-receipt.json', {'candidate': candidate, 'release_id': after['id'], 'changed': changed, 'presentation': presentation, 'original_publication_run': c['publication_run']})
+    return result
 
 
 def candidate_release(report):
     """Candidate has the preview; the existing final renderer omits that link."""
     title = f"Release {report['version']}-rc.{report['rc_number']} — {report['title']}"
     preview = f"\n[Ver preview]({report['preview_url']})\n" if report.get('preview_url') else '\nEnsaio sem preview e sem patches.\n'
-    body = ('Release Candidate em avaliação.\n' + preview + '\n## Mudanças\n' +
+    plan = require_mobile_plan(report)
+    android = ('\n**Android:** patch na base `1.1.0+2`, somente no track `staging`. '
+               'Execução local acompanhada após os dois aceites e a Release GitHub. '
+               'Sem promoção para stable, iOS ou lojas.\n') if plan else ''
+    body = ('Release Candidate em avaliação.\n' + preview + android + '\n## Mudanças\n' +
             changes(report) +
             f"\n\n[Preparação]({report['run_url']}) · [Evidências](https://github.com/{lab.REPOSITORY}/tree/{HISTORY}/candidates/{report['id']})")
     expected = {'tag_name': report['rc_tag'], 'target_commitish': report['source_sha'], 'name': title,
@@ -164,6 +232,7 @@ def control(operation, **data):
     if operation == 'register':
         report = json.loads(data['report_text'])
         require_reviewers(report.get('reviewers'))
+        require_mobile_plan(report)
         record = write_record(f"candidates/{report['id']}/manifest.json", report)
         lab.output(output, 'manifest-receipt.json', record)
         release = candidate_release(report)
@@ -176,9 +245,13 @@ def control(operation, **data):
             raise lab.LabError('Titulares registrados diferem do manifesto; preserve as evidências.')
         drain(output)
         return result
+    plan = mobile_plan(os.environ.get('DELIVERY_PATCH_MODE', 'none'),
+                       data.get('publication_scope'), data.get('validation_mode')) if operation == 'plan' else None
     result = api_control(operation, **data)
     if operation == 'plan':
         require_reviewers(result.get('reviewers'))
+        if plan:
+            result['mobile_execution_plan'] = plan
     if operation in ('claim', 'complete'):
         drain(output)
     return result
@@ -203,9 +276,12 @@ def main():
         raise lab.LabError('Exclusive repository and opt-in required.')
     require_history_protection()
     if len(__import__('sys').argv)>1 and __import__('sys').argv[1]=='drain':
-        parser=argparse.ArgumentParser();parser.add_argument('command');parser.add_argument('--output',required=True);parser.add_argument('--cancel')
+        parser=argparse.ArgumentParser();parser.add_argument('command');parser.add_argument('--output',required=True);parser.add_argument('--cancel');parser.add_argument('--refresh')
         args=parser.parse_args()
+        if args.cancel and args.refresh:
+            raise lab.LabError('Cancelamento e atualização são operações separadas.')
         if args.cancel: api_control('cancel',candidate=args.cancel)
+        if args.refresh: refresh_presentation(args.refresh, args.output)
         drain(args.output)
         lab.output(args.output,'compaction-receipt.json',api_control('compact'))
         return 0

@@ -2,6 +2,7 @@ import base64
 import os
 import sys
 import json
+import copy
 import tempfile
 from pathlib import Path
 import unittest
@@ -40,6 +41,83 @@ class SourceChecks(unittest.TestCase):
                             {'workflow_runs': [valid]}, {'jobs': [{**job, 'conclusion': conclusion}]}]):
                     with self.assertRaises(v2.lab.LabError):
                         v2.legacy.checked_source(source, output, release)
+
+class AndroidPlanTests(unittest.TestCase):
+    def test_mobile_mode_requires_full_github_and_never_authorizes_stable(self):
+        plan = v2.mobile_plan('android_staging', 'github_test', 'full')
+        self.assertIs(plan['stable_authorized'], False)
+        self.assertEqual(plan['track'], 'staging')
+        self.assertEqual(plan['target']['release_version'], '1.1.0+2')
+        self.assertIsNone(v2.mobile_plan('none', 'none', 'controls_only'))
+        for mode, scope, validation in [('android_staging','none','full'),
+                                        ('android_staging','github_test','controls_only'),
+                                        ('stable','github_test','full')]:
+            with self.subTest(mode=mode,scope=scope,validation=validation), self.assertRaises(v2.lab.LabError):
+                v2.mobile_plan(mode, scope, validation)
+
+    def test_changed_target_or_stable_grant_cannot_enter_frozen_report(self):
+        report = {'publication_scope':'github_test','validation_mode':'full',
+                  'mobile_execution_plan': v2.mobile_plan('android_staging','github_test','full')}
+        self.assertEqual(v2.require_mobile_plan(report), report['mobile_execution_plan'])
+        for field, value in [('stable_authorized', True), ('track', 'stable')]:
+            bad = copy.deepcopy(report)
+            bad['mobile_execution_plan'][field] = value
+            with self.assertRaises(v2.lab.LabError):
+                v2.require_mobile_plan(bad)
+
+class RefreshTests(unittest.TestCase):
+    def fixture(self):
+        report = {'title':'Rodada Android','validation_mode':'full','publication_scope':'github_test',
+                  'commits':[], 'mobile_execution_plan':v2.mobile_plan('android_staging','github_test','full')}
+        c = {'id':'delivery-'+'a'*32,'version':'2.0.0','rc_tag':'poc-v2.0.0-rc.1',
+             'source_sha':'b'*40,'status':'published','publication_run':'123',
+             'report_digest':'c'*64,'report_text':v2.lab.canonical(report)}
+        presentation = {'rows':[['GitHub','poc-v2.0.0','Release publicada'],
+            ['Web','1.1.0+2','Preview validado; não comprova produção'],
+            ['Android','1.1.0+2 (patch 5)','Patch em staging; execução em dispositivo não comprovada'],
+            ['iOS','Não validada','Sem publicação comprovada nesta entrega']], 'sources':[]}
+        before = copy.deepcopy(presentation)
+        before['rows'][2] = ['Android','1.1.0+2',
+            'Patch staging pendente; execução local após os aceites e a Release GitHub']
+        release = {'id':42,'tag_name':'poc-v2.0.0','name':'Release 2.0.0 — Rodada Android',
+                   'draft':False,'prerelease':False,'updated_at':'time','assets':[],
+                   'body':v2.final_body(c,before)}
+        return c, presentation, release
+
+    def test_verified_receipt_refresh_preserves_publication_link_and_updates_only_body(self):
+        with patch.dict(os.environ, {'GITHUB_RUN_ID':'999'}):
+            c, presentation, release = self.fixture()
+            calls = []
+            def api(path, data=None, method='GET', **kwargs):
+                if data is not None:
+                    calls.append((method,copy.deepcopy(data)))
+                    release.update(data)
+                if '/git/ref/' in path:
+                    return {'object':{'type':'commit','sha':c['source_sha']}}
+                return copy.deepcopy(release)
+            with tempfile.TemporaryDirectory() as out, patch.object(v2,'api_control',return_value={'candidate':c,'presentation':presentation}), patch.object(v2.lab,'api',side_effect=api):
+                v2.refresh_presentation(c['id'],out)
+                self.assertEqual(calls,[('PATCH',{'body':v2.final_body(c,presentation)})])
+                self.assertIn('/actions/runs/123',release['body'])
+                self.assertNotIn('/actions/runs/999',release['body'])
+                calls.clear()
+                v2.refresh_presentation(c['id'],out)
+                self.assertEqual(calls,[])
+
+    def test_manual_body_or_moved_tag_blocks_without_patch(self):
+        with patch.dict(os.environ, {'GITHUB_RUN_ID':'999'}):
+            for changed in ('body','tag'):
+                c, presentation, release = self.fixture()
+                if changed == 'body': release['body'] += '\nEdição humana.'
+                writes = []
+                def api(path, data=None, *args, **kwargs):
+                    if data is not None: writes.append(data)
+                    if '/git/ref/' in path:
+                        return {'object':{'type':'commit','sha':'d'*40 if changed=='tag' else c['source_sha']}}
+                    return copy.deepcopy(release)
+                with tempfile.TemporaryDirectory() as out, patch.object(v2,'api_control',return_value={'candidate':c,'presentation':presentation}), patch.object(v2.lab,'api',side_effect=api):
+                    with self.assertRaises(v2.lab.LabError): v2.refresh_presentation(c['id'],out)
+                    self.assertEqual(writes,[])
 
 class JournalTests(unittest.TestCase):
     def test_existing_record_is_verified_at_immutable_commit_without_writes(self):

@@ -23,7 +23,13 @@ export function defaultRows(c: any): VersionRow[] {
         ? "Não gerado nesta rodada"
         : "Versão do preview não conferida",
     ],
-    ["Android", "Não validada", "Sem publicação comprovada nesta entrega"],
+    [
+      "Android",
+      r.mobile_execution_plan?.target?.release_version ?? "Não validada",
+      r.mobile_execution_plan?.schema === "delivery-android-staging-v1"
+        ? "Patch staging pendente; execução local após os aceites e a Release GitHub"
+        : "Sem publicação comprovada nesta entrega",
+    ],
     ["iOS", "Não validada", "Sem publicação comprovada nesta entrega"],
   ];
 }
