@@ -51,7 +51,7 @@ Esses runs são `workflow_dispatch`; esta rodada não é nova comprovação do c
 ## Logs, prints e lições
 
 [Resultado sanitizado](result.json), [recibos e digests dos logs](evidence-digests.json),
-[índice dos oito prints](screenshots.json) e [trecho da suíte Python](ci-excerpt.log).
+[índice dos oito prints](screenshots.json) e [trecho da suíte Python](ci-excerpt.txt).
 Logs completos, snapshots e prints ficam no diretório privado local
 `/Users/israelhudson/Documents/Codex/2026-10-15/reviewer-defaults/`.
 Não foram enviados payloads privados ou screenshots ao repositório público.
