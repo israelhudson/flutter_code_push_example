@@ -8,9 +8,8 @@ exclusivo após backup e restauração verificados. Há somente `delivery_contro
 publicação e preparos permanecem bloqueados. O worker da main foi integrado e validado com DMs reais; veja [evidências](evidence/main-worker/README.md).
 Veja o [estado atual e a prova dos cliques](evidence/main-migration/README.md).
 Veja [resultados da validação do banco](evidence/database-validation/README.md).
-Nenhuma candidata foi preparada, nenhum aceite enviado e nenhuma tag/Release
-alterada nesta implementação. A rodada 1.15.2 permanece cancelada; sua RC não deve
-ser reutilizada silenciosamente.
+Ensaios operacionais com controles fictícios validaram aceites reais nas DMs, rejeição e RC2. Nenhuma tag/Release foi criada nessas rodadas. A rodada 1.15.2 permanece cancelada; sua RC não deve ser reutilizada silenciosamente.
+Veja [recuperação, correções e limites do cron](evidence/worker-recovery/README.md).
 
 
 ## Pendência: restaurar validações humanas antes da adoção na Amulets
@@ -149,4 +148,4 @@ Releases que já foram confirmadas.
 - Testes PGlite executam SQL real local; HTTP/GitHub/Slack usam fixtures.
 
 Os testes locais não comprovam entrega de DMs reais, cron, proteções da branch
-remota nem distribuição mobile. A rodada foi cancelada pelo usuário; não executada.
+remota nem distribuição mobile. A rodada de release 1.15.2 foi cancelada pelo usuário. Os ensaios remotos posteriores do worker e das DMs estão documentados nas evidências acima e não equivalem à publicação de uma release.

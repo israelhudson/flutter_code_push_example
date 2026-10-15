@@ -1,0 +1,34 @@
+{
+  "public_tables": [
+    "delivery_control",
+    "delivery_outbox"
+  ],
+  "active_controls": 0,
+  "pending_operations": 0,
+  "dispatch_operations": 0,
+  "publication_runs": 0,
+  "fixture_controls": [
+    {
+      "id": "delivery-19e1ba7f70c648c980c9241d4a1551ac",
+      "rc": 2,
+      "status": "cancelled",
+      "revision": 3,
+      "previous_id": "delivery-b1db80bb8a0e4d97b273c566b4561b8b",
+      "technical_received": true,
+      "business_received": true
+    },
+    {
+      "id": "delivery-b1db80bb8a0e4d97b273c566b4561b8b",
+      "rc": 1,
+      "status": "rejected",
+      "revision": 1,
+      "previous_id": null,
+      "technical_received": false,
+      "business_received": false
+    }
+  ],
+  "cron_observed": false,
+  "worker_flag_after": "false",
+  "correction_pr": 57,
+  "main_sha": "eddbd06aee7ceea91e64352d8fe1f0461f72e79e"
+}
