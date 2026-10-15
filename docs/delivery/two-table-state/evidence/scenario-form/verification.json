@@ -1,0 +1,67 @@
+{
+  "base": "7ef832024cafc54f1f1f5eb81c602bdcd6594107",
+  "implementation": "c49759f3353657ee49843b02db17d83ac7d2a792",
+  "focused_tests": {
+    "passed": 10,
+    "type": "offline"
+  },
+  "deno_contracts": {
+    "passed": 94,
+    "failed": 0,
+    "type": "local_pglite_and_mocks"
+  },
+  "actionlint": {
+    "version": "1.7.12",
+    "result": "passed",
+    "workflow_files": [
+      "delivery-prepare.yml",
+      "poc-slack-prepare.yml"
+    ],
+    "shellcheck": false,
+    "pyflakes": false
+  },
+  "dry_runs": 5,
+  "real_workflow_dispatches": 0,
+  "release_round_started": false,
+  "preview_generated": false,
+  "patch_generated": false,
+  "screenshot_context": {
+    "service": "GitHub Actions",
+    "selected_branch": "codex/delivery-scenario-form",
+    "run_workflow_submitted": false,
+    "main_form_updated": false
+  },
+  "unchanged": [
+    "supabase",
+    "tools/delivery/delivery_v2.py",
+    "tools/delivery/poc_slack.py",
+    "tools/delivery/delivery_android_staging.py",
+    "tools/delivery/preview_retention.py",
+    ".github/workflows/delivery-publish.yml",
+    ".github/workflows/delivery-worker.yml"
+  ],
+  "python_regression": {
+    "passed": 631,
+    "failed": 0,
+    "seconds": 238.337,
+    "type": "offline"
+  },
+  "ci_on_implementation": {
+    "head": "c49759f3353657ee49843b02db17d83ac7d2a792",
+    "flutter_and_delivery": 38793357309,
+    "delivery_contracts": 38793357424,
+    "issue_contracts": 38793357837,
+    "conclusion": "success",
+    "preview_jobs": "skipped"
+  },
+  "preparation_runs_unchanged": {
+    "count": 6,
+    "last_run": 38788973624
+  },
+  "github_controls": {
+    "DELIVERY_V2_ENABLED": false,
+    "POC_SLACK_ENABLED": false,
+    "POC_SLACK_PUBLISH_ENABLED": false,
+    "POC_LEGACY_ENABLED": false
+  }
+}

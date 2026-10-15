@@ -1,29 +1,26 @@
-name: Entrega v2 - Preparar candidata
+name: Entrega · Preparar candidata
 run-name: Entrega · ${{ inputs.version }} / ${{ inputs.title }}
 on:
   workflow_dispatch:
     inputs:
-      scope:
-        description: Publicação após os aceites — none não publica; github cria a Release
+      scenario:
+        description: Cenário da entrega — toda execução cria uma candidata real
         type: choice
-        options: [none, github]
-        default: none
-      validation_mode:
-        description: controls_only não gera preview; full gera preview Web; este workflow não executa Shorebird
-        type: choice
-        options: [controls_only, full]
-        default: controls_only
-      patch_mode:
-        description: Android staging local após aceites e Release; exige full e scope github
-        type: choice
-        options: [none, android_staging]
-        default: none
+        required: true
+        # Keep these display strings aligned with delivery_scenarios.SCENARIOS.
+        options:
+          - Só avaliar a candidata
+          - Avaliar a candidata com preview
+          - Teste rápido com Release no GitHub
+          - Teste com preview e Release no GitHub
+          - Android staging — preview, Release e patch via CLI
+        default: Só avaliar a candidata
       version:
-        description: Versão da entrega, sem prefixo nem RC
+        description: 'Versão da entrega — exemplo: 1.15.7, sem v e sem RC'
         type: string
         required: true
       title:
-        description: Mudança que os revisores vão conferir
+        description: 'Título da entrega — exemplo: Corrigir renovação do token no login'
         type: string
         required: true
 permissions:
@@ -50,21 +47,27 @@ jobs:
       tag: ${{ steps.prepare.outputs.candidate_tag }}
       source: ${{ steps.prepare.outputs.source_sha }}
       tooling: ${{ steps.prepare.outputs.tooling_sha }}
+      validation_mode: ${{ steps.scenario.outputs.validation_mode }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           ref: ${{ github.sha }}
           fetch-depth: 0
           persist-credentials: false
+      - id: scenario
+        name: Resolver cenário sem criar referências
+        env:
+          DELIVERY_SCENARIO: ${{ inputs.scenario }}
+        run: python3 tools/delivery/delivery_scenarios.py
       - id: prepare
         name: Congelar código e identificar candidata
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ inputs.version }}
           TITLE: ${{ inputs.title }}
-          SCOPE: ${{ inputs.scope == 'github' && 'github_test' || inputs.scope }}
-          VALIDATION_MODE: ${{ inputs.validation_mode || 'controls_only' }}
-          DELIVERY_PATCH_MODE: ${{ inputs.patch_mode || 'none' }}
+          SCOPE: ${{ steps.scenario.outputs.scope }}
+          VALIDATION_MODE: ${{ steps.scenario.outputs.validation_mode }}
+          DELIVERY_PATCH_MODE: ${{ steps.scenario.outputs.patch_mode }}
           POC_SUPABASE_URL: ${{ vars.POC_SUPABASE_URL }}
           POC_REGISTRATION_SECRET: ${{ secrets.POC_REGISTRATION_SECRET }}
         run: python3 tools/delivery/delivery_v2.py prepare --version "$VERSION" --title "$TITLE" --scope "$SCOPE" --validation-mode "$VALIDATION_MODE" --output "$RUNNER_TEMP/poc-prepare"
@@ -77,7 +80,7 @@ jobs:
           if-no-files-found: ignore
   build:
     needs: prepare
-    if: (inputs.validation_mode || 'controls_only') == 'full'
+    if: needs.prepare.outputs.validation_mode == 'full'
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
@@ -176,8 +179,8 @@ jobs:
     needs: [prepare, web]
     if: >-
       always() && !cancelled() && needs.prepare.result == 'success' &&
-      (((inputs.validation_mode || 'controls_only') == 'full' && needs.web.result == 'success') ||
-       ((inputs.validation_mode || 'controls_only') == 'controls_only' && needs.web.result == 'skipped'))
+      ((needs.prepare.outputs.validation_mode == 'full' && needs.web.result == 'success') ||
+       (needs.prepare.outputs.validation_mode == 'controls_only' && needs.web.result == 'skipped'))
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     concurrency:
@@ -192,7 +195,7 @@ jobs:
           ref: ${{ needs.prepare.outputs.tooling }}
           persist-credentials: false
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
-        if: (inputs.validation_mode || 'controls_only') == 'full'
+        if: needs.prepare.outputs.validation_mode == 'full'
         with:
           name: poc-web-proof
           path: ${{ runner.temp }}/poc-web-proof
@@ -205,7 +208,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           POC_SUPABASE_URL: ${{ vars.POC_SUPABASE_URL }}
           POC_REGISTRATION_SECRET: ${{ secrets.POC_REGISTRATION_SECRET }}
-          VALIDATION_MODE: ${{ inputs.validation_mode || 'controls_only' }}
+          VALIDATION_MODE: ${{ needs.prepare.outputs.validation_mode }}
         run: |
           if [ "$VALIDATION_MODE" = 'controls_only' ]; then
             python3 tools/delivery/delivery_v2.py register --plan "$RUNNER_TEMP/poc-plan/candidate-plan.json" --output "$RUNNER_TEMP/poc-open"

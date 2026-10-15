@@ -1,5 +1,11 @@
 # Fluxos de entrega e modos de validação
 
+**Guia histórico do fluxo anterior.** O fluxo oficial atual usa a `main`,
+`delivery-prepare.yml` e um único cenário. Seguir
+[Formulário e CLI](../two-table-state/FORMULARIO-E-CLI.md) para novas chamadas.
+O workflow abaixo agora aparece como **Legado · Preparar candidata** e continua
+bloqueado. Preservamos este registro para explicar execuções antigas.
+
 ## Dois caminhos coexistem
 
 - **Entrega ·**: fluxo com aceites técnico e de negócio pelo bot exclusivo no Slack. Os arquivos ainda se chamam `poc-slack-*.yml` para preservar chamadas da API e validações de segurança. Usar `slack-main` em **Use workflow from**.
@@ -7,7 +13,7 @@
 
 O prefixo do workflow identifica a experiência de entrega, não o ambiente de produção. Os nomes do bot, branches, tags e tabelas internas permanecem compatíveis. O check obrigatório `Slack / Verificar contratos` conserva o identificador exigido pela proteção da branch.
 
-## Formulário Entrega · Preparar candidata
+## Formulário anterior, hoje identificado como Legado
 
 | Campo | Opção | Efeito |
 |---|---|---|
@@ -22,7 +28,7 @@ O formulário traduz `github` para o escopo interno existente `github_test`. Ess
 
 Não há opção de produção mobile nesta lista. Um futuro destino homologação/produção exigirá base Shorebird, plataforma, track, permissões e comprovação de instalação. Nenhum patch é gerado por estas duas opções.
 
-## CLI equivalente para o formulário novo
+## CLI histórica (não usar para uma nova rodada)
 
 ```bash
 gh workflow run poc-slack-prepare.yml \

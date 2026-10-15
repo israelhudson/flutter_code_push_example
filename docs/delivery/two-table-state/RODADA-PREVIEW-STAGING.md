@@ -8,8 +8,11 @@ como responsável técnico e de negócio. São dois papéis, não duas pessoas.
 
 O comando abaixo registra a preparação histórica. **Não o reexecute para criar
 outra entrega 1.15.5**: essa versão já foi publicada e deve continuar preservada.
-Para novas versões, usar [os nomes oficiais](NOMES-OFICIAIS.md), escolhidos pela
-esteira; o formulário continua recebendo a versão sem `v` e sem sufixo RC.
+Para novas versões, usar [o formulário por cenário e a CLI](FORMULARIO-E-CLI.md)
+com `--scenario android_staging`, começando por `--dry-run`. Os inputs abaixo
+pertencem à execução histórica; não são a interface atual. Os
+[nomes oficiais](NOMES-OFICIAIS.md) são escolhidos pela esteira; informar a versão
+sem `v` e sem sufixo RC.
 
 ```bash
 gh workflow run delivery-prepare.yml \

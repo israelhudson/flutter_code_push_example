@@ -1,4 +1,4 @@
-name: Entrega · Preparar candidata
+name: Legado · Preparar candidata
 run-name: Entrega · ${{ inputs.version }} / ${{ inputs.title }}
 on:
   workflow_dispatch:
