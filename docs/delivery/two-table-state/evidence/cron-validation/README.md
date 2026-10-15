@@ -1,5 +1,10 @@
 # Validação do cron na main — 14/10/2026
 
+**Atualização de 15/10:** a observação prolongada posterior encontrou um run
+realmente agendado, mas depois da janela combinada. Veja a
+[prova e seus limites](../cron-extended/README.md). Este relatório mantém o
+resultado da primeira observação e seu fallback manual.
+
 O PR#58 foi integrado à main em14/10/2026 às23:01:29−03, commit cdf5cb558563df2e0eacb7a8582775da37733721. Checks Flutter/contratos passaram; preview foi pulado conforme configuração.
 
 ## Condições verificadas

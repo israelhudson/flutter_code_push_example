@@ -1,0 +1,213 @@
+{
+  "observed_on": "2026-10-15",
+  "cron_observed": true,
+  "within_planned_window": false,
+  "scheduled_timeliness_proven": false,
+  "cutoff_enforced_on_time": false,
+  "run": {
+    "databaseId": 38698226773,
+    "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38698226773",
+    "event": "schedule",
+    "headBranch": "main",
+    "headSha": "9aff732232421f68f75aa95d5490ca506f66c60d",
+    "createdAt": "2026-10-15T07:21:43Z",
+    "updatedAt": "2026-10-15T07:22:21Z",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "job": {
+    "name": "drain",
+    "databaseId": 116299787786,
+    "status": "completed",
+    "conclusion": "success",
+    "startedAt": "2026-10-15T07:21:45Z",
+    "completedAt": "2026-10-15T07:22:20Z"
+  },
+  "planned_window": {
+    "started_at_utc": "2026-10-15T02:22:00.188465+00:00",
+    "deadline_utc": "2026-10-15T04:22:00.188465+00:00",
+    "deadline_fortaleza": "2026-10-15T01:22:00.188465-03:00",
+    "candidate": "delivery-91fe34c52e0f4b88812943e29480239f",
+    "scope": "none",
+    "worker_should_remain_enabled_until_window_ends": true
+  },
+  "fixture": {
+    "id": "delivery-91fe34c52e0f4b88812943e29480239f",
+    "version": "99.0.7",
+    "scope": "none",
+    "status": "cancelled",
+    "revision": 1,
+    "publication_run": null,
+    "technical_at": null,
+    "business_at": null
+  },
+  "operations": [
+    {
+      "id": 215,
+      "kind": "history",
+      "revision": 0,
+      "state": "done",
+      "attempts": 2,
+      "completed_at": "2026-10-15T07:21:54.936554+00:00",
+      "receipt": {
+        "commit": "4f1e8291f41b9cedd8f073af9e21bd3e4d866a16",
+        "digest": "8d177ced326387a69264977bdd810791020e307e68a328d98938e6e0c0b38d0e",
+        "path": "candidates/delivery-91fe34c52e0f4b88812943e29480239f/event-0.json",
+        "bytes_verified": true,
+        "status": "pending"
+      }
+    },
+    {
+      "id": 216,
+      "kind": "channel",
+      "revision": 0,
+      "state": "done",
+      "attempts": 1,
+      "completed_at": "2026-10-15T07:21:57.225679+00:00",
+      "receipt": {
+        "provider": "slack",
+        "confirmed": true,
+        "identity_omitted": true
+      }
+    },
+    {
+      "id": 217,
+      "kind": "technical",
+      "revision": 0,
+      "state": "done",
+      "attempts": 1,
+      "completed_at": "2026-10-15T07:21:59.310533+00:00",
+      "receipt": {
+        "provider": "slack",
+        "confirmed": true,
+        "identity_omitted": true
+      }
+    },
+    {
+      "id": 218,
+      "kind": "business",
+      "revision": 0,
+      "state": "done",
+      "attempts": 1,
+      "completed_at": "2026-10-15T07:22:01.712556+00:00",
+      "receipt": {
+        "provider": "slack",
+        "confirmed": true,
+        "identity_omitted": true
+      }
+    },
+    {
+      "id": 219,
+      "kind": "history",
+      "revision": 1,
+      "state": "done",
+      "attempts": 1,
+      "completed_at": "2026-10-15T07:22:10.267402+00:00",
+      "receipt": {
+        "commit": "70a77d105b4afddeb6668fda60f269207e7bbb5c",
+        "digest": "5ad1d68497c8d7f0095aae947474f621ea7049c400890c4a6424ccdaa05c0706",
+        "path": "candidates/delivery-91fe34c52e0f4b88812943e29480239f/event-1.json",
+        "bytes_verified": true,
+        "status": "cancelled"
+      }
+    },
+    {
+      "id": 220,
+      "kind": "channel",
+      "revision": 1,
+      "state": "done",
+      "attempts": 1,
+      "completed_at": "2026-10-15T07:22:12.495435+00:00",
+      "receipt": {
+        "provider": "slack",
+        "confirmed": true,
+        "identity_omitted": true
+      }
+    },
+    {
+      "id": 221,
+      "kind": "technical",
+      "revision": 1,
+      "state": "done",
+      "attempts": 1,
+      "completed_at": "2026-10-15T07:22:14.73801+00:00",
+      "receipt": {
+        "provider": "slack",
+        "confirmed": true,
+        "identity_omitted": true
+      }
+    },
+    {
+      "id": 222,
+      "kind": "business",
+      "revision": 1,
+      "state": "done",
+      "attempts": 1,
+      "completed_at": "2026-10-15T07:22:16.709376+00:00",
+      "receipt": {
+        "provider": "slack",
+        "confirmed": true,
+        "identity_omitted": true
+      }
+    }
+  ],
+  "global_final_state": {
+    "active_controls": 0,
+    "pending_operations": 0,
+    "dispatch_operations": 0,
+    "public_tables": [
+      "delivery_control",
+      "delivery_outbox"
+    ]
+  },
+  "compaction": {
+    "removed": 0
+  },
+  "pause": {
+    "verified_at_utc": "2026-10-15T12:32:08.774748+00:00",
+    "github": {
+      "DELIVERY_V2_ENABLED": {
+        "name": "DELIVERY_V2_ENABLED",
+        "updatedAt": "2026-10-15T12:27:16Z",
+        "value": "false"
+      },
+      "POC_LEGACY_ENABLED": {
+        "name": "POC_LEGACY_ENABLED",
+        "updatedAt": "2026-10-15T01:28:05Z",
+        "value": "false"
+      },
+      "POC_SLACK_ENABLED": {
+        "name": "POC_SLACK_ENABLED",
+        "updatedAt": "2026-10-15T01:28:04Z",
+        "value": "false"
+      },
+      "POC_SLACK_PUBLISH_ENABLED": {
+        "name": "POC_SLACK_PUBLISH_ENABLED",
+        "updatedAt": "2026-10-15T12:27:17Z",
+        "value": "false"
+      }
+    },
+    "supabase_project": "xtvueqciogzkyjkkqxcx",
+    "supabase": {
+      "DELIVERY_V2_ENABLED": {
+        "value": "false",
+        "sha256_matches": true,
+        "updated_at": "2026-10-15T12:31:46.560Z"
+      },
+      "POC_PUBLICATION_ENABLED": {
+        "value": "false",
+        "sha256_matches": true,
+        "updated_at": "2026-10-15T02:21:12.790Z"
+      }
+    },
+    "heartbeat_status": "DELETED"
+  },
+  "limitations": [
+    "Scheduled recovery occurred after the planned deadline.",
+    "The local follow-up did not apply the planned cutoff on time; cause unproven.",
+    "One schedule run does not establish latency or periodic reliability.",
+    "Slack receipts do not prove human reading.",
+    "No Release, tag, preview or patch publication was tested.",
+    "No manual fallback was needed at final inspection because schedule had already drained the fixture."
+  ]
+}
