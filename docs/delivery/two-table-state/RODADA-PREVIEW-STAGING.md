@@ -1,10 +1,15 @@
 # Rodada com preview, aceites manuais e Android em staging
 
-Alvo da rodada: **1.15.5**. O texto do aplicativo identifica essa entrega, para
+Rodada concluída: **1.15.5**, em **15/10/2026**. O texto do aplicativo identifica essa entrega, para
 comparar o preview com o Android. Israel recebe duas DMs e decide manualmente
 como responsável técnico e de negócio. São dois papéis, não duas pessoas.
 
-## Preparar pela main
+## Preparação usada na rodada 1.15.5
+
+O comando abaixo registra a preparação histórica. **Não o reexecute para criar
+outra entrega 1.15.5**: essa versão já foi publicada e deve continuar preservada.
+Para novas versões, usar [os nomes oficiais](NOMES-OFICIAIS.md), escolhidos pela
+esteira; o formulário continua recebendo a versão sem `v` e sem sufixo RC.
 
 ```bash
 gh workflow run delivery-prepare.yml \
@@ -14,7 +19,8 @@ gh workflow run delivery-prepare.yml \
   -f scope=github -f validation_mode=full -f patch_mode=android_staging
 ```
 
-O comando é o roteiro, não uma prova de que a rodada terminou. O preparo congela
+O comando isolado não comprova conclusão; as provas reais estão no
+[resultado abaixo](#resultado-real-da-1155). O preparo congela
 o código e o plano Android, cria a tag/prerelease, testa e publica o preview,
 confere seus hashes e entrega o cartão de acompanhamento e as duas DMs.
 `controls_only` ou `scope=none` são recusados quando `patch_mode=android_staging`.
@@ -68,6 +74,46 @@ de um canal silenciado. Enviar ao Slack não comprova que o destinatário leu.
 
 Guardar logs privados, hashes, recibos, prints do preview, GitHub e Slack por
 marco. Só registrar sucesso quando existir a evidência correspondente.
+
+## Resultado real da 1.15.5
+
+O [PR #64](https://github.com/israelhudson/flutter_code_push_example/pull/64)
+entrou na `main`, commit `2b2ea070fcb7c9cad71c3f63bdd252765285ba78`. Esta rodada
+foi preparada antes da mudança de nomes; suas referências continuam
+**`poc-release/1.15.5`**, **`poc-v1.15.5-rc.1`** e **`poc-v1.15.5`**.
+Não foram renomeadas para representar o padrão novo.
+
+| Etapa | Evidência real | Resultado |
+|---|---|---|
+| Preparação e Web | [Run 38784099405](https://github.com/israelhudson/flutter_code_push_example/actions/runs/38784099405) | Preview do SHA aprovado publicado e conferido por hashes. |
+| Avaliação | [Histórico da candidata](https://github.com/israelhudson/flutter_code_push_example/tree/codex/delivery-history/candidates/delivery-b9b75f1922de4a8b8461dfbea819fdf5) | Israel deu manualmente os dois aceites nas DMs; manifesto e eventos foram preservados. |
+| Publicação GitHub | [Run 38785467883](https://github.com/israelhudson/flutter_code_push_example/actions/runs/38785467883) | Disparo automático depois dos aceites; Release final publicada no mesmo SHA da RC. |
+| Android local | [Recibo anexado](https://github.com/israelhudson/flutter_code_push_example/releases/download/poc-v1.15.5/platform-receipt-android.json) | Base `1.1.0+2`, patch `5`, ID `722743`, confirmado em staging pelos três hashes do AAB. |
+| Atualização GitHub/Slack | [Run 38786116974](https://github.com/israelhudson/flutter_code_push_example/actions/runs/38786116974) | Tabela e cartão atualizados; um único aviso Android, três marcos no total. |
+
+A [Release final](https://github.com/israelhudson/flutter_code_push_example/releases/tag/poc-v1.15.5)
+mostra **`1.1.0+2 (patch 5)`** e **“Patch em staging; execução em dispositivo não comprovada”**.
+O mesmo cartão do canal e as duas DMs foram atualizados no lugar. Não houve
+menção coletiva. Os patches `1`, `2` e `3` em stable mantiveram seus dados,
+artefatos e tracks; o patch `4` anterior também foi preservado.
+
+O refresh conservou o ID da Release, as duas tags e os eventos `0` a `4`,
+acrescentando o evento Android sem reescrever decisões. A outbox terminou sem
+pendências e o banco manteve três tabelas de aplicação. Os controles de execução
+e publicação foram pausados depois da conferência; a rodada não deixou uma
+publicação permanentemente liberada.
+
+**Limites da prova:** dois papéis solo não são duas pessoas independentes;
+upload em staging não é execução no dispositivo; a ponte Android foi local,
+não um job mobile em CI. Não houve promoção stable, publicação iOS, envio a
+lojas, deploy Web de produção ou alteração na Amulets.
+
+Logs brutos, capturas completas e snapshots privados foram guardados fora do
+repositório. Este resumo aponta somente para runs, histórico e recibo de
+resultado, sem copiar credenciais ou payloads privados. A alteração dos nomes
+para próximas versões não executa uma nova rodada nem modifica esta prova.
+
+## Antes de aplicar na Amulets
 
 Para a Amulets, investigar em separado o uso de tracks a partir da main/release
 real, bases por plataforma, configuração dos aparelhos de QA e bloqueios contra

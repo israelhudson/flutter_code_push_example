@@ -17,10 +17,12 @@ from urllib.request import Request, build_opener
 import poc_slack as legacy
 import release_lab as lab
 import shorebird_delivery as mobile
+import delivery_names as names
 
 HISTORY = 'codex/delivery-history'
 ID = re.compile(r'delivery-[a-f0-9]{32}')
 LEGACY_BODY = legacy.release_body
+LEGACY_PROTECT = legacy.protect
 
 
 def mobile_plan(mode, scope, validation_mode):
@@ -158,7 +160,7 @@ def changes(report):
 
 def final_body(c, presentation=None):
     report=json.loads(c['report_text'])
-    validated=LEGACY_BODY(c,presentation)
+    validated=LEGACY_BODY(c,presentation,github_tag=names.final_tag(c))
     table='## Versões e publicação'+validated.split('## Versões e publicação',1)[1].split('## O que mudou',1)[0]
     run = c.get('publication_run') or os.environ['GITHUB_RUN_ID']
     return table.strip()+'\n\n## Mudanças\n\n'+changes(report)+f"\n\n[Publicação](https://github.com/{lab.REPOSITORY}/actions/runs/{run}) · [Histórico e evidências](https://github.com/{lab.REPOSITORY}/tree/{HISTORY}/candidates/{c['id']})\n\nCandidata preservada: `{c['rc_tag']}`. Esta Release GitHub não comprova publicação em lojas."
@@ -176,11 +178,12 @@ def refresh_presentation(candidate, output):
     if c.get('id') != candidate or c.get('status') != 'published' or not c.get('publication_run'):
         raise lab.LabError('Atualização exige a Release publicada da mesma candidata.')
     require_mobile_plan(json.loads(c['report_text']))
-    for tag in (c['rc_tag'], 'poc-v' + c['version']):
+    tag = names.final_tag(c)
+    for tag in (c['rc_tag'], tag):
         ref = lab.api(lab.endpoint('git/ref/tags/' + tag))
         if ref.get('object', {}).get('type') != 'commit' or ref['object'].get('sha') != c['source_sha']:
             raise lab.LabError('Tag mudou; atualização de tabela bloqueada.')
-    release = lab.api(lab.endpoint('releases/tags/poc-v' + c['version']))
+    release = lab.api(lab.endpoint('releases/tags/' + names.final_tag(c)))
     name = 'Release ' + c['version'] + ' — ' + json.loads(c['report_text'])['title']
     if release.get('prerelease') is not False or release.get('draft') is not False or release.get('name') != name:
         raise lab.LabError('Release mudou; não sobrescrever edição manual.')
@@ -291,6 +294,10 @@ def main():
     if '--finalize-existing' in argv: raise lab.LabError('Legacy presentation repair is not a v2 operation.')
     legacy.control=control
     legacy.release_body=final_body
+    def protect():
+        LEGACY_PROTECT()
+        names.protect()
+    legacy.protect=protect
     return legacy.main()
 
 

@@ -193,7 +193,13 @@ function fixture() {
     request,
     resolve: (value: any) => resolved = value,
     missing: () => resolverError = true,
-    setRow: (value: any) => row = value,
+    setRow: (value: any) =>
+      row = value
+        ? Object.assign(value, {
+          version: value.version ?? report.version,
+          rc_number: value.rc_number ?? report.rc_number,
+        })
+        : value,
     setRegistered: (value: any) => registeredOverride = value,
     changedDefaults: () => registrationError = true,
     collideTag: () => tagCollision = true,

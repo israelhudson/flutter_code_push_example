@@ -16,6 +16,7 @@ import uuid
 import delivery_v2 as delivery
 import release_lab as lab
 import shorebird_delivery as mobile
+import delivery_names as names
 
 HISTORY = 'codex/delivery-history'
 OPERATOR = {'id': 18661493, 'login': 'israelhudson', 'type': 'User'}
@@ -88,8 +89,8 @@ def verify_authorization(manifest, events, run, release, rc, final):
     require(manifest['mobile_execution_plan'].get('stable_authorized') is False,
             'Promoção stable não faz parte desta autorização.')
     version, source = manifest['version'], manifest['source_sha']
-    require(type(manifest.get('rc_number')) is int and manifest['rc_number'] > 0
-            and manifest.get('rc_tag') == f'poc-v{version}-rc.{manifest["rc_number"]}',
+    identity = names.frozen_names(manifest)
+    require(type(manifest.get('rc_number')) is int and manifest['rc_number'] > 0,
             'Tag RC não corresponde à candidata aprovada.')
     require(isinstance(events, list) and events and len(events) <= 100,
             'Histórico de decisões ausente ou excessivo.')
@@ -134,13 +135,13 @@ def verify_authorization(manifest, events, run, release, rc, final):
                 and ref['object'].get('sha') == source for ref in (rc, final)),
             'Tag RC/final diverge do SHA aprovado; nenhuma tag será movida.')
     require(type(release.get('id')) is int and release['id'] > 0
-            and release.get('tag_name') == 'poc-v' + version and release.get('draft') is False
+            and release.get('tag_name') == identity['final_tag'] and release.get('draft') is False
             and release.get('prerelease') is False
-            and release.get('html_url') == f'https://github.com/{lab.REPOSITORY}/releases/tag/poc-v{version}',
+            and release.get('html_url') == f'https://github.com/{lab.REPOSITORY}/releases/tag/{identity["final_tag"]}',
             'Release final não confirma a versão aprovada.')
     return {'candidate_id': manifest['id'], 'source_sha': source,
             'report_digest': lab.digest(manifest), 'publication_run': str(run['id']),
-            'release_id': release['id'], 'github_tag': 'poc-v' + version,
+            'release_id': release['id'], 'github_tag': identity['final_tag'],
             'rc_tag': manifest['rc_tag'], 'version': version}
 
 
@@ -168,10 +169,10 @@ def authorization(candidate):
     version = manifest.get('version', '')
     require(lab.VERSION.fullmatch(version), 'Versão inválida.')
     rc_tag = manifest.get('rc_tag', '')
-    require(re.fullmatch(r'poc-v\d+\.\d+\.\d+-rc\.[1-9][0-9]*', rc_tag), 'Tag RC inválida.')
-    release = lab.api(lab.endpoint('releases/tags/poc-v' + version))
+    identity = names.frozen_names(manifest)
+    release = lab.api(lab.endpoint('releases/tags/' + identity['final_tag']))
     rc = lab.api(lab.endpoint('git/ref/tags/' + rc_tag))
-    final = lab.api(lab.endpoint('git/ref/tags/poc-v' + version))
+    final = lab.api(lab.endpoint('git/ref/tags/' + identity['final_tag']))
     proof = verify_authorization(manifest, events, run, release, rc, final)
     proof['history_commit'] = commit
     return manifest, proof, release

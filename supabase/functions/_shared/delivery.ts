@@ -1,6 +1,7 @@
 import { CHANNEL, digest, type IO, REPOSITORY, requireReady, TEAM, validSignature } from "./poc.ts";
 import { canonical, verifyCandidateEvidence } from "./preview.ts";
 import { versionPresentation } from "./versions.ts";
+import { candidateNames, releaseNames } from "./release_names.ts";
 const ID = /^delivery-[a-f0-9]{32}$/;
 const SHA = /^[a-f0-9]{40}$/;
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
@@ -91,6 +92,7 @@ async function state(io: IO, id: string) {
     throw Error("Manifest identity differs");
   }
   verifyFrozenReviewers(c, report);
+  releaseNames({ ...c, branch: report.branch });
   return {
     ...c,
     report_text: text,
@@ -116,7 +118,7 @@ export function deliveryCard(c: any, kind: string) {
     : c.status === "rejected"
     ? `Versão ${c.version} negada`
     : `Release Candidate ${c.version} · RC${c.rc_number}`;
-  const tag = c.status === "published" ? `poc-v${c.version}` : c.rc_tag;
+  const tag = c.status === "published" ? releaseNames(c).final_tag : c.rc_tag;
   const links = `<https://github.com/${REPOSITORY}/releases/tag/${tag}|Ver versão no GitHub>` +
     (c.publication_run
       ? `\n<https://github.com/${REPOSITORY}/actions/runs/${c.publication_run}|Acompanhar publicação>`
@@ -177,6 +179,7 @@ export function deliveryCard(c: any, kind: string) {
 // later state in place of the event it is acknowledging. Never mention users.
 export function deliveryNotice(c: any, task: any) {
   const event = task.event;
+  const names = releaseNames(c);
   if (
     task.kind !== "notice" || !Number.isSafeInteger(task.revision) || task.revision < 1 ||
     !event || event.schema !== "delivery-channel-notice-v1" ||
@@ -184,7 +187,7 @@ export function deliveryNotice(c: any, task: any) {
     event.source_sha !== c.source_sha || !SHA.test(c.source_sha) ||
     event.version !== c.version || !/^\d+\.\d+\.\d+$/.test(c.version) ||
     event.rc_number !== c.rc_number || !Number.isSafeInteger(c.rc_number) || c.rc_number < 1 ||
-    event.rc_tag !== c.rc_tag || c.rc_tag !== `poc-v${c.version}-rc.${c.rc_number}` ||
+    event.rc_tag !== c.rc_tag ||
     c.channel_id !== CHANNEL || !/^\d+\.\d+$/.test(c.channel_message ?? "") ||
     !["publishing", "published", "rejected", "cancelled", "android_staging"].includes(event.status)
   ) throw Error("Frozen channel milestone rejected");
@@ -210,7 +213,7 @@ export function deliveryNotice(c: any, task: any) {
       event.status === "rejected" ? "negada" : "cancelada"
     }.`;
   const tag = ["published", "android_staging"].includes(event.status)
-    ? `poc-v${event.version}`
+    ? names.final_tag
     : event.rc_tag;
   const links = `<https://github.com/${REPOSITORY}/releases/tag/${tag}|Ver versão no GitHub>` +
     (publishing
@@ -347,7 +350,7 @@ export function deliveryControlHandler(io: IO) {
         ) throw Error("Manual main refresh required");
         const frozen = await state(io, p.candidate);
         if (frozen.status !== "published") throw Error("Published candidate required");
-        const release = await github(io, `releases/tags/poc-v${frozen.version}`);
+        const release = await github(io, `releases/tags/${releaseNames(frozen).final_tag}`);
         if (!release) throw Error("Published release missing");
         // Validate real assets before scheduling a changed card; no publication
         // action, tag mutation or acceptance occurs on this path.
@@ -420,7 +423,7 @@ export function deliveryControlHandler(io: IO) {
         } else if (["channel", "technical", "business"].includes(t.kind)) {
           if (c.status === "published") {
             const frozen = await state(io, c.id);
-            const release = await github(io, `releases/tags/poc-v${c.version}`);
+            const release = await github(io, `releases/tags/${releaseNames(c).final_tag}`);
             if (!release) throw Error("Published release missing");
             const presentation = await versionPresentation(io, frozen, release);
             c.versionRows = presentation.rows;
@@ -490,15 +493,18 @@ export function deliveryControlHandler(io: IO) {
           }),
           cfg.solo,
         );
-        const tags = await github(io, "git/matching-refs/tags/poc-v");
+        const tagSets = await Promise.all([
+          github(io, "git/matching-refs/tags/v"),
+          github(io, "git/matching-refs/tags/poc-v"),
+        ]);
         const requested = p.version.split(".").map(Number);
         const atLeast = (v: number[]) =>
           v[0] > requested[0] ||
           v[0] === requested[0] &&
             (v[1] > requested[1] || v[1] === requested[1] && v[2] >= requested[2]);
         if (
-          !Array.isArray(tags) || tags.some((t: any) => {
-            const m = /^refs\/tags\/poc-v(\d+)\.(\d+)\.(\d+)$/.exec(t.ref);
+          tagSets.some((tags) => !Array.isArray(tags)) || tagSets.flat().some((t: any) => {
+            const m = /^refs\/tags\/(?:poc-)?v(\d+)\.(\d+)\.(\d+)$/.exec(t.ref);
             return m && atLeast(m.slice(1).map(Number));
           })
         ) throw Error("Version already promoted or obsolete");
@@ -506,24 +512,54 @@ export function deliveryControlHandler(io: IO) {
         if (rows.some((c: any) => ["pending", "approved", "publishing"].includes(c.status))) {
           throw Error("Active evaluation");
         }
-        const previous = rows.find((c: any) => c.version === p.version);
+        const previous = rows.filter((c: any) => c.version === p.version)
+          .sort((a: any, b: any) => b.rc_number - a.rc_number)[0];
         if (previous && !["rejected", "cancelled"].includes(previous.status)) {
           throw Error("Version closed");
         }
-        // Never reuse a legacy namespace or overwrite its tags/branch.
-        const branch = await github(io, `git/ref/heads/poc-release/${p.version}`);
-        if (branch && !previous) throw Error("Version already exists in legacy lane");
         const rc = (previous?.rc_number ?? 0) + 1;
-        if (await github(io, `git/ref/tags/poc-v${p.version}-rc.${rc}`)) {
+        const names = candidateNames(
+          p.version,
+          rc,
+          previous ? releaseNames(previous).namespace : "official",
+        );
+        const other = candidateNames(
+          p.version,
+          rc,
+          names.namespace === "official" ? "legacy" : "official",
+        );
+        const [branch, otherBranch] = await Promise.all([
+          github(io, `git/ref/heads/${names.branch}`),
+          github(io, `git/ref/heads/${other.branch}`),
+        ]);
+        const versionRefs = tagSets.flat().filter((t: any) =>
+          t.ref.startsWith(`refs/tags/v${p.version}-rc.`) ||
+          t.ref.startsWith(`refs/tags/poc-v${p.version}-rc.`)
+        );
+        if (otherBranch || (!previous && (branch || versionRefs.length))) {
+          throw Error("Version already exists in another or orphan namespace");
+        }
+        if (
+          previous && (!branch || branch.object?.type !== "commit" || !SHA.test(branch.object.sha))
+        ) {
+          throw Error("Frozen release branch required for next RC");
+        }
+        if (
+          versionRefs.some((t: any) => {
+            const match = /^refs\/tags\/(poc-)?v.+-rc\.([1-9]\d*)$/.exec(t.ref);
+            return !match || (match[1] ? "legacy" : "official") !== names.namespace ||
+              Number(match[2]) > (previous?.rc_number ?? 0);
+          }) || await github(io, `git/ref/tags/${names.rc_tag}`)
+        ) {
           throw Error("Existing orphan tag requires reconciliation");
         }
         return Response.json({
           id: "delivery-" + crypto.randomUUID().replaceAll("-", ""),
           version: p.version,
           rc_number: rc,
-          rc_tag: `poc-v${p.version}-rc.${rc}`,
+          rc_tag: names.rc_tag,
           source_sha: branch?.object?.sha ?? run.head_sha,
-          branch: `poc-release/${p.version}`,
+          branch: names.branch,
           creator: cfg.operator_github_login,
           publication_scope: p.publication_scope,
           validation_mode: p.validation_mode,
@@ -539,6 +575,7 @@ export function deliveryControlHandler(io: IO) {
         const text = await file(io, `candidates/${p.candidate}/manifest.json`, p.manifest_commit);
         if (await digest(text) !== p.manifest_digest) throw Error("Manifest digest differs");
         const r = JSON.parse(text);
+        releaseNames(r);
         if (
           r.id !== p.candidate || r.repository !== REPOSITORY ||
           r.run_url !== `https://github.com/${REPOSITORY}/actions/runs/${p.run_id}` ||
@@ -603,24 +640,41 @@ export function deliveryControlHandler(io: IO) {
       if (p.operation === "state") return Response.json(c);
       if (p.operation === "presentation") {
         return Response.json(
-          await versionPresentation(io, c, await github(io, `releases/tags/poc-v${c.version}`)),
+          await versionPresentation(
+            io,
+            c,
+            await github(io, `releases/tags/${releaseNames(c).final_tag}`),
+          ),
         );
       }
       if (["claim", "complete"].includes(p.operation)) {
         if (io.env("POC_PUBLICATION_ENABLED") !== "true") throw Error("Publication disabled");
+        const names = releaseNames(c);
+        const other = candidateNames(
+          c.version,
+          c.rc_number,
+          names.namespace === "official" ? "legacy" : "official",
+        );
+        const collisions = await Promise.all([
+          github(io, `git/ref/tags/${other.final_tag}`),
+          github(io, `releases/tags/${other.final_tag}`),
+          github(io, `git/ref/tags/${other.rc_tag}`),
+          github(io, `git/ref/heads/${other.branch}`),
+        ]);
+        if (collisions.some((ref) => ref !== null)) throw Error("Version namespace collision");
         const tag = await github(io, `git/ref/tags/${c.rc_tag}`);
         if (tag?.object?.type !== "commit" || tag.object.sha !== c.source_sha) {
           throw Error("Candidate tag differs");
         }
         if (p.operation === "claim") await verifyCandidateEvidence(io, JSON.parse(c.report_text));
         else {
-          const finalTag = `poc-v${c.version}`,
+          const finalTag = releaseNames(c).final_tag,
             ref = await github(io, `git/ref/tags/${finalTag}`),
             release = await github(io, `releases/tags/${finalTag}`);
           if (
             ref?.object?.type !== "commit" || ref.object.sha !== c.source_sha ||
             release?.id !== p.receipt?.release_id || release.draft !== false ||
-            release.prerelease !== false
+            release.prerelease !== false || release.tag_name !== finalTag
           ) throw Error("Publication unproven");
         }
         const result = await io.db("rpc/delivery_publish", {
@@ -629,7 +683,7 @@ export function deliveryControlHandler(io: IO) {
           p_complete: p.operation === "complete",
         });
         const published = c.status === "published"
-          ? await github(io, `releases/tags/poc-v${c.version}`)
+          ? await github(io, `releases/tags/${releaseNames(c).final_tag}`)
           : null;
         return Response.json({
           ...result,

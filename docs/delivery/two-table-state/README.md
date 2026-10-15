@@ -1,6 +1,15 @@
 # Entrega: controle, fila e cadastro de aprovadores
 
-Implementação opt-in da proposta B. **Worker e DMs validados na main; publicação bloqueada.**
+Fluxo oficial opt-in, validado na **`main`**. A rodada **1.15.5** concluiu
+preview Web, dois aceites manuais nas DMs, publicação GitHub automática e
+**Android `1.1.0+2`, patch `5` em staging**, com atualização da tabela e do cartão
+Slack. Não houve validação em dispositivo nem promoção stable. Os controles
+foram pausados no encerramento; publicação não está liberada permanentemente.
+
+Novas versões usam **`release/X.Y.Z`**, **`vX.Y.Z-rc.N`** e **`vX.Y.Z`**.
+O histórico `poc-release/...` e `poc-v...` permanece intacto, sem misturar os
+formatos na mesma versão. A mudança de nomes não dispara releases nem altera
+aceites. Veja [a convenção completa e o exemplo de RC2](NOMES-OFICIAIS.md).
 
 Evolução em 15/10: o preparo pode congelar `patch_mode=android_staging`, com
 preview completo e escopo GitHub. A geração Android é uma etapa local explícita,
@@ -8,8 +17,9 @@ somente após os dois aceites e a Release GitHub, sem promoção para stable.
 O cartão continua sendo editado e avisos por marco aparecem também no canal.
 Veja o [roteiro da rodada](RODADA-PREVIEW-STAGING.md) e a
 [ponte Android com autorização e recibos](ANDROID-STAGING.md).
-Esses caminhos precisam de evidência real da rodada para serem considerados
-validados; os testes locais não comprovam upload ou execução no aparelho.
+O [resultado real da 1.15.5](RODADA-PREVIEW-STAGING.md#resultado-real-da-1155)
+comprova esses caminhos até o upload em staging e a apresentação final.
+Testes locais, upload e preview continuam sem comprovar execução no aparelho.
 
 Extensão de 15/10/2026: a proposta 1 de **titulares automáticos no banco** está
 integrada na `main`, com migração aplicada e ensaio solo por DMs reais concluído.
@@ -82,13 +92,15 @@ avaliação encerrada com dois aceites nesse escopo pode ser cancelada pelo oper
 
 ## Caminho normal
 
-1. `Entrega v2 - Preparar candidata` usa a integração configurada e as mesmas
+1. `delivery-prepare.yml` usa a integração configurada (`main`) e as mesmas
    verificações de código, proteção de tags e build/preview do fluxo atual.
 2. `controls_only` dispensa build/preview/patch. `full` valida preview, **sem patch**.
    O escopo `github` é convertido para `github_test` e permite só GitHub Release.
    O preparo normal cria tag RC e prerelease mesmo em `controls_only`/`none`;
    `none` bloqueia a promoção final, não esses registros de candidata.
-   A opção separada `patch_mode=android_staging` exige `full` e escopo `github`:
+   Para uma versão nova, cria `release/X.Y.Z` e `vX.Y.Z-rc.1`; a numeração RC
+   pertence à tag, não ao nome da branch. A opção separada
+   `patch_mode=android_staging` exige `full` e escopo `github`:
    congela um plano para execução local após a publicação GitHub. O job de
    preparo continua sem executar `shorebird patch`.
 3. O script grava um manifesto imutável no GitHub e cria a Release Candidate com
@@ -128,6 +140,14 @@ Após correção por PR na branch da release, novo preparo cria outra identidade
 outra tag RC. O banco exige antecessora rejeitada/cancelada e sequência crescente.
 Nenhum aceite ou mensagem é transferido. Tags de outro fluxo, versão já promovida
 e tag órfã são recusadas antes de serem sobrescritas.
+
+Para novas versões, a branch continua `release/X.Y.Z` e a nova tag é
+`vX.Y.Z-rc.2`. Reexecuta-se o mesmo workflow na `main`, informando a mesma
+versão; o script encontra o código corrigido da release. RC2 de uma versão
+histórica mantém a branch `poc-release/X.Y.Z` e a sequência `poc-vX.Y.Z-rc.N`
+da candidata anterior, sem conversão nem transferência de aceites. Versão já
+publicada, referência órfã e referência de outro fluxo bloqueiam ambos os
+formatos. Ver [nomes oficiais](NOMES-OFICIAIS.md).
 
 ## Recuperação de falhas
 
@@ -199,4 +219,8 @@ Releases que já foram confirmadas.
 - Testes PGlite executam SQL real local; HTTP/GitHub/Slack usam fixtures.
 
 Os testes locais não comprovam entrega de DMs reais, cron, proteções da branch
-remota nem distribuição mobile. A rodada de release 1.15.2 foi cancelada pelo usuário. Os ensaios remotos posteriores do worker e das DMs estão documentados nas evidências acima e não equivalem à publicação de uma release.
+remota nem distribuição mobile. A rodada de release 1.15.2 foi cancelada pelo
+usuário. Os ensaios remotos do worker e das DMs documentados acima não equivalem
+à publicação de uma release. A posterior rodada **1.15.5** possui provas próprias
+de preview, aceites, Release e patch Android em staging, reunidas no
+[resultado da rodada](RODADA-PREVIEW-STAGING.md#resultado-real-da-1155).
