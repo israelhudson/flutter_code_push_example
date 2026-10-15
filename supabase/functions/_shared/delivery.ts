@@ -16,7 +16,10 @@ function reviewerSnapshot(value: any, solo: boolean) {
     if (
       !person || !UUID.test(person.id ?? "") || !Number.isSafeInteger(person.revision) ||
       person.revision < 1 || typeof person.name !== "string" || !person.name.trim() ||
-      person.name.length > 120 || /[\u0000-\u001f]/.test(person.name) ||
+      person.name.length > 120 ||
+      [...person.name].some((character: string) =>
+        character.charCodeAt(0) < 32 || character.charCodeAt(0) === 127
+      ) ||
       !/^U[A-Z0-9]+$/.test(person.slack_user ?? "") ||
       (person.github_user_id != null &&
         (!Number.isSafeInteger(person.github_user_id) || person.github_user_id < 1)) ||
