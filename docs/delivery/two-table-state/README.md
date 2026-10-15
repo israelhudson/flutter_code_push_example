@@ -1,16 +1,26 @@
 # Entrega: controle em duas tabelas
 
-Implementação opt-in da proposta B. **Fluxo não ativado remotamente.**
+Implementação opt-in da proposta B. **Worker e DMs validados na main; publicação bloqueada.**
 
 Em 14/10/2026, as migrações aditiva e de aposentadoria foram aplicadas no projeto
 exclusivo após backup e restauração verificados. Há somente `delivery_control` e
 `delivery_outbox` no schema público. O receptor de DMs está implantado para testes;
-publicação e preparos permanecem bloqueados. O worker da main ainda aguarda integração.
+publicação e preparos permanecem bloqueados. O worker da main foi integrado e validado com DMs reais; veja [evidências](evidence/main-worker/README.md).
 Veja o [estado atual e a prova dos cliques](evidence/main-migration/README.md).
 Veja [resultados da validação do banco](evidence/database-validation/README.md).
 Nenhuma candidata foi preparada, nenhum aceite enviado e nenhuma tag/Release
 alterada nesta implementação. A rodada 1.15.2 permanece cancelada; sua RC não deve
 ser reutilizada silenciosamente.
+
+
+## Pendência: restaurar validações humanas antes da adoção na Amulets
+
+A dispensa de revisão humana em PRs para `main` e `release/**` é temporária, exclusiva deste projeto durante o amadurecimento da esteira. Não representa a política final da Amulets.
+
+Antes da adoção, alinhar com Samuel quem pode preparar candidatas, revisar código, dar aceite técnico e de negócio e autorizar publicação. Restaurar as regras de revisão humana acordadas, definir quantidade de revisores e validar os bloqueios com contas distintas. Essa pendência deve aparecer nos próximos balanços do que falta concluir.
+
+Durante esta fase, priorizar CLI e APIs para preparar PRs, acompanhar checks e integrar alterações autorizadas. Usar Computer Use quando necessário para validar a experiência visual e as interações reais. A dispensa de review de PR não remove os aceites de release nem autoriza publicação por si só.
+
 
 ## O que muda
 
