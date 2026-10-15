@@ -6,6 +6,10 @@ on:
         description: ID congelado no Supabase; rerun usa o mesmo run para recuperar efeitos parciais
         type: string
         required: true
+      finalize_existing:
+        description: Corrigir apenas a apresentação de Release já publicada (sem republicar nem mover tags)
+        type: boolean
+        default: false
 permissions:
   contents: read
 env:
@@ -14,8 +18,8 @@ env:
   POC_SLACK_PUBLISH_ENABLED: ${{ vars.POC_SLACK_PUBLISH_ENABLED }}
 jobs:
   publish:
-    name: Publicar GitHub TESTE e salvar recibo
-    if: vars.POC_SLACK_ENABLED == 'true' && vars.POC_SLACK_PUBLISH_ENABLED == 'true' && github.ref == format('refs/heads/{0}', vars.POC_SOURCE_BRANCH || 'slack-main')
+    name: Publicar Release e salvar recibo
+    if: vars.POC_LEGACY_ENABLED == 'true' && vars.POC_SLACK_ENABLED == 'true' && vars.POC_SLACK_PUBLISH_ENABLED == 'true' && github.ref == format('refs/heads/{0}', vars.POC_SOURCE_BRANCH || 'slack-main')
     runs-on: ubuntu-24.04
     timeout-minutes: 8
     concurrency:
@@ -32,9 +36,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           CANDIDATE: ${{ inputs.candidate }}
+          FINALIZE_EXISTING: ${{ inputs.finalize_existing }}
           POC_SUPABASE_URL: ${{ vars.POC_SUPABASE_URL }}
           POC_PUBLICATION_SECRET: ${{ secrets.POC_PUBLICATION_SECRET }}
-        run: python3 tools/delivery/poc_slack.py publish --candidate "$CANDIDATE" --output "$RUNNER_TEMP/poc-publication"
+        run: |
+          args=()
+          if [ "$FINALIZE_EXISTING" = "true" ]; then args+=(--finalize-existing); fi
+          python3 tools/delivery/poc_slack.py publish --candidate "$CANDIDATE" --output "$RUNNER_TEMP/poc-publication" "${args[@]}"
       - if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:

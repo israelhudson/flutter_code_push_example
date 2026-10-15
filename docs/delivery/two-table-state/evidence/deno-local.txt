@@ -1,0 +1,78 @@
+Task check:poc deno fmt --check supabase/functions tests/slack_supabase && deno lint supabase/functions tests/slack_supabase && deno check supabase/functions/*/index.ts && deno test -A tests/slack_supabase
+Checked 19 files
+Checked 19 files
+Check tests/slack_supabase/controls_test.ts
+Check tests/slack_supabase/database_test.ts
+Check tests/slack_supabase/delivery_control_test.ts
+Check tests/slack_supabase/delivery_database_test.ts
+Check tests/slack_supabase/delivery_http_test.ts
+Check tests/slack_supabase/dispatch_test.ts
+Check tests/slack_supabase/http_test.ts
+Check tests/slack_supabase/preview_test.ts
+Check tests/slack_supabase/router_test.ts
+Check tests/slack_supabase/versions_test.ts
+running 1 test from ./tests/slack_supabase/controls_test.ts
+Postgres: negar sem motivo, RC2 limpa, controles explícitos e publicação idempotente ... ok (1s)
+running 1 test from ./tests/slack_supabase/database_test.ts
+Postgres local: roles, duas ordens, repetição, ajuste/RC2, expiração, publicação e proteção ... ok (1s)
+running 3 tests from ./tests/slack_supabase/delivery_control_test.ts
+delivery control authenticates flag, secret, workflow, operator and completed runs before DB ... ok (14ms)
+delivery control only confirms history after matching immutable GitHub evidence ... ok (585µs)
+scheduled worker accepts only main and does not authorize manual cancellation ... ok (573µs)
+running 2 tests from ./tests/slack_supabase/delivery_database_test.ts
+delivery: two tables, DM roles, durable evidence, rejection/RC2 and single publication ... ok (990ms)
+delivery outbox: receipts, uncertain effects, cancellation and safe compaction ... ok (658ms)
+running 2 tests from ./tests/slack_supabase/delivery_http_test.ts
+delivery cards: public tracking, role-specific DMs, closed decisions and run link ... ok (307µs)
+delivery webhook commits before ACK/wakeup, refuses forgery, and does not fake success on DB failure ... ok (13ms)
+running 6 tests from ./tests/slack_supabase/dispatch_test.ts
+Dispatch absent token does not reserve or send ... ok (252µs)
+Dispatch denied reservation never sends ... ok (48µs)
+Dispatch rechecks live decision before sending ... ok (49µs)
+Dispatch targets only POC workflow and frozen candidate ... ok (3ms)
+Dispatch uncertainty records without retry {"status":403} ... ok (6ms)
+Dispatch uncertainty records without retry {"fail":true} ... ok (77µs)
+running 27 tests from ./tests/slack_supabase/http_test.ts
+HMAC: corpo exato, segredo, prazo e adulteração ... ok (11ms)
+HTTP assinado bloqueia outro canal sem escrever ... ok (1ms)
+HTTP assinado bloqueia outro workspace sem escrever ... ok (263µs)
+HTTP assinado bloqueia app compartilhado sem escrever ... ok (225µs)
+HTTP assinado bloqueia botão estrangeiro sem escrever ... ok (209µs)
+HTTP assinado bloqueia candidata Mobile sem escrever ... ok (192µs)
+HTTP assinado bloqueia container divergente sem escrever ... ok (221µs)
+HTTP assinado bloqueia duas ações sem escrever ... ok (167µs)
+HTTP recusa assinatura velha e flag desativada ... ok (266µs)
+ACK não espera cartão/DM e erro de identidade não produz aceite ... ok (474µs)
+Projeto Mobile, URL não HTTPS e redirects são recusados ... ok (183µs)
+Cartão expirado/ajustado não oferece aceite; resumo não inventa pessoas ... ok (373µs)
+Envio incerto reserva antes do POST e não tenta novamente ... ok (263µs)
+Controle não aceita workflow/ator arbitrário só por ter secret ... ok (1ms)
+Controle exige credencial separada para publicação ... ok (141µs)
+Digest textual coincide com contrato SHA-256 do banco ... ok (74µs)
+Controle aceita operador verificado somente na branch configurada ... ok (305µs)
+Conclusão exige Release final real; pré-lançamento, draft e recibo falso bloqueiam ... ok (1ms)
+Aceite salvo não recebe mensagem de falha quando aviso posterior falha ... ok (333µs)
+Slack lê membros por GET e envia mensagens por POST JSON ... ok (655µs)
+Botões de URL confirmam navegação sem RPC, voto ou aviso ... ok (493µs)
+Negar versão registra ação assinada sem modal, justificativa ou dispatch ... ok (230µs)
+Cartão de controles explica limites, permite negar e não inventa preview ... ok (95µs)
+Botão de URL não aceita outro canal ou assinatura inválida ... ok (270µs)
+published card highlights final release and preserves candidate evidence after expiry ... ok (86µs)
+unpublished cards never claim a final release ... ok (154µs)
+Refreshing published versions only edits the original card and never writes approvals or publication ... ok (636µs)
+running 2 tests from ./tests/slack_supabase/preview_test.ts
+Preview só aceita manifest, metadados e bytes do SHA congelado ... ok (12ms)
+Controls-only exige ausência explícita de preview e patches; não consulta Pages ... ok (201µs)
+running 4 tests from ./tests/slack_supabase/router_test.ts
+Router preserva bytes/assinatura e destino fixo dos cartões antigos ... ok (12ms)
+Router nunca encaminha namespace POC/misto ao banco antigo ... ok (2ms)
+Router não encaminha assinatura inválida ou contexto estrangeiro ... ok (375µs)
+Router de modal POC mantém separação e timeout antigo não cria aceite ... ok (574µs)
+running 4 tests from ./tests/slack_supabase/versions_test.ts
+Version rows distinguish Android and iOS build from patch; absent evidence is never success ... ok (352µs)
+Mobile receipt from another candidate, SHA, base or failed upload cannot be displayed as delivered ... ok (247µs)
+Controls-only table does not fetch Pages and never generates preview or patch ... ok (127µs)
+Table uses hashed preview metadata and matching release assets; changed evidence fails closed ... ok (11ms)
+
+ok | 52 passed | 0 failed (4s)
+

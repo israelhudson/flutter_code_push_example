@@ -1,0 +1,70 @@
+{
+  "tests": [
+    {
+      "scenario": "duplicate_accept",
+      "passed": true,
+      "status": "pending",
+      "revision": 1,
+      "seconds": 14.97,
+      "call_results": [
+        {
+          "success": true
+        },
+        {
+          "success": true
+        }
+      ]
+    },
+    {
+      "scenario": "reject_wins",
+      "passed": true,
+      "status": "rejected",
+      "revision": 2,
+      "seconds": 14.76,
+      "call_results": [
+        {
+          "success": true
+        },
+        {
+          "success": false
+        }
+      ]
+    },
+    {
+      "scenario": "accept_wins",
+      "passed": true,
+      "status": "approved",
+      "revision": 2,
+      "seconds": 14.9,
+      "call_results": [
+        {
+          "success": true
+        },
+        {
+          "success": false
+        }
+      ]
+    },
+    {
+      "scenario": "two_workers",
+      "passed": true,
+      "status": "pending",
+      "revision": 0,
+      "seconds": 11.02,
+      "call_results": [
+        {
+          "success": true
+        },
+        {
+          "success": true
+        }
+      ]
+    }
+  ],
+  "remaining": [
+    {
+      "controls": 0,
+      "outbox": 0
+    }
+  ]
+}

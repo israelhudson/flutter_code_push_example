@@ -1,0 +1,20 @@
+{
+  "schema": "poc-preview-recovery-v1",
+  "source_sha": "e36098f65e99592f85870c566591678d20cb2759",
+  "rc_tag": "poc-v1.14.0-rc.2",
+  "publication_scope": "github_test",
+  "source_objects": {
+    ".github": "2b2fe071eb545f8b9e1ec3a937576fdeab30fd56",
+    "deploy": "fb8c7fbdbb183201e5c12e6c3308ec05dd9c536c",
+    "tools/delivery": "80eec87b496c756ac2f1b97c24fea8e5b1a7bda3",
+    "delivery/release-lab-policy.json": "4836cb9687cd25e605149f11ea75b08f32d1690d",
+    "supabase": "d66cefaee8466d369e37385c694c4800907c0217"
+  },
+  "tooling_objects": {
+    ".github": "5fb66da3973b03de4e20405eed215998e0a0686c",
+    "deploy": "fb8c7fbdbb183201e5c12e6c3308ec05dd9c536c",
+    "tools/delivery": "dd19b6a1d36d02bb47b2952b75a9584fb91b5655",
+    "delivery/release-lab-policy.json": "4836cb9687cd25e605149f11ea75b08f32d1690d",
+    "supabase": "d66cefaee8466d369e37385c694c4800907c0217"
+  }
+}

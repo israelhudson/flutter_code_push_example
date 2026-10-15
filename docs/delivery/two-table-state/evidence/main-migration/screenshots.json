@@ -1,0 +1,17 @@
+[
+  {
+    "file": "03-dms-confirmadas.png",
+    "sha256": "1d7e4582d723e4b53f661ac2f932315a08a89a0c272407528c8e1e1005c93d66",
+    "storage": "private local artifacts"
+  },
+  {
+    "file": "02-canal-aceites.png",
+    "sha256": "62f86d5ddeab7d3b5843df856e877242c13af89a35c56c8b4a5948da3241018e",
+    "storage": "private local artifacts"
+  },
+  {
+    "file": "01-dms-antes.png",
+    "sha256": "7eb516c996d68efdc1955f25c362f5809f1c0e4db0319c94d3500e618cd7f961",
+    "storage": "private local artifacts"
+  }
+]

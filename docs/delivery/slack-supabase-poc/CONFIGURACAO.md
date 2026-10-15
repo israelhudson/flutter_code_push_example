@@ -1,3 +1,10 @@
+> **Estado validado em 13/10/2026:** o token exclusivo foi instalado e a 1.14.1
+> publicou automaticamente após 2/2. Os valores desligados abaixo são o roteiro
+> Regra atual: a versão promovida é uma Release final no GitHub, mantendo o escopo de teste e sem promoção mobile. Consulte [Release final e correção do histórico](RELEASE-FINAL.md). As menções a pré-release abaixo descrevem a configuração inicial.
+
+> de instalação inicial, não o estado da rodada validada.
+> Consulte [a prova e as lições](VALIDACAO-1.14.1-E-LICOES.md).
+
 # Ativar a POC Slack — guia de Israel
 
 O código começa desligado. LAB e Issue continuam com suas regras. Fabrícia não
@@ -122,7 +129,9 @@ criada com escopo `github_test`; uma candidata `none` nunca recebe upgrade.
 ## 5. Percorrer a entrega
 
 1. Fazer PR de feature para `slack-main`; conferir preview e check.
-2. Merge; executar **Slack - Preparar candidata** na branch `slack-main`, com
+2. Merge; aguardar **Slack - Verificar contratos** passar na execução de `push`
+   do commit integrado (o check do PR pertence a outro SHA). Depois executar
+   **Slack - Preparar candidata** na branch `slack-main`, com
    versão e título legíveis. Começar com escopo `none`.
 3. A RC recebe tag `poc-v1.0.0-rc.1`, SHA congelado, preview próprio e changelog.
    O preview de PR pode ter outro SHA; não reaproveitar o link sem prova dos bytes.
@@ -130,12 +139,39 @@ criada com escopo `github_test`; uma candidata `none` nunca recebe upgrade.
    Em 1/2, a DM vai ao papel faltante; no modo solo, ambos pertencem a Israel.
 5. Em 2/2, o criador recebe DM. Com escopo `none`, nenhuma tag final/Release é criada.
 6. Testar ajuste: informar motivo no modal. A RC fica bloqueada. Corrigir por PR
-   em `poc-release/1.0.0`; após merge, preparar novamente a mesma versão.
+   em `poc-release/1.0.0`; após merge e check de `push` dessa branch passar,
+   preparar novamente a mesma versão.
    Nasce `poc-v1.0.0-rc.2`, outro cartão e zero aceites. Preservar RC1.
 7. Em novo ensaio explicitamente habilitado para `github_test`, 2/2 permite uma
    prerelease **TESTE** `poc-v1.0.0`, no mesmo SHA da RC aprovada. Não distribui app.
 
 ## 6. Recuperação e rollback
+
+### Retenção dos previews de PR
+
+Os workflows Slack arquivam os snapshots sem vínculo com entrega, preservando:
+todas as tags (inclusive anotadas, em qualquer namespace), metadados de candidata,
+destino da página inicial, snapshot que está entrando e dois previews de PR
+anteriores mais recentes pela data do commit. Arquivar retira esses previews
+antigos do Pages, mas seus arquivos ficam no commit anterior de
+`codex/pages-previews`; não há force-push nem remoção de tags.
+
+O artefato `poc-web-proof` inclui `preview-retention.json`, com lista de snapshots,
+bytes liberados e commit de recuperação. A retenção usa o lock `pages-preview`.
+Falha ao consultar tags, nova tag protegendo um arquivo planejado, checkout sujo
+ou orçamento insuficiente bloqueiam a operação. Se as próprias entregas
+preservadas consumirem os 800 MiB, migrar o armazenamento; não apagar RCs.
+
+Para recuperar um preview arquivado, buscar o `history_commit` do recibo e
+extrair `snapshots/<SHA>` desse commit para revisão/restauração por commit comum.
+Na manutenção inicial, o arquivo no Git antecede a atualização no Pages:
+os links antigos deixam de estar online na próxima publicação do site.
+
+Se o corte parar por falta de check no commit integrado, ele não deve criar refs.
+Conferir artefatos, refs e banco antes de repetir. Sem RC registrada, a próxima
+tentativa usa a mesma versão e continua RC1; não excluir a entrega nem inventar RC2.
+A correção de workflow precisa de uma nova execução na `slack-main` atualizada:
+reexecutar o Run antigo conserva o código antigo.
 
 Resposta incerta de Slack/dispatch não recebe retry automático: consultar
 `poc_private_notices`, recibos e o destino antes de decidir. Uma execução parcialmente

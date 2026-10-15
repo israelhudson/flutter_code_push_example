@@ -1,5 +1,9 @@
 # Aprovar uma versão no GitHub
 
+A refatoração opt-in está em [Controle em duas tabelas](two-table-state/README.md).
+O guia distingue implementação, migração pendente e testes locais; não substitui
+os fluxos abaixo enquanto não houver ativação validada.
+
 **Para testar sozinho agora, abra o [laboratório local](LABORATORIO.md).**
 Ele já permite operar papéis simulados e estados persistentes. Este guia explica
 o caminho GitHub com reviews reais; a contagem local não autoriza esse caminho.
@@ -221,6 +225,15 @@ RC reservada sem PR; a próxima tentativa usa outro número, sem reutilizar a ta
 O branch de estudos e seus documentos anteriores foram consultados e preservados.
 As recomendações históricas de publicar primeiro em uma track Shorebird não são
 usadas aqui: a decisão atual é **aprovar antes de gerar qualquer patch**.
+
+## POC Slack: publicação automática comprovada
+
+A rodada **1.14.1** validou dois aceites no Slack, dispatch automático, criação
+da prerelease TESTE no GitHub e aviso final pelo bot exclusivo da POC.
+[Fluxo operacional](slack-supabase-poc/DISPARO-AUTOMATICO.md) ·
+[Provas, logs e lições para Amulets](slack-supabase-poc/VALIDACAO-1.14.1-E-LICOES.md).
+LAB e Issue mantêm os próprios comandos finais; essa mudança descreve a alternativa
+Slack. Dois papéis exercidos por Israel não comprovam dois revisores independentes.
 
 ### Inventário operacional dos bots
 

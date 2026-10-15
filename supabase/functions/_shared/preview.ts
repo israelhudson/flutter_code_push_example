@@ -1,6 +1,6 @@
 import type { IO } from "./poc.ts";
 
-function canonical(value: any): string {
+export function canonical(value: any): string {
   if (Array.isArray(value)) return "[" + value.map(canonical).join(",") + "]";
   if (value && typeof value === "object") {
     const ordered = Object.keys(value).sort((a, b) => {
@@ -73,4 +73,23 @@ export async function verifyPreview(io: Pick<IO, "fetch">, report: any) {
       },
     ),
   );
+}
+
+// The alternative is a frozen, explicitly labelled GitHub-only exercise.
+// Missing preview evidence in the normal flow must still fail closed.
+export async function verifyCandidateEvidence(io: Pick<IO, "fetch">, report: any) {
+  const mode = report.validation_mode ?? "full";
+  if (mode === "full") return await verifyPreview(io, report);
+  if (
+    mode !== "controls_only" || !/^[a-f0-9]{40}$/.test(report.source_sha ?? "") ||
+    !["none", "github_test"].includes(report.publication_scope) ||
+    report.preview_performed !== false || report.distribution_performed !== false ||
+    ["preview_url", "preview_sha", "web_content_sha256", "snapshot_manifest_sha256"].some(
+      (key) => report[key] !== null,
+    ) ||
+    ["android", "ios"].some((platform) =>
+      report.platforms?.[platform]?.base_release_version !== null ||
+      report.platforms?.[platform]?.effective_patch !== null
+    )
+  ) throw Error("Controls-only evidence rejected");
 }

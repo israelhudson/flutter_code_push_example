@@ -1,0 +1,17 @@
+{
+  "legacy_comparison": {
+    "columns": true,
+    "constraints": true,
+    "evidence_sequence": true,
+    "functions": true,
+    "grants": true,
+    "indexes": true,
+    "policies": true,
+    "project": true,
+    "rls": true,
+    "tables": true
+  },
+  "before_sha256": "cfac39ba65c6eca181ba079dfd5d86353ff41d3518fa76639fddea9a4bc85d42",
+  "after_sha256": "34b6df4545aca2248e3dcbe32a02925a137109d312a389f35fc5745468a3bfd6",
+  "contains_private_rows": false
+}

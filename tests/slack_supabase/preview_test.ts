@@ -1,5 +1,8 @@
 // deno-lint-ignore-file require-await
-import { verifyPreview } from "../../supabase/functions/_shared/preview.ts";
+import {
+  verifyCandidateEvidence,
+  verifyPreview,
+} from "../../supabase/functions/_shared/preview.ts";
 import { digest } from "../../supabase/functions/_shared/poc.ts";
 function assert(v: unknown) {
   if (!v) throw Error("assertion failed");
@@ -52,4 +55,49 @@ Deno.test("Preview só aceita manifest, metadados e bytes do SHA congelado", asy
     failed = true;
   }
   assert(failed);
+});
+
+Deno.test("Controls-only exige ausência explícita de preview e patches; não consulta Pages", async () => {
+  const report: any = {
+    validation_mode: "controls_only",
+    source_sha: "a".repeat(40),
+    publication_scope: "github_test",
+    preview_performed: false,
+    distribution_performed: false,
+    preview_url: null,
+    preview_sha: null,
+    web_content_sha256: null,
+    snapshot_manifest_sha256: null,
+    platforms: {
+      android: { base_release_version: null, effective_patch: null },
+      ios: { base_release_version: null, effective_patch: null },
+    },
+  };
+  const io = {
+    fetch: (() => {
+      throw Error("Network forbidden");
+    }) as typeof fetch,
+  };
+  await verifyCandidateEvidence(io, report);
+  for (
+    const mutation of [
+      { validation_mode: "full" },
+      { validation_mode: undefined },
+      { validation_mode: "skip" },
+      { preview_url: "https://example.com" },
+      { preview_url: undefined },
+      { preview_performed: true },
+      { distribution_performed: true },
+      { publication_scope: "production" },
+      { platforms: { android: { base_release_version: "1.0.0", effective_patch: 1 } } },
+    ]
+  ) {
+    let failed = false;
+    try {
+      await verifyCandidateEvidence(io, { ...report, ...mutation });
+    } catch {
+      failed = true;
+    }
+    assert(failed);
+  }
 });

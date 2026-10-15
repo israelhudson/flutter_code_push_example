@@ -1,0 +1,24 @@
+{
+  "receiver": {
+    "version": 13,
+    "updated_at": 1792019436768,
+    "entrypoint": "import { runtime, slackHandler } from \"../_shared/poc.ts\";\nDeno.serve(slackHandler(runtime()));\n"
+  },
+  "requests": [
+    {
+      "local_time": "2026-10-14 22:20:06",
+      "status": 403
+    },
+    {
+      "local_time": "2026-10-14 22:20:09",
+      "status": 403
+    },
+    {
+      "local_time": "2026-10-14 22:20:25",
+      "status": 403
+    }
+  ],
+  "timezone": "America/Fortaleza",
+  "cause": "Deployed legacy handler does not route delivery_* actions; new handler only running in local integration harness",
+  "human_approvals_recorded": false
+}

@@ -12,6 +12,67 @@ import release_lab as lab
 
 
 class POCContracts(unittest.TestCase):
+    def test_cut_requires_successful_post_merge_run_and_job(self):
+        valid = {'id': 42, 'head_sha': 'a'*40, 'head_branch': 'slack-main',
+                 'event': 'push', 'status': 'completed', 'conclusion': 'success'}
+        job = {'name': 'Slack / Verificar contratos', 'status': 'completed', 'conclusion': 'success'}
+        for changes in ({'event': 'pull_request'}, {'head_sha': 'b'*40},
+                        {'head_branch': 'main'}, {'conclusion': 'failure'}, {'status': 'in_progress'}):
+            with self.subTest(changes=changes), tempfile.TemporaryDirectory() as out, \
+                    patch.object(lab, 'api', return_value={'workflow_runs': [{**valid, **changes}]}) as api:
+                with self.assertRaisesRegex(lab.LabError, 'check do PR'):
+                    poc.checked_source('a'*40, out, 'poc-release/1.14.0')
+                self.assertEqual(api.call_count, 1)
+        for conclusion in ('failure', 'skipped', 'success'):
+            with self.subTest(job=conclusion), tempfile.TemporaryDirectory() as out, \
+                    patch.object(lab, 'api', side_effect=[{'workflow_runs': [valid]},
+                               {'jobs': [{**job, 'conclusion': conclusion}]}]):
+                if conclusion == 'success':
+                    poc.checked_source('a'*40, out, 'poc-release/1.14.0')
+                    self.assertTrue(json.loads(Path(out, 'source-check.json').read_text())['success'])
+                else:
+                    with self.assertRaises(lab.LabError): poc.checked_source('a'*40, out, 'poc-release/1.14.0')
+        with tempfile.TemporaryDirectory() as out, patch.object(lab, 'api', side_effect=[
+                {'workflow_runs': [{**valid, 'head_branch': 'poc-release/1.14.0'}]}, {'jobs': [job]}]):
+            poc.checked_source('a'*40, out, 'poc-release/1.14.0')
+            self.assertTrue(json.loads(Path(out, 'source-check.json').read_text())['success'])
+
+    def test_missing_post_merge_check_stops_before_git_effects(self):
+        plan = {'version': '1.14.0', 'rc_tag': 'poc-v1.14.0-rc.1', 'rc_number': 1,
+                'id': 'poc-'+'a'*32, 'source_sha': 'a'*40, 'branch': 'poc-release/1.14.0',
+                'creator': 'israelhudson', 'publication_scope': 'none'}
+        with tempfile.TemporaryDirectory() as out, patch.object(poc, 'protect'), \
+                patch.object(poc, 'control', return_value=plan), patch.object(lab, 'trusted_source'), \
+                patch.object(lab, 'api', return_value={'workflow_runs': []}), \
+                patch.object(lab, 'create_ref_verified') as refs:
+            with self.assertRaises(lab.LabError): poc.prepare('1.14.0', 'login', 'none', out)
+            refs.assert_not_called()
+
+    def test_recovery_requires_exact_reviewed_source_tools_tag_and_scope(self):
+        plan = {'source_sha': 'a'*40, 'rc_tag': 'poc-v1.14.0-rc.2', 'publication_scope': 'github_test'}
+        record = {**plan, 'schema': 'poc-preview-recovery-v1',
+                  'source_objects': {p: 'b'*40 for p in poc.RECOVERY_PATHS},
+                  'tooling_objects': {p: 'b'*40 for p in poc.RECOVERY_PATHS}}
+        for change in ('none', 'rc_tag', 'source_sha', 'publication_scope', 'tooling', 'missing', 'backend'):
+            with self.subTest(change=change), tempfile.TemporaryDirectory() as out:
+                edited = json.loads(json.dumps(record))
+                if change in plan: edited[change] = 'different'
+                if change == 'missing': del edited['source_objects']['deploy']
+                if change == 'backend': edited['tooling_objects']['supabase'] = 'c'*40
+                def git(*args):
+                    if args[0] == 'show': return json.dumps(edited)
+                    if args == ('rev-parse', 'HEAD'): return 'd'*40
+                    if change == 'tooling' and args[1] == 'HEAD:tools/delivery': return 'c'*40
+                    if change == 'backend' and args[1] == 'HEAD:supabase': return 'c'*40
+                    return 'b'*40
+                with patch.object(lab, 'trusted_source', side_effect=lab.LabError('mismatch')), patch.object(lab, 'git', side_effect=git):
+                    if change == 'none':
+                        self.assertEqual(poc.trusted_poc_source(plan, out), 'd'*40)
+                        self.assertTrue(Path(out, 'tooling-recovery.json').exists())
+                    else:
+                        with self.assertRaises(lab.LabError): poc.trusted_poc_source(plan, out)
+                        self.assertFalse(Path(out, 'tooling-recovery.json').exists())
+
     def test_exclusive_origin(self):
         self.assertEqual(poc.backend_origin('https://'+'a'*20+'.supabase.co/'),'https://'+'a'*20+'.supabase.co')
         for url in ('https://uvfwvplcziehxrkidrxh.supabase.co','http://'+'a'*20+'.supabase.co','https://'+'a'*20+'.supabase.co?x=1','https://token@'+'a'*20+'.supabase.co'):
@@ -34,6 +95,30 @@ class POCContracts(unittest.TestCase):
             self.assertEqual(poc.publish('poc-'+'a'*32,out),receipt)
             tag.assert_not_called();api.assert_not_called()
 
+    def test_controls_only_registers_explicit_absence_and_keeps_default_strict(self):
+        plan = {'id': 'poc-'+'a'*32, 'source_sha': 'a'*40, 'validation_mode': 'controls_only',
+                'changelog_base_sha': 'b'*40, 'publication_scope': 'github_test'}
+        with tempfile.TemporaryDirectory() as out, patch.object(lab, 'api', return_value={'status': 'ahead', 'total_commits': 0, 'commits': []}), \
+                patch.object(poc, 'control', side_effect=[{'id': plan['id']}, {'delivery': 'sent', 'message_ts': '1.1'}]) as remote:
+            poc.register(plan, None, None, out)
+            report = json.loads(Path(out, 'frozen-report.json').read_text())
+            self.assertFalse(report['preview_performed'])
+            self.assertFalse(report['distribution_performed'])
+            self.assertIsNone(report['preview_url'])
+            self.assertIsNone(report['web_content_sha256'])
+            self.assertIn('sem preview', poc.release_body({'version':'1.15.1','source_sha': plan['source_sha'], 'report_digest': 'c'*64, 'report_text': lab.canonical(report)}))
+            self.assertEqual(remote.call_args_list[0].args[0], 'register')
+        for mode in ('full', 'unknown', None):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as out, patch.object(poc, 'control') as remote:
+                edited = dict(plan)
+                if mode is None: edited.pop('validation_mode')
+                else: edited['validation_mode'] = mode
+                with self.assertRaises(lab.LabError): poc.register(edited, None, None, out)
+                remote.assert_not_called()
+        with tempfile.TemporaryDirectory() as out, patch.object(poc, 'control') as remote:
+            with self.assertRaises(lab.LabError): poc.register(plan, {}, {}, out)
+            remote.assert_not_called()
+
     def test_lab_channel_and_publication_roles_are_not_shell_interpolated(self):
         root=Path(__file__).resolve().parents[2]
         prepare=(root/'.github/workflows/poc-slack-prepare.yml').read_text()
@@ -51,7 +136,7 @@ class POCContracts(unittest.TestCase):
 
     def test_release_notes_keep_platform_bases_and_actual_patches_separate(self):
         report={'platforms':{'android':{'base_release_version':'1.0.0+1','effective_patch':None},'ios':{'base_release_version':None,'effective_patch':None}}}
-        text=poc.release_body({'source_sha':'a'*40,'report_digest':'b'*64,'report_text':lab.canonical(report)})
+        text=poc.release_body({'version':'1.15.1','source_sha':'a'*40,'report_digest':'b'*64,'report_text':lab.canonical(report)})
         self.assertIn('effective_patch',text)
         self.assertIn('base_release_version',text)
 

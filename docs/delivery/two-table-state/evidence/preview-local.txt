@@ -1,0 +1,11 @@
+test_different_bytes_same_sha_are_blocked (test_issue_preview.PreviewTests.test_different_bytes_same_sha_are_blocked) ... ok
+test_flutter_exception_rejects_worker_loader_inputs_and_ambiguous_versions (test_issue_preview.PreviewTests.test_flutter_exception_rejects_worker_loader_inputs_and_ambiguous_versions) ... ok
+test_flutter_generated_version_reuses_exact_original_bytes_and_manifest (test_issue_preview.PreviewTests.test_flutter_generated_version_reuses_exact_original_bytes_and_manifest) ... ok
+test_new_snapshot_preserves_old_snapshot_and_root (test_issue_preview.PreviewTests.test_new_snapshot_preserves_old_snapshot_and_root) ... ok
+test_same_inputs_and_bytes_reuse_existing_snapshot_without_changing_wrapper (test_issue_preview.PreviewTests.test_same_inputs_and_bytes_reuse_existing_snapshot_without_changing_wrapper) ... ok
+test_wrong_source_artifact_is_blocked (test_issue_preview.PreviewTests.test_wrong_source_artifact_is_blocked) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.105s
+
+OK

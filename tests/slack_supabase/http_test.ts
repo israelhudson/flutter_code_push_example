@@ -303,6 +303,70 @@ Deno.test("Controle aceita operador verificado somente na branch configurada", a
   const plan = await r.json();
   assert(plan.source_sha === "a".repeat(40) && plan.rc_tag === "poc-v1.0.0-rc.1");
 });
+
+Deno.test("Conclusão exige Release final real; pré-lançamento, draft e recibo falso bloqueiam", async () => {
+  for (const failure of ["none", "prerelease", "missing_flag", "draft", "tag", "sha", "receipt"]) {
+    const writes: string[] = [];
+    const c: any = { ...candidate(), version: "0.1.0", publication_scope: "github_test" };
+    const release: any = { id: 42, draft: false, prerelease: false, tag_name: "poc-v0.1.0" };
+    if (failure === "prerelease") release.prerelease = true;
+    if (failure === "missing_flag") delete release.prerelease;
+    if (failure === "draft") release.draft = true;
+    if (failure === "tag") release.tag_name = "poc-v9.0.0";
+    const f = fixture({
+      db: async (path) => {
+        if (path.startsWith("poc_config")) {
+          return [{ enabled: true, operator_github: "israelhudson" }];
+        }
+        if (path.startsWith("poc_user_directory")) return [{ github_id: 18661493 }];
+        if (path === "rpc/poc_state") return c;
+        if (path === "rpc/poc_publish") {
+          writes.push(path);
+          return { published: true };
+        }
+        throw Error("Unexpected DB");
+      },
+      fetch: (async (url) => {
+        const path = String(url);
+        if (path.includes("actions/runs/")) {
+          return Response.json({
+            head_branch: "slack-main",
+            event: "workflow_dispatch",
+            path: ".github/workflows/poc-slack-publish.yml",
+            actor: { id: 18661493 },
+            triggering_actor: { id: 18661493 },
+          });
+        }
+        if (path.includes("releases/tags/")) return Response.json(release);
+        if (path.includes("git/ref/tags/")) {
+          return Response.json({
+            object: { type: "commit", sha: failure === "sha" ? "b".repeat(40) : c.source_sha },
+          });
+        }
+        throw Error("Unexpected HTTP");
+      }) as typeof fetch,
+    });
+    f.env.POC_PUBLICATION_ENABLED = "true";
+    const r = await controlHandler(f.io)(
+      new Request("https://fixture.invalid", {
+        method: "POST",
+        headers: { Authorization: "Bearer fixture-pub" },
+        body: JSON.stringify({
+          operation: "complete",
+          run_id: "1",
+          candidate: id,
+          receipt: { release_id: 42, prerelease: failure === "receipt" ? true : false },
+        }),
+      }),
+    );
+    await Promise.all(f.tasks);
+    assert(r.status === (failure === "none" ? 200 : 409), failure);
+    assert(
+      writes.length === (failure === "none" ? 1 : 0),
+      failure + " must not finish publication",
+    );
+  }
+});
 Deno.test("Aceite salvo não recebe mensagem de falha quando aviso posterior falha", async () => {
   const f = fixture({
     db: async (path) => {
@@ -333,4 +397,173 @@ Deno.test("Slack lê membros por GET e envia mensagens por POST JSON", async () 
   );
   assert(post.method === "POST" && (await post.json()).text === "fixture");
   assert(post.redirect === "error" && read.redirect === "error");
+});
+
+Deno.test("Botões de URL confirmam navegação sem RPC, voto ou aviso", async () => {
+  for (const action of ["poc_preview", "poc_changelog", "poc_release", "poc_workflow_link"]) {
+    const f = fixture();
+    const p = payload();
+    p.actions[0].action_id = action;
+    const r = await slackHandler(f.io)((await signed(p)).request);
+    assert(r.status === 200 && f.calls.length === 0 && f.tasks.length === 0);
+  }
+  const rendered = card(candidate());
+  const buttons = rendered.blocks.at(-1)!.elements ?? [];
+  assert(buttons[0].action_id === "poc_preview" && buttons[1].action_id === "poc_changelog");
+  assert(buttons[0].value === id && buttons[1].value === id);
+});
+
+Deno.test("Negar versão registra ação assinada sem modal, justificativa ou dispatch", async () => {
+  const f = fixture(), p = payload();
+  p.actions[0].action_id = "poc_reject";
+  const r = await slackHandler(f.io)((await signed(p)).request);
+  assert(r.status === 200);
+  await Promise.all(f.tasks);
+  const actions = f.calls.filter(([path]) => path === "rpc/poc_action");
+  assert(actions.length === 1 && actions[0][1].p_action === "reject");
+  assert(actions[0][1].p_user === user && actions[0][1].p_reason === undefined);
+  assert(!f.calls.some(([path]) => path === "views.open" || path === "rpc/poc_notice"));
+  assert(!f.logs.includes("poc_action_not_confirmed"));
+});
+
+Deno.test("Cartão de controles explica limites, permite negar e não inventa preview", () => {
+  const c: any = candidate();
+  c.report_text = JSON.stringify({
+    ...JSON.parse(c.report_text),
+    validation_mode: "controls_only",
+    preview_url: null,
+  });
+  let rendered = JSON.stringify(card(c));
+  assert(rendered.includes("ENSAIO SOMENTE DE CONTROLES") && rendered.includes("Negar versão"));
+  assert(!rendered.includes('"action_id":"poc_preview"'));
+  c.status = "adjustment_requested";
+  c.adjustment_reason = null;
+  rendered = JSON.stringify(card(c));
+  assert(rendered.includes("Versão negada") && rendered.includes("sem justificativa"));
+  assert(
+    !rendered.includes('"action_id":"poc_reject"') &&
+      !rendered.includes('"action_id":"poc_technical"'),
+  );
+});
+Deno.test("Botão de URL não aceita outro canal ou assinatura inválida", async () => {
+  const p = payload();
+  p.actions[0].action_id = "poc_preview";
+  p.channel.id = "COTHER";
+  const f = fixture();
+  assert((await slackHandler(f.io)((await signed(p)).request)).status === 403);
+  p.channel.id = CHANNEL;
+  assert((await slackHandler(f.io)((await signed(p, 0, "wrong-secret")).request)).status === 401);
+  assert(f.calls.length === 0 && f.tasks.length === 0);
+});
+
+Deno.test("published card highlights final release and preserves candidate evidence after expiry", () => {
+  const c = {
+    ...candidate(),
+    version: "0.1.0",
+    status: "published",
+    publication_scope: "github_test",
+    approvals: [{ role: "technical" }, { role: "business" }],
+    expires_at: "2020-01-01T00:00:00Z",
+  };
+  const rendered = card(c);
+  const text = JSON.stringify(rendered);
+  assert(rendered.text.startsWith("✅ Versão 0.1.0 publicada"));
+  assert(text.includes("Promovida de: poc-v0.1.0-rc.1"));
+  assert(text.includes("publicada · GitHub"));
+  assert(!text.includes("Flutter POC"));
+  assert(rendered.blocks.some((b) => b.type === "table"));
+  assert(!text.includes("candidata bloqueada"));
+  const buttons = rendered.blocks.at(-1)!.elements!;
+  assert(
+    buttons[0].url ===
+      "https://github.com/israelhudson/flutter_code_push_example/releases/tag/poc-v0.1.0",
+  );
+  assert(buttons.every((b: any) => b.url));
+  assert(buttons.some((b: any) => b.text.text === "Preview aprovado"));
+});
+
+Deno.test("unpublished cards never claim a final release", () => {
+  for (
+    const status of [
+      "pending",
+      "approved",
+      "publishing",
+      "adjustment_requested",
+      "cancelled",
+      "expired",
+    ]
+  ) {
+    const rendered = card({ ...candidate(), version: "0.1.0", status });
+    const text = JSON.stringify(rendered);
+    assert(!text.includes("poc_release"));
+    assert(!text.includes("Versão 0.1.0 publicada"));
+    assert(text.includes("poc-v0.1.0-rc.1"));
+  }
+});
+
+Deno.test("Refreshing published versions only edits the original card and never writes approvals or publication", async () => {
+  const c = {
+    ...candidate(),
+    version: "0.1.0",
+    status: "published",
+    publication_scope: "github_test",
+    report_text: JSON.stringify({ validation_mode: "controls_only", title: "Existing release" }),
+  };
+  const mutations: string[] = [];
+  const f = fixture({
+    db: async (path) => {
+      if (path.startsWith("poc_config")) {
+        return [{ enabled: true, operator_github: "israelhudson" }];
+      }
+      if (path.startsWith("poc_user_directory")) return [{ github_id: 18661493 }];
+      if (path === "rpc/poc_state") return c;
+      mutations.push(path);
+      throw Error("No database write allowed");
+    },
+    fetch: (async (url) => {
+      const path = String(url);
+      if (path.includes("actions/runs/")) {
+        return Response.json({
+          head_branch: "slack-main",
+          event: "workflow_dispatch",
+          path: ".github/workflows/poc-slack-publish.yml",
+          actor: { id: 18661493 },
+          triggering_actor: { id: 18661493 },
+        });
+      }
+      if (path.includes("releases/tags/")) {
+        return Response.json({
+          tag_name: "poc-v0.1.0",
+          draft: false,
+          prerelease: false,
+          assets: [],
+        });
+      }
+      if (path.includes("git/ref/tags/")) {
+        return Response.json({ object: { type: "commit", sha: c.source_sha } });
+      }
+      throw Error("No preview or upload allowed");
+    }) as typeof fetch,
+  });
+  f.env.POC_PUBLICATION_ENABLED = "true";
+  const request = (operation: string, secret = "fixture-pub") =>
+    new Request("https://fixture.invalid", {
+      method: "POST",
+      headers: { Authorization: "Bearer " + secret },
+      body: JSON.stringify({ operation, run_id: "1", candidate: id }),
+    });
+  assert((await controlHandler(f.io)(request("refresh_card", "fixture-reg"))).status === 401);
+  assert((await controlHandler(f.io)(request("presentation"))).status === 200);
+  assert(f.calls.length === 0);
+  for (let i = 0; i < 2; i++) {
+    assert((await controlHandler(f.io)(request("refresh_card"))).status === 200);
+  }
+  assert(mutations.length === 0);
+  assert(
+    f.calls.length === 2 &&
+      f.calls.every(([method, data]) => method === "chat.update" && data.ts === c.message_ts),
+  );
+  c.status = "pending";
+  assert((await controlHandler(f.io)(request("refresh_card"))).status === 409);
+  assert(f.calls.length === 2);
 });

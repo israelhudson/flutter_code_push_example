@@ -1,4 +1,5 @@
-import { verifyPreview } from "./preview.ts";
+import { verifyCandidateEvidence } from "./preview.ts";
+import { defaultRows, versionPresentation, type VersionRow } from "./versions.ts";
 
 export const REPOSITORY = "israelhudson/flutter_code_push_example";
 export const CHANNEL = "C0C8DUJB52L";
@@ -100,7 +101,7 @@ export function runtime(): IO {
     db: async (path, data, method = "POST") => {
       const base = isolated(Deno.env.get("SUPABASE_URL") ?? "");
       const key = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-      if (!key || !/^(rpc\/poc_[a-z_]+|poc_[a-z_]+(?:\?.*)?)$/.test(path)) {
+      if (!key || !/^(rpc\/(?:poc|delivery)_[a-z_]+|poc_[a-z_]+(?:\?.*)?)$/.test(path)) {
         throw Error("Database scope rejected");
       }
       const r = await fetch(`${base}/rest/v1/${path}`, {
@@ -148,15 +149,23 @@ export async function state(io: IO, id: string) {
   ) throw Error("Candidate scope rejected");
   return c;
 }
-export function card(c: any, now = Date.now()) {
+export function card(c: any, now = Date.now(), rows: VersionRow[] = defaultRows(c)) {
   const report = JSON.parse(c.report_text);
   const roles = new Set(c.approvals?.map((a: any) => a.role) ?? []);
   const expired = Date.parse(c.expires_at) <= now;
-  const blocked = expired ||
-    ["adjustment_requested", "cancelled", "expired"].includes(c.status);
-  const title = blocked
+  const published = c.status === "published";
+  const controlsOnly = report.validation_mode === "controls_only";
+  const rejected = c.status === "adjustment_requested" && !c.adjustment_reason;
+  const finalTag = published ? "poc-v" + c.version : null;
+  const blocked = !published && (expired ||
+    ["adjustment_requested", "cancelled", "expired"].includes(c.status));
+  const title = published
+    ? `✅ Versão ${c.version} publicada · GitHub`
+    : rejected
+    ? "⛔ Versão negada · candidata bloqueada"
+    : blocked
     ? "Ajuste ou prazo encerrado · candidata bloqueada"
-    : `Flutter POC · ${roles.size}/2 aceites`;
+    : `Flutter Code Push · ${roles.size}/2 aceites`;
   const section = (text: string) => ({
     type: "section",
     text: { type: "plain_text", text },
@@ -164,15 +173,32 @@ export function card(c: any, now = Date.now()) {
   const solo = c.mode === "solo_test"
     ? "Solo: Israel representa os dois papéis; não são dois revisores reais."
     : "Dois revisores independentes.";
-  const elements: any[] = [{
+  const elements: any[] = [];
+  if (!controlsOnly) {
+    elements.push({
+      type: "button",
+      action_id: "poc_preview",
+      value: c.id,
+      text: { type: "plain_text", text: published ? "Preview aprovado" : "Preview da RC" },
+      url: report.preview_url,
+    });
+  }
+  elements.push({
     type: "button",
-    text: { type: "plain_text", text: "Preview da RC" },
-    url: report.preview_url,
-  }, {
-    type: "button",
+    action_id: "poc_changelog",
+    value: c.id,
     text: { type: "plain_text", text: "Changelog e execução" },
     url: report.run_url,
-  }];
+  });
+  if (published) {
+    elements.unshift({
+      type: "button",
+      action_id: "poc_release",
+      value: c.id,
+      text: { type: "plain_text", text: "Abrir Release" },
+      url: `https://github.com/israelhudson/flutter_code_push_example/releases/tag/${finalTag}`,
+    });
+  }
   if (!blocked && c.status === "pending") {
     for (
       const [role, label] of [["technical", "Aceite técnico"], [
@@ -193,14 +219,15 @@ export function card(c: any, now = Date.now()) {
   if (!blocked && ["pending", "approved"].includes(c.status)) {
     elements.push({
       type: "button",
-      action_id: "poc_adjust",
+      action_id: "poc_reject",
       value: c.id,
-      text: { type: "plain_text", text: "Solicitar ajuste" },
+      text: { type: "plain_text", text: "Negar versão" },
+      style: "danger",
     });
   }
   return {
     channel: CHANNEL,
-    text: `${c.rc_tag} · ${title}`,
+    text: published ? `${title} · ${finalTag}` : `${c.rc_tag} · ${title}`,
     parse: "none",
     link_names: false,
     unfurl_links: false,
@@ -208,28 +235,52 @@ export function card(c: any, now = Date.now()) {
     blocks: [
       { type: "header", text: { type: "plain_text", text: title } },
       section(
-        `${c.rc_tag}\n${report.title}\n${
+        `${published ? finalTag + "\nPromovida de: " + c.rc_tag : c.rc_tag}\n${report.title}\n${
           (report.changelog || "Consulte o changelog completo na execução.")
             .slice(0, 1400)
         }`,
       ),
+      section("Versões e publicação"),
+      {
+        type: "table",
+        column_settings: [{ is_wrapped: true }, { is_wrapped: true }, { is_wrapped: true }],
+        rows: [["Destino", "Versão / identidade", "Resultado"], ...rows].map((row) =>
+          row.map((text) => ({ type: "raw_text", text }))
+        ),
+      },
       section(
         `Técnico: ${
           roles.has("technical") ? "aceito" : "pendente"
         } (${c.technical_reviewer})\nNegócio: ${
           roles.has("business") ? "aceito" : "pendente"
-        } (${c.business_reviewer})\n${solo}\nEstado: ${c.status}\n${
-          c.adjustment_reason ? "Motivo: " + c.adjustment_reason : ""
+        } (${c.business_reviewer})\n${solo}\nEstado: ${
+          published
+            ? "Publicada no GitHub"
+            : rejected
+            ? "Negada; preparar uma nova candidata"
+            : c.status
+        }\n${
+          c.adjustment_reason
+            ? "Motivo: " + c.adjustment_reason
+            : rejected
+            ? "Rejeição registrada sem justificativa."
+            : ""
         }`,
       ),
       {
         type: "context",
         elements: [{
           type: "plain_text",
-          text: `SHA ${
-            c.source_sha.slice(0, 12)
-          } · validade 36h · encerra ${c.expires_at}\nPublicação: ${
-            c.publication_scope === "none" ? "desligada" : "somente GitHub TESTE"
+          text: `${
+            controlsOnly ? "ENSAIO SOMENTE DE CONTROLES · sem preview, build web ou patches.\n" : ""
+          }SHA ${c.source_sha.slice(0, 12)} · ${
+            published
+              ? "Aprovações concluídas; RC preservada como histórico"
+              : "validade 36h · encerra " + c.expires_at
+          }\nPublicação: ${
+            c.publication_scope === "none"
+              ? "desligada"
+              : "GitHub; distribuição mobile exige autorização própria"
           }. A thread fica livre para conversa.`,
         }],
       },
@@ -241,10 +292,17 @@ export async function updateCard(io: IO, id: string) {
   let c = await state(io, id);
   if (!c.message_ts) return;
   for (let i = 0; i < 4; i++) {
-    const message = card(c);
+    const presentation = await versionPresentation(
+      io,
+      c,
+      c.status === "published" ? await github(io, `releases/tags/poc-v${c.version}`) : null,
+    );
+    const message = card(c, Date.now(), presentation.rows);
     await io.slack("chat.update", { ...message, ts: c.message_ts });
     const next = await state(io, id);
-    if (JSON.stringify(message) === JSON.stringify(card(next))) return;
+    if (JSON.stringify(message) === JSON.stringify(card(next, Date.now(), presentation.rows))) {
+      return;
+    }
     c = next;
   }
   throw Error("Card requires reconciliation");
@@ -275,12 +333,13 @@ export async function sendNotice(io: IO, id: string, event: string) {
     }
     const c = await state(io, id);
     let message: Data;
-    if (event === "card") message = card(c);
-    else if (event === "published") {
+    if (event === "card") {
+      message = card(c, Date.now(), (await versionPresentation(io, c, null)).rows);
+    } else if (event === "published") {
       message = {
         channel: CHANNEL,
         text:
-          `${c.rc_tag}: Release de TESTE publicada no GitHub. SHA ${c.source_sha}. Nenhum patch distribuído.`,
+          `poc-v${c.version}: Release publicada no GitHub. Origem: ${c.rc_tag}. SHA ${c.source_sha}. Consulte os resultados por plataforma no cartão.`,
         unfurl_links: false,
       };
     } else {
@@ -488,12 +547,28 @@ export function slackHandler(io: IO) {
       const a = p.actions?.[0];
       if (
         p.type !== "block_actions" || p.actions.length !== 1 ||
-        !["poc_technical", "poc_business", "poc_adjust"].includes(
+        ![
+          "poc_technical",
+          "poc_business",
+          "poc_reject",
+          "poc_adjust",
+          "poc_preview",
+          "poc_changelog",
+          "poc_release",
+          "poc_workflow_link",
+        ].includes(
           a?.action_id,
         ) || !ID.test(a?.value ?? "") || p.channel?.id !== CHANNEL ||
         (p.container?.channel_id && p.container.channel_id !== CHANNEL) ||
         !/^\d+\.\d+$/.test(p.container?.message_ts ?? "")
       ) throw Error("Invalid interaction");
+      // URL buttons still produce callbacks. ACK navigation without voting,
+      // creating notices, or granting any publication capability.
+      if (
+        ["poc_preview", "poc_changelog", "poc_release", "poc_workflow_link"].includes(a.action_id)
+      ) {
+        return new Response("");
+      }
       const input = {
         p_id: a.value,
         p_user: p.user.id,
@@ -534,6 +609,16 @@ export function slackHandler(io: IO) {
                 }],
               },
             });
+          } else if (a.action_id === "poc_reject") {
+            await io.db("rpc/poc_action", { ...input, p_action: "reject" });
+            await feedback(
+              io,
+              p,
+              "Versão negada. Esta candidata não pode ser publicada. Corrija pela branch da versão e prepare uma nova candidata, com novos aceites.",
+            );
+            await updateCard(io, a.value).catch(() =>
+              io.log("poc_rejection_saved_notification_failed")
+            );
           } else {
             const result = await io.db("rpc/poc_action", {
               ...input,
@@ -605,7 +690,7 @@ export function controlHandler(io: IO) {
       const raw = await request.text();
       if (raw.length > 65536) return new Response("Too large", { status: 413 });
       const input = JSON.parse(raw);
-      const publication = ["claim", "complete", "state"].includes(
+      const publication = ["claim", "complete", "state", "presentation", "refresh_card"].includes(
         input.operation,
       );
       const secret = io.env(
@@ -640,6 +725,10 @@ export function controlHandler(io: IO) {
           throw Error("Version required");
         }
         const scope = input.publication_scope ?? "none";
+        const validationMode = input.validation_mode ?? "full";
+        if (!["full", "controls_only"].includes(validationMode)) {
+          throw Error("Validation mode rejected");
+        }
         if (
           !["none", "github_test"].includes(scope) ||
           (scope === "github_test" &&
@@ -665,7 +754,8 @@ export function controlHandler(io: IO) {
           c.version === input.version && c.status === "pending" && !c.message_ts &&
           JSON.parse(c.report_text).run_url ===
             `https://github.com/${REPOSITORY}/actions/runs/${input.run_id}` &&
-          JSON.parse(c.report_text).title === input.title && c.publication_scope === scope
+          JSON.parse(c.report_text).title === input.title && c.publication_scope === scope &&
+          (JSON.parse(c.report_text).validation_mode ?? "full") === validationMode
         );
         if (retry) {
           return Response.json({
@@ -678,6 +768,7 @@ export function controlHandler(io: IO) {
             previous_candidate: retry.previous_candidate,
             creator: retry.creator_github,
             publication_scope: retry.publication_scope,
+            validation_mode: validationMode,
           });
         }
         if (
@@ -707,6 +798,7 @@ export function controlHandler(io: IO) {
           previous_candidate: prior?.id ?? null,
           creator: operator.github_login,
           publication_scope: scope,
+          validation_mode: validationMode,
         });
       }
       if (input.operation === "register") {
@@ -750,7 +842,7 @@ export function controlHandler(io: IO) {
         if (r.publication_scope === "github_test" && io.env("POC_PUBLICATION_ENABLED") !== "true") {
           throw Error("Publication scope disabled");
         }
-        await verifyPreview(io, r);
+        await verifyCandidateEvidence(io, r);
         const c = await io.db("rpc/poc_register", {
           p_report: input.report_text,
           p_digest: input.report_digest,
@@ -797,7 +889,31 @@ export function controlHandler(io: IO) {
         if (ref?.object?.type !== "commit" || ref.object.sha !== c.source_sha) {
           throw Error("Frozen tag changed");
         }
-        if (input.operation === "claim") await verifyPreview(io, JSON.parse(c.report_text));
+        if (["presentation", "refresh_card"].includes(input.operation)) {
+          const release = c.status === "published"
+            ? await github(io, `releases/tags/poc-v${c.version}`)
+            : null;
+          const presentation = await versionPresentation(io, c, release);
+          if (input.operation === "presentation") return Response.json(presentation);
+          if (
+            c.status !== "published" || !c.message_ts || !release || release.prerelease !== false ||
+            release.draft !== false
+          ) throw Error("Published card required");
+          const final = await github(io, `git/ref/tags/poc-v${c.version}`);
+          if (final?.object?.type !== "commit" || final.object.sha !== c.source_sha) {
+            throw Error("Final tag changed");
+          }
+          await updateCard(io, c.id);
+          return Response.json({
+            candidate: c.id,
+            message_ts: c.message_ts,
+            refreshed: true,
+            ...presentation,
+          });
+        }
+        if (input.operation === "claim") {
+          await verifyCandidateEvidence(io, JSON.parse(c.report_text));
+        }
         if (input.operation === "complete") {
           const release = await github(
             io,
@@ -808,8 +924,10 @@ export function controlHandler(io: IO) {
             `git/ref/tags/${encodeURIComponent("poc-v" + c.version)}`,
           );
           if (
-            release?.id !== input.receipt?.release_id || release?.draft ||
-            release?.prerelease !== true || final?.object?.type !== "commit" ||
+            release?.id !== input.receipt?.release_id || release?.draft !== false ||
+            release?.tag_name !== "poc-v" + c.version ||
+            release?.prerelease !== false || input.receipt?.prerelease !== false ||
+            final?.object?.type !== "commit" ||
             final.object.sha !== c.source_sha
           ) throw Error("Publication receipt not independently verified");
         }

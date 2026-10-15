@@ -1,0 +1,61 @@
+Task check:poc deno fmt --check supabase/functions tests/slack_supabase && deno lint supabase/functions tests/slack_supabase && deno check supabase/functions/*/index.ts && deno test -A tests/slack_supabase
+Checked 12 files
+Checked 12 files
+Check supabase/functions/poc-control/index.ts
+Check supabase/functions/poc-slack-approvals/index.ts
+Check supabase/functions/poc-slack-router/index.ts
+Check tests/slack_supabase/controls_test.ts
+Check tests/slack_supabase/database_test.ts
+Check tests/slack_supabase/dispatch_test.ts
+Check tests/slack_supabase/http_test.ts
+Check tests/slack_supabase/preview_test.ts
+Check tests/slack_supabase/router_test.ts
+running 1 test from ./tests/slack_supabase/controls_test.ts
+Postgres: negar sem motivo, RC2 limpa, controles explícitos e publicação idempotente ... ok (1s)
+running 1 test from ./tests/slack_supabase/database_test.ts
+Postgres local: roles, duas ordens, repetição, ajuste/RC2, expiração, publicação e proteção ... ok (1s)
+running 6 tests from ./tests/slack_supabase/dispatch_test.ts
+Dispatch absent token does not reserve or send ... ok (272µs)
+Dispatch denied reservation never sends ... ok (50µs)
+Dispatch rechecks live decision before sending ... ok (34µs)
+Dispatch targets only POC workflow and frozen candidate ... ok (4ms)
+Dispatch uncertainty records without retry {"status":403} ... ok (6ms)
+Dispatch uncertainty records without retry {"fail":true} ... ok (87µs)
+running 26 tests from ./tests/slack_supabase/http_test.ts
+HMAC: corpo exato, segredo, prazo e adulteração ... ok (13ms)
+HTTP assinado bloqueia outro canal sem escrever ... ok (2ms)
+HTTP assinado bloqueia outro workspace sem escrever ... ok (257µs)
+HTTP assinado bloqueia app compartilhado sem escrever ... ok (226µs)
+HTTP assinado bloqueia botão estrangeiro sem escrever ... ok (256µs)
+HTTP assinado bloqueia candidata Mobile sem escrever ... ok (191µs)
+HTTP assinado bloqueia container divergente sem escrever ... ok (184µs)
+HTTP assinado bloqueia duas ações sem escrever ... ok (183µs)
+HTTP recusa assinatura velha e flag desativada ... ok (309µs)
+ACK não espera cartão/DM e erro de identidade não produz aceite ... ok (497µs)
+Projeto Mobile, URL não HTTPS e redirects são recusados ... ok (197µs)
+Cartão expirado/ajustado não oferece aceite; resumo não inventa pessoas ... ok (1ms)
+Envio incerto reserva antes do POST e não tenta novamente ... ok (276µs)
+Controle não aceita workflow/ator arbitrário só por ter secret ... ok (973µs)
+Controle exige credencial separada para publicação ... ok (107µs)
+Digest textual coincide com contrato SHA-256 do banco ... ok (34µs)
+Controle aceita operador verificado somente na branch configurada ... ok (266µs)
+Conclusão exige Release final real; pré-lançamento, draft e recibo falso bloqueiam ... ok (1ms)
+Aceite salvo não recebe mensagem de falha quando aviso posterior falha ... ok (380µs)
+Slack lê membros por GET e envia mensagens por POST JSON ... ok (457µs)
+Botões de URL confirmam navegação sem RPC, voto ou aviso ... ok (1ms)
+Negar versão registra ação assinada sem modal, justificativa ou dispatch ... ok (306µs)
+Cartão de controles explica limites, permite negar e não inventa preview ... ok (89µs)
+Botão de URL não aceita outro canal ou assinatura inválida ... ok (214µs)
+published card highlights final release and preserves candidate evidence after expiry ... ok (86µs)
+unpublished cards never claim a final release ... ok (85µs)
+running 2 tests from ./tests/slack_supabase/preview_test.ts
+Preview só aceita manifest, metadados e bytes do SHA congelado ... ok (12ms)
+Controls-only exige ausência explícita de preview e patches; não consulta Pages ... ok (196µs)
+running 4 tests from ./tests/slack_supabase/router_test.ts
+Router preserva bytes/assinatura e destino fixo dos cartões antigos ... ok (12ms)
+Router nunca encaminha namespace POC/misto ao banco antigo ... ok (2ms)
+Router não encaminha assinatura inválida ou contexto estrangeiro ... ok (365µs)
+Router de modal POC mantém separação e timeout antigo não cria aceite ... ok (523µs)
+
+ok | 40 passed | 0 failed (2s)
+

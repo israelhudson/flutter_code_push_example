@@ -39,6 +39,10 @@ não dispensa verificar a assinatura no código.
 descreve RLS e os cuidados com credenciais que contornam políticas. Nesta POC, as
 tabelas negam acesso anônimo/autenticado e somente o backend usa credencial de servidor.
 
+A [documentação de botões](https://docs.slack.dev/reference/block-kit/block-elements/button-element/)
+esclarece que botões com URL também enviam payload e exigem ACK. Esses callbacks
+de navegação não registram votos na POC.
+
 ## Aplicação neste projeto
 
 Projeto Supabase e app Slack exclusivos da POC; tabelas poc_* e funções poc-*.
@@ -56,6 +60,9 @@ solo não comprova duas pessoas independentes.
 
 ## Pendências
 
-- [ ] Cliques/DMs reais no novo app exclusivo.
+- [x] Clique real em diagnóstico negativo do app exclusivo; nenhum aceite criado.
+- [x] Aceites reais e recibos de avisos da RC 1.14.1; dispatch e publicação GitHub TESTE confirmados.
+  [Evidência local do projeto](../../docs/delivery/slack-supabase-poc/VALIDACAO-1.14.1-E-LICOES.md);
+  não é afirmação da fonte oficial nem comprovação de leitura das DMs.
 - [ ] Recuperação de publicação parcial em um Run GitHub real.
 - [ ] Base, plataforma, track e instalação antes de qualquer patch Shorebird.
