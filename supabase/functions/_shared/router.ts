@@ -1,3 +1,4 @@
+import { deliverySlackHandler } from "./delivery.ts";
 import { IO, isolated, slackHandler, TEAM, validSignature } from "./poc.ts";
 const LEGACY = "https://uvfwvplcziehxrkidrxh.supabase.co/functions/v1/slack-approvals";
 export function routerHandler(io: IO) {
@@ -18,6 +19,16 @@ export function routerHandler(io: IO) {
         return new Response("Context rejected", { status: 403 });
       }
       const actions = Array.isArray(p.actions) ? p.actions : [];
+      if (
+        actions.some((a: any) =>
+          String(a.action_id ?? "").startsWith("delivery_") ||
+          String(a.value ?? "").startsWith("delivery-")
+        )
+      ) {
+        return deliverySlackHandler(io)(
+          new Request(request.url, { method: "POST", headers: request.headers, body: raw }),
+        );
+      }
       const own = actions.some((a: any) =>
         String(a.action_id ?? "").startsWith("poc_") || String(a.value ?? "").startsWith("poc-")
       ) ||

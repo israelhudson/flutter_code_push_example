@@ -1,0 +1,13 @@
+{
+  "schema": "delivery-policy-v2",
+  "repository": "israelhudson/flutter_code_push_example",
+  "team_id": "T09CYB7AS77",
+  "channel_id": "C0C8DUJB52L",
+  "source_branch": "slack-main",
+  "history_branch": "codex/delivery-history",
+  "operator_github_id": 18661493,
+  "operator_github_login": "israelhudson",
+  "solo": true,
+  "technical": {"slack_user": "U0BMFQKC001", "github_login": "israelhudson"},
+  "business": {"slack_user": "U0BMFQKC001", "github_login": "israelhudson"}
+}

@@ -1,5 +1,9 @@
 # Aprovar uma versão no GitHub
 
+A refatoração opt-in está em [Controle em duas tabelas](two-table-state/README.md).
+O guia distingue implementação, migração pendente e testes locais; não substitui
+os fluxos abaixo enquanto não houver ativação validada.
+
 **Para testar sozinho agora, abra o [laboratório local](LABORATORIO.md).**
 Ele já permite operar papéis simulados e estados persistentes. Este guia explica
 o caminho GitHub com reviews reais; a contagem local não autoriza esse caminho.

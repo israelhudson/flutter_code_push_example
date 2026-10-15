@@ -1,0 +1,13 @@
+{
+  "observed_date": "2026-10-14",
+  "project": "xtvueqciogzkyjkkqxcx",
+  "mode": "read_only",
+  "legacy_tables": ["poc_adjustment_tokens", "poc_approvals", "poc_candidates", "poc_config", "poc_events", "poc_private_notices", "poc_publications", "poc_user_directory"],
+  "candidate_counts": {"adjustment_requested": 2, "published": 4},
+  "notice_counts": {"sent": 22},
+  "active_registered_candidates": 0,
+  "orphan_refs_audited": false,
+  "remote_writes_performed": false,
+  "new_release_run_started": false,
+  "backup_export_completed": false
+}

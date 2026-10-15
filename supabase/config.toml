@@ -9,3 +9,6 @@ verify_jwt = false
 
 [functions.poc-slack-router]
 verify_jwt = false
+
+[functions.delivery-control]
+verify_jwt = false
