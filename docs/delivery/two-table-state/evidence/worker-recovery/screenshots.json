@@ -1,0 +1,22 @@
+[
+  {
+    "file": "04-rc2-dois-aceites.png",
+    "sha256": "7a57b3ef66ecd74f50195893258bd24c4876c7704e26e0f9dd4d988d3f4b9b9f"
+  },
+  {
+    "file": "01-rc1-pendente.png",
+    "sha256": "a69d2bc80f6aca0aa62a78fd4093fc47556313a1135d58b9f1b5e73c3195d3ab"
+  },
+  {
+    "file": "05-ensaio-encerrado.png",
+    "sha256": "c42c995093e5233c08b679a017174a45bb8d5f1a4b97cf87ae438efc832709b1"
+  },
+  {
+    "file": "03-rc2-sem-aceites.png",
+    "sha256": "fa0d90beb1a2c9f149d6286e6609baf0c03ce4bd337b43b95cc39f1134c74e90"
+  },
+  {
+    "file": "02-rc1-negada.png",
+    "sha256": "ed2e9ee8223463a4e02f1ce0d721e70c5090554d3a5c6b6eb11bd1d8f9de6c47"
+  }
+]
