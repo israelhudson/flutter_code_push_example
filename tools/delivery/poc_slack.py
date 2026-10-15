@@ -10,6 +10,7 @@ from urllib.parse import urlparse
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 import release_lab as lab
+import delivery_names as names
 
 PROJECT_FORBIDDEN = 'uvfwvplcziehxrkidrxh'
 GUARDS = {
@@ -130,10 +131,13 @@ def prepare(version, title, scope, output, validation_mode='full'):
         raise lab.LabError('Modo de validação desconhecido.')
     protect()
     p = control('plan', version=version, title=title, publication_scope=scope, validation_mode=validation_mode)
-    if (p.get('version') != version or p.get('rc_tag') != f'poc-v{version}-rc.{p.get("rc_number")}'
+    official = os.environ.get('DELIVERY_STATE_V2') == 'true'
+    expected = names.frozen_names(p) if official else {
+        'rc_tag': f'poc-v{version}-rc.{p.get("rc_number")}', 'branch': 'poc-release/' + version}
+    if (p.get('version') != version or p.get('rc_tag') != expected['rc_tag']
             or type(p.get('rc_number')) is not int or p['rc_number'] < 1
             or not re.fullmatch(r'delivery-[a-f0-9]{32}' if os.environ.get('DELIVERY_STATE_V2') == 'true' else r'poc-[a-f0-9]{32}', p.get('id', ''))
-            or not lab.SHA.fullmatch(p.get('source_sha', '')) or p.get('branch') != 'poc-release/' + version
+            or not lab.SHA.fullmatch(p.get('source_sha', '')) or p.get('branch') != expected['branch']
             or p.get('creator') != 'israelhudson' or p.get('publication_scope') != scope
             or p.get('validation_mode', 'full') != validation_mode):
         raise lab.LabError('Plano remoto fora da identidade da POC.')
@@ -240,11 +244,14 @@ def previous_release_body(c):
     return '\n\n'.join(body)
 
 
-def release_body(c, presentation=None):
+def release_body(c, presentation=None, *, github_tag=None):
     # Presentation never rewrites the frozen report or grants mobile permission.
     report = json.loads(c['report_text'])
+    tag = 'poc-v' + c['version'] if github_tag is None else names.final_tag(c)
+    if github_tag is not None and github_tag != tag:
+        raise lab.LabError('Tabela deve usar a identidade congelada da Release.')
     if presentation is None:
-        rows = [['GitHub', 'poc-v' + c['version'], 'Release publicada'],
+        rows = [['GitHub', tag, 'Release publicada'],
                 ['Web', 'Não verificada', 'Não gerado nesta rodada' if report.get('validation_mode') == 'controls_only' else 'Versão do preview não conferida'],
                 ['Android', 'Não validada', 'Sem publicação comprovada nesta entrega'],
                 ['iOS', 'Não validada', 'Sem publicação comprovada nesta entrega']]
@@ -253,7 +260,7 @@ def release_body(c, presentation=None):
         if (not isinstance(rows, list) or len(rows) != 4 or [r[0] for r in rows] != ['GitHub', 'Web', 'Android', 'iOS']
                 or any(len(r) != 3 or any(not isinstance(v, str) or len(v) > 400 or '\n' in v for v in r) for r in rows)):
             raise lab.LabError('Tabela de versões inválida.')
-        rows = [['GitHub', 'poc-v' + c['version'], 'Release publicada'], *rows[1:]]
+        rows = [['GitHub', tag, 'Release publicada'], *rows[1:]]
     cell = lambda v: html.escape(v).replace('|', '&#124;').replace('`', '&#96;').replace('@', '&#64;')
     table = '## Versões e publicação\n\n| Destino | Versão / identidade | Resultado |\n|---|---|---|\n'
     table += '\n'.join('| ' + ' | '.join(cell(v) for v in row) + ' |' for row in rows)
@@ -342,8 +349,8 @@ def publish(candidate, output, finalize=False):
     if authorization.get('already_published'):
         lab.output(output, 'receipt.json', authorization['receipt'])
         return authorization['receipt']
-    tag = 'poc-v' + c['version']
-    if not re.fullmatch(r'poc-v\d+\.\d+\.\d+', tag):
+    tag = names.final_tag(c) if os.environ.get('DELIVERY_STATE_V2') == 'true' else 'poc-v' + c['version']
+    if not re.fullmatch(r'(?:poc-)?v\d+\.\d+\.\d+' if os.environ.get('DELIVERY_STATE_V2') == 'true' else r'poc-v\d+\.\d+\.\d+', tag):
         raise lab.LabError('Tag final fora do namespace POC.')
     control('claim', candidate=candidate)  # Live recheck immediately before each external effect.
     lab.create_ref_verified('tags/' + tag, c['source_sha'])

@@ -5,6 +5,11 @@ Não usa o journal LAB, não cria tabelas e não aprova por ninguém. Os dois ac
 continuam manuais, pelas DMs. O ensaio solo permite Israel nos dois papéis;
 isso comprova duas decisões de papel, não independência entre duas pessoas.
 
+Novas versões seguem [os nomes oficiais](NOMES-OFICIAIS.md): branch
+`release/X.Y.Z`, candidata `vX.Y.Z-rc.N` e final `vX.Y.Z`. O bridge também
+respeita as referências históricas congeladas `poc-release/...` e `poc-v...`.
+Não renomeia tags, não muda aceites e não inicia uma entrega por trocar o nome.
+
 ## O que a candidata autoriza
 
 O manifesto precisa congelar, antes dos aceites:
@@ -116,5 +121,8 @@ python3 -m unittest discover -s tests/delivery \
 
 Os testes são offline e usam dados sintéticos para autorização, rejeição,
 dois papéis solo, SHA/tags divergentes, repetição, resposta perdida e hashes.
-Eles não comprovam geração real. A rodada real precisa guardar seus próprios
-logs, recibos e prints, preservando as tags e os aceites anteriores.
+Eles não comprovam geração real. A [rodada 1.15.5](RODADA-PREVIEW-STAGING.md#resultado-real-da-1155)
+registrou separadamente o upload real do patch `5` em staging, base `1.1.0+2`,
+com os três hashes do AAB iguais aos artefatos do provedor. Não houve prova de
+execução em dispositivo ou promoção stable. Logs brutos e prints completos
+permanecem no arquivo privado da rodada, sem copiá-los para o repositório.

@@ -1,5 +1,6 @@
 import type { IO } from "./poc.ts";
 import { canonical } from "./preview.ts";
+import { releaseNames } from "./release_names.ts";
 
 export type VersionRow = [string, string, string];
 const repo = "israelhudson/flutter_code_push_example";
@@ -13,7 +14,7 @@ export function defaultRows(c: any): VersionRow[] {
   return [
     [
       "GitHub",
-      c.status === "published" ? `poc-v${c.version}` : c.rc_tag,
+      c.status === "published" ? releaseNames(c).final_tag : c.rc_tag,
       c.status === "published" ? "Release publicada" : "Candidata; publicação pendente",
     ],
     [
@@ -41,7 +42,7 @@ export function mobileRow(c: any, p: any): VersionRow {
     !["local_operator_android_staging_receipt", "platform_delivery_receipt_v1"].includes(p.kind) ||
     (p.kind === "local_operator_android_staging_receipt" && platform !== "android") ||
     p.candidate_id !== c.id || p.delivery_version !== c.version || p.rc_tag !== c.rc_tag ||
-    p.github_tag !== `poc-v${c.version}` || p.source_sha !== c.source_sha ||
+    p.github_tag !== releaseNames(c).final_tag || p.source_sha !== c.source_sha ||
     p.report_digest !== c.report_digest || p.uploaded !== true ||
     !appVersion.test(p.target.release_version) || !Number.isSafeInteger(p.patch_number) ||
     p.patch_number < 1 ||
@@ -99,7 +100,7 @@ export async function versionPresentation(io: Pick<IO, "fetch">, c: any, release
   }
   if (release) {
     if (
-      release.tag_name !== `poc-v${c.version}` || release.draft !== false ||
+      release.tag_name !== releaseNames(c).final_tag || release.draft !== false ||
       release.prerelease !== false
     ) throw Error("Release evidence rejected");
     const seen = new Set<string>();
@@ -111,7 +112,9 @@ export async function versionPresentation(io: Pick<IO, "fetch">, c: any, release
           `shorebird-staging-receipt-${c.version}.json`,
         ].includes(asset.name)
       ) continue;
-      const url = `https://github.com/${repo}/releases/download/poc-v${c.version}/${asset.name}`;
+      const url = `https://github.com/${repo}/releases/download/${
+        releaseNames(c).final_tag
+      }/${asset.name}`;
       if (
         asset.browser_download_url !== url || asset.size > 262144 ||
         !/^sha256:[a-f0-9]{64}$/.test(asset.digest ?? "")

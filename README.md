@@ -1,6 +1,35 @@
 # flutter_code_push_example
 
-## Esteira atual do laboratório
+## Esteira oficial de entrega
+
+O fluxo oficial deste projeto usa a **`main`**, os workflows
+[`delivery-prepare.yml`](.github/workflows/delivery-prepare.yml),
+[`delivery-publish.yml`](.github/workflows/delivery-publish.yml) e
+[`delivery-worker.yml`](.github/workflows/delivery-worker.yml). O canal Slack
+acompanha a entrega; os aceites técnico e de negócio são feitos em DMs.
+Com escopo e controles habilitados, os dois aceites disparam a publicação GitHub
+automaticamente. O modo solo atual usa Israel nos dois papéis; não equivale a
+duas pessoas independentes.
+
+Para **novas versões**, a branch é `release/X.Y.Z`, a tag candidata é
+`vX.Y.Z-rc.N` e a tag final é `vX.Y.Z`. A mudança de nomes não dispara uma
+release, não cria aceites e não renomeia tags ou branches históricas.
+As referências antigas `poc-v...` e `poc-release/...` permanecem preservadas.
+Não misturar os dois formatos para a mesma versão.
+
+[Guia do fluxo oficial](docs/delivery/two-table-state/README.md) ·
+[Nomes de branches e tags, RC1 e RC2](docs/delivery/two-table-state/NOMES-OFICIAIS.md) ·
+[Resultado real da rodada 1.15.5](docs/delivery/two-table-state/RODADA-PREVIEW-STAGING.md).
+
+A rodada **1.15.5** comprovou preview Web, dois aceites manuais, Release GitHub
+automática e **Android `1.1.0+2`, patch `5` em staging**, com a tabela e o cartão
+Slack atualizados. Os patches stable anteriores foram preservados. A etapa
+Android foi executada localmente após a Release GitHub, não em CI, e não
+comprovou execução em dispositivo. iOS, stable, lojas e Amulets não foram
+publicados nessa rodada. Os controles de execução/publicação foram pausados ao
+encerrar a janela; uma nova rodada exige habilitação autorizada.
+
+## LAB: outro fluxo, preservado
 
 Use **Actions → LAB · Criar candidata**, informando versão e título. O fluxo cria a RC, valida o app e publica o preview. **Israel E Fabrícia** aprovam; depois **Israel OU Fabrícia** autoriza PUBLICAR em uma etapa separada. A promoção cria **uma nova tag estável e uma Release real no GitHub, no mesmo commit da RC aprovada**, preservando as tags candidatas. Não distribui o app nem gera patch mobile.
 
@@ -104,9 +133,13 @@ lib/
 Este projeto é um exemplo de atualização de código com Shorebird (code push para Android; iOS
 também é suportado pelo Shorebird, mas requer dispositivo físico — veja a nota abaixo).
 
-Os comandos abaixo são o estudo manual de Shorebird. A esteira implementada não
-os executa. Um ensaio real exige confirmar app, release-base, destino e autorização
-antes de gerar/publicar patches; as duas aprovações liberam um comando final separado.
+Os comandos abaixo são o estudo manual de Shorebird. O fluxo LAB não os executa.
+No fluxo oficial, os jobs GitHub também não executam o upload Shorebird: a
+[ponte Android local](docs/delivery/two-table-state/ANDROID-STAGING.md) permite
+uma tentativa em staging depois dos dois aceites e da Release GitHub, quando
+esse plano foi congelado antes da avaliação. App, base, código, destino e
+autorização são reconferidos; geração, execução em dispositivo e promoção para
+stable são provas distintas.
 
 #### 1. Instalar a CLI e autenticar
 
@@ -171,7 +204,10 @@ Mais informações:
 
 [Guia anterior da POC: preview web, aprovação 2/2 e publicação dry-run](docs/delivery/README.md).
 A sessão local histórica usa SQLite; a fila local e os papéis simulados não viram
-aprovações do GitHub. O caminho ativo é o [fluxo descrito no início deste README](docs/delivery/FLUXO-DOIS-APROVADORES.md):
-preparação manual, avaliação, dois avais, comando separado e promoção GitHub-only.
-PRs e merges não criam RCs por conta própria. Nenhum desses caminhos gera patches
-Shorebird ou distribui aplicativos.
+aprovações do GitHub. O [fluxo LAB](docs/delivery/FLUXO-DOIS-APROVADORES.md)
+continua documentado como outro caminho: preparação manual, dois avais,
+comando separado e promoção GitHub-only. O fluxo oficial atual está no início
+deste README e possui suas próprias DMs, automação e ponte Android opcional.
+PRs, merges e a mudança dos nomes das tags não iniciam uma candidata por conta
+própria; o preparo continua sendo um Run workflow autorizado, pela interface
+ou CLI.
