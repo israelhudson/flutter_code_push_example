@@ -145,6 +145,14 @@ if (mode === "prepare") {
   if ((await sql("select count(*) n from delivery_control"))[0].n !== 0) {
     throw Error("Requires empty v2");
   }
+  if (config.solo !== true || config.reviewer_source !== "database-v1") {
+    throw Error("Rehearsal requires the explicit solo database-reviewer policy");
+  }
+  const reviewers = await db("rpc/delivery_resolve_reviewers", {
+    p_repository: config.repository,
+    p_team: config.team_id,
+    p_solo: config.solo,
+  });
   c = {
     id: "delivery-" + crypto.randomUUID().replaceAll("-", ""),
     repository: config.repository,
@@ -156,8 +164,9 @@ if (mode === "prepare") {
     manifest_digest: "c".repeat(64),
     team_id: config.team_id,
     channel_id: config.channel_id,
-    technical_user: config.technical.slack_user,
-    business_user: config.business.slack_user,
+    technical_user: reviewers.technical.slack_user,
+    business_user: reviewers.business.slack_user,
+    reviewers,
     solo: true,
     scope: "none",
   };

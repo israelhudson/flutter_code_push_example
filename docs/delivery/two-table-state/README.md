@@ -1,6 +1,13 @@
-# Entrega: controle em duas tabelas
+# Entrega: controle, fila e cadastro de aprovadores
 
 Implementação opt-in da proposta B. **Worker e DMs validados na main; publicação bloqueada.**
+
+Extensão de 15/10/2026: a proposta 1 de **titulares automáticos no banco** está
+implementada em código e migração, aguardando aplicação e rodada remota. Acrescenta
+somente `delivery_reviewers`: três tabelas de aplicação no total. O histórico
+continua no GitHub. Veja o [guia dos aprovadores](APROVADORES.md) e o
+[planejamento original e sua evolução](PLANO-APROVADORES.md). Esta seção não afirma
+que a nova migração já foi aplicada nem que os novos titulares foram testados em DMs reais.
 
 Em 14/10/2026, as migrações aditiva e de aposentadoria foram aplicadas no projeto
 exclusivo após backup e restauração verificados. Há somente `delivery_control` e
@@ -24,22 +31,37 @@ Antes da adoção, alinhar com Samuel quem pode preparar candidatas, revisar có
 
 Durante esta fase, priorizar CLI e APIs para preparar PRs, acompanhar checks e integrar alterações autorizadas. Usar Computer Use quando necessário para validar a experiência visual e as interações reais. A dispensa de review de PR não remove os aceites de release nem autoriza publicação por si só.
 
+Para a Amulets, ainda alinhar administração, substituição e identidade dos
+aprovadores com Samuel. O [cadastro implementado](APROVADORES.md) escolhe titulares
+automaticamente e não transfere aceites de candidatas abertas. O ensaio deste
+projeto usa Israel nos dois papéis, com `solo: true`; não comprova revisão por duas pessoas.
+
 
 ## O que muda
 
 | Responsabilidade | Destino |
 |---|---|
+| Pessoas elegíveis, identidades e titulares automáticos | `delivery_reviewers`, nova migração |
 | SHA, tag, responsáveis congelados, dois aceites, rejeição, revisão, mensagens e run | `delivery_control` |
 | Registro no GitHub, envio/edição de mensagens e disparo, com tentativas/recibos | `delivery_outbox` |
 | Manifesto completo, changelog e eventos permanentes | branch `codex/delivery-history`, diretório por candidata |
-| Configuração e identificação dos responsáveis | `delivery/delivery-policy.json`, no commit confiável do workflow |
+| Regras da entrega, modo solo e fonte `database-v1`, sem pessoas no JSON | `delivery/delivery-policy.json`, no commit confiável do workflow |
 | Builds, preview, Release Candidate e Release final | GitHub/Pages existentes |
 | Credenciais | secrets existentes; nada em JSON de configuração ou eventos |
 
-A configuração atual é **solo**: Israel representa técnico e negócio. São dois
-papéis e duas DMs distintas, não duas pessoas. O manifesto guarda `tooling_sha`,
-que identifica a versão da política usada. O controle congela os destinatários;
-uma alteração posterior de política não troca quem pode aprovar essa candidata.
+A configuração de teste é **solo**: o seed da nova migração cadastra Israel como
+titular técnico e de negócio. São dois papéis e duas DMs distintas, não duas
+pessoas. O preparo lê os padrões pelo RPC `delivery_resolve_reviewers`, guarda o
+snapshot em `manifest.reviewers` e o banco compara novamente os padrões ao
+registrar a candidata. `delivery_control` mantém duas chaves estrangeiras e uma
+cópia dos responsáveis daquela avaliação. Sem titular ativo, o preparo bloqueia;
+não escolhe outro elegível por conta própria.
+
+O manifesto guarda `tooling_sha`, que identifica a versão da política usada.
+Trocar o titular não muda as candidatas já abertas. Revogar o papel ou inativar
+um designado bloqueia novas decisões dessa avaliação, preservando os aceites já
+registrados. Candidatas antigas permanecem com seus IDs congelados e sem cadastro
+retroativo. Retentativa do mesmo manifesto não elege os titulares de novo.
 
 Não há prazo de 36 horas na avaliação nova. A assinatura Slack continua vencendo
 em cinco minutos para proteção contra replay. Encerramento ocorre por rejeição,
@@ -53,7 +75,9 @@ avaliação encerrada com dois aceites nesse escopo pode ser cancelada pelo oper
 2. `controls_only` dispensa build/preview/patch. `full` valida preview, **sem patch**.
    O escopo `github` é convertido para `github_test` e permite só GitHub Release.
 3. O script grava um manifesto imutável no GitHub e cria a Release Candidate com
-   o preview, quando houver. O banco recebe apenas referência, digest e controle.
+   o preview, quando houver. Novas candidatas incluem os titulares resolvidos no
+   banco; o registro confere o snapshot em transação antes de congelá-lo. O banco
+   mantém referência, digest, controle e a pequena cópia de identidades.
 4. A fila publica um cartão de acompanhamento no canal e uma DM por papel.
    Cada DM tem seu aceite e **Negar versão**. O canal não tem botões de decisão.
 5. O receptor valida assinatura, app, workspace, destinatário, papel e ID da DM.
@@ -134,9 +158,11 @@ de uma publicação iniciada.
    encerramento das pendências e período de observação combinado.
 
 A transição com dez tabelas foi concluída no projeto exclusivo. O banco remoto
-da aplicação agora possui duas tabelas; o legado foi arquivado e removido pela
+da aplicação possuía duas tabelas no encerramento do ensaio do cron; o legado foi arquivado e removido pela
 migration `20261015012542_retire_legacy_delivery_tables.sql`. O roteiro acima
 permanece como referência para uma migração futura, não como estado pendente da POC.
+A nova migração `20261015132214_delivery_reviewer_defaults.sql` acrescenta o
+cadastro de aprovadores; seu roteiro específico está em [APROVADORES.md](APROVADORES.md).
 
 Rollback: desligar entrada v2 para novos preparos e preservar controles/fila.
 Não apagar a fila nem reabrir decisões antigas. Se houver publicação em andamento,

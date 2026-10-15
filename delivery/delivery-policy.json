@@ -8,12 +8,5 @@
   "operator_github_id": 18661493,
   "operator_github_login": "israelhudson",
   "solo": true,
-  "technical": {
-    "slack_user": "U0BMFQKC001",
-    "github_login": "israelhudson"
-  },
-  "business": {
-    "slack_user": "U0BMFQKC001",
-    "github_login": "israelhudson"
-  }
+  "reviewer_source": "database-v1"
 }

@@ -1,4 +1,4 @@
-"""Two-table delivery adapter. Legacy entrypoints remain unchanged unless opted in.
+"""Delivery adapter with automatic database reviewers and an immutable journal.
 
 GitHub is the durable journal. Supabase keeps only frozen authorization, message
 identifiers and a transactional outbox. This module never calls Shorebird.
@@ -19,6 +19,47 @@ import release_lab as lab
 HISTORY = 'codex/delivery-history'
 ID = re.compile(r'delivery-[a-f0-9]{32}')
 LEGACY_BODY = legacy.release_body
+
+
+def require_reviewers(snapshot):
+    """Reject missing/spoofed authorization before creating GitHub records.
+
+    SQL rechecks the selected defaults atomically at registration. No fallback to
+    configuration-file users or arbitrary accounts is permitted in this lane.
+    """
+    policy = json.loads(Path('delivery/delivery-policy.json').read_text())
+    if (policy.get('reviewer_source') != 'database-v1'
+            or type(policy.get('solo')) is not bool
+            or not isinstance(snapshot, dict)
+            or snapshot.get('schema') != 'delivery-reviewers-v1'
+            or snapshot.get('repository') != policy['repository']
+            or snapshot.get('team_id') != policy['team_id']
+            or type(snapshot.get('solo')) is not bool
+            or snapshot['solo'] != policy['solo']):
+        raise lab.LabError('Titulares automáticos ausentes ou fora da política confiável.')
+    for role in ('technical', 'business'):
+        reviewer = snapshot.get(role)
+        if (not isinstance(reviewer, dict)
+                or not isinstance(reviewer.get('id'), str)
+                or not re.fullmatch(r'[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}', reviewer['id'])
+                or type(reviewer.get('revision')) is not int or reviewer['revision'] < 1
+                or not isinstance(reviewer.get('slack_user'), str)
+                or not re.fullmatch(r'U[A-Z0-9]+', reviewer['slack_user'])
+                or not isinstance(reviewer.get('name'), str)
+                or not reviewer['name'].strip() or len(reviewer['name']) > 120
+                or any(ord(c) < 32 for c in reviewer['name'])):
+            raise lab.LabError('Identidade do titular automático inválida.')
+        github_id, login = reviewer.get('github_user_id'), reviewer.get('github_login')
+        if (github_id is not None and (type(github_id) is not int or github_id <= 0)
+                or login is not None and (not isinstance(login, str)
+                    or not re.fullmatch(r'[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?', login))):
+            raise lab.LabError('Identidade GitHub do titular inválida.')
+    if (not policy['solo'] and (snapshot['technical']['id'] == snapshot['business']['id']
+            or snapshot['technical']['slack_user'] == snapshot['business']['slack_user']
+            or snapshot['technical'].get('github_user_id') is not None
+            and snapshot['technical']['github_user_id'] == snapshot['business'].get('github_user_id'))):
+        raise lab.LabError('Dois papéis exigem pessoas distintas fora do ensaio solo.')
+    return snapshot
 
 
 def api_control(operation, **data):
@@ -122,14 +163,22 @@ def control(operation, **data):
     output = os.environ.get('DELIVERY_LOG_DIR', 'delivery-logs')
     if operation == 'register':
         report = json.loads(data['report_text'])
+        require_reviewers(report.get('reviewers'))
         record = write_record(f"candidates/{report['id']}/manifest.json", report)
         lab.output(output, 'manifest-receipt.json', record)
         release = candidate_release(report)
         lab.output(output, 'candidate-release.json', {'id':release['id'],'url':release['html_url']})
         result = api_control('register', candidate=report['id'], manifest_commit=record['commit'], manifest_digest=record['digest'])
+        if (result.get('reviewer_snapshot') != report['reviewers']
+                or any(result.get(f'{role}_reviewer_id') != report['reviewers'][role]['id']
+                       or result.get(f'{role}_user') != report['reviewers'][role]['slack_user']
+                       for role in ('technical', 'business'))):
+            raise lab.LabError('Titulares registrados diferem do manifesto; preserve as evidências.')
         drain(output)
         return result
     result = api_control(operation, **data)
+    if operation == 'plan':
+        require_reviewers(result.get('reviewers'))
     if operation in ('claim', 'complete'):
         drain(output)
     return result
