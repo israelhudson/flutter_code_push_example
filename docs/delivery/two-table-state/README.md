@@ -10,6 +10,10 @@ Veja o [estado atual e a prova dos cliques](evidence/main-migration/README.md).
 Veja [resultados da validação do banco](evidence/database-validation/README.md).
 Ensaios operacionais com controles fictícios validaram aceites reais nas DMs, rejeição e RC2. Nenhuma tag/Release foi criada nessas rodadas. A rodada 1.15.2 permanece cancelada; sua RC não deve ser reutilizada silenciosamente.
 Veja [recuperação, correções e limites do cron](evidence/worker-recovery/README.md).
+Em 15/10, uma execução `schedule` na `main` recuperou as oito tarefas do ensaio
+prolongado. Ocorreu depois da janela combinada; a pausa também foi tardia.
+Worker e receptor estão desligados, com fila sem pendências e publicação bloqueada.
+Veja a [prova do cron, os horários e a lacuna de encerramento](evidence/cron-extended/README.md).
 
 
 ## Pendência: restaurar validações humanas antes da adoção na Amulets

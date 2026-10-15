@@ -1,0 +1,21 @@
+{
+  "stored_privately": true,
+  "files": [
+    {
+      "file": "01-pr60-integrado.png",
+      "sha256": "f916d911588cb6daedab0bbfb6fd35b4028316d6c4a9e1da3e4a5f23cb345da2"
+    },
+    {
+      "file": "02-worker-habilitado-publicacao-bloqueada.png",
+      "sha256": "4df247d6dcfcba8f0afb9c32395e9e5e4774a3262cc9c3edf73704ad0875aa63"
+    },
+    {
+      "file": "03-scheduled-run.jpg",
+      "sha256": "25141f803680e58d8e6f02f97a717de6068a1e2f00d76d529c7e2e3315d7256a"
+    },
+    {
+      "file": "04-worker-pausado.jpg",
+      "sha256": "ecace2799d3468a4f7eb25995e1b458fc70a703f2060eb0c5f715802ec857f9e"
+    }
+  ]
+}
