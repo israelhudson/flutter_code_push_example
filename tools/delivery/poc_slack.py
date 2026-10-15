@@ -130,7 +130,7 @@ def prepare(version, title, scope, output, validation_mode='full'):
     p = control('plan', version=version, title=title, publication_scope=scope, validation_mode=validation_mode)
     if (p.get('version') != version or p.get('rc_tag') != f'poc-v{version}-rc.{p.get("rc_number")}'
             or type(p.get('rc_number')) is not int or p['rc_number'] < 1
-            or not re.fullmatch(r'poc-[a-f0-9]{32}', p.get('id', ''))
+            or not re.fullmatch(r'delivery-[a-f0-9]{32}' if os.environ.get('DELIVERY_STATE_V2') == 'true' else r'poc-[a-f0-9]{32}', p.get('id', ''))
             or not lab.SHA.fullmatch(p.get('source_sha', '')) or p.get('branch') != 'poc-release/' + version
             or p.get('creator') != 'israelhudson' or p.get('publication_scope') != scope
             or p.get('validation_mode', 'full') != validation_mode):
@@ -318,8 +318,14 @@ def finalize_existing(c, authorization, output):
     return result
 
 
+def release_name(c):
+    if os.environ.get('DELIVERY_STATE_V2') == 'true':
+        return 'Release ' + c['version'] + ' — ' + json.loads(c['report_text'])['title']
+    return 'Versão ' + c['version']
+
+
 def publish(candidate, output, finalize=False):
-    if not re.fullmatch(r'poc-[a-f0-9]{32}', candidate or ''):
+    if not re.fullmatch(r'delivery-[a-f0-9]{32}' if os.environ.get('DELIVERY_STATE_V2') == 'true' else r'poc-[a-f0-9]{32}', candidate or ''):
         raise lab.LabError('ID de candidata inválido.')
     protect()
     c = control('state', candidate=candidate)
@@ -343,7 +349,7 @@ def publish(candidate, output, finalize=False):
     existing = lab.api(lab.endpoint('releases/tags/' + tag), missing=True)
     presentation = control('presentation', candidate=c['id'])
     lab.output(output, 'version-presentation.json', presentation)
-    expected = {'tag_name': tag, 'target_commitish': c['source_sha'], 'name': 'Versão ' + c['version'],
+    expected = {'tag_name': tag, 'target_commitish': c['source_sha'], 'name': release_name(c),
                 'body': release_body(c, presentation), 'draft': False, 'prerelease': False, 'make_latest': 'false'}
     if existing is None:
         existing = lab.api(lab.endpoint('releases'), expected, 'POST')

@@ -101,7 +101,7 @@ export function runtime(): IO {
     db: async (path, data, method = "POST") => {
       const base = isolated(Deno.env.get("SUPABASE_URL") ?? "");
       const key = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-      if (!key || !/^(rpc\/poc_[a-z_]+|poc_[a-z_]+(?:\?.*)?)$/.test(path)) {
+      if (!key || !/^(rpc\/(?:poc|delivery)_[a-z_]+|poc_[a-z_]+(?:\?.*)?)$/.test(path)) {
         throw Error("Database scope rejected");
       }
       const r = await fetch(`${base}/rest/v1/${path}`, {
