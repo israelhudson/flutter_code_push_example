@@ -1,0 +1,37 @@
+{
+  "controls": [
+    {
+      "id": "delivery-10f6554131c34ed5b17b81f1b6673182",
+      "publication_run": null,
+      "revision": 3,
+      "scope": "none",
+      "status": "cancelled"
+    }
+  ],
+  "queue": [
+    {
+      "count": 4,
+      "kind": "channel",
+      "state": "done"
+    },
+    {
+      "count": 4,
+      "kind": "history",
+      "state": "done"
+    },
+    {
+      "count": 4,
+      "kind": "business",
+      "state": "done"
+    },
+    {
+      "count": 4,
+      "kind": "technical",
+      "state": "done"
+    }
+  ],
+  "tables": [
+    "delivery_control",
+    "delivery_outbox"
+  ]
+}

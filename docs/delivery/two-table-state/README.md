@@ -1,11 +1,11 @@
 # Entrega: controle em duas tabelas
 
-Implementação opt-in da proposta B. **Fluxo não ativado remotamente.**
+Implementação opt-in da proposta B. **Worker e DMs validados na main; publicação bloqueada.**
 
 Em 14/10/2026, as migrações aditiva e de aposentadoria foram aplicadas no projeto
 exclusivo após backup e restauração verificados. Há somente `delivery_control` e
 `delivery_outbox` no schema público. O receptor de DMs está implantado para testes;
-publicação e preparos permanecem bloqueados. O worker da main ainda aguarda integração.
+publicação e preparos permanecem bloqueados. O worker da main foi integrado e validado com DMs reais; veja [evidências](evidence/main-worker/README.md).
 Veja o [estado atual e a prova dos cliques](evidence/main-migration/README.md).
 Veja [resultados da validação do banco](evidence/database-validation/README.md).
 Nenhuma candidata foi preparada, nenhum aceite enviado e nenhuma tag/Release
