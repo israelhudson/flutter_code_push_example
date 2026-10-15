@@ -73,10 +73,12 @@ def protect():
 
 def checked_source(source_sha, output, release_branch):
     """Require real post-merge CI on the exact integration commit before refs."""
+    integration = (os.environ.get('POC_SOURCE_BRANCH', 'main')
+                   if os.environ.get('DELIVERY_STATE_V2') == 'true' else 'slack-main')
     runs = lab.api(lab.endpoint('actions/workflows/poc-slack-tests.yml/runs?'
                                'head_sha=' + source_sha + '&event=push&status=success&per_page=100'))
     for run in runs.get('workflow_runs', []):
-        if (run.get('head_sha') != source_sha or run.get('head_branch') not in ('slack-main', release_branch)
+        if (run.get('head_sha') != source_sha or run.get('head_branch') not in (integration, release_branch)
                 or run.get('event') != 'push' or run.get('status') != 'completed'
                 or run.get('conclusion') != 'success'):
             continue
@@ -88,7 +90,7 @@ def checked_source(source_sha, output, release_branch):
             return
     lab.output(output, 'source-check.json', {'source_sha': source_sha, 'success': False})
     raise lab.LabError('Aguarde Slack - Verificar contratos concluir com sucesso após o merge '
-                       'na slack-main ou na branch de correção da RC. O check do PR não substitui o check do commit integrado; '
+                       f'na {integration} ou na branch de correção da RC. O check do PR não substitui o check do commit integrado; '
                        'nenhuma branch ou tag foi criada nesta tentativa.')
 
 
