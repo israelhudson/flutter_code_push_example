@@ -12,6 +12,16 @@ Nenhuma candidata foi preparada, nenhum aceite enviado e nenhuma tag/Release
 alterada nesta implementação. A rodada 1.15.2 permanece cancelada; sua RC não deve
 ser reutilizada silenciosamente.
 
+
+## Pendência: restaurar validações humanas antes da adoção na Amulets
+
+A dispensa de revisão humana em PRs para `main` e `release/**` é temporária, exclusiva deste projeto durante o amadurecimento da esteira. Não representa a política final da Amulets.
+
+Antes da adoção, alinhar com Samuel quem pode preparar candidatas, revisar código, dar aceite técnico e de negócio e autorizar publicação. Restaurar as regras de revisão humana acordadas, definir quantidade de revisores e validar os bloqueios com contas distintas. Essa pendência deve aparecer nos próximos balanços do que falta concluir.
+
+Durante esta fase, priorizar CLI e APIs para preparar PRs, acompanhar checks e integrar alterações autorizadas. Usar Computer Use quando necessário para validar a experiência visual e as interações reais. A dispensa de review de PR não remove os aceites de release nem autoriza publicação por si só.
+
+
 ## O que muda
 
 | Responsabilidade | Destino |
