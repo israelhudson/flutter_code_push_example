@@ -7,7 +7,8 @@ on:
         type: string
         required: false
   schedule:
-    - cron: '*/5 * * * *'
+    # Avoid the start-of-hour load; schedule is best effort, callbacks also wake this worker.
+    - cron: '2-59/5 * * * *'
 permissions: {}
 concurrency:
   group: delivery-v2-outbox
