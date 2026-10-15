@@ -1,0 +1,53 @@
+{
+  "kind": "offline_postgres_restore_rehearsal",
+  "backup_sha256": "cfac39ba65c6eca181ba079dfd5d86353ff41d3518fa76639fddea9a4bc85d42",
+  "tables": [
+    {
+      "table": "poc_user_directory",
+      "count": 1,
+      "sha256": "0700a9da78639393444547d4dbab06b3a32c900c3ce7ab216aae6a9bf741bcd1"
+    },
+    {
+      "table": "poc_config",
+      "count": 1,
+      "sha256": "19fa4863a1ce61b6fdc9f5e04dae3f8e395747fe8ce15d91618f9a67804f2840"
+    },
+    {
+      "table": "poc_candidates",
+      "count": 6,
+      "sha256": "e722b36cf176836187c62a8dac4c8aadcee5248372ab152bbdc4bc5c1b7397e4"
+    },
+    {
+      "table": "poc_approvals",
+      "count": 10,
+      "sha256": "a59936299e1decb862458c76234b9718e055ad271bca5dd966075574fadd53c0"
+    },
+    {
+      "table": "poc_publications",
+      "count": 4,
+      "sha256": "7806d8dc5a5519a654eb1eada00814dd20dba321e16c32a6defc319cdd23e5b5"
+    },
+    {
+      "table": "poc_events",
+      "count": 22,
+      "sha256": "616e701bcc058ad388652c6e9fba52a6750b8238493f40821255502ddb05ba14"
+    },
+    {
+      "table": "poc_private_notices",
+      "count": 22,
+      "sha256": "5faef83ae5d4c2fb8657b11fd6779243a2a91ae95815b90d701df63deda7e1fd"
+    },
+    {
+      "table": "poc_adjustment_tokens",
+      "count": 1,
+      "sha256": "d4b12c05c50353cf237a2cba77b1b91f809b66fd6aca453edc51e63d85bbb579"
+    }
+  ],
+  "legacy_data_unchanged_after_migration": true,
+  "legacy_function_drift": [],
+  "new_table_counts": {
+    "controls": 0,
+    "outbox": 0
+  },
+  "contains_private_rows": false
+}

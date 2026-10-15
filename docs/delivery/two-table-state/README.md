@@ -1,6 +1,10 @@
 # Entrega: controle em duas tabelas
 
-Implementação opt-in da proposta B, em branch separada. **Não ativada remotamente.**
+Implementação opt-in da proposta B. **Fluxo não ativado remotamente.**
+
+Em 14/10/2026, a migração aditiva foi aplicada no projeto exclusivo e validada
+com transações desfeitas. As oito tabelas antigas permanecem intactas.
+Veja [resultados da validação do banco](evidence/database-validation/README.md).
 Nenhuma candidata foi preparada, nenhum aceite enviado e nenhuma tag/Release
 alterada nesta implementação. A rodada 1.15.2 permanece cancelada; sua RC não deve
 ser reutilizada silenciosamente.
