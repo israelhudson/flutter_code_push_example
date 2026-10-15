@@ -2,6 +2,15 @@
 
 Implementação opt-in da proposta B. **Worker e DMs validados na main; publicação bloqueada.**
 
+Evolução em 15/10: o preparo pode congelar `patch_mode=android_staging`, com
+preview completo e escopo GitHub. A geração Android é uma etapa local explícita,
+somente após os dois aceites e a Release GitHub, sem promoção para stable.
+O cartão continua sendo editado e avisos por marco aparecem também no canal.
+Veja o [roteiro da rodada](RODADA-PREVIEW-STAGING.md) e a
+[ponte Android com autorização e recibos](ANDROID-STAGING.md).
+Esses caminhos precisam de evidência real da rodada para serem considerados
+validados; os testes locais não comprovam upload ou execução no aparelho.
+
 Extensão de 15/10/2026: a proposta 1 de **titulares automáticos no banco** está
 integrada na `main`, com migração aplicada e ensaio solo por DMs reais concluído.
 Acrescentou somente `delivery_reviewers`: **três tabelas de aplicação** no total.
@@ -79,6 +88,9 @@ avaliação encerrada com dois aceites nesse escopo pode ser cancelada pelo oper
    O escopo `github` é convertido para `github_test` e permite só GitHub Release.
    O preparo normal cria tag RC e prerelease mesmo em `controls_only`/`none`;
    `none` bloqueia a promoção final, não esses registros de candidata.
+   A opção separada `patch_mode=android_staging` exige `full` e escopo `github`:
+   congela um plano para execução local após a publicação GitHub. O job de
+   preparo continua sem executar `shorebird patch`.
 3. O script grava um manifesto imutável no GitHub e cria a Release Candidate com
    o preview, quando houver. Novas candidatas incluem os titulares resolvidos no
    banco; o registro confere o snapshot em transação antes de congelá-lo. O banco
@@ -103,7 +115,8 @@ avaliação encerrada com dois aceites nesse escopo pode ser cancelada pelo oper
 A Release final reaproveita a validação existente da tabela de versões e usa
 `Mudanças` com links de PRs/commits e evidências ao final. O preview fica somente
 na Release Candidate; o título final inclui versão e título informado no preparo.
-Não existe distribuição Android/iOS nesta etapa. Não foi criado um fluxo de lojas.
+Sem plano Android e recibo separado, não existe distribuição mobile comprovada.
+A ponte opcional nova executa somente Android staging; não foi criado um fluxo de lojas.
 
 ## Rejeição e RC2
 

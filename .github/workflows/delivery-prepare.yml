@@ -9,10 +9,15 @@ on:
         options: [none, github]
         default: none
       validation_mode:
-        description: Validação — controls_only é rápido e sem preview; full gera preview Web; ambos sem patches
+        description: controls_only não gera preview; full gera preview Web; este workflow não executa Shorebird
         type: choice
         options: [controls_only, full]
         default: controls_only
+      patch_mode:
+        description: Android staging local após aceites e Release; exige full e scope github
+        type: choice
+        options: [none, android_staging]
+        default: none
       version:
         description: Versão da entrega, sem prefixo nem RC
         type: string
@@ -59,6 +64,7 @@ jobs:
           TITLE: ${{ inputs.title }}
           SCOPE: ${{ inputs.scope == 'github' && 'github_test' || inputs.scope }}
           VALIDATION_MODE: ${{ inputs.validation_mode || 'controls_only' }}
+          DELIVERY_PATCH_MODE: ${{ inputs.patch_mode || 'none' }}
           POC_SUPABASE_URL: ${{ vars.POC_SUPABASE_URL }}
           POC_REGISTRATION_SECRET: ${{ secrets.POC_REGISTRATION_SECRET }}
         run: python3 tools/delivery/delivery_v2.py prepare --version "$VERSION" --title "$TITLE" --scope "$SCOPE" --validation-mode "$VALIDATION_MODE" --output "$RUNNER_TEMP/poc-prepare"

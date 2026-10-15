@@ -108,7 +108,9 @@ export function deliveryCard(c: any, kind: string) {
   const label = c.status === "cancelled"
     ? `Versão ${c.version} cancelada`
     : c.status === "published"
-    ? `Versão ${c.version} publicada`
+    ? c.androidStagingPending
+      ? `Release GitHub ${c.version} publicada · Android staging pendente`
+      : `Versão ${c.version} publicada`
     : c.status === "publishing"
     ? `Publicando ${c.version}`
     : c.status === "rejected"
@@ -169,6 +171,59 @@ export function deliveryCard(c: any, kind: string) {
     });
   }
   return { text: label, blocks };
+}
+// A new message is activity; editing the card alone is not a notification.
+// Freeze the milestone at enqueue time so a delayed worker cannot announce a
+// later state in place of the event it is acknowledging. Never mention users.
+export function deliveryNotice(c: any, task: any) {
+  const event = task.event;
+  if (
+    task.kind !== "notice" || !Number.isSafeInteger(task.revision) || task.revision < 1 ||
+    !event || event.schema !== "delivery-channel-notice-v1" ||
+    event.candidate !== c.id || !ID.test(c.id) || event.revision !== task.revision ||
+    event.source_sha !== c.source_sha || !SHA.test(c.source_sha) ||
+    event.version !== c.version || !/^\d+\.\d+\.\d+$/.test(c.version) ||
+    event.rc_number !== c.rc_number || !Number.isSafeInteger(c.rc_number) || c.rc_number < 1 ||
+    event.rc_tag !== c.rc_tag || c.rc_tag !== `poc-v${c.version}-rc.${c.rc_number}` ||
+    c.channel_id !== CHANNEL || !/^\d+\.\d+$/.test(c.channel_message ?? "") ||
+    !["publishing", "published", "rejected", "cancelled", "android_staging"].includes(event.status)
+  ) throw Error("Frozen channel milestone rejected");
+  const publishing = ["publishing", "published", "android_staging"].includes(event.status);
+  if (
+    publishing && (!/^\d+$/.test(event.publication_run ?? "") ||
+      event.publication_run !== c.publication_run)
+  ) throw Error("Milestone publication identity rejected");
+  if (
+    event.status === "android_staging" &&
+    (!Number.isSafeInteger(event.patch_number) || event.patch_number < 1 ||
+      !/^\d+\.\d+\.\d+\+\d+(?:\.\d+)*$/.test(event.release_version ?? "") ||
+      !/^[a-f0-9]{64}$/.test(event.asset_digest ?? "") ||
+      c.android_staging_notice_digest !== event.asset_digest)
+  ) throw Error("Android milestone evidence rejected");
+  const label = event.status === "publishing"
+    ? `Publicando a versão ${event.version}.`
+    : event.status === "published"
+    ? `Release GitHub ${event.version} publicada.`
+    : event.status === "android_staging"
+    ? `Patch Android ${event.patch_number} disponível em staging · app ${event.release_version}. Consulte a validação de instalação no cartão.`
+    : `Release Candidate ${event.version} · RC${event.rc_number} ${
+      event.status === "rejected" ? "negada" : "cancelada"
+    }.`;
+  const tag = ["published", "android_staging"].includes(event.status)
+    ? `poc-v${event.version}`
+    : event.rc_tag;
+  const links = `<https://github.com/${REPOSITORY}/releases/tag/${tag}|Ver versão no GitHub>` +
+    (publishing
+      ? ` · <https://github.com/${REPOSITORY}/actions/runs/${event.publication_run}|Acompanhar publicação>`
+      : "");
+  return {
+    channel: c.channel_id,
+    thread_ts: c.channel_message,
+    reply_broadcast: true,
+    text: `${label}\n${links}`,
+    unfurl_links: false,
+    unfurl_media: false,
+  };
 }
 export function deliverySlackHandler(io: IO) {
   return async (request: Request) => {
@@ -251,11 +306,13 @@ export function deliveryControlHandler(io: IO) {
       const run = await github(io, `actions/runs/${p.run_id}`);
       const workflow = publication
         ? "delivery-publish.yml"
-        : ["take", "finish", "send", "cancel", "compact"].includes(p.operation)
+        : ["take", "finish", "send", "cancel", "compact", "refresh"].includes(p.operation)
         ? "delivery-worker.yml"
         : "delivery-prepare.yml";
-      const workerOperation = ["take", "finish", "send", "cancel", "compact"].includes(p.operation);
-      const allowedPath = workerOperation
+      const workerOperation = ["take", "finish", "send", "cancel", "compact", "refresh"].includes(
+        p.operation,
+      );
+      const allowedPath = workerOperation && p.operation !== "refresh"
         ? ["delivery-worker.yml", "delivery-prepare.yml", "delivery-publish.yml"].some((w) =>
           run?.path === `.github/workflows/${w}`
         )
@@ -282,6 +339,41 @@ export function deliveryControlHandler(io: IO) {
       ) throw Error("Operator rejected");
       if (run.event === "schedule" && workflow !== "delivery-worker.yml") {
         throw Error("Unexpected schedule");
+      }
+      if (p.operation === "refresh") {
+        if (
+          run.event !== "workflow_dispatch" || run.head_branch !== "main" ||
+          run.path !== ".github/workflows/delivery-worker.yml" || !ID.test(p.candidate)
+        ) throw Error("Manual main refresh required");
+        const frozen = await state(io, p.candidate);
+        if (frozen.status !== "published") throw Error("Published candidate required");
+        const release = await github(io, `releases/tags/poc-v${frozen.version}`);
+        if (!release) throw Error("Published release missing");
+        // Validate real assets before scheduling a changed card; no publication
+        // action, tag mutation or acceptance occurs on this path.
+        const presentation = await versionPresentation(io, frozen, release);
+        const android = presentation.rows[2];
+        const patch = /^(\d+\.\d+\.\d+\+\d+(?:\.\d+)*) \(patch ([1-9]\d*)\)$/.exec(android[1]);
+        const source = presentation.sources.find((s: any) =>
+          s.url.endsWith("/platform-receipt-android.json")
+        ) ?? presentation.sources.find((s: any) =>
+          s.url.endsWith(`/shorebird-staging-receipt-${frozen.version}.json`)
+        );
+        // Neither the request body nor a display-only pending row is a receipt.
+        // versionPresentation checked candidate/platform/base/hash/upload/track.
+        const mobile = patch && android[2].startsWith("Patch em staging") && source
+          ? {
+            schema: "delivery-android-staging-notice-v1",
+            patch_number: Number(patch[2]),
+            release_version: patch[1],
+            asset_digest: source.sha256,
+          }
+          : null;
+        const updated = await io.db("rpc/delivery_refresh", {
+          p_id: p.candidate,
+          p_mobile: mobile,
+        });
+        return Response.json({ candidate: { ...frozen, ...updated }, presentation });
       }
       if (p.operation === "cancel") {
         if (
@@ -320,12 +412,22 @@ export function deliveryControlHandler(io: IO) {
           );
           if (r.status !== 204) throw Error("Dispatch outcome not confirmed");
           receipt = "github-dispatch-204";
+        } else if (t.kind === "notice") {
+          const sent = await io.slack("chat.postMessage", deliveryNotice(c, t));
+          channel = sent.channel;
+          message = sent.ts;
+          receipt = `slack:${channel}:${message}`;
         } else if (["channel", "technical", "business"].includes(t.kind)) {
           if (c.status === "published") {
             const frozen = await state(io, c.id);
             const release = await github(io, `releases/tags/poc-v${c.version}`);
             if (!release) throw Error("Published release missing");
-            c.versionRows = (await versionPresentation(io, frozen, release)).rows;
+            const presentation = await versionPresentation(io, frozen, release);
+            c.versionRows = presentation.rows;
+            c.androidStagingPending =
+              JSON.parse(frozen.report_text).mobile_execution_plan?.schema ===
+                "delivery-android-staging-v1" &&
+              !presentation.rows[2][1].includes("(patch ");
           }
           const isChannel = t.kind === "channel";
           const ts = isChannel ? c.channel_message : c[`${t.kind}_message`];

@@ -6,6 +6,10 @@ on:
         description: Opcional — cancelar candidata antes de iniciar a publicação
         type: string
         required: false
+      refresh_candidate:
+        description: Opcional — atualizar tabela da Release publicada e cartão a partir dos recibos reais
+        type: string
+        required: false
   schedule:
     # Avoid the start-of-hour load; schedule is best effort, callbacks also wake this worker.
     - cron: '2-59/5 * * * *'
@@ -35,9 +39,11 @@ jobs:
       - name: Confirmar evidências e entregar operações pendentes
         env:
           CANCEL_CANDIDATE: ${{ inputs.cancel_candidate }}
+          REFRESH_CANDIDATE: ${{ inputs.refresh_candidate }}
         run: |
           args=()
           if [ -n "$CANCEL_CANDIDATE" ]; then args+=(--cancel "$CANCEL_CANDIDATE"); fi
+          if [ -n "$REFRESH_CANDIDATE" ]; then args+=(--refresh "$REFRESH_CANDIDATE"); fi
           python3 tools/delivery/delivery_v2.py drain --output "$RUNNER_TEMP/delivery-worker" "${args[@]}"
       - if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9

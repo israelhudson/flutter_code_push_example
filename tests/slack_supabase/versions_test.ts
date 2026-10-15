@@ -84,6 +84,21 @@ Deno.test("Controls-only table does not fetch Pages and never generates preview 
   assert(result.rows[1][2] === "Não gerado nesta rodada");
   assert(result.sources.length === 0);
 });
+Deno.test("Frozen staging plan displays a pending patch, never a completed Android delivery", () => {
+  const rows = defaultRows({
+    ...c,
+    report_text: JSON.stringify({
+      validation_mode: "full",
+      mobile_execution_plan: {
+        schema: "delivery-android-staging-v1",
+        target: { release_version: "1.1.0+2" },
+      },
+    }),
+  });
+  assert(rows[2][1] === "1.1.0+2");
+  assert(rows[2][2].includes("pendente"));
+  assert(rows[3][1] === "Não validada");
+});
 Deno.test("Table uses hashed preview metadata and matching release assets; changed evidence fails closed", async () => {
   const metadata = JSON.stringify({
     source_sha: c.source_sha,
