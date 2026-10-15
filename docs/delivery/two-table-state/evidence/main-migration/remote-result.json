@@ -1,0 +1,26 @@
+{
+  "project": "xtvueqciogzkyjkkqxcx",
+  "migration": "retire_legacy_delivery_tables",
+  "applied": true,
+  "public_application_tables": [
+    "delivery_control",
+    "delivery_outbox"
+  ],
+  "legacy_endpoint_http_status": 410,
+  "publication_dispatches": 0,
+  "publication_enabled": false,
+  "github_publication_enabled": false,
+  "legacy_preparation_enabled": false,
+  "manual_callbacks_http": [
+    200,
+    200,
+    200,
+    200
+  ],
+  "revision_after_repeated_accepts": 2,
+  "worker_on_main_validated": false,
+  "pr": 54,
+  "receiver_version": 17,
+  "legacy_control_version": 17,
+  "receiver_bundle_sha256": "ec97e044220b2e39fd4e835f18d3dfbcb029a1efea700590d0e5022aad8c90d0"
+}

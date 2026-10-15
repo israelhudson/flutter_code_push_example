@@ -30,3 +30,7 @@ A migration de aposentadoria recusa candidata ativa, aviso pendente, publicaçã
 4. Validar callback → wakeup → GitHub journal → atualização de DMs com a execução real. Só então considerar esse percurso comprovado.
 
 Logs/prints privados: `Documents/Codex/2026-10-14/delivery-manual-validation`.
+
+## Resultado remoto final
+
+A migration de aposentadoria foi aplicada com sucesso. Consulta ao catálogo confirmou exatamente `delivery_control` e `delivery_outbox` em `public`; zero tarefas de dispatch. Auditor de segurança retornou somente INFO de RLS sem policies nas duas tabelas server-only, sem acesso público. O endpoint legado responde 410. Ver `remote-result.json`.

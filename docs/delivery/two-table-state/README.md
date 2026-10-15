@@ -2,8 +2,11 @@
 
 Implementação opt-in da proposta B. **Fluxo não ativado remotamente.**
 
-Em 14/10/2026, a migração aditiva foi aplicada no projeto exclusivo e validada
-com transações desfeitas. As oito tabelas antigas permanecem intactas.
+Em 14/10/2026, as migrações aditiva e de aposentadoria foram aplicadas no projeto
+exclusivo após backup e restauração verificados. Há somente `delivery_control` e
+`delivery_outbox` no schema público. O receptor de DMs está implantado para testes;
+publicação e preparos permanecem bloqueados. O worker da main ainda aguarda integração.
+Veja o [estado atual e a prova dos cliques](evidence/main-migration/README.md).
 Veja [resultados da validação do banco](evidence/database-validation/README.md).
 Nenhuma candidata foi preparada, nenhum aceite enviado e nenhuma tag/Release
 alterada nesta implementação. A rodada 1.15.2 permanece cancelada; sua RC não deve
@@ -117,8 +120,10 @@ de uma publicação iniciada.
 8. Só remover as oito tabelas antigas em outra migração, depois de backup validado,
    encerramento das pendências e período de observação combinado.
 
-Durante a transição haverá dez tabelas: oito preservadas e duas novas. O modelo
-novo usa apenas duas. **Esta mudança não afirma que o banco remoto já foi reduzido.**
+A transição com dez tabelas foi concluída no projeto exclusivo. O banco remoto
+da aplicação agora possui duas tabelas; o legado foi arquivado e removido pela
+migration `20261015012542_retire_legacy_delivery_tables.sql`. O roteiro acima
+permanece como referência para uma migração futura, não como estado pendente da POC.
 
 Rollback: desligar entrada v2 para novos preparos e preservar controles/fila.
 Não apagar a fila nem reabrir decisões antigas. Se houver publicação em andamento,
