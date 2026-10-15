@@ -1,4 +1,4 @@
-name: LAB - Verificar PR
+name: CI · Verificar PR
 on:
   pull_request:
     branches:
