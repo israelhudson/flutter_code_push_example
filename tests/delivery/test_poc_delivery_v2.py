@@ -1,11 +1,45 @@
 import base64
 import os
 import sys
+import json
+import tempfile
 from pathlib import Path
 import unittest
 from unittest.mock import patch
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'tools'/'delivery'))
 import delivery_v2 as v2
+
+class SourceChecks(unittest.TestCase):
+    def test_v2_requires_successful_push_on_configured_main_or_exact_release(self):
+        source = 'a' * 40
+        release = 'poc-release/2.0.0'
+        valid = {'id': 42, 'head_sha': source, 'head_branch': 'main',
+                 'event': 'push', 'status': 'completed', 'conclusion': 'success'}
+        job = {'name': 'Slack / Verificar contratos', 'status': 'completed',
+               'conclusion': 'success'}
+        cases = [({}, True), ({'head_branch': release}, True),
+                 ({'head_branch': 'slack-main'}, False),
+                 ({'head_branch': 'poc-release/3.0.0'}, False),
+                 ({'event': 'pull_request'}, False),
+                 ({'head_sha': 'b' * 40}, False),
+                 ({'conclusion': 'failure'}, False)]
+        with patch.dict(os.environ, {'DELIVERY_STATE_V2': 'true', 'POC_SOURCE_BRANCH': 'main'}):
+            for changes, accepted in cases:
+                with self.subTest(changes=changes), tempfile.TemporaryDirectory() as output, \
+                        patch.object(v2.lab, 'api', side_effect=[
+                            {'workflow_runs': [{**valid, **changes}]}, {'jobs': [job]}]):
+                    if accepted:
+                        v2.legacy.checked_source(source, output, release)
+                    else:
+                        with self.assertRaises(v2.lab.LabError):
+                            v2.legacy.checked_source(source, output, release)
+                    self.assertEqual(json.loads(Path(output, 'source-check.json').read_text())['success'], accepted)
+            for conclusion in ('failure', 'skipped'):
+                with self.subTest(job=conclusion), tempfile.TemporaryDirectory() as output, \
+                        patch.object(v2.lab, 'api', side_effect=[
+                            {'workflow_runs': [valid]}, {'jobs': [{**job, 'conclusion': conclusion}]}]):
+                    with self.assertRaises(v2.lab.LabError):
+                        v2.legacy.checked_source(source, output, release)
 
 class JournalTests(unittest.TestCase):
     def test_existing_record_is_verified_at_immutable_commit_without_writes(self):
