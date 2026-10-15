@@ -1,0 +1,45 @@
+{
+  "storage": "Private local evidence; no screenshots uploaded to public repository",
+  "files": [
+    {
+      "file": "01-pr62-integrado.jpg",
+      "sha256": "706536cfb8dfa40c8000530caac3dd36026adedd78c12b54e5408d5d48e15264",
+      "bytes": 115134
+    },
+    {
+      "file": "02-dms-titulares-automaticos.jpg",
+      "sha256": "4db3b88833b96bd3f7b29d21f54f1039ce81bea2c1ad8e4f4cad35780943403e",
+      "bytes": 88290
+    },
+    {
+      "file": "03-aceite-tecnico-recebido.jpg",
+      "sha256": "5b19eb229d08380feaf2e49b411aa0010a668177c228344a12e553981be6f692",
+      "bytes": 91172
+    },
+    {
+      "file": "04-dois-aceites-recebidos.jpg",
+      "sha256": "f2322e88977f253958b616e935edc93caa9d4d61f17977a8a522112f687a5bee",
+      "bytes": 90433
+    },
+    {
+      "file": "05-workflow-sem-build-preview.jpg",
+      "sha256": "2a180e27ef0956efdf1967effdcada8d7ef70eac834f90a811c2a442a796f782",
+      "bytes": 59131
+    },
+    {
+      "file": "06-release-candidata-sem-preview.jpg",
+      "sha256": "dcd28c3e38b4e3ece57c07bafbd001d4b1b713fd698859ba38f537bc42659a50",
+      "bytes": 90408
+    },
+    {
+      "file": "07-dms-encerradas-aceites-preservados.jpg",
+      "sha256": "cb1950f41e7afb2e1182dc63abc75c8f12f555d7cbdea8e3e5e3ba80bae2f9b7",
+      "bytes": 88275
+    },
+    {
+      "file": "08-canal-ensaio-encerrado.jpg",
+      "sha256": "8b2f8d12399c5beb513326b5ffdec8c1f2de991f4bcd3ca791f0335c35128f59",
+      "bytes": 84848
+    }
+  ]
+}

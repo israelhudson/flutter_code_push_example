@@ -3,15 +3,18 @@
 Implementação opt-in da proposta B. **Worker e DMs validados na main; publicação bloqueada.**
 
 Extensão de 15/10/2026: a proposta 1 de **titulares automáticos no banco** está
-implementada em código e migração, aguardando aplicação e rodada remota. Acrescenta
-somente `delivery_reviewers`: três tabelas de aplicação no total. O histórico
-continua no GitHub. Veja o [guia dos aprovadores](APROVADORES.md) e o
-[planejamento original e sua evolução](PLANO-APROVADORES.md). Esta seção não afirma
-que a nova migração já foi aplicada nem que os novos titulares foram testados em DMs reais.
+integrada na `main`, com migração aplicada e ensaio solo por DMs reais concluído.
+Acrescentou somente `delivery_reviewers`: **três tabelas de aplicação** no total.
+Israel ocupou os dois papéis automaticamente, sem pessoas no JSON. A candidata
+`1.15.3 RC1` foi cancelada depois dos dois aceites; não houve promoção final,
+preview ou patch. A tag RC e sua prerelease foram criadas e preservadas.
+Veja os [resultados e logs sanitizados](evidence/reviewer-defaults/README.md), o
+[guia dos aprovadores](APROVADORES.md) e o
+[planejamento original e sua evolução](PLANO-APROVADORES.md).
 
 Em 14/10/2026, as migrações aditiva e de aposentadoria foram aplicadas no projeto
-exclusivo após backup e restauração verificados. Há somente `delivery_control` e
-`delivery_outbox` no schema público. O receptor de DMs está implantado para testes;
+exclusivo após backup e restauração verificados. Naquele momento, restaram somente
+`delivery_control` e `delivery_outbox` no schema público. O receptor de DMs está implantado para testes;
 publicação e preparos permanecem bloqueados. O worker da main foi integrado e validado com DMs reais; veja [evidências](evidence/main-worker/README.md).
 Veja o [estado atual e a prova dos cliques](evidence/main-migration/README.md).
 Veja [resultados da validação do banco](evidence/database-validation/README.md).
@@ -74,6 +77,8 @@ avaliação encerrada com dois aceites nesse escopo pode ser cancelada pelo oper
    verificações de código, proteção de tags e build/preview do fluxo atual.
 2. `controls_only` dispensa build/preview/patch. `full` valida preview, **sem patch**.
    O escopo `github` é convertido para `github_test` e permite só GitHub Release.
+   O preparo normal cria tag RC e prerelease mesmo em `controls_only`/`none`;
+   `none` bloqueia a promoção final, não esses registros de candidata.
 3. O script grava um manifesto imutável no GitHub e cria a Release Candidate com
    o preview, quando houver. Novas candidatas incluem os titulares resolvidos no
    banco; o registro confere o snapshot em transação antes de congelá-lo. O banco
@@ -86,8 +91,9 @@ avaliação encerrada com dois aceites nesse escopo pode ser cancelada pelo oper
    periódica recuperam um despertar perdido. Não usamos `waitUntil` como fila.
 7. O worker grava cada evento no GitHub e confirma os bytes pelo commit imutável.
    O receptor verifica novamente o conteúdo antes de dar baixa na tarefa.
-8. Dois aceites fecham a avaliação. Depois da persistência dos eventos, é feito
-   um único dispatch; a publicação possui um único `run_id` proprietário.
+8. Dois aceites fecham a avaliação. Com escopo de publicação e controles
+   habilitados, depois da persistência dos eventos é feito um único dispatch;
+   a publicação possui um único `run_id` proprietário. Em `none`, não há dispatch.
 9. A publicação conserva tags RC e cria a tag final no SHA aprovado. O cartão é
    editado, mostra o link da execução e depois os resultados de versões comprovados.
 10. Operações concluídas de candidatas terminais saem da fila após sete dias,
@@ -162,7 +168,9 @@ da aplicação possuía duas tabelas no encerramento do ensaio do cron; o legado
 migration `20261015012542_retire_legacy_delivery_tables.sql`. O roteiro acima
 permanece como referência para uma migração futura, não como estado pendente da POC.
 A nova migração `20261015132214_delivery_reviewer_defaults.sql` acrescenta o
-cadastro de aprovadores; seu roteiro específico está em [APROVADORES.md](APROVADORES.md).
+cadastro de aprovadores e foi aplicada em 15/10; o banco tem agora três tabelas.
+Seu roteiro está em [APROVADORES.md](APROVADORES.md), e a distinção entre versão
+local e registro remoto da migração está na [prova da aplicação](evidence/reviewer-defaults/README.md).
 
 Rollback: desligar entrada v2 para novos preparos e preservar controles/fila.
 Não apagar a fila nem reabrir decisões antigas. Se houver publicação em andamento,

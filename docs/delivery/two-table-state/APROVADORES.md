@@ -1,7 +1,9 @@
 # Aprovadores: titulares automáticos e substitutos
 
-**Código e migração implementados; aplicação e rodada remota ainda precisam de
-evidência própria. Publicação bloqueada.** Este guia se aplica somente ao projeto
+**Integrado na main, migração aplicada e titulares automáticos validados em DMs
+reais no ensaio solo de 15/10/2026. Promoção final bloqueada; worker e receptor
+pausados ao encerrar.** Veja os [resultados e limites](evidence/reviewer-defaults/README.md).
+Este guia se aplica somente ao projeto
 `israelhudson/flutter_code_push_example` e ao Supabase exclusivo
 `xtvueqciogzkyjkkqxcx`. Não modifica banco, bot ou regras da Amulets.
 
@@ -182,15 +184,31 @@ As alterações são aditivas ao controle e não removem nenhuma candidata ou ac
    Conferir três tabelas públicas de aplicação, grants do catálogo, titulares e
    preservação das candidatas, aceites, tags e histórico existentes.
 4. Testar RPC, worker e DMs em ensaio autorizado `controls_only`, escopo `none`.
-   Publicação permanece bloqueada; esse ensaio não cria Release, tag, preview ou patch.
+   Promoção final permanece bloqueada. Esse modo dispensa build, preview e patch,
+   mas o preparo normal ainda cria a **tag RC e a GitHub prerelease da candidata**.
+   `none` impede o dispatch da publicação final; não elimina os registros de candidata.
 5. Guardar logs e prints do catálogo, resolução automática, duas DMs e decisões.
    Confirmar zero dispatch/publicação. Encerrar a fixture sem pendências e pausar
    novamente o worker/receptor.
 
-Cobertura local preparada: defaults solo e distintos, falta/duplicidade de titular,
+Cobertura local: defaults solo e distintos, falta/duplicidade de titular,
 troca concorrente, snapshot divergente, usuário não designado, revogação, RLS/grants,
 histórico legado, retry e rejeição/RC2. Testes locais usam SQL real em PGlite e
-fixtures HTTP; não comprovam entrega de DMs, cliques ou implantação reais.
+fixtures HTTP; seus resultados não devem ser confundidos com testes remotos de
+troca de titular, revogação ou concorrência entre sessões reais.
+
+Em 15/10, o [PR #62](https://github.com/israelhudson/flutter_code_push_example/pull/62)
+foi integrado na `main`; a migração foi aplicada somente ao projeto exclusivo e
+a candidata `1.15.3 RC1`, em `controls_only`/`none`, usou os titulares do banco.
+As duas DMs receberam aceites da conta de Israel, e o operador cancelou a candidata
+para encerrar o ensaio. Seus 16 trabalhos terminaram, sem dispatch ou run de
+publicação. O banco ficou com três tabelas de aplicação, zero pendências e os
+registros anteriores preservados. Foram criadas a tag `poc-v1.15.3-rc.1` e sua
+prerelease; não foram criados tag estável, Release final, preview ou patch.
+
+O worker/receptor foi pausado novamente e os controles de promoção permaneceram
+desligados durante toda a rodada. O [relatório da rodada](evidence/reviewer-defaults/README.md)
+liga os runs, a prova sanitizada e os limites da validação.
 
 Antes da Amulets: validar com duas contas distintas, definir administradores,
 restaurar revisão humana dos PRs e acordar o procedimento operacional de

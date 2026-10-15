@@ -2,10 +2,12 @@
 
 Solicitação registrada em 15/10/2026. **Registro original de planejamento,
 preservado para acompanhar a decisão.** A proposta 1 foi autorizada e implementada
-em código e migração no mesmo dia; aplicação no projeto exclusivo e rodada remota
-ainda precisam de evidência própria. Não é uma autorização para alterar a Amulets.
+em código e migração no mesmo dia. Foi integrada na main, aplicada ao projeto
+exclusivo e validada em rodada solo com DMs reais. Veja a
+[prova da rodada e seus limites](evidence/reviewer-defaults/README.md).
+Não é uma autorização para alterar a Amulets.
 
-## Evolução: proposta 1 implementada em código
+## Evolução: proposta 1 implementada e testada em modo solo
 
 - Uma nova tabela, `delivery_reviewers`, define elegíveis e titulares automáticos.
   O modelo passa de duas para três tabelas de aplicação, sem nova tabela de histórico.
@@ -20,8 +22,9 @@ ainda precisam de evidência própria. Não é uma autorização para alterar a 
   de CRUD. O runtime só lê o cadastro. Ausência de titular bloqueia, sem fallback.
 - Troca de padrão não altera uma avaliação aberta. Inativação ou retirada do papel
   impede novas decisões dos designados, sem apagar decisões já confirmadas.
-- Publicação permanece bloqueada. A validação operacional deve usar
-  `controls_only` e escopo `none`, sem Release, tag, preview ou patch novos.
+- Publicação final permanece bloqueada. A rodada `controls_only`/`none` criou
+  a tag RC e o pré-lançamento da candidata, sem preview, patch ou promoção final.
+  Os dois aceites foram registrados e preservados ao encerrar a avaliação.
 
 O [guia de operação e implantação](APROVADORES.md) descreve o código implementado,
 a substituição atômica e o que falta validar. As seções abaixo registram o cenário
