@@ -1,0 +1,186 @@
+{
+  "schema": "reviewer-defaults-validation-v1",
+  "date_utc": "2026-10-15T13:47:56.607147+00:00",
+  "repository": "israelhudson/flutter_code_push_example",
+  "implementation_pr": 62,
+  "source_sha": "8913fd51cacd0e620b589ab3fdb06164e215f62d",
+  "candidate": "delivery-00f48a8471ed496580cb6f93eb781bb1",
+  "version": "1.15.3",
+  "rc_tag": "poc-v1.15.3-rc.1",
+  "candidate_prerelease_created": true,
+  "stable_release_created": false,
+  "mode": "controls_only",
+  "scope": "none",
+  "solo": true,
+  "reviewers_from": "database-v1",
+  "same_person_two_roles": true,
+  "application_tables": [
+    "delivery_control",
+    "delivery_outbox",
+    "delivery_reviewers"
+  ],
+  "state_transitions": [
+    {
+      "step": "initial",
+      "status": "pending",
+      "revision": 0,
+      "technical_received": false,
+      "business_received": false,
+      "publication_run": null
+    },
+    {
+      "step": "technical",
+      "status": "pending",
+      "revision": 1,
+      "technical_received": true,
+      "business_received": false,
+      "publication_run": null
+    },
+    {
+      "step": "business",
+      "status": "approved",
+      "revision": 2,
+      "technical_received": true,
+      "business_received": true,
+      "publication_run": null
+    },
+    {
+      "step": "close",
+      "status": "cancelled",
+      "revision": 3,
+      "technical_received": true,
+      "business_received": true,
+      "publication_run": null
+    }
+  ],
+  "queue": {
+    "candidate_operations": 16,
+    "all_done": true,
+    "unfinished_global": 0,
+    "dispatch_operations": 0,
+    "active_controls_global": 0
+  },
+  "preservation": {
+    "old_controls_preserved": true,
+    "old_outbox_preserved": true,
+    "old_tags_preserved": true,
+    "historical_controls": 7,
+    "historical_tasks": 88,
+    "tags_added": [
+      "refs/tags/poc-v1.15.3-rc.1"
+    ],
+    "stable_tag_absent": true
+  },
+  "journal": {
+    "baseline": "70a77d105b4afddeb6668fda60f269207e7bbb5c",
+    "current": "443d27182c24af28afab75cf1a94cc7c5663eafa",
+    "status": "ahead",
+    "ahead_by": 5,
+    "behind_by": 0,
+    "records_verified": [
+      {
+        "revision": 0,
+        "commit": "6f50f81ec9fbad7172e91b7bc2ad27d97d311ed2",
+        "path": "candidates/delivery-00f48a8471ed496580cb6f93eb781bb1/event-0.json",
+        "sha256": "3aa3d7cff5283c0a5941db28c70bc78c9cdfe189347daa49f774179a5ab00bfa",
+        "exact_event_match": true
+      },
+      {
+        "revision": 1,
+        "commit": "f89165f795a740d01a403667705d153a1b777b14",
+        "path": "candidates/delivery-00f48a8471ed496580cb6f93eb781bb1/event-1.json",
+        "sha256": "1297c0760700891ac7d8b928ca5d4e7c755688ad151f811c17df5708edf7ef61",
+        "exact_event_match": true
+      },
+      {
+        "revision": 2,
+        "commit": "89acb650a2879aa403620dbf147e2250bca56c2b",
+        "path": "candidates/delivery-00f48a8471ed496580cb6f93eb781bb1/event-2.json",
+        "sha256": "809fe094614d15a4d0a3026428d668332ebff704815e34e29501e5d8bbd3842b",
+        "exact_event_match": true
+      },
+      {
+        "revision": 3,
+        "commit": "443d27182c24af28afab75cf1a94cc7c5663eafa",
+        "path": "candidates/delivery-00f48a8471ed496580cb6f93eb781bb1/event-3.json",
+        "sha256": "0046d5608567e34b70ea00691426ef76b9fff4c854bd1a97089a6093f5d5b605",
+        "exact_event_match": true
+      }
+    ],
+    "manifest_verified": {
+      "commit": "92da8dc5e0fbb893cb6a14a0c58613be07a797aa",
+      "digest": "ef80b1edd8aa92b62e69dcc14c122cf646fce7a633454a1f2a4e3fe4a45e7f0d",
+      "path": "candidates/delivery-00f48a8471ed496580cb6f93eb781bb1/manifest.json"
+    },
+    "snapshot_matches": true
+  },
+  "flags": {
+    "github": {
+      "DELIVERY_V2_ENABLED": false,
+      "POC_LEGACY_ENABLED": false,
+      "POC_SLACK_ENABLED": false,
+      "POC_SLACK_PUBLISH_ENABLED": false
+    },
+    "supabase": {
+      "DELIVERY_V2_ENABLED": false,
+      "POC_PUBLICATION_ENABLED": false
+    }
+  },
+  "automation": {
+    "prepare_run": 38744723709,
+    "worker_runs": [
+      {
+        "id": 38744926071,
+        "event": "workflow_dispatch",
+        "conclusion": "success",
+        "branch": "main",
+        "sha": "8913fd51cacd0e620b589ab3fdb06164e215f62d",
+        "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38744926071"
+      },
+      {
+        "id": 38745051119,
+        "event": "workflow_dispatch",
+        "conclusion": "success",
+        "branch": "main",
+        "sha": "8913fd51cacd0e620b589ab3fdb06164e215f62d",
+        "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38745051119"
+      },
+      {
+        "id": 38745241492,
+        "event": "workflow_dispatch",
+        "conclusion": "success",
+        "branch": "main",
+        "sha": "8913fd51cacd0e620b589ab3fdb06164e215f62d",
+        "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38745241492"
+      }
+    ],
+    "build": "skipped",
+    "web": "skipped",
+    "patch": "not_requested",
+    "slack_decisions": "real_browser_clicks_by_agent"
+  },
+  "ci": {
+    "python_tests_passed": 580,
+    "deno_tests_passed": 76,
+    "flutter_analyze": "passed",
+    "flutter_test": "passed"
+  },
+  "limitations": [
+    "Solo: not two independent people",
+    "Reviewer replacement and revocation covered locally; not exercised against live catalog",
+    "Real parallel PostgreSQL connections not exercised",
+    "No preview, patch or stable publication in this round"
+  ],
+  "reviewer_catalog": {
+    "rows": 1,
+    "access_verified": {
+      "anon_select": false,
+      "authenticated_select": false,
+      "rls": true,
+      "runtime_delete": false,
+      "runtime_insert": false,
+      "runtime_select": true,
+      "runtime_update": false
+    }
+  }
+}
