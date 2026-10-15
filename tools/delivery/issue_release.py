@@ -109,6 +109,10 @@ class Journal:
             self.value = json.loads(base64.b64decode(response['content']))
             if self.value.get('schema') != 1:
                 raise IssueError('Journal Issue desconhecido.')
+        for record in self.value['candidates'].values():
+            slack_notify.notification_profile(record)
+        if self.value.get('preparation'):
+            slack_notify.notification_profile(self.value['preparation'])
         return self.value
 
     def save(self, action, tag):
@@ -150,12 +154,21 @@ def tag_sha(tag):
     return ref['object']['sha']
 
 
-def frozen(record, policy):
-    if record.get('policy_digest') != lab.digest(policy):
-        raise IssueError('Política mudou. Prepare outra candidata.')
+def frozen_notification_profile(record):
     report = record.get('report')
     if not report or record.get('report_digest') != lab.digest(report):
         raise IssueError('Relatório congelado ausente ou alterado.')
+    profile = slack_notify.notification_profile(record)
+    if profile != slack_notify.notification_profile(report):
+        raise IssueError('Perfil de aviso diverge do relatório congelado.')
+    return profile
+
+
+def frozen(record, policy):
+    if record.get('policy_digest') != lab.digest(policy):
+        raise IssueError('Política mudou. Prepare outra candidata.')
+    frozen_notification_profile(record)
+    report = record['report']
     if (report.get('source_sha') != record['source_sha'] or report.get('tag') != record['tag']
             or report.get('title') != record['title'] or report.get('version') != record['version']
             or report.get('stable_tag') != record['stable_tag']
@@ -226,6 +239,7 @@ def prepare(policy, version, title, output):
                   'source_sha': source, 'branch': branch, 'tooling_sha': lab.git('rev-parse', 'HEAD'),
                   'policy_digest': lab.digest(policy), 'created_at': lab.now(), 'base_sha': baseline, 'accepted_comments': {},
                   'base_publication': deepcopy(last), 'status': 'prepared', 'revoked_comment_ids': [],
+                  'notification_profile': slack_notify.POC_PROFILE,
                   'preparation_run': os.environ['GITHUB_RUN_ID']}
         state['preparation'] = deepcopy(record)
         journal.save('reserve-preparation', tag)
@@ -367,6 +381,8 @@ def open_issue(policy, tag, metadata, smoke, output):
               'web_content_sha256': metadata['web_content_sha256'], 'snapshot_manifest_sha256': metadata['snapshot_manifest_sha256'],
               'base_sha': record['base_sha'], 'commits': [{'sha': c['sha'], 'message': c['commit']['message'].splitlines()[0]}
                                                        for c in compare.get('commits', [])]}
+    if 'notification_profile' in record:
+        report['notification_profile'] = slack_notify.notification_profile(record)
     if record.get('report_digest') and record['report_digest'] != lab.digest(report):
         raise IssueError('Relatório já congelado diverge. Não reabrir com outro conteúdo.')
     record.update(report=report, report_digest=lab.digest(report), status='opening')
@@ -585,7 +601,10 @@ def notify(policy, tag, output):
     journal = Journal(policy)
     record = journal.record(tag)
     results = []
-    token = os.environ.get('SLACK_BOT_TOKEN')
+    profile = slack_notify.notification_profile(record)
+    if any(notice['state'] == 'pending' for notice in record.get('notices', {}).values()):
+        profile = frozen_notification_profile(record)
+    token = slack_notify.notification_token(profile)
     for key, notice in list(record.get('notices', {}).items()):
         if notice['state'] != 'pending':
             continue  # sent/unknown are never blindly repeated on an ephemeral runner.
@@ -597,7 +616,7 @@ def notify(policy, tag, output):
         if not token:
             results.append({'key': key, 'state': 'pending', 'reason': 'secret-absent'})
             continue
-        slack_notify.verify_destination(token)
+        bot_user = slack_notify.verify_destination(token, slack_notify.slack_api, profile=profile)
         labels = {'candidate': 'Candidata pronta para avaliar', 'approved': 'Aval registrado. Falta /publicar',
                   'rejected': 'RC reprovada', 'superseded': 'RC substituída', 'published': 'Release de teste publicada'}
         text = (f'TESTE de aprovação por Issue (1/1): {tag}\n{record["title"]}\n'
@@ -611,7 +630,7 @@ def notify(policy, tag, output):
             'unfurl_links': False, 'unfurl_media': False}, token)
         if response.get('channel') != slack_notify.CHANNEL_ID or not re.fullmatch(r'\d+\.\d+', str(response.get('ts', ''))):
             raise IssueError('Slack sem recibo exato. Unknown bloqueia reenvio automático.')
-        notice.update(state='sent', ts=response['ts'])
+        notice.update(state='sent', ts=response['ts'], notification_profile=profile, bot_user=bot_user)
         journal.save('slack-sent', tag)
         results.append({'key': key, 'state': 'sent', 'channel': response['channel'], 'ts': response['ts']})
     lab.output(output, 'notifications.json', results)

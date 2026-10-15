@@ -26,6 +26,37 @@ CORRECTION = 'b' * 40
 OWNER = {'id': 18661493, 'login': 'israelhudson', 'type': 'User'}
 ATTACKER = {'id': 42, 'login': 'outsider', 'type': 'User'}
 DATE = '2026-10-09T21:00:00Z'
+POC_BOT = 'U0C8XJ5S0Q6'
+LEGACY_BOT = 'U0C750FTCS3'
+POC_TOKEN = 'poc-offline-fixture-token'
+LEGACY_TOKEN = 'legacy-offline-fixture-token'
+
+
+class Slack:
+    """API-shaped fixture that exercises the real destination verifier offline."""
+    def __init__(self, bot_user=POC_BOT):
+        self.bot_user = bot_user
+        self.calls = []
+
+    def api(self, method, data, token):
+        self.calls.append((method, deepcopy(data), token))
+        if method == 'auth.test':
+            return {'ok': True, 'user_id': self.bot_user, 'bot_id': 'B0C9TUA3EFJ',
+                    'team_id': 'T09CYB7AS77'}
+        if method == 'conversations.info':
+            return {'ok': True, 'channel': {'id': issue.slack_notify.CHANNEL_ID,
+                    'name': issue.slack_notify.CHANNEL_NAME,
+                    'is_private': True, 'is_archived': False}}
+        if method == 'conversations.members':
+            return {'ok': True, 'members': [issue.slack_notify.ISRAEL_ID, LEGACY_BOT, POC_BOT],
+                    'response_metadata': {'next_cursor': ''}}
+        if method == 'chat.postMessage':
+            return {'ok': True, 'channel': issue.slack_notify.CHANNEL_ID, 'ts': '1792000000.123456'}
+        raise AssertionError('Unexpected Slack operation: ' + method)
+
+    @property
+    def posts(self):
+        return [call for call in self.calls if call[0] == 'chat.postMessage']
 
 
 class GitHub:
@@ -167,8 +198,10 @@ class IssueTests(unittest.TestCase):
             'ISSUE_RELEASE_ENABLED': 'true', 'GITHUB_OUTPUT': str(Path(self.folder, 'outputs'))})
         self.env.start(); self.addCleanup(self.env.stop)
 
-    def candidate(self, version='1.13.0'):
+    def candidate(self, version='1.13.0', *, legacy=False):
         record = issue.prepare(self.policy, version, 'Mudança de exemplo', self.folder)
+        if legacy:
+            del self.github.state['candidates'][record['tag']]['notification_profile']
         metadata = {'source_sha': record['source_sha'], 'web_content_sha256': 'c' * 64, 'snapshot_manifest_sha256': 'd' * 64}
         smoke = {**metadata, 'success': True,
                  'snapshot_url': 'https://israelhudson.github.io/flutter_code_push_example/snapshots/' + record['source_sha'] + '/'}
@@ -352,7 +385,41 @@ class IssueTests(unittest.TestCase):
         record = issue.prepare(self.policy, '1.13.0', 'Mudança', self.folder)
         again = issue.prepare(self.policy, '1.13.0', 'Mudança', self.folder)
         self.assertEqual(record['tag'], again['tag'])
+        self.assertEqual(record['notification_profile'], issue.slack_notify.POC_PROFILE)
+        self.assertEqual(again['notification_profile'], record['notification_profile'])
         self.assertEqual(self.github.effects.count(('ref', 'tags/' + record['tag'])), 1)
+
+    def test_prepared_legacy_cut_keeps_original_profile_on_retry(self):
+        record = issue.prepare(self.policy, '1.13.0', 'Mudança', self.folder)
+        del self.github.state['candidates'][record['tag']]['notification_profile']
+        again = issue.prepare(self.policy, '1.13.0', 'Mudança', self.folder)
+        self.assertNotIn('notification_profile', again)
+        self.assertEqual(issue.slack_notify.notification_profile(again), issue.slack_notify.LEGACY_PROFILE)
+
+    def test_partial_legacy_reservation_keeps_original_profile_on_recovery(self):
+        original = lab.create_ref_verified
+        def fail_candidate_ref(ref, sha):
+            if ref.startswith('heads/test-issue-release/'):
+                raise lab.LabError('Falha antes da referência')
+            return original(ref, sha)
+        with patch.object(lab, 'create_ref_verified', side_effect=fail_candidate_ref):
+            with self.assertRaises(lab.LabError):
+                issue.prepare(self.policy, '1.13.0', 'Mudança', self.folder)
+        del self.github.state['preparation']['notification_profile']
+        again = issue.prepare(self.policy, '1.13.0', 'Mudança', self.folder)
+        self.assertNotIn('notification_profile', again)
+        self.assertNotIn('notification_profile', self.github.state['candidates'][again['tag']])
+
+    def test_new_rc_after_legacy_rejection_uses_poc_without_rewriting_rc1(self):
+        rc1 = self.candidate(legacy=True)
+        self.decide(rc1, self.vote(rc1, 'reprovar'))
+        self.github.refs['heads/' + rc1['branch']] = CORRECTION
+        rc2 = self.candidate()
+        self.assertTrue(rc2['tag'].endswith('rc.2'))
+        self.assertEqual(rc2['notification_profile'], issue.slack_notify.POC_PROFILE)
+        self.assertFalse(rc2.get('approvals'))
+        self.assertNotIn('notification_profile', self.github.state['candidates'][rc1['tag']])
+        self.assertEqual(self.github.refs['tags/' + rc1['tag']], SOURCE)
 
     def test_all_comment_pages_are_consulted(self):
         record = self.candidate()
@@ -402,7 +469,7 @@ class IssueTests(unittest.TestCase):
 
     def test_unknown_slack_result_is_not_retried(self):
         record = self.candidate()
-        with patch.dict(os.environ, {'SLACK_BOT_TOKEN': 'fixture-not-a-real-secret'}), \
+        with patch.dict(os.environ, {'POC_SLACK_BOT_TOKEN': POC_TOKEN}), \
              patch.object(issue.slack_notify, 'verify_destination'), \
              patch.object(issue.slack_notify, 'slack_api', side_effect=issue.slack_notify.SlackAPIError('Resposta incerta')) as post:
             with self.assertRaises(issue.slack_notify.SlackAPIError):
@@ -410,6 +477,134 @@ class IssueTests(unittest.TestCase):
             issue.notify(self.policy, record['tag'], self.folder)
             self.assertEqual(post.call_count, 1)
         self.assertEqual(self.github.state['candidates'][record['tag']]['status'], 'awaiting_approval')
+
+    def test_new_notice_uses_exclusive_bot_and_sent_receipt_prevents_replay(self):
+        record = self.candidate()
+        self.assertEqual(record['report']['notification_profile'], issue.slack_notify.POC_PROFILE)
+        slack = Slack()
+        with patch.dict(os.environ, {'POC_SLACK_BOT_TOKEN': POC_TOKEN, 'SLACK_BOT_TOKEN': LEGACY_TOKEN}), \
+             patch.object(issue.slack_notify, 'slack_api', slack.api):
+            result = issue.notify(self.policy, record['tag'], self.folder)
+            calls = deepcopy(slack.calls)
+            self.assertEqual(issue.notify(self.policy, record['tag'], self.folder), [])
+            self.assertEqual(slack.calls, calls)
+        self.assertEqual(len(slack.posts), 1)
+        self.assertEqual(result[0]['state'], 'sent')
+        self.assertTrue(all(call[2] == POC_TOKEN for call in slack.calls))
+        payload = slack.posts[0][1]
+        self.assertNotIn('blocks', payload)
+        self.assertNotIn('attachments', payload)
+        self.assertIn(record['issue_url'], payload['text'])
+        saved = next(iter(self.github.state['candidates'][record['tag']]['notices'].values()))
+        self.assertEqual(saved['notification_profile'], issue.slack_notify.POC_PROFILE)
+        self.assertEqual(saved['bot_user'], POC_BOT)
+        self.assertEqual(self.github.state['events'][-2]['action'], 'slack-intent')
+        self.assertEqual(self.github.state['events'][-1]['action'], 'slack-sent')
+
+    def test_new_notice_rejects_shared_bot_before_any_post_or_intent(self):
+        record = self.candidate()
+        slack = Slack(LEGACY_BOT)
+        original = deepcopy(self.github.state)
+        with patch.dict(os.environ, {'POC_SLACK_BOT_TOKEN': POC_TOKEN}), \
+             patch.object(issue.slack_notify, 'slack_api', slack.api):
+            with self.assertRaises(issue.slack_notify.NoticeError):
+                issue.notify(self.policy, record['tag'], self.folder)
+        self.assertFalse(slack.posts)
+        self.assertEqual(self.github.state, original)
+
+    def test_exclusive_notice_without_new_secret_never_falls_back_to_shared_token(self):
+        record = self.candidate()
+        with patch.dict(os.environ, {'SLACK_BOT_TOKEN': LEGACY_TOKEN}, clear=True), \
+             patch.object(issue.slack_notify, 'slack_api') as api:
+            result = issue.notify(self.policy, record['tag'], self.folder)
+        api.assert_not_called()
+        self.assertEqual(result[0]['reason'], 'secret-absent')
+        self.assertEqual(result[0]['state'], 'pending')
+
+    def test_legacy_pending_notice_keeps_shared_identity_and_text_payload(self):
+        record = self.candidate(legacy=True)
+        slack = Slack(LEGACY_BOT)
+        with patch.dict(os.environ, {'POC_SLACK_BOT_TOKEN': POC_TOKEN, 'SLACK_BOT_TOKEN': LEGACY_TOKEN}), \
+             patch.object(issue.slack_notify, 'slack_api', slack.api):
+            issue.notify(self.policy, record['tag'], self.folder)
+        self.assertTrue(all(call[2] == LEGACY_TOKEN for call in slack.calls))
+        self.assertEqual(len(slack.posts), 1)
+        self.assertNotIn('blocks', slack.posts[0][1])
+        self.assertNotIn('notification_profile', self.github.state['candidates'][record['tag']])
+
+    def test_sent_and_unknown_legacy_notices_are_not_migrated_or_replayed(self):
+        record = self.candidate(legacy=True)
+        stored = self.github.state['candidates'][record['tag']]
+        stored['notices'] = {'sent': {'state': 'sent', 'event': 'candidate', 'ts': '1791000000.1'},
+                             'unknown': {'state': 'unknown', 'event': 'approved'}}
+        original = deepcopy(self.github.state)
+        with patch.dict(os.environ, {'POC_SLACK_BOT_TOKEN': POC_TOKEN, 'SLACK_BOT_TOKEN': LEGACY_TOKEN}), \
+             patch.object(issue.slack_notify, 'slack_api') as api:
+            self.assertEqual(issue.notify(self.policy, record['tag'], self.folder), [])
+        api.assert_not_called()
+        self.assertEqual(self.github.state, original)
+
+    def test_unknown_notification_profile_stops_before_network_or_state_mutation(self):
+        record = self.candidate()
+        self.github.state['candidates'][record['tag']]['notification_profile'] = 'another-project'
+        original = deepcopy(self.github.state)
+        with patch.object(issue.slack_notify, 'slack_api') as api:
+            with self.assertRaises(issue.slack_notify.NoticeError):
+                issue.notify(self.policy, record['tag'], self.folder)
+        api.assert_not_called()
+        self.assertEqual(self.github.state, original)
+
+    def test_valid_profile_change_after_open_is_blocked_before_slack_or_intent(self):
+        record = self.candidate()
+        stored = self.github.state['candidates'][record['tag']]
+        stored['notification_profile'] = issue.slack_notify.LEGACY_PROFILE
+        original = deepcopy(self.github.state)
+        with patch.dict(os.environ, {'POC_SLACK_BOT_TOKEN': POC_TOKEN, 'SLACK_BOT_TOKEN': LEGACY_TOKEN}), \
+             patch.object(issue.slack_notify, 'slack_api') as api:
+            with self.assertRaisesRegex(issue.IssueError, 'Perfil de aviso'):
+                issue.notify(self.policy, record['tag'], self.folder)
+        api.assert_not_called()
+        self.assertEqual(self.github.state, original)
+
+    def test_legacy_notice_cannot_change_to_poc_after_report_was_frozen(self):
+        record = self.candidate(legacy=True)
+        self.assertNotIn('notification_profile', record['report'])
+        self.github.state['candidates'][record['tag']]['notification_profile'] = issue.slack_notify.POC_PROFILE
+        original = deepcopy(self.github.state)
+        with patch.dict(os.environ, {'POC_SLACK_BOT_TOKEN': POC_TOKEN, 'SLACK_BOT_TOKEN': LEGACY_TOKEN}), \
+             patch.object(issue.slack_notify, 'slack_api') as api:
+            with self.assertRaisesRegex(issue.IssueError, 'Perfil de aviso'):
+                issue.notify(self.policy, record['tag'], self.folder)
+        api.assert_not_called()
+        self.assertEqual(self.github.state, original)
+
+    def test_report_profile_change_cannot_bypass_frozen_digest(self):
+        record = self.candidate()
+        stored = self.github.state['candidates'][record['tag']]
+        stored['notification_profile'] = issue.slack_notify.LEGACY_PROFILE
+        stored['report']['notification_profile'] = issue.slack_notify.LEGACY_PROFILE
+        original = deepcopy(self.github.state)
+        with patch.object(issue.slack_notify, 'slack_api') as api:
+            with self.assertRaisesRegex(issue.IssueError, 'Relatório congelado'):
+                issue.notify(self.policy, record['tag'], self.folder)
+        api.assert_not_called()
+        self.assertEqual(self.github.state, original)
+
+    def test_superseded_legacy_notice_keeps_frozen_profile_after_branch_advanced(self):
+        rc1 = self.candidate(legacy=True)
+        self.decide(rc1, self.vote(rc1, 'reprovar'))
+        self.github.refs['heads/' + rc1['branch']] = CORRECTION
+        self.candidate()
+        digest = self.github.state['candidates'][rc1['tag']]['report_digest']
+        slack = Slack(LEGACY_BOT)
+        with patch.dict(os.environ, {'POC_SLACK_BOT_TOKEN': POC_TOKEN, 'SLACK_BOT_TOKEN': LEGACY_TOKEN}), \
+             patch.object(issue.slack_notify, 'slack_api', slack.api):
+            result = issue.notify(self.policy, rc1['tag'], self.folder)
+        self.assertTrue(all(item['state'] == 'sent' for item in result))
+        self.assertTrue(any('RC substituída' in call[1]['text'] for call in slack.posts))
+        self.assertTrue(all(call[2] == LEGACY_TOKEN for call in slack.calls))
+        self.assertEqual(self.github.state['candidates'][rc1['tag']]['report_digest'], digest)
+        self.assertEqual(self.github.refs['tags/' + rc1['tag']], SOURCE)
 
     def test_live_comment_changed_after_intent_cannot_resume(self):
         record, command = self.ready()

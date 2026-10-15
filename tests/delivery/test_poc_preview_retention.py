@@ -91,3 +91,22 @@ class RetentionTests(unittest.TestCase):
 
 
 if __name__ == '__main__': unittest.main()
+
+class WorkflowRetentionTests(unittest.TestCase):
+    def test_every_pages_publisher_retains_before_import_and_uploads_evidence(self):
+        root = Path(__file__).resolve().parents[2]
+        names = ('poc-slack-preview', 'poc-slack-prepare', 'issue-release-prepare', 'release-lab-evaluate')
+        for name in names:
+            with self.subTest(workflow=name):
+                text = (root/'.github/workflows'/f'{name}.yml').read_text()
+                history = text.index('pages_preview.py history')
+                retention = text.index('preview_retention.py --site')
+                merge = text.index('release_lab.py merge-preview' if name == 'release-lab-evaluate' else 'issue_preview.py --incoming')
+                persist = text.index('pages_preview.py persist')
+                self.assertLess(history, retention)
+                self.assertLess(retention, merge)
+                self.assertLess(merge, persist)
+                self.assertIn('--incoming', text[retention:merge])
+                self.assertIn('--apply', text[retention:merge])
+                self.assertIn('preview-retention.json', text)
+                self.assertIn('group: pages-preview', text)

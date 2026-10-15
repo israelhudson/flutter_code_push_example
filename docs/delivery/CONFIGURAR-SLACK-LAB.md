@@ -1,7 +1,17 @@
+> **Registro histórico:** a configuração compartilhada descrita abaixo foi
+> substituída. Use o [manual atual dos bots](BOTS-POR-PROJETO.md).
+> LAB/Issue usam `POC_SLACK_BOT_TOKEN`; o bot Amulets e o secret legado foram
+> retirados da POC após a validação da migração.
+
 # Configuração Slack do laboratório
 
-**Use o bot `Flutter Deploy LAB` já instalado. A conexão real foi validada.**
-O secret `SLACK_BOT_TOKEN` já existe no GitHub. Os avisos da candidata foram
+**Configuração atual: [um bot por projeto](BOTS-POR-PROJETO.md).** Novas
+candidatas com perfil `poc-v1` usam **Flutter POC Deploy** e o secret
+`POC_SLACK_BOT_TOKEN`. O bot antigo, hoje **Amulets Deploy**, e
+`SLACK_BOT_TOKEN` são preservados para os registros históricos durante a transição.
+
+As provas abaixo descrevem a conexão histórica de `Flutter Deploy LAB`.
+Os avisos da candidata foram
 integrados pela PR #19 e comprovados na jornada 1.7.0, com cinco avisos reais.
 A jornada 1.8.0 concluiu rejeição, correção, RC2 e retorno à main. Foram
 confirmados 13 avisos reais nas duas jornadas; seguir o
@@ -38,8 +48,9 @@ tag, aprovação ou Release foi alterada pelo teste de conexão.
 
 ## Permissões e credencial
 
-O bot precisa participar do canal privado. Para este fluxo, conferir no app
-existente os escopos de bot pertinentes:
+O bot precisa participar do canal privado. Para o perfil histórico, conferir no app
+legado os escopos de bot pertinentes. O app POC não recebeu `groups:history`;
+esse limite mantém a reconciliação incerta bloqueada até prova positiva:
 
 | Escopo | Finalidade |
 | --- | --- |
@@ -58,7 +69,9 @@ a recuperação automática pelo histórico ainda precisa de sua própria prova.
 O runner recebe o token explicitamente somente na etapa de comunicação.
 Para manutenção ou rotação, usar
 [Settings → Secrets and variables → Actions](https://github.com/israelhudson/flutter_code_push_example/settings/secrets/actions)
-e atualizar `SLACK_BOT_TOKEN` diretamente. Conferir a presença pelo **nome**;
+e atualizar o secret correspondente ao perfil, sem trocar sua identidade.
+`SLACK_BOT_TOKEN` é legado e `POC_SLACK_BOT_TOKEN` é exclusivo da POC.
+Conferir a presença pelo **nome**;
 guardar o valor apenas no secret. Não copiar token para chat, código, arquivo,
 print, artefato ou log.
 [Guia oficial de secrets](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets?tool=webui).

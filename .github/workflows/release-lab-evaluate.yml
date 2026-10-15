@@ -8,6 +8,9 @@ on:
         type: string
         required: true
     secrets:
+      POC_SLACK_BOT_TOKEN:
+        description: Bot exclusivo Flutter POC Deploy; somente candidatas com perfil poc-v1
+        required: false
       SLACK_BOT_TOKEN:
         description: Bot de avisos do canal privado LAB; opcional
         required: false
@@ -181,6 +184,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 trusted/deploy/pages_preview.py history --site "$RUNNER_TEMP/pages-site"
+      - name: Arquivar previews antigos de PR preservando entregas
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 trusted/tools/delivery/preview_retention.py --site "$RUNNER_TEMP/pages-site" --incoming "$RUNNER_TEMP/incoming-site" --output "$RUNNER_TEMP/pages-retention" --apply
       - name: Validar identidade e importar sem sobrescrever snapshots
         env:
           GH_TOKEN: ${{ github.token }}
@@ -235,6 +242,7 @@ jobs:
           path: |
             ${{ runner.temp }}/release-lab/
             ${{ runner.temp }}/pages-smoke.json
+            ${{ runner.temp }}/pages-retention/preview-retention.json
           if-no-files-found: ignore
           retention-days: 90
           overwrite: false
@@ -476,6 +484,7 @@ jobs:
       notification_label: slack_candidate
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      POC_SLACK_BOT_TOKEN: ${{ secrets.POC_SLACK_BOT_TOKEN }}
   slack_first:
     name: Avisar aprovação 1 — Slack opcional
     needs: [preflight, web, approve_first]
@@ -490,6 +499,7 @@ jobs:
       notification_label: slack_first
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      POC_SLACK_BOT_TOKEN: ${{ secrets.POC_SLACK_BOT_TOKEN }}
   slack_second:
     name: Avisar aprovação 2 — Slack opcional
     needs: [preflight, web, approve_second]
@@ -504,6 +514,7 @@ jobs:
       notification_label: slack_second
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      POC_SLACK_BOT_TOKEN: ${{ secrets.POC_SLACK_BOT_TOKEN }}
   slack_ready:
     name: Avisar 2/2 e comando separado — Slack opcional
     needs: [preflight, web, approve_first, approve_second]
@@ -518,6 +529,7 @@ jobs:
       notification_label: slack_ready
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      POC_SLACK_BOT_TOKEN: ${{ secrets.POC_SLACK_BOT_TOKEN }}
   slack_publication:
     name: Avisar resultado de promoção — Slack opcional
     needs: [preflight, publish]
@@ -532,6 +544,7 @@ jobs:
       notification_label: slack_publication
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      POC_SLACK_BOT_TOKEN: ${{ secrets.POC_SLACK_BOT_TOKEN }}
   slack_final_status:
     name: Avisar encerramento — Slack opcional
     needs: [preflight, finalize_status]
@@ -546,3 +559,4 @@ jobs:
       notification_label: slack_final_status
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      POC_SLACK_BOT_TOKEN: ${{ secrets.POC_SLACK_BOT_TOKEN }}

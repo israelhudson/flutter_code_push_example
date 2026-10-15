@@ -39,36 +39,35 @@ Plano Free, sem upgrade solicitado. O plano gratuito pode pausar por inatividade
 
 URL: `https://xtvueqciogzkyjkkqxcx.supabase.co`.
 Aplicar a migration em `supabase/migrations/` e publicar apenas as funções
-`poc-control`, `poc-slack-approvals` e `poc-slack-router` neste projeto. Nunca no projeto Mobile.
+`poc-control` e `poc-slack-approvals` neste projeto. O router histórico não é
+usado pelo app exclusivo. Nunca publicar estas funções no projeto Mobile.
 As funções usam autenticação própria: bearer por operação ou assinatura
 Slack HMAC. Por isso o verificador JWT do gateway está desligado, não a autenticação.
 Nenhuma tabela permite acesso de `anon`/`authenticated`. As RPCs são exclusivas
 da credencial de servidor. Não colocar service role no GitHub nem no navegador.
 
-## 3. App exclusivo da POC — configuração atual
+## 3. App exclusivo Flutter POC Deploy
 
-Israel escolheu isolamento em 13/10/2026. O app **Flutter Deploy POC Slack**
-(`A0C8J5ZC9JT`, bot `U0C8XJ5S0Q6`) foi criado e instalado no workspace Amulets,
-e adicionado somente ao `app-deploy-test-isr` (`C0C8DUJB52L`). Scopes `chat:write`
-e `groups:read`; nenhum acesso a histórico de mensagens foi solicitado.
+A decisão final foi **um app por projeto**, preservando a Amulets. Usar o app
+**Flutter POC Deploy** (`A0C8J5ZC9JT`, bot `U0C8XJ5S0Q6`) somente no canal
+`app-deploy-test-isr` (`C0C8DUJB52L`). O nome anterior deste app era
+Flutter Deploy POC Slack. O app antigo foi renomeado para Amulets Deploy.
 
-Sua Request URL é direta:
+A Request URL do app exclusivo é
 `https://xtvueqciogzkyjkkqxcx.supabase.co/functions/v1/poc-slack-approvals`.
-As credenciais novas ficam somente no projeto exclusivo.
-`POC_SHARED_APP_ROUTING=false`: o router preparado anteriormente não é usado.
-
-O app antigo Flutter Deploy LAB (`A0C750DS05D`) permanece com a URL original:
+Manter **`POC_SHARED_APP_ROUTING=false`**. O `poc-slack-router` foi uma alternativa
+anterior; não é a entrada dos cartões nesta organização. A Request URL do app
+Amulets permanece
 `https://uvfwvplcziehxrkidrxh.supabase.co/functions/v1/slack-approvals`.
-Não substituir essa URL nem usar suas credenciais na POC.
 
-Um clique real no cartão diagnóstico da POC recebeu resposta privada recusando
-uma candidata inexistente. Não registrou aceite. Um cartão antigo concluído,
-sem publicação, respondeu normalmente a um clique repetido, mantendo dois votos.
-Essas provas de ativação não substituem o primeiro ensaio de RC real e suas DMs.
+O app POC já está instalado com `chat:write` e `groups:read`. A DM/App Home usa
+`chat.postMessage` com ID do usuário e guarda o ID D retornado.
+[Documentação oficial](https://docs.slack.dev/reference/methods/chat.postMessage/).
+Não presumir leitura de histórico: `groups:history` não foi adicionado.
 
-Os links Preview/Changelog possuem action IDs próprios e recebem ACK sem RPC,
-voto ou aviso: o Slack também envia callbacks para botões com URL.
-[Regra oficial](https://docs.slack.dev/reference/block-kit/block-elements/button-element/).
+LAB e Issue também migram os **novos** avisos para o app exclusivo, via secret
+`POC_SLACK_BOT_TOKEN` no GitHub. A migração foi concluída: o bot Amulets saiu do canal POC e os cartões antigos
+ficaram como histórico. Consultar o [inventário e manual dos bots](../BOTS-POR-PROJETO.md).
 
 | Secret no Supabase | Origem |
 |---|---|
@@ -79,13 +78,13 @@ voto ou aviso: o Slack também envia callbacks para botões com URL.
 | `POC_REGISTRATION_SECRET` | Aleatório próprio, igual ao secret novo do GitHub |
 | `POC_PUBLICATION_SECRET` | Outro aleatório próprio, igual ao secret novo do GitHub |
 | `POC_GITHUB_DISPATCH_TOKEN` | Opcional; fine-grained PAT restrito a este repo, Actions write e Contents read, para disparo após 2/2 e consultas autenticadas |
-| `POC_SHARED_APP_ROUTING` | `false`, app exclusivo com URL direta |
+| `POC_SHARED_APP_ROUTING` | `false`, app exclusivo sem encaminhamento |
 | `POC_SOURCE_BRANCH` | `slack-main` |
 | `POC_ENABLED` | `false` durante configuração; `true` para ensaio |
 | `POC_PUBLICATION_ENABLED` | `false` até autorizar prerelease de teste |
 
-Os dois secrets de máquina e os flags desligados já foram instalados nesta execução.
-Para coletar os dados do app sem colocá-los no chat, usar o terminal local:
+Para uma instalação nova, os flags começam desligados. Para coletar os dados
+do app exclusivo sem colocá-los no chat, usar o terminal local:
 
 ```bash
 python3 tools/delivery/configure_poc_slack_app.py
@@ -94,6 +93,8 @@ python3 tools/delivery/configure_poc_slack_app.py
 O script verifica workspace, scopes e membros do canal antes de gravar os secrets;
 as entradas sensíveis ficam ocultas e em arquivo privado fora do repositório.
 Ele não manda mensagem e não ativa a publicação.
+Não reexecutar a instalação sobre uma POC ativa sem revisar os flags: os valores
+iniciais não representam necessariamente a configuração atual.
 
 O token de dispatch é opcional: sem ele, após 2/2 Israel executa manualmente
 `Slack - Publicar teste aprovado` com o ID da candidata. A decisão humana é a
@@ -106,13 +107,18 @@ Não configurar PAT de Amulets ou credencial Shorebird nesta etapa.
 |---|---|---|
 | Secret | `POC_REGISTRATION_SECRET` | Mesmo aleatório do backend |
 | Secret | `POC_PUBLICATION_SECRET` | Mesmo segundo aleatório do backend |
+| Secret | `POC_SLACK_BOT_TOKEN` | Token do app exclusivo, para novos avisos LAB/Issue |
+| Variable | `POC_SHARED_APP_ROUTING` | `false`, app exclusivo sem encaminhamento |
 | Variable | `POC_SOURCE_BRANCH` | `slack-main` |
 | Variable | `POC_SUPABASE_URL` | URL do projeto exclusivo |
 | Variable | `POC_SLACK_ENABLED` | `false` inicialmente |
 | Variable | `POC_PR_PREVIEW_ENABLED` | `false` inicialmente |
 | Variable | `POC_SLACK_PUBLISH_ENABLED` | `false` inicialmente |
 
-Não substituir `SLACK_BOT_TOKEN`, secrets Issue ou variáveis LAB.
+`SLACK_BOT_TOKEN` legado foi removido da POC após encerrar as dependências históricas.
+Não recriá-lo nem usar credencial Amulets como fallback. O novo secret de
+Actions `POC_SLACK_BOT_TOKEN` atende os avisos LAB/Issue com perfil `poc-v1`.
+Secrets de publicação, gates e variáveis dos fluxos existentes permanecem separados.
 Primeiro ativar backend `POC_ENABLED`, tabela `poc_config.enabled` e os dois
 flags GitHub de preparação/preview. A publicação continua desligada.
 Para publicar TESTE, ativar **as três permissões**: tabela
@@ -176,8 +182,7 @@ sem criar tag/Release de novo. Falha no aviso posterior não desfaz um aceite sa
 Para parar: desligar flags GitHub, backend e `poc_config.enabled`. Preservar
 histórico, tags, cartões e recibos. Não apagar o projeto como rollback de entrega.
 
-**Limite do ensaio:** se o projeto Free pausar por inatividade, os botões da POC
-param de responder. O app antigo continua usando seu próprio receptor; não
-depende do projeto desta POC.
-Não usar esta dependência Free como receptor de produção da Amulets; definir
-com Samuel disponibilidade, monitoramento e hospedagem antes da adoção.
+**Limite do ensaio:** se o projeto Free pausar por inatividade, os cartões da
+POC podem parar de responder. O receptor Amulets continua independente; não
+trocar sua URL para contornar uma falha da POC. Definir com Samuel
+disponibilidade, monitoramento e hospedagem antes da adoção na Amulets.

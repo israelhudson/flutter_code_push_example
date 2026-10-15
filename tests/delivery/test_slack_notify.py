@@ -17,7 +17,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/delivery'))
 import slack_notify as slack
 
 SHA = 'a' * 40
-BOT_USER = 'U0TESTBOT1'
+BOT_USER = slack.notification_identity(slack.LEGACY_PROFILE)['bot_user_id']
 TOKEN = 'xoxb-offline-fixture-token'
 GITHUB_URL = 'https://github.com/israelhudson/flutter_code_push_example/pull/3'
 
