@@ -163,7 +163,7 @@ export function deliverySlackHandler(io: IO) {
               Accept: "application/vnd.github+json",
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ ref: io.env("POC_SOURCE_BRANCH") ?? "slack-main" }),
+            body: JSON.stringify({ ref: io.env("DELIVERY_SOURCE_BRANCH") ?? "main" }),
           },
         ).then((r) => {
           if (r.status !== 204) io.log("delivery_worker_wakeup_pending");
@@ -207,7 +207,7 @@ export function deliveryControlHandler(io: IO) {
           run?.path === `.github/workflows/${w}`
         )
         : run?.path === `.github/workflows/${workflow}`;
-      const sourceBranch = io.env("POC_SOURCE_BRANCH") ?? "slack-main";
+      const sourceBranch = io.env("DELIVERY_SOURCE_BRANCH") ?? "main";
       const scheduled = run?.event === "schedule" &&
         run?.path === ".github/workflows/delivery-worker.yml" && run?.head_branch === "main";
       if (

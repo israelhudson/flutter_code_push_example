@@ -1,0 +1,324 @@
+{
+  "kind": "sanitized_legacy_history",
+  "captured_at": "2026-10-15T01:27:18.909053+00:00",
+  "private_backup_sha256": "38d8226d3b57ada415142acb55e0a88240644a855ebedfa135f2711ff1a8d18d",
+  "excluded": "Private identities, Slack messages, report_text, reasons, tokens and raw payloads remain only in private backup",
+  "tables": {
+    "poc_candidates": [
+      {
+        "id": "poc-2d8945d7985445e3a8fb2e0481bf1feb",
+        "version": "1.15.0",
+        "rc_number": 1,
+        "rc_tag": "poc-v1.15.0-rc.1",
+        "source_sha": "cace86767b246e9d5a87ddd6849afbbd58be9608",
+        "status": "adjustment_requested",
+        "revision": 1,
+        "created_at": "2026-10-14T21:26:29.625644+00:00",
+        "previous_candidate": null,
+        "report_digest": "41c3c259c55130c4a5a89e7d43743864133c3979f86defa0ea50e9c2a0ee2589",
+        "publication_scope": "github_test"
+      },
+      {
+        "id": "poc-41d60103ed334a49806252d7af3f87b3",
+        "version": "1.14.0",
+        "rc_number": 2,
+        "rc_tag": "poc-v1.14.0-rc.2",
+        "source_sha": "e36098f65e99592f85870c566591678d20cb2759",
+        "status": "published",
+        "revision": 4,
+        "created_at": "2026-10-14T01:28:19.780898+00:00",
+        "previous_candidate": "poc-c8662baa34d842b0a9c76ead4a50014b",
+        "report_digest": "3df2b9b4012e139981ab3e577e8912cf6af6f023e2d5b4e2c08b5fa074ec2872",
+        "publication_scope": "github_test"
+      },
+      {
+        "id": "poc-bb3759bf908b42afa99cfb594d771196",
+        "version": "1.15.0",
+        "rc_number": 2,
+        "rc_tag": "poc-v1.15.0-rc.2",
+        "source_sha": "d84d3ce156487886271ed9f83a79b77cfa2e8615",
+        "status": "published",
+        "revision": 4,
+        "created_at": "2026-10-14T21:31:49.776135+00:00",
+        "previous_candidate": "poc-2d8945d7985445e3a8fb2e0481bf1feb",
+        "report_digest": "a4e73b19a767d7817e965586ebc95f1d559a0a091761c298e5611d412f9cf3f1",
+        "publication_scope": "github_test"
+      },
+      {
+        "id": "poc-c8662baa34d842b0a9c76ead4a50014b",
+        "version": "1.14.0",
+        "rc_number": 1,
+        "rc_tag": "poc-v1.14.0-rc.1",
+        "source_sha": "e36098f65e99592f85870c566591678d20cb2759",
+        "status": "adjustment_requested",
+        "revision": 3,
+        "created_at": "2026-10-13T22:19:21.412425+00:00",
+        "previous_candidate": null,
+        "report_digest": "bb12100483194b6a58148f7e82bcd8479003d448eb6d23b5981a58c5fef27f32",
+        "publication_scope": "none"
+      },
+      {
+        "id": "poc-d90c43ec138544479b44d6c8fda1a1c0",
+        "version": "1.14.1",
+        "rc_number": 1,
+        "rc_tag": "poc-v1.14.1-rc.1",
+        "source_sha": "17c8fcb181e2069320217df73f83746c1975eaba",
+        "status": "published",
+        "revision": 4,
+        "created_at": "2026-10-14T01:43:16.781126+00:00",
+        "previous_candidate": null,
+        "report_digest": "7ee49df528a5cbd1fe9fdf728c1a7827d336c15d2c0acf980f6bc28a5682b2d0",
+        "publication_scope": "github_test"
+      },
+      {
+        "id": "poc-e79dbcf4fc4b42f2ace8e30f4ebe7049",
+        "version": "1.15.1",
+        "rc_number": 1,
+        "rc_tag": "poc-v1.15.1-rc.1",
+        "source_sha": "cd876089cdf8338047f5ad431094c0331eb540bf",
+        "status": "published",
+        "revision": 4,
+        "created_at": "2026-10-14T21:53:07.803591+00:00",
+        "previous_candidate": null,
+        "report_digest": "e5948149d1696e72fc0dabf9639b91506827d496cddbbb31774e498d6a18e44a",
+        "publication_scope": "github_test"
+      }
+    ],
+    "poc_approvals": [
+      {
+        "candidate_id": "poc-c8662baa34d842b0a9c76ead4a50014b",
+        "role": "business",
+        "approved_at": "2026-10-13T22:19:44.893237+00:00",
+        "mode": "solo_test"
+      },
+      {
+        "candidate_id": "poc-41d60103ed334a49806252d7af3f87b3",
+        "role": "business",
+        "approved_at": "2026-10-14T01:31:26.359516+00:00",
+        "mode": "solo_test"
+      },
+      {
+        "candidate_id": "poc-d90c43ec138544479b44d6c8fda1a1c0",
+        "role": "business",
+        "approved_at": "2026-10-14T01:44:27.809939+00:00",
+        "mode": "solo_test"
+      },
+      {
+        "candidate_id": "poc-bb3759bf908b42afa99cfb594d771196",
+        "role": "business",
+        "approved_at": "2026-10-14T21:33:27.481578+00:00",
+        "mode": "solo_test"
+      },
+      {
+        "candidate_id": "poc-e79dbcf4fc4b42f2ace8e30f4ebe7049",
+        "role": "business",
+        "approved_at": "2026-10-14T21:56:26.561362+00:00",
+        "mode": "solo_test"
+      },
+      {
+        "candidate_id": "poc-c8662baa34d842b0a9c76ead4a50014b",
+        "role": "technical",
+        "approved_at": "2026-10-13T22:19:38.037116+00:00",
+        "mode": "solo_test"
+      },
+      {
+        "candidate_id": "poc-41d60103ed334a49806252d7af3f87b3",
+        "role": "technical",
+        "approved_at": "2026-10-14T01:31:22.622687+00:00",
+        "mode": "solo_test"
+      },
+      {
+        "candidate_id": "poc-d90c43ec138544479b44d6c8fda1a1c0",
+        "role": "technical",
+        "approved_at": "2026-10-14T01:44:26.552271+00:00",
+        "mode": "solo_test"
+      },
+      {
+        "candidate_id": "poc-bb3759bf908b42afa99cfb594d771196",
+        "role": "technical",
+        "approved_at": "2026-10-14T21:33:01.934409+00:00",
+        "mode": "solo_test"
+      },
+      {
+        "candidate_id": "poc-e79dbcf4fc4b42f2ace8e30f4ebe7049",
+        "role": "technical",
+        "approved_at": "2026-10-14T21:56:11.790765+00:00",
+        "mode": "solo_test"
+      }
+    ],
+    "poc_events": [
+      {
+        "id": 1,
+        "candidate_id": "poc-c8662baa34d842b0a9c76ead4a50014b",
+        "event": "registered",
+        "at": "2026-10-13T22:19:21.412425+00:00"
+      },
+      {
+        "id": 2,
+        "candidate_id": "poc-c8662baa34d842b0a9c76ead4a50014b",
+        "event": "technical",
+        "at": "2026-10-13T22:19:38.037116+00:00"
+      },
+      {
+        "id": 3,
+        "candidate_id": "poc-c8662baa34d842b0a9c76ead4a50014b",
+        "event": "business",
+        "at": "2026-10-13T22:19:44.893237+00:00"
+      },
+      {
+        "id": 4,
+        "candidate_id": "poc-c8662baa34d842b0a9c76ead4a50014b",
+        "event": "adjust",
+        "at": "2026-10-13T22:24:32.871038+00:00"
+      },
+      {
+        "id": 5,
+        "candidate_id": "poc-41d60103ed334a49806252d7af3f87b3",
+        "event": "registered",
+        "at": "2026-10-14T01:28:19.780898+00:00"
+      },
+      {
+        "id": 6,
+        "candidate_id": "poc-41d60103ed334a49806252d7af3f87b3",
+        "event": "technical",
+        "at": "2026-10-14T01:31:22.622687+00:00"
+      },
+      {
+        "id": 7,
+        "candidate_id": "poc-41d60103ed334a49806252d7af3f87b3",
+        "event": "business",
+        "at": "2026-10-14T01:31:26.359516+00:00"
+      },
+      {
+        "id": 8,
+        "candidate_id": "poc-41d60103ed334a49806252d7af3f87b3",
+        "event": "published",
+        "at": "2026-10-14T01:34:03.572961+00:00"
+      },
+      {
+        "id": 9,
+        "candidate_id": "poc-d90c43ec138544479b44d6c8fda1a1c0",
+        "event": "registered",
+        "at": "2026-10-14T01:43:16.781126+00:00"
+      },
+      {
+        "id": 10,
+        "candidate_id": "poc-d90c43ec138544479b44d6c8fda1a1c0",
+        "event": "technical",
+        "at": "2026-10-14T01:44:26.552271+00:00"
+      },
+      {
+        "id": 11,
+        "candidate_id": "poc-d90c43ec138544479b44d6c8fda1a1c0",
+        "event": "business",
+        "at": "2026-10-14T01:44:27.809939+00:00"
+      },
+      {
+        "id": 12,
+        "candidate_id": "poc-d90c43ec138544479b44d6c8fda1a1c0",
+        "event": "published",
+        "at": "2026-10-14T01:44:54.71151+00:00"
+      },
+      {
+        "id": 13,
+        "candidate_id": "poc-2d8945d7985445e3a8fb2e0481bf1feb",
+        "event": "registered",
+        "at": "2026-10-14T21:26:29.625644+00:00"
+      },
+      {
+        "id": 14,
+        "candidate_id": "poc-2d8945d7985445e3a8fb2e0481bf1feb",
+        "event": "reject",
+        "at": "2026-10-14T21:27:14.550965+00:00"
+      },
+      {
+        "id": 15,
+        "candidate_id": "poc-bb3759bf908b42afa99cfb594d771196",
+        "event": "registered",
+        "at": "2026-10-14T21:31:49.776135+00:00"
+      },
+      {
+        "id": 16,
+        "candidate_id": "poc-bb3759bf908b42afa99cfb594d771196",
+        "event": "technical",
+        "at": "2026-10-14T21:33:01.934409+00:00"
+      },
+      {
+        "id": 17,
+        "candidate_id": "poc-bb3759bf908b42afa99cfb594d771196",
+        "event": "business",
+        "at": "2026-10-14T21:33:27.481578+00:00"
+      },
+      {
+        "id": 18,
+        "candidate_id": "poc-bb3759bf908b42afa99cfb594d771196",
+        "event": "published",
+        "at": "2026-10-14T21:33:51.888876+00:00"
+      },
+      {
+        "id": 19,
+        "candidate_id": "poc-e79dbcf4fc4b42f2ace8e30f4ebe7049",
+        "event": "registered",
+        "at": "2026-10-14T21:53:07.803591+00:00"
+      },
+      {
+        "id": 20,
+        "candidate_id": "poc-e79dbcf4fc4b42f2ace8e30f4ebe7049",
+        "event": "technical",
+        "at": "2026-10-14T21:56:11.790765+00:00"
+      },
+      {
+        "id": 21,
+        "candidate_id": "poc-e79dbcf4fc4b42f2ace8e30f4ebe7049",
+        "event": "business",
+        "at": "2026-10-14T21:56:26.561362+00:00"
+      },
+      {
+        "id": 22,
+        "candidate_id": "poc-e79dbcf4fc4b42f2ace8e30f4ebe7049",
+        "event": "published",
+        "at": "2026-10-14T21:56:50.911183+00:00"
+      }
+    ],
+    "poc_publications": [
+      {
+        "candidate_id": "poc-41d60103ed334a49806252d7af3f87b3",
+        "run_id": "38496402136",
+        "state": "published",
+        "created_at": "2026-10-14T01:33:56.055249+00:00",
+        "finished_at": "2026-10-14T01:34:03.572961+00:00"
+      },
+      {
+        "candidate_id": "poc-d90c43ec138544479b44d6c8fda1a1c0",
+        "run_id": "38497337584",
+        "state": "published",
+        "created_at": "2026-10-14T01:44:43.782633+00:00",
+        "finished_at": "2026-10-14T01:44:54.71151+00:00"
+      },
+      {
+        "candidate_id": "poc-bb3759bf908b42afa99cfb594d771196",
+        "run_id": "38641181694",
+        "state": "published",
+        "created_at": "2026-10-14T21:33:42.766631+00:00",
+        "finished_at": "2026-10-14T21:33:51.888876+00:00"
+      },
+      {
+        "candidate_id": "poc-e79dbcf4fc4b42f2ace8e30f4ebe7049",
+        "run_id": "38644060220",
+        "state": "published",
+        "created_at": "2026-10-14T21:56:42.317519+00:00",
+        "finished_at": "2026-10-14T21:56:50.911183+00:00"
+      }
+    ]
+  },
+  "counts": {
+    "poc_adjustment_tokens": 1,
+    "poc_approvals": 10,
+    "poc_candidates": 6,
+    "poc_config": 1,
+    "poc_events": 22,
+    "poc_private_notices": 22,
+    "poc_publications": 4,
+    "poc_user_directory": 1
+  }
+}

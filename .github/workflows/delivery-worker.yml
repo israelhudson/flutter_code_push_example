@@ -23,7 +23,7 @@ jobs:
     env:
       DELIVERY_V2_ENABLED: ${{ vars.DELIVERY_V2_ENABLED }}
       POC_SUPABASE_URL: ${{ vars.POC_SUPABASE_URL }}
-      POC_SOURCE_BRANCH: ${{ vars.POC_SOURCE_BRANCH || 'slack-main' }}
+      POC_SOURCE_BRANCH: ${{ vars.DELIVERY_SOURCE_BRANCH || 'main' }}
       POC_REGISTRATION_SECRET: ${{ secrets.POC_REGISTRATION_SECRET }}
       GH_TOKEN: ${{ github.token }}
     steps:

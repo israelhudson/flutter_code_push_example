@@ -9,7 +9,7 @@ function fixture() {
   const calls: any[] = [];
   const run: any = {
     path: ".github/workflows/delivery-worker.yml",
-    head_branch: "slack-main",
+    head_branch: "main",
     event: "workflow_dispatch",
     status: "in_progress",
     head_sha: "a".repeat(40),

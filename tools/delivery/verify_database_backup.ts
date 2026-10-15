@@ -88,6 +88,21 @@ try {
     )).rows[0],
     contains_private_rows: false,
   };
+  if (Deno.args[2] === "--retirement") {
+    await db.exec("update poc_config set enabled=false,publication_enabled=false");
+    await db.exec(
+      await Deno.readTextFile(
+        "supabase/migrations/20261015012542_retire_legacy_delivery_tables.sql",
+      ),
+    );
+    const remaining = (await db.query<{ tablename: string }>(
+      "select tablename from pg_tables where schemaname='public' order by tablename",
+    )).rows.map((r) => r.tablename);
+    if (remaining.join() !== "delivery_control,delivery_outbox") {
+      throw Error("Unexpected remaining tables");
+    }
+    Object.assign(result, { retirement_verified: true, remaining_public_tables: remaining });
+  }
   await Deno.writeTextFile(output, JSON.stringify(result, null, 2) + "\n");
   console.log(
     JSON.stringify({

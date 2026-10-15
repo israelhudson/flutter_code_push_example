@@ -1,0 +1,14 @@
+{
+  "backend": "real dedicated Supabase",
+  "slack": "real exclusive bot",
+  "handler": "local production handler",
+  "github_run_authorization": "fixture",
+  "github_history_receipts": "fixture",
+  "scope": "none",
+  "two_role_messages_distinct": true,
+  "same_messages_after_approval": true,
+  "human_approval": false,
+  "state_after_synthetic_approvals": "approved",
+  "dispatch_tasks": 0,
+  "dm_permalink": "https://amuletsworkspace.slack.com/archives/D0C8U8D4TBP/p1792027187331479"
+}

@@ -19,7 +19,7 @@ env:
 jobs:
   publish:
     name: Publicar Release e salvar recibo
-    if: vars.POC_SLACK_ENABLED == 'true' && vars.POC_SLACK_PUBLISH_ENABLED == 'true' && github.ref == format('refs/heads/{0}', vars.POC_SOURCE_BRANCH || 'slack-main')
+    if: vars.POC_LEGACY_ENABLED == 'true' && vars.POC_SLACK_ENABLED == 'true' && vars.POC_SLACK_PUBLISH_ENABLED == 'true' && github.ref == format('refs/heads/{0}', vars.POC_SOURCE_BRANCH || 'slack-main')
     runs-on: ubuntu-24.04
     timeout-minutes: 8
     concurrency:

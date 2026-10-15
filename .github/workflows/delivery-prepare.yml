@@ -28,11 +28,11 @@ concurrency:
   cancel-in-progress: false
 env:
   DELIVERY_V2_ENABLED: ${{ vars.DELIVERY_V2_ENABLED }}
-  POC_SOURCE_BRANCH: ${{ vars.POC_SOURCE_BRANCH || 'slack-main' }}
+  POC_SOURCE_BRANCH: ${{ vars.DELIVERY_SOURCE_BRANCH || 'main' }}
   POC_SLACK_ENABLED: ${{ vars.POC_SLACK_ENABLED }}
 jobs:
   prepare:
-    if: vars.POC_SLACK_ENABLED == 'true' && vars.DELIVERY_V2_ENABLED == 'true' && github.ref == format('refs/heads/{0}', vars.POC_SOURCE_BRANCH || 'slack-main')
+    if: vars.POC_SLACK_ENABLED == 'true' && vars.DELIVERY_V2_ENABLED == 'true' && github.ref == format('refs/heads/{0}', vars.DELIVERY_SOURCE_BRANCH || 'main')
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     concurrency:

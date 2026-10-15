@@ -11,5 +11,10 @@ Deno.serve(async (request: Request) => {
       return deliverySlackHandler(io)(request);
     }
   } catch { /* Let the legacy authenticated parser reject malformed requests. */ }
+  if (io.env("POC_LEGACY_RETIRED") === "true") {
+    return new Response("Este cartão pertence ao histórico. Use as DMs da nova entrega.", {
+      status: 200,
+    });
+  }
   return slackHandler(io)(request);
 });
