@@ -45,6 +45,7 @@ create table public.delivery_outbox (
  lease text,
  leased_at timestamptz,
  receipt text,
+ completed_at timestamptz,
  -- Only the minimal historical event, never a report, changelog or raw Slack payload.
  event jsonb not null default '{}'::jsonb check (jsonb_typeof(event) = 'object' and octet_length(event::text) <= 4096),
  created_at timestamptz not null default now(),
@@ -182,7 +183,7 @@ begin
   elsif o.kind='technical' then update delivery_control set technical_message=p_message,technical_channel=p_channel where id=c.id;
   else update delivery_control set business_message=p_message,business_channel=p_channel where id=c.id; end if;
  end if;
- update delivery_outbox set state='done',receipt=p_receipt,lease=null where id=o.id;
+ update delivery_outbox set state='done',receipt=p_receipt,lease=null,completed_at=clock_timestamp() where id=o.id;
 end $$;
 
 create function public.delivery_publish(p_id text,p_run text,p_complete boolean default false) returns jsonb
@@ -267,7 +268,7 @@ begin
  if c.status not in ('pending','approved') or exists(select 1 from delivery_outbox where candidate_id=p_id and kind='dispatch' and state<>'pending')
  then raise exception 'Cannot cancel after dispatch starts'; end if;
  update delivery_control set status='cancelled',revision=revision+1 where id=p_id returning * into c;
- update delivery_outbox set state='done',receipt='cancelled-before-dispatch' where candidate_id=p_id and kind='dispatch' and state='pending';
+ update delivery_outbox set state='done',receipt='cancelled-before-dispatch',completed_at=clock_timestamp() where candidate_id=p_id and kind='dispatch' and state='pending';
  perform delivery_enqueue(p_id);
  return to_jsonb(c);
 end $$;
@@ -283,7 +284,7 @@ begin
  delete from delivery_outbox o using delivery_control c
  where o.candidate_id=c.id and c.status in ('published','rejected','cancelled')
  and not exists(select 1 from delivery_outbox q where q.candidate_id=c.id and
-    (q.state<>'done' or q.created_at>now()-interval '7 days'))
+    (q.state<>'done' or q.completed_at is null or q.completed_at>now()-interval '7 days'))
  and exists(select 1 from delivery_outbox h where h.candidate_id=c.id and h.kind='history'
     and h.revision=c.revision and h.state='done' and h.receipt ~ '^[a-f0-9]{40}$');
  get diagnostics removed=row_count;

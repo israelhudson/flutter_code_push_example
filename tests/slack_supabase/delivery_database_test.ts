@@ -178,7 +178,7 @@ Deno.test("delivery outbox: receipts, uncertain effects, cancellation and safe c
     assert((await value("select delivery_cancel($1) v", [c.id])).status === "cancelled");
     assert(await value("select delivery_compact() v") === 0, "pending work must survive");
     await db.exec(
-      "update delivery_outbox set state='done',receipt=repeat('e',40),created_at=now()-interval '8 days'",
+      "update delivery_outbox set state='done',receipt=repeat('e',40),created_at=now()-interval '8 days',completed_at=now()-interval '8 days'",
     );
     assert(await value("select delivery_compact() v") > 0);
     assert(await value("select count(*)::int v from delivery_outbox") === 0);
