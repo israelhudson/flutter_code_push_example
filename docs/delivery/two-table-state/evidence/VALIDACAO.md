@@ -5,9 +5,9 @@ workflow de release, deploy Edge ou migração remota foi executado.
 
 | Verificação | Resultado | Evidência |
 |---|---|---|
-| Formatação, lint, tipos e testes Deno/Postgres | 52 testes passaram | `deno-local.log` |
-| Contratos Python de preparação/publicação, incluindo journal v2 | 31 passaram | `python-local.log` |
-| Preservação dos previews | 6 passaram | `preview-local.log` |
+| Formatação, lint, tipos e testes Deno/Postgres | 52 testes passaram | `deno-local.txt` |
+| Contratos Python de preparação/publicação, incluindo journal v2 | 31 passaram | `python-local.txt` |
+| Preservação dos previews | 6 passaram | `preview-local.txt` |
 | YAML dos três workflows novos | Parse Ruby/Psych passou | comando abaixo |
 | Whitespace do diff | passou | `git diff --check` |
 | Inventário Supabase | 8 tabelas antigas, 6 candidatas encerradas, 22 avisos enviados | `inventory.json` |
