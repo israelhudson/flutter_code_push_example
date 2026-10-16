@@ -1,0 +1,91 @@
+{
+  "version": "1.15.7",
+  "scenario": "release_only",
+  "main_sha": "7a10f5086c5305524b9b13e40703cc2e9020c627",
+  "candidate_tag": "v1.15.7-rc.1",
+  "final_tag": "v1.15.7",
+  "prepare_run": 38817614027,
+  "publication_run": 38817869790,
+  "publication_automatic": true,
+  "new_prepare_runs": [
+    38817614027
+  ],
+  "publication_dispatches": 1,
+  "preview_performed": false,
+  "patch_performed": false,
+  "release_prerelease": false,
+  "candidate_status": "published",
+  "outbox_done": 23,
+  "pending_all": 0,
+  "tables": [
+    "delivery_control",
+    "delivery_outbox",
+    "delivery_reviewers"
+  ],
+  "prior_tags_preserved": 46,
+  "prior_releases_preserved": 23,
+  "controls_paused": true,
+  "solo": true,
+  "repository": "israelhudson/flutter_code_push_example",
+  "scenario_label": "Teste rápido com Release no GitHub",
+  "automation_ref": "main",
+  "title": "Validar cenário rápido com Release no GitHub",
+  "resolved": {
+    "publication_scope": "github_test",
+    "validation_mode": "controls_only",
+    "patch_mode": "none"
+  },
+  "release_url": "https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.15.7",
+  "candidate_url": "https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.15.7-rc.1",
+  "prepare_url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38817614027",
+  "publication_url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38817869790",
+  "technical_acceptance_at": "2026-10-15T22:32:07.66655+00:00",
+  "business_acceptance_at": "2026-10-15T22:32:37.150936+00:00",
+  "release_published_at": "2026-10-15T22:33:45Z",
+  "prepare_jobs": {
+    "prepare": "success",
+    "open": "success",
+    "build": "skipped",
+    "web": "skipped"
+  },
+  "publication_conclusion": "success",
+  "evidence_scope": "Ensaio solo com dois papeis; nao comprova distribuicao mobile nem execucao no dispositivo.",
+  "sanitization": {
+    "raw_logs_and_private_snapshots_excluded": true,
+    "slack_ids_and_database_row_ids_excluded": true,
+    "slack_images": "Recortes reais das mensagens; sidebars, cabecalhos e conversas alheias excluidos.",
+    "github_images": "Capturas originais da interface publica do repositorio.",
+    "slack_crop_boxes_xyxy": {
+      "02-dms-aguardando.jpg": [
+        670,
+        433,
+        1500,
+        945
+      ],
+      "03-dms-aceite-tecnico.jpg": [
+        670,
+        490,
+        1500,
+        945
+      ],
+      "05-dms-dois-aceites.jpg": [
+        670,
+        550,
+        1500,
+        945
+      ],
+      "06-slack-publicando.jpg": [
+        670,
+        443,
+        1500,
+        720
+      ],
+      "07-slack-publicada.jpg": [
+        670,
+        170,
+        1500,
+        580
+      ]
+    }
+  }
+}
