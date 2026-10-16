@@ -1,0 +1,13 @@
+# Extrato sanitizado da rodada 1.15.7
+# Fontes: candidate-plan.json, metadados GitHub Actions, journal/event-0..4.json e receipt.json.
+# Projecao por lista permitida; nao e copia completa nem simulacao de log de runner.
+# Identidades Slack, IDs internos, segredos, env e paths excluidos. Horarios em UTC.
+
+PREPARO {"branch": "release/1.15.7", "publication_scope": "github_test", "rc_number": 1, "rc_tag": "v1.15.7-rc.1", "source_sha": "7a10f5086c5305524b9b13e40703cc2e9020c627", "title": "Validar cenário rápido com Release no GitHub", "tooling_sha": "7a10f5086c5305524b9b13e40703cc2e9020c627", "validation_mode": "controls_only", "version": "1.15.7"}
+JOBS {"build": "skipped", "open": "success", "prepare": "success", "web": "skipped"}
+EVENTO {"business_at": null, "publication_run": null, "revision": 0, "solo": true, "source_sha": "7a10f5086c5305524b9b13e40703cc2e9020c627", "status": "pending", "technical_at": null}
+EVENTO {"business_at": null, "publication_run": null, "revision": 1, "solo": true, "source_sha": "7a10f5086c5305524b9b13e40703cc2e9020c627", "status": "pending", "technical_at": "2026-10-15T22:32:07.66655+00:00"}
+EVENTO {"business_at": "2026-10-15T22:32:37.150936+00:00", "publication_run": null, "revision": 2, "solo": true, "source_sha": "7a10f5086c5305524b9b13e40703cc2e9020c627", "status": "approved", "technical_at": "2026-10-15T22:32:07.66655+00:00"}
+EVENTO {"business_at": "2026-10-15T22:32:37.150936+00:00", "publication_run": "38817869790", "revision": 3, "solo": true, "source_sha": "7a10f5086c5305524b9b13e40703cc2e9020c627", "status": "publishing", "technical_at": "2026-10-15T22:32:07.66655+00:00"}
+EVENTO {"business_at": "2026-10-15T22:32:37.150936+00:00", "publication_run": "38817869790", "revision": 4, "solo": true, "source_sha": "7a10f5086c5305524b9b13e40703cc2e9020c627", "status": "published", "technical_at": "2026-10-15T22:32:07.66655+00:00"}
+PUBLICACAO {"distribution_performed": false, "prerelease": false, "published_at": "2026-10-15T22:33:45Z", "release_id": 414338051, "release_url": "https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.15.7", "source_sha": "7a10f5086c5305524b9b13e40703cc2e9020c627", "tag": "v1.15.7"}

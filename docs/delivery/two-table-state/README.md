@@ -5,6 +5,10 @@ O fluxo oficial é **Entrega · Preparar candidata**, pela `main`.
 A [base anterior preservada](BASE-VALIDADA-FORMULARIO.md) registra as provas das
 rodadas 1.15.5 e 1.15.6 antes da simplificação da interface.
 
+A **1.15.7** validou o cenário **Teste rápido com Release no GitHub** na `main`:
+dois aceites reais em ensaio solo, um único dispatch automático e Release final
+publicada, sem preview ou patch. Veja os [resultados, logs e prints sanitizados](evidence/release-1.15.7/README.md).
+
 Fluxo oficial opt-in, validado na **`main`**. A rodada **1.15.5** concluiu
 preview Web, dois aceites manuais nas DMs, publicação GitHub automática e
 **Android `1.1.0+2`, patch `5` em staging**, com atualização da tabela e do cartão
