@@ -9,6 +9,11 @@ A **1.15.7** validou o cenário **Teste rápido com Release no GitHub** na `main
 dois aceites reais em ensaio solo, um único dispatch automático e Release final
 publicada, sem preview ou patch. Veja os [resultados, logs e prints sanitizados](evidence/release-1.15.7/README.md).
 
+A **1.15.8** validou preview Web, dois aceites reais em ensaio solo, Release
+GitHub automática e **Android `1.1.0+2`, patch 6 em staging via CLI**. O histórico
+foi preservado e os controles foram pausados. Execução em dispositivo continua
+não comprovada. Veja a [documentação visual com logs e prints sanitizados](evidence/release-1.15.8/README.md).
+
 Fluxo oficial opt-in, validado na **`main`**. A rodada **1.15.5** concluiu
 preview Web, dois aceites manuais nas DMs, publicação GitHub automática e
 **Android `1.1.0+2`, patch `5` em staging**, com atualização da tabela e do cartão
