@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "note": "Nomes relativos dentro do conjunto privado; caminhos absolutos e conteudo bruto privado nao publicados. Hashes identificam as fontes usadas nas projecoes.",
+  "screenshots": [
+    {
+      "published_file": "01-slack-dms-aguardando-recorte.jpg",
+      "source_file": "01-slack-dms-aguardando-recorte.jpg",
+      "source_sha256": "8acd163a262f81c839bbd957b93be799825b9bae0cfb7b744dceae20be564809",
+      "transformation": "none; existing screenshot crop copied byte-for-byte"
+    },
+    {
+      "published_file": "02-preview-1.15.8.jpg",
+      "source_file": "02-preview-1.15.8.jpg",
+      "source_sha256": "75725da75de29a8d47d8c32321bc8b9e4a72f769fcd731287747cfc8e7fecbc5",
+      "transformation": "none; existing screenshot crop copied byte-for-byte"
+    },
+    {
+      "published_file": "03-candidata-com-preview.jpg",
+      "source_file": "03-candidata-com-preview.jpg",
+      "source_sha256": "786c515da59143b21abf46da400ae75c53addef2dd3ae749c9db342f781700b4",
+      "transformation": "none; existing screenshot crop copied byte-for-byte"
+    },
+    {
+      "published_file": "04-slack-aceite-tecnico-recorte.jpg",
+      "source_file": "04-slack-aceite-tecnico-recorte.jpg",
+      "source_sha256": "dc8d04d7b9d5686ed98bd9b90d6747b69cd2057a5df84612c3b034d73cc8e595",
+      "transformation": "none; existing screenshot crop copied byte-for-byte"
+    },
+    {
+      "published_file": "05-slack-dois-aceites-recorte.jpg",
+      "source_file": "05-slack-dois-aceites-recorte.jpg",
+      "source_sha256": "3d4220119eddcff16baec579f120092d7bb12d231f0401e68992758f4897bbf2",
+      "transformation": "none; existing screenshot crop copied byte-for-byte"
+    },
+    {
+      "published_file": "06-slack-publicando-recorte.jpg",
+      "source_file": "06-slack-publicando-recorte.jpg",
+      "source_sha256": "7bab36c12c23af92c19ebdae7fefa3a264688b17a5c1d4943166001986dc3335",
+      "transformation": "none; existing screenshot crop copied byte-for-byte"
+    },
+    {
+      "published_file": "07-slack-publicada-patch-pendente-recorte.jpg",
+      "source_file": "07-slack-publicada-patch-pendente-recorte.jpg",
+      "source_sha256": "3a801edc7a8eb944df975df178ae1b4454177686d662751fab0c90d4a892e122",
+      "transformation": "none; existing screenshot crop copied byte-for-byte"
+    },
+    {
+      "published_file": "08-slack-patch-confirmado-recorte.jpg",
+      "source_file": "08-slack-patch-confirmado-recorte.jpg",
+      "source_sha256": "3470f8a029ff6fb46b246865a3580f79d0601e5adce841fb107c0b3742c3262c",
+      "transformation": "none; existing screenshot crop copied byte-for-byte"
+    },
+    {
+      "published_file": "09-release-patch-confirmado.jpg",
+      "source_file": "09-release-patch-confirmado.jpg",
+      "source_sha256": "436f48241adaf612e07ff993756ab17a22b3eb7b8f84c625b3c53519cf4b8943",
+      "transformation": "none; existing screenshot crop copied byte-for-byte"
+    },
+    {
+      "published_file": "12-slack-aviso-patch-staging-recorte.jpg",
+      "source_file": "12-slack-aviso-patch-staging-recorte.jpg",
+      "source_sha256": "f88c8a8844f59cc1f7fa5fef3ef7e3564a101e7859501df901f6e9621867a6d4",
+      "transformation": "none; existing screenshot crop copied byte-for-byte"
+    }
+  ],
+  "projected_source_files": [
+    {
+      "source_file": "dispatch-result.json",
+      "source_sha256": "06be6c58931d5d84e9d3c0c5be9ec56ff8ccfa2df3c095fe146494d2a2a370b8"
+    },
+    {
+      "source_file": "prepare-attempt1-artifacts/poc-preparation/blocked.json",
+      "source_sha256": "a1c1db6ce00a8eb543e7fc399b23aed7e7e8225673db0f23d85a13f4ef8e9449"
+    },
+    {
+      "source_file": "authorized-artifact-delete.json",
+      "source_sha256": "d3b254ce4f9a8dbf14432e9d7a7bdb90916ac05dd12035060978e5304cb25d65"
+    },
+    {
+      "source_file": "prepare-final.json",
+      "source_sha256": "36558b6b41d920241eba52bb4d647fa6cbb53a51575e5f2891f50165873d49b6"
+    },
+    {
+      "source_file": "preparation-artifacts/poc-web-proof/poc-smoke.json",
+      "source_sha256": "dbb2b47fb2e2eef36176d843746cd594bccc39c26d1563e0252d3fde725fc201"
+    },
+    {
+      "source_file": "after-technical.private.json",
+      "source_sha256": "560293acedb84ec66ff6a1896302a061ad1c25bc11e45eaebc33f2667f0bfe0d"
+    },
+    {
+      "source_file": "after-business.private.json",
+      "source_sha256": "10f7349d88a881935f7272a1ab0b64f1b31d9b267b35c27849cc693a4858f856"
+    },
+    {
+      "source_file": "publication-artifacts/poc-publication-receipts/receipt.json",
+      "source_sha256": "64236427b4be0d4bc45955a3e49d16c3afa8ffc82e0e84610db11022c1bc65a5"
+    },
+    {
+      "source_file": "android-publication/dry-run-proof.json",
+      "source_sha256": "b194dc1a95b2adcf7853586771aa94874decf7fc45b9740cf7d43ded5746755c"
+    },
+    {
+      "source_file": "android-publication/platform-receipt-android.json",
+      "source_sha256": "e03825ed8d38bdfef1e0a1781f072f5f124afc05e130ad8c92d4afb561919cf9"
+    },
+    {
+      "source_file": "shorebird-receipt-comparison.json",
+      "source_sha256": "d5413adb70f3cac472dae7c95dc1611597403904d7ba89c631580b763e7cb608"
+    },
+    {
+      "source_file": "shorebird-comparison.json",
+      "source_sha256": "bf73833a59944d5e9b8a35b90dbca488eff34097db43b1a964e642d788e370f5"
+    },
+    {
+      "source_file": "refresh-artifacts/delivery-worker-receipts/presentation-refresh-receipt.json",
+      "source_sha256": "4872d635b9248c2e37279ff00386a2521f58439d76f07cdca721c1168a75c4c9"
+    },
+    {
+      "source_file": "refresh-final.json",
+      "source_sha256": "459ddf0add98d15979c4ba4e6b1ccd45dcf89fc0ad8c268345d4def96c4a812d"
+    },
+    {
+      "source_file": "controls-final.json",
+      "source_sha256": "4fcf04156ad39c4f6112d05f27024e0d37046355d882b72f8021ad779abe3dbd"
+    },
+    {
+      "source_file": "history-preservation.json",
+      "source_sha256": "8dca444bd5c4cc58164def12525ea877dbad06ffe6c484b359c9a6b2af9e060d"
+    },
+    {
+      "source_file": "verification.json",
+      "source_sha256": "b983e8988b772caeff3497cf0b50a402f0f71cefa4794a6526f5f9e54eef5963"
+    }
+  ]
+}

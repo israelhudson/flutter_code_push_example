@@ -1,0 +1,213 @@
+{
+  "report_status": "completed_with_device_validation_pending",
+  "version": "1.15.8",
+  "scenario": "android_staging",
+  "scenario_label": "Android staging — preview, Release e patch via CLI",
+  "resolved": {
+    "scope": "github_test",
+    "validation_mode": "full",
+    "patch_mode": "android_staging"
+  },
+  "automation_ref": "main",
+  "source_sha": "d1b5e8251ec051bbccdae7d9462bb1c2f5d1b026",
+  "branch": "release/1.15.8",
+  "candidate_tag": "v1.15.8-rc.1",
+  "final_tag": "v1.15.8",
+  "prepare_run": 38819229078,
+  "prepare_success_attempt": 3,
+  "prepare_conclusion": "success",
+  "prepare_jobs": {
+    "prepare": "success",
+    "build": "success",
+    "web": "success",
+    "open": "success"
+  },
+  "preview_performed": true,
+  "preview_url": "https://israelhudson.github.io/flutter_code_push_example/snapshots/d1b5e8251ec051bbccdae7d9462bb1c2f5d1b026/",
+  "preview_smoke_success": true,
+  "preview_app_version": "1.1.0+2",
+  "acceptances": {
+    "technical": "received_real_slack_click",
+    "business": "received_real_slack_click",
+    "solo": true,
+    "independent_people": false,
+    "technical_at": "2026-10-15T22:53:39.753542+00:00",
+    "business_at": "2026-10-15T22:54:14.690788+00:00"
+  },
+  "publication_run": 38820254448,
+  "publication_automatic": true,
+  "publication_conclusion": "success",
+  "release_url": "https://github.com/israelhudson/flutter_code_push_example/releases/tag/v1.15.8",
+  "release_id": 414350378,
+  "release_published_at": "2026-10-15T22:55:26Z",
+  "release_prerelease": false,
+  "recovery": {
+    "attempt1": "blocked_until_main_contracts_succeeded",
+    "attempt2": "open_downloaded_old_blocked_poc_preparation_artifact",
+    "old_artifact_id": 12012656257,
+    "backup_sha256": "f3189f0517819aea6e42c692dacf64e4d1d02753ed8a7a88a62413fc9ce8ba50",
+    "delete_explicitly_authorized": true,
+    "deleted_at": "2026-10-15T22:51:48.880816+00:00",
+    "same_rc1_and_preview_preserved": true
+  },
+  "android": {
+    "platform": "android",
+    "base_release": "1.1.0+2",
+    "track": "staging",
+    "flutter_version": "3.44.9",
+    "dry_run_status": "success",
+    "patch_status": "uploaded_to_staging",
+    "patch_number": 6,
+    "upload_confirmed": true,
+    "stable_authorized": false,
+    "device_execution_confirmed": false,
+    "provider_patch_id": 723169,
+    "promoted_to_stable": false,
+    "provider_git_sha_verified": false,
+    "three_architecture_hashes_match_provider": true,
+    "architectures": [
+      "aarch64",
+      "arm",
+      "x86_64"
+    ],
+    "previous_patches_preserved": 5,
+    "stable_count_before": 3,
+    "stable_count_after": 3
+  },
+  "final_state_verification": {
+    "controls_paused": true,
+    "outbox_zero_pending": true,
+    "candidate_tasks_done": 28,
+    "global_tasks_done": 222,
+    "candidate_dispatches": 1,
+    "candidate_notices": 3,
+    "active_candidates": 0,
+    "tables": [
+      "delivery_control",
+      "delivery_outbox",
+      "delivery_reviewers"
+    ],
+    "candidate_status": "published",
+    "candidate_revision": 5,
+    "prior_tags_and_releases_preserved": true,
+    "stable_unchanged": true
+  },
+  "presentation_refresh": {
+    "run": 38820839479,
+    "conclusion": "success",
+    "release_updated": true,
+    "same_channel_and_two_dm_messages_updated": true,
+    "original_publication_run": 38820254448
+  },
+  "notes": [
+    "Ensaio solo: uma conta nos dois papeis, sem comprovacao de duas pessoas independentes.",
+    "Patch 6 enviado somente a staging; execucao no dispositivo nao comprovada.",
+    "A origem do patch e sustentada por CLI/AAB e hashes das tres arquiteturas; API Shorebird nao comprova diretamente Git SHA.",
+    "O patch CLI e posterior a publicacao automatica da Release GitHub."
+  ],
+  "artifact_fix": {
+    "pull_request": 69,
+    "url": "https://github.com/israelhudson/flutter_code_push_example/pull/69",
+    "part_of_approved_release_source": false,
+    "integration": "posterior_a_rodada"
+  },
+  "sanitization": {
+    "raw_logs_and_private_snapshots_excluded": true,
+    "slack_ids_database_ids_and_private_paths_excluded": true,
+    "images": "Copias identicas dos recortes reais preexistentes; nomes do bot e da conta Israel e trechos da 1.15.7 do mesmo projeto podem aparecer. Sem sidebar de conversas.",
+    "screen_text_edited": false
+  },
+  "published_screenshots": [
+    "01-slack-dms-aguardando-recorte.jpg",
+    "02-preview-1.15.8.jpg",
+    "03-candidata-com-preview.jpg",
+    "04-slack-aceite-tecnico-recorte.jpg",
+    "05-slack-dois-aceites-recorte.jpg",
+    "06-slack-publicando-recorte.jpg",
+    "07-slack-publicada-patch-pendente-recorte.jpg",
+    "08-slack-patch-confirmado-recorte.jpg",
+    "09-release-patch-confirmado.jpg",
+    "12-slack-aviso-patch-staging-recorte.jpg"
+  ],
+  "prepare_attempt3_reexecuted_jobs": [
+    "open"
+  ],
+  "prepare_jobs_reused_from_attempt2": [
+    "prepare",
+    "build",
+    "web"
+  ],
+  "post_round_integration": {
+    "source_sha_unchanged": true,
+    "pull_requests": [
+      {
+        "pull_request": 67,
+        "url": "https://github.com/israelhudson/flutter_code_push_example/pull/67",
+        "head_sha_checked": "058ad7067d4b228203e88a24076d3db878dbe757",
+        "merge_sha": "449b0c4cc29e8e057b70174816117a09d6f39b9a",
+        "merged_at_utc": "2026-10-16T00:00:47Z",
+        "checks": [
+          {
+            "name": "build",
+            "conclusion": "SKIPPED",
+            "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38819388355/job/116711963095"
+          },
+          {
+            "name": "Flutter analyze e test",
+            "conclusion": "SUCCESS",
+            "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38819393036/job/116711974595"
+          },
+          {
+            "name": "Slack / Verificar contratos",
+            "conclusion": "SUCCESS",
+            "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38819393055/job/116711976365"
+          },
+          {
+            "name": "Issue / Verificar contratos",
+            "conclusion": "SUCCESS",
+            "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38819393093/job/116711974854"
+          },
+          {
+            "name": "web",
+            "conclusion": "SKIPPED",
+            "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38819388355/job/116711963358"
+          }
+        ]
+      },
+      {
+        "pull_request": 69,
+        "url": "https://github.com/israelhudson/flutter_code_push_example/pull/69",
+        "head_sha_checked": "113db1d59768597b8b161dc19b7e345de6d3969a",
+        "merge_sha": "84e0bcb03c2964c98a964f74b71bc7292a343c73",
+        "merged_at_utc": "2026-10-16T00:04:01Z",
+        "checks": [
+          {
+            "name": "build",
+            "conclusion": "SKIPPED",
+            "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38827073993/job/116736947828"
+          },
+          {
+            "name": "Flutter analyze e test",
+            "conclusion": "SUCCESS",
+            "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38827073882/job/116736896212"
+          },
+          {
+            "name": "Slack / Verificar contratos",
+            "conclusion": "SUCCESS",
+            "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38827073934/job/116736895851"
+          },
+          {
+            "name": "Issue / Verificar contratos",
+            "conclusion": "SUCCESS",
+            "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38827073921/job/116736895802"
+          },
+          {
+            "name": "web",
+            "conclusion": "SKIPPED",
+            "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38827073993/job/116736900547"
+          }
+        ]
+      }
+    ]
+  }
+}

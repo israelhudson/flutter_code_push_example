@@ -1,0 +1,73 @@
+{
+  "note": "Integrações posteriores à rodada; não alteram as tags ou a origem d1b5e82 da 1.15.8.",
+  "pull_requests": [
+    {
+      "pull_request": 67,
+      "url": "https://github.com/israelhudson/flutter_code_push_example/pull/67",
+      "head_sha_checked": "058ad7067d4b228203e88a24076d3db878dbe757",
+      "merge_sha": "449b0c4cc29e8e057b70174816117a09d6f39b9a",
+      "merged_at_utc": "2026-10-16T00:00:47Z",
+      "checks": [
+        {
+          "name": "build",
+          "conclusion": "SKIPPED",
+          "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38819388355/job/116711963095"
+        },
+        {
+          "name": "Flutter analyze e test",
+          "conclusion": "SUCCESS",
+          "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38819393036/job/116711974595"
+        },
+        {
+          "name": "Slack / Verificar contratos",
+          "conclusion": "SUCCESS",
+          "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38819393055/job/116711976365"
+        },
+        {
+          "name": "Issue / Verificar contratos",
+          "conclusion": "SUCCESS",
+          "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38819393093/job/116711974854"
+        },
+        {
+          "name": "web",
+          "conclusion": "SKIPPED",
+          "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38819388355/job/116711963358"
+        }
+      ]
+    },
+    {
+      "pull_request": 69,
+      "url": "https://github.com/israelhudson/flutter_code_push_example/pull/69",
+      "head_sha_checked": "113db1d59768597b8b161dc19b7e345de6d3969a",
+      "merge_sha": "84e0bcb03c2964c98a964f74b71bc7292a343c73",
+      "merged_at_utc": "2026-10-16T00:04:01Z",
+      "checks": [
+        {
+          "name": "build",
+          "conclusion": "SKIPPED",
+          "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38827073993/job/116736947828"
+        },
+        {
+          "name": "Flutter analyze e test",
+          "conclusion": "SUCCESS",
+          "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38827073882/job/116736896212"
+        },
+        {
+          "name": "Slack / Verificar contratos",
+          "conclusion": "SUCCESS",
+          "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38827073934/job/116736895851"
+        },
+        {
+          "name": "Issue / Verificar contratos",
+          "conclusion": "SUCCESS",
+          "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38827073921/job/116736895802"
+        },
+        {
+          "name": "web",
+          "conclusion": "SKIPPED",
+          "url": "https://github.com/israelhudson/flutter_code_push_example/actions/runs/38827073993/job/116736900547"
+        }
+      ]
+    }
+  ]
+}
